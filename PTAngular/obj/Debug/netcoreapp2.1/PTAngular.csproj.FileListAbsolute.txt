@@ -1,0 +1,4 @@
+C:\Users\Ndiananie\Git\ProjectUpdates\PTAngular\obj\Debug\netcoreapp2.1\PTAngular.csprojAssemblyReference.cache
+C:\Users\Ndiananie\Git\ProjectUpdates\PTAngular\obj\Debug\netcoreapp2.1\PTAngular.csproj.CoreCompileInputs.cache
+C:\Users\Ndiananie\Git\ProjectUpdates\PTAngular\obj\Debug\netcoreapp2.1\PTAngular.AssemblyInfoInputs.cache
+C:\Users\Ndiananie\Git\ProjectUpdates\PTAngular\obj\Debug\netcoreapp2.1\PTAngular.AssemblyInfo.cs

@@ -1,0 +1,138 @@
+
+
+    <div class="email-app-content-area w-100">
+        <div class="email-app-list-mails p-0">
+          <div  class="email-app-list">
+            <div id="users-list">
+    <p>one</p>
+            </div>
+          </div>
+        </div>
+        <div class="email-app-mail-content" #emailContent>
+          <div class="email-app-mail-content-detail">
+            <div class="email-app-options card-body">
+              <div class="row d-md-none">
+                <button class="btn btn-raised btn-primary ml-2 back-to-inbox">
+                  <i class="fa fa-angle-left"></i> Back to inbox</button>
+              </div>
+            </div>
+            <!-- side 3 -->
+            <div classs ="m-2 p-2">
+                <div classs ="row">
+                    <div class="col-12">
+                        <ngb-tabset  type="pills">
+                            <hr>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>Life time</b></ng-template>
+                              <ng-template  ngbTabContent>
+                                <hr>
+                <p>Life time</p>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year1}} </b><span class="text-danger" *ngIf="isCurrentyears(year1)">- Current year</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <div class="container-fluid m-2">
+                                  <app-project-budget-previousyear *ngIf="isPreviousyears(year1)"></app-project-budget-previousyear>
+                                  <app-project-budget-currentyear *ngIf="isCurrentyears(year1)"></app-project-budget-currentyear>
+                                  <app-project-budget-futureyear *ngIf="isFutureyears(year1)"></app-project-budget-futureyear>
+                                </div>
+
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year2}}</b><span *ngIf="isCurrentyears(year2)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year2)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year2)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year2)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year3}}</b><span *ngIf="isCurrentyears(year3)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year3)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year3)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year3)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year4}}</b><span *ngIf="isCurrentyears(year4)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year4)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year4)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year4)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year5}}</b><span *ngIf="isCurrentyears(year5)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year5)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year5)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year5)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year6 }}</b>(<span class="text-danger" *ngIf="isCurrentyears(year6)">Current year</span>)</ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year6)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year6)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year6)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year7}}</b><span *ngIf="isCurrentyears(year7)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year7)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year7)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year7)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year8}}</b><span *ngIf="isCurrentyears(year8)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year8)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year8)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year8)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year9}}</b><span *ngIf="isCurrentyears(year9)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year9)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year9)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year9)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                              <ng-template ngbTabTitle><b>{{year10}}</b><span *ngIf="isCurrentyears(year10)"> - "Current year"</span></ng-template>
+                              <ng-template ngbTabContent>
+                                <hr>
+                                <app-project-budget-previousyear *ngIf="isPreviousyears(year10)"></app-project-budget-previousyear>
+                                <app-project-budget-currentyear *ngIf="isCurrentyears(year10)"></app-project-budget-currentyear>
+                                <app-project-budget-futureyear *ngIf="isFutureyears(year10)"></app-project-budget-futureyear>
+                              </ng-template>
+                            </ngb-tab>
+
+                        </ngb-tabset>
+                    </div>
+
+                </div>
+              </div>
+
+          </div>
+          <div class="email-app-mail-content-detail" *ngIf="false">
+            <p class="primary text-center">Select a message to read</p>
+          </div>
+        </div>
+      </div>
+

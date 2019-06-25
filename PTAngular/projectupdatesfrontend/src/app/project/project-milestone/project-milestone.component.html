@@ -1,0 +1,39 @@
+<div class="email-app-content-area w-100">
+    <div class="email-app-list-mails p-0">
+      <div  class="email-app-list">
+        <div id="users-list">
+<p>one</p>
+        </div>
+      </div>
+    </div>
+    <div class="email-app-mail-content" #emailContent>
+      <div class="email-app-mail-content-detail">
+        <div class="email-app-options card-body">
+          <div class="row d-md-none">
+            <button class="btn btn-raised btn-primary ml-2 back-to-inbox">
+              <i class="fa fa-angle-left"></i> Back to inbox</button>
+          </div>
+          <p>two</p>
+        </div>
+
+        <div class="email-app-title card-body">
+          <div class="row">
+            <div class="col-sm-6 col-12 text-left">
+              <span class="primary">
+                <span class="badge badge-primary ">Previous</span>
+              </span>
+            </div>
+            <div class="col-sm-6 col-12 text-right">
+              <i *ngIf="true" class="float-right font-medium-3 ft-star warning"></i>
+              <i *ngIf="false" class="float-right font-medium-3 ft-star"></i>
+            </div>
+          </div>
+        </div>
+        <p>three</p>
+
+      </div>
+      <div class="email-app-mail-content-detail" *ngIf="false">
+        <p class="primary text-center">Select a message to read</p>
+      </div>
+    </div>
+  </div>
