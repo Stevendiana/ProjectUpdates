@@ -15,7 +15,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/companydetails")]

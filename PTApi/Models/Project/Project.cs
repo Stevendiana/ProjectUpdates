@@ -116,7 +116,7 @@ namespace PTApi.Models
         [ForeignKey("ProjectCurrentBudgetTrackerId")]
         public ProjectBudgetTracker ProjectBudgetTracker  { get; set; }
 
-        public int LastBatchCount { get; set; }
+        public int LastBudgetBatchVersion { get; set; }
         //public int? LastApprovedBatchtVersion { get; set; }
         //// Draft, Approved, Rejected, Revised
         //public string BudgetCurrentStatus  { get; set; }
@@ -187,7 +187,7 @@ namespace PTApi.Models
         }
 
 
-        public void Cancel()
+        public void CancelProjectNotification()
         {
             IsCanceled = true;
 
@@ -201,7 +201,7 @@ namespace PTApi.Models
             }
         }
 
-        public void CreateProject(string currentuser, string loggedInResourceId)
+        public void CreateProjectNotification(string currentuser, string loggedInResourceId)
         {
             // var currentuser = _userService.GetSecureUserId();
             // var loggedInResourceId = _resourceService.GetLoggedInUserResource().ResourceId;
@@ -231,7 +231,7 @@ namespace PTApi.Models
             return;
         }
 
-        public void UpdateProjectInfo()
+        public void UpdateProjectInfoNotification()
         {
             var currentuser = _userService.GetSecureUserId();
             var loggedInResourceId = _resourceService.GetLoggedInUserResource().ResourceId;
@@ -250,7 +250,7 @@ namespace PTApi.Models
             return;
         }
 
-        public void UpdateProjectStatus(string newStatus)
+        public void UpdateProjectStatusNotification(string newStatus)
         {
 
             var currentuser = _userService.GetSecureUserId();

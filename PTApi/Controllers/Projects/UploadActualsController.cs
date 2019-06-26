@@ -1,38 +1,23 @@
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-
-using Newtonsoft.Json;
-
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 //using OfficeOpenXml;
 
 using Microsoft.AspNetCore.Identity;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Persistence;
-using ProjectCentreBackend.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Text;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OfficeOpenXml;
-using System.Data;
-using ProjectCentreBackend.Models.Methods;
+using System;
+using System.Collections.Generic;
 //using FluentValidation;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Http.Headers;
-using System.Globalization;
-using System.Data.SqlClient;
-using System.Collections.Concurrent;
-using ProjectCentreBackend.Core.Interfaces;
-using AutoMapper;
-using ProjectCentreBackend.ViewModels;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
 
     [Route("api/uploadactuals")]

@@ -1,32 +1,19 @@
 
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading.Tasks;
 using AutoMapper;
-using ProjectCentreBackend.Auth;
-using ProjectCentreBackend.Helpers;
-using ProjectCentreBackend.Models;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Models.Methods;
-using ProjectCentreBackend.Persistence;
-using ProjectCentreBackend.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using ProjectCentreBackend.Core.Interfaces;
-using System.Globalization;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
 
     [Produces("application/json")]

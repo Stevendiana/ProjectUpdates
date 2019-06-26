@@ -1,22 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using ProjectCentreBackend.Models;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Models.Methods;
-using ProjectCentreBackend.Persistence;
-using ProjectCentreBackend.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using ProjectCentreBackend.Core.Interfaces;
+using PTApi.Data.Repositories;
+using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using PTApi.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ProjectCentreBackend.Controllers
+
+namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/Issues")]
@@ -24,38 +21,33 @@ namespace ProjectCentreBackend.Controllers
     public class IssueController : Controller
     {
 
-        private readonly UserManager<AppUser> _userManager;
-        private readonly ProjectCentreDbContext _appDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
+        private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public IssueController(UserManager<AppUser> userManager, IUserService userService, IProjectService projectService, ProjectCentreDbContext appDbContext, IMapper mapper)
+        public IssueController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
             _projectService = projectService;
             _userManager = userManager;
-            _appDbContext = appDbContext;
             _mapper = mapper;
         }
 
-        private static string CreateNewId(string id)
+        private string CreateNewId(string id)
         {
-            GeneratePublicId generatePublicId = new GeneratePublicId();
-            return generatePublicId.PartId(id, 8);
-        }
-
-        public static string WriteMonthInWords(int period){
-
-           ConvertPeriodNumbersToWords convertPeriodNumbersToWords = new ConvertPeriodNumbersToWords();
-           return convertPeriodNumbersToWords.ConvertMonthNumbersToWords(period);
+            return _getpublicId.PartId(id, 8);
         }
 
 
 
         public class EditIssueData
         {
+
             public string IssueId { get; set; }
             public string IssueCode { get; set; }
             public string ProjectId { get; set; }
@@ -89,9 +81,9 @@ namespace ProjectCentreBackend.Controllers
                 return BadRequest("You are not authorised to perform this action.");
 
             }
-            var IssueDb = _appDbContext.Issues.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.IssueId == id));
+            var IssueDb = _unitOfWork.Issues.SingleOrDefault(b => (b.CompanyId == companyId) && (b.IssueId == id));
 
-            if(IssueDb == null)
+            if (IssueDb == null)
             return NotFound("Issue not found");
 
             var IssueData = _mapper.Map<Issue, IssueViewModel>(IssueDb);
@@ -113,7 +105,7 @@ namespace ProjectCentreBackend.Controllers
 
             }
 
-            var allIssue = await _appDbContext.Issues.Where(p => (p.CompanyId == companyId) && (p.ProjectId == projectId)).ToListAsync();
+            var allIssue = _unitOfWork.Issues.GetAllIssuesOnly(projectId, comp);
 
             return allIssue.Select(Mapper.Map<Issue, IssueViewModel>);
         }
@@ -138,7 +130,7 @@ namespace ProjectCentreBackend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var project = Getproject(comp, IssueData.ProjectId);
+            var project = _unitOfWork.Projects.GetOneProject(IssueData.ProjectId, comp);
 
             if (project==null) // return validation error if client side validation is not passed.
             {
@@ -146,7 +138,8 @@ namespace ProjectCentreBackend.Controllers
             }
 
             var companyId = comp;
-            var Issue = GetIssue(companyId, IssueData.IssueId);
+            var Issue = _unitOfWork.Issues.GetOneIssue(IssueData.IssueId, comp);
+
 
             if (Issue == null)
                 return NotFound();
@@ -154,12 +147,12 @@ namespace ProjectCentreBackend.Controllers
             _mapper.Map<EditIssueData, Issue>(IssueData, Issue);
 
             Issue.CompanyId = comp;
-            Issue.IssueCode = "ASSUMP" + "-" + CreateNewId(Issue.IssueId).ToUpper();
+            Issue.IssueCode = "ISSUE" + "-" + CreateNewId(Issue.IssueId).ToUpper();
 
 
-            _appDbContext.SaveChanges();
+            _unitOfWork.Complete();
 
-            Issue = GetIssue(comp, Issue.IssueId);
+            Issue = _unitOfWork.Issues.GetOneIssue(IssueData.IssueId, comp);
 
             var result = _mapper.Map<Issue, IssueViewModel>(Issue);
 
@@ -167,22 +160,6 @@ namespace ProjectCentreBackend.Controllers
 
         }
 
-
-        Company GetSecureUserCompany()
-        {
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == comp);
-        }
-
-
-
-        Issue GetIssue(string companyId, string id)
-        {
-            var IssueDb =  _appDbContext.Issues.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.IssueId == id));
-            return IssueDb;
-        }
 
 
         [HttpPost]
@@ -206,7 +183,7 @@ namespace ProjectCentreBackend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var project = Getproject(comp, IssueData.ProjectId);
+            var project = _unitOfWork.Projects.GetOneProject(IssueData.ProjectId, comp);
 
             if (project==null) // return validation error if client side validation is not passed.
             {
@@ -221,20 +198,14 @@ namespace ProjectCentreBackend.Controllers
 
             Issue.IssueCode = "ISSUE" + "-" + CreateNewId(Issue.IssueId).ToUpper();
 
-            var newIssue = _appDbContext.Issues.Add(Issue).Entity;
-            _appDbContext.SaveChanges();
+            _unitOfWork.Issues.Add(Issue);
+            _unitOfWork.Complete();
 
-            Issue = GetIssue(comp, id);
+            Issue = _unitOfWork.Issues.GetOneIssue(id, comp);
 
             var results = _mapper.Map<Issue, IssueViewModel>(Issue);
 
             return Ok(results);
-        }
-
-        Project Getproject(string companyId, string projectId)
-        {
-            var projectDb = _appDbContext.Projects.SingleOrDefault(r => (r.CompanyId == companyId)&& (r.ProjectId == projectId));
-            return projectDb;
         }
 
 
@@ -256,13 +227,13 @@ namespace ProjectCentreBackend.Controllers
             }
             // var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
             var company = comp;
-            var Issue = GetIssue(company, id);
+            var Issue = _unitOfWork.Issues.GetOneIssue(id, comp);
 
             if (Issue == null)
             return BadRequest("You are not authorised to perform this action.");
 
-            _appDbContext.Remove(Issue);
-            _appDbContext.SaveChanges();
+            _unitOfWork.Issues.Remove(Issue);
+            _unitOfWork.Complete();
 
             return Json("Success");
         }

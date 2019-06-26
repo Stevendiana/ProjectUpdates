@@ -1,46 +1,45 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using PTApi.Data.Repositories;
+using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using PTApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using ProjectCentreBackend.Models;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Models.Methods;
-using ProjectCentreBackend.Persistence;
-using ProjectCentreBackend.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProjectCentreBackend.Core.Interfaces;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProjectsController : Controller
     {
 
-        private readonly UserManager<AppUser> _userManager;
-        private readonly ProjectCentreDbContext _appDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
+        private readonly IProjectService _projectService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
+        private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public ProjectsController(UserManager<AppUser> userManager, IUserService userService, ProjectCentreDbContext appDbContext, IMapper mapper)
+        public ProjectsController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
+            _projectService = projectService;
             _userManager = userManager;
-            _appDbContext = appDbContext;
             _mapper = mapper;
         }
 
-        private static string CreateNewId(string id)
+        private string CreateNewId(string id)
         {
-            GeneratePublicId generatePublicId = new GeneratePublicId();
-            return generatePublicId.PartId(id, 8);
+            return _getpublicId.PartId(id, 8);
         }
-
 
         public class EditProjectData
         {
@@ -109,7 +108,7 @@ namespace ProjectCentreBackend.Controllers
                 return BadRequest("You are not authorised to perform this action.");
 
             }
-            var projectDb = _appDbContext.Projects.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectId == id));
+            var projectDb = _unitOfWork.Projects.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectId == id));
 
             if(projectDb == null)
             return NotFound("Portfolio not found");
@@ -131,7 +130,7 @@ namespace ProjectCentreBackend.Controllers
             {
                 if ( companyId == comp)
                 {
-                    var allProjects = await _appDbContext.Projects.Where(p => p.CompanyId == companyId).ToListAsync();
+                    var allProjects = _unitOfWork.Projects.GetAllProjects(comp);
 
                     return allProjects.Select(Mapper.Map<Project, ProjectViewModel>);
                 }
@@ -162,7 +161,7 @@ namespace ProjectCentreBackend.Controllers
             if (roleGroup=="Admin_Group")
             {
                 var companyId = comp;
-                var project = Getproject(companyId, projectData.ProjectId);
+                var project = _unitOfWork.Projects.SingleOrDefault(b => (b.CompanyId == companyId) && (b.ProjectId == projectData.ProjectId));
 
                 if (project == null)
                     return NotFound();
@@ -184,16 +183,16 @@ namespace ProjectCentreBackend.Controllers
                 project.PortfolioId = projectData.PortfolioId ?? project.PortfolioId;
                 project.BusinessUnitId = projectData.BusinessUnitId ?? project.BusinessUnitId;
                 project.ParentId = projectData.ProgrammeId ?? project.ParentId;
-                // project.ProjectBudget = projectData.ProjectBudget ?? project.ProjectBudget;
+                
                 project.ProjectCustomer = projectData.ProjectCustomer ?? project.ProjectCustomer;
-                // project.ProjectEndDate = projectData.ProjectEndDate ?? project.ProjectEndDate;
+               
                 project.ProjectManagementRankId = project.ProjectManagementRankId;
                 project.ProjectLifecycleStage = projectData.ProjectLifecycleStage ?? project.ProjectLifecycleStage;
                 project.ProjectAlignment = projectData.ProjectAlignment ?? project.ProjectAlignment;
 
                 project.ProjectName = projectData.ProjectName ?? project.ProjectName;
-                project.CurrentBudgetBadgeVersion = projectData.CurrentBudgetBadgeVersion ?? project.CurrentBudgetBadgeVersion;
-                project.BudgetCurrentStatus = projectData.BudgetCurrentStatus ?? project.BudgetCurrentStatus;
+                project.ProjectCurrentBudgetTrackerId = projectData.ProjectCurrentBudgetTrackerId ?? project.ProjectCurrentBudgetTrackerId;
+
 
                 project.ProjectObjective = projectData.ProjectObjective ?? project.ProjectObjective;
 
@@ -205,14 +204,12 @@ namespace ProjectCentreBackend.Controllers
                 project.RevexCostCode =  "30" + "-"+ CreateNewId(project.ProjectId).ToString().ToUpper();
                 project.CapexCostCode =  "40"+ "-" + CreateNewId(project.ProjectId).ToString().ToUpper();
                 project.OpexCostCode =  "50" + "-"+ CreateNewId(project.ProjectId).ToString().ToUpper();
-               // project.ResourceCostCentreId = projectData.ResourceCostCentreId ?? project.ResourceCostCentreId;
+               
                 project.ProjectStrategy = projectData.ProjectStrategy ?? project.ProjectStrategy;
-                // project.ProjectStartDate = projectData.ProjectStartDate ?? project.ProjectStartDate;
-
+               
 
                 project.ProjectCode = "PRJ" + "-" + CreateNewId(project.ProjectId).ToUpper();
 
-                project.UpdateProjectInfo();
 
                 if ( project.ProjectManagementRank.ProjectManagerUserId != projectData.ProjectManagerUserId  ||
                 project.ProjectManagementRank.ProjectSeniorManagerUserId != projectData.ProjectSeniorManagerUserId  ||
@@ -231,9 +228,19 @@ namespace ProjectCentreBackend.Controllers
 
                 }
 
-                _appDbContext.SaveChanges();
+                // project.ProjectStartDate = projectData.ProjectStartDate ?? project.ProjectStartDate;
+                //project.BudgetCurrentStatus = projectData.BudgetCurrentStatus ?? project.BudgetCurrentStatus;
+                // project.ResourceCostCentreId = projectData.ResourceCostCentreId ?? project.ResourceCostCentreId;
+                // project.ProjectBudget = projectData.ProjectBudget ?? project.ProjectBudget;
+                // project.ProjectEndDate = projectData.ProjectEndDate ?? project.ProjectEndDate;
 
-                project = Getproject(comp, project.ProjectId);
+
+                _unitOfWork.Complete();
+                //project.UpdateProjectInfoNotification();
+                project.UpdateProjectStatusNotification(project.CurrentStageGateStatus);
+
+
+                project = _unitOfWork.Projects.GetOneProject(project.ProjectId, comp);
 
                 var result = _mapper.Map<Project, ProjectViewModel>(project);
 
@@ -244,26 +251,12 @@ namespace ProjectCentreBackend.Controllers
         }
 
 
-        Company GetSecureUserCompany()
-        {
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == comp);
-        }
-
-
-
-        Project Getproject(string companyId, string id)
-        {
-            var projectDb =  _appDbContext.Projects.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectId == id));
-            return projectDb;
-        }
+       
 
 
         [HttpPost]
         [Authorize(Policy="Admin_Group")]
-        public IActionResult PostProject( [FromBody] EditProjectData projectData)
+        public IActionResult NewProject( [FromBody] EditProjectData projectData)
         {
             var roleGroup =_userService.UserRoleGroup();
             var comp = _userService.GetSecureUserCompany();
@@ -286,17 +279,17 @@ namespace ProjectCentreBackend.Controllers
                 var project = _mapper.Map<EditProjectData, Project>(projectData);
                 project.CompanyId = comp;
                 project.ProjectId = id;
-                project.CurrentBudgetBadgeVersion = 0;
-                project.BudgetCurrentStatus = "Draft";
+                project.LastBudgetBatchVersion = 0;
+                
                 project.ProjectCode = "PRJ" + "-" + CreateNewId(id).ToUpper();
 
-                var newproject = _appDbContext.Projects.Add(project).Entity;
+                _unitOfWork.Projects.Add(project);
 
-                project.CreateProject(currentuser,loggedInResourceId);
+                project.CreateProjectNotification(currentuser,loggedInResourceId);
 
-                _appDbContext.SaveChanges();
+                _unitOfWork.Complete();
 
-                project = Getproject(comp, id);
+                project = _unitOfWork.Projects.GetOneProject(id,comp);
 
                 var results = _mapper.Map<Project, EditProjectData>(project);
 
@@ -327,15 +320,15 @@ namespace ProjectCentreBackend.Controllers
 
                 // var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
                 var company = comp;
-                var project = Getproject(company, id);
+                var project = _unitOfWork.Projects.GetOneProject(id, comp);
 
                 if (project == null)
                 return BadRequest("You are not authorised to perform this action.");
 
-                project.Cancel();
+                project.CancelProjectNotification();
 
-                _appDbContext.Remove(project);
-                _appDbContext.SaveChanges();
+                //_unitOfWork.Projects.Remove(project);
+                //_unitOfWork.Complete();
 
                 return Json("Success");
             }

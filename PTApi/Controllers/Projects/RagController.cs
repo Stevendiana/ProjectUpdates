@@ -1,22 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using ProjectCentreBackend.Models;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Models.Methods;
-using ProjectCentreBackend.Persistence;
-using ProjectCentreBackend.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ProjectCentreBackend.Core.Interfaces;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/rags")]

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/assumptions")]
@@ -146,7 +146,7 @@ namespace ProjectCentreBackend.Controllers
             _mapper.Map<EditAssumptionData, Assumption>(assumptionData, assumption);
 
             assumption.CompanyId = comp;
-            assumption.AssumptionCode = "ASSUMP" + "-" + CreateNewId(assumption.AssumptionId).ToUpper();
+            assumption.AssumptionCode = "ASSUME" + "-" + CreateNewId(assumption.AssumptionId).ToUpper();
 
 
             _unitOfWork.Complete();

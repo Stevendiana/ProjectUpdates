@@ -1,61 +1,48 @@
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using ProjectCentreBackend.Models;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Models.Methods;
-using ProjectCentreBackend.Persistence;
-using ProjectCentreBackend.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProjectCentreBackend.Core.Repositories;
-using ProjectCentreBackend.Core.Interfaces;
-using static ProjectCentreBackend.Core.Repositories.ProjectForecastRepository;
+using PTApi.Data.Repositories;
+using PTApi.Helpers;
+using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using PTApi.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ProjectCentreBackend.Helpers;
-using FluentValidation.Results;
 using System.ComponentModel.DataAnnotations;
-using static ProjectCentreBackend.CustomValidation.CustomValidation;
+using System.Linq;
+using System.Threading.Tasks;
+using static PTApi.Services.ProjectForecastService;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ForecastTasksController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly ProjectCentreDbContext _appDbContext;
-        private readonly IProjectService _projectService;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
-        private readonly IProjectForecastRepository _projectForecastRepository;
+        private readonly IProjectService _projectService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        GetForecastAndActualMinAndMaxDates _summaries;
-        int p;
-        // string projectId;
+        private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
+        private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public ForecastTasksController(UserManager<AppUser> userManager, IUserService userService, IMapper mapper,ProjectCentreDbContext appDbContext, IProjectForecastRepository projectForecastRepository, IProjectService projectService )
+        public ForecastTasksController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
+            _userService = userService;
             _projectService = projectService;
             _userManager = userManager;
-             _userService = userService;
-            _mapper=mapper;
-            _appDbContext = appDbContext ;
-            _projectForecastRepository = projectForecastRepository ;
-            p = _projectService.ConvertMonthWordsToNumbers(_userService.GetSecureUserCompanyReportingPeriod());
-
-
+            _mapper = mapper;
         }
 
-        private static string CreateNewId(string Id)
+        private string CreateNewId(string id)
         {
-            GeneratePublicId generatePublicId = new GeneratePublicId();
-            return generatePublicId.PartId(Id, 8);
+            return _getpublicId.PartId(id, 8);
         }
 
         public class EditForecastTaskData
@@ -382,18 +369,12 @@ namespace ProjectCentreBackend.Controllers
         }
 
 
-        [HttpGet]
-        [Authorize]
-        public IEnumerable<ForecastTask> Get()
-        {
-           return _appDbContext.ForecastTasks;
-        }
-
 
         [Authorize]
         [HttpGet("{companyId}/{id}")]
         public ActionResult Get(string companyId, string id) {
-            var forecastTaskDb = _appDbContext.ForecastTasks.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ForecastTaskId == id));
+
+            var forecastTaskDb = _unitOfWork.LifetimeForecast.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ForecastTaskId == id));
 
             if(forecastTaskDb == null)
             return NotFound("Forecast not found");
@@ -418,205 +399,6 @@ namespace ProjectCentreBackend.Controllers
             return forecast.VendorId;
         }
 
-
-
-        [Authorize]
-        [HttpGet("getactualforecastrec/{companyId}/{projectId}/{year}")]
-        public async Task<IEnumerable<ForecastTaskViewModel>> GetOneForecastAndRec(string companyId, string projectId, int year)
-        {
-
-            var all = await _appDbContext.ForecastTasks
-                                            .Include(f=>f.Resource).Include(f=>f.Supplier)
-                                            .Where(f=>(f.ProjectId==projectId) && (f.CompanyId==companyId)&& (f.Year==year))
-                                            .Include(f=>f.ReconciledActuals).ToListAsync();
-
-
-            return all.Select(Mapper.Map<ForecastTask, ForecastTaskViewModel>);
-        }
-        public List<ForecastTask> GetForecast(string companyId, string projectId, string reportingyear, bool lifetime)
-        {
-
-            int? i = 0;
-            string s = reportingyear;
-            i =int.Parse(s);
-            i = Convert.ToInt32(s);
-
-
-            if (lifetime==false)
-            {
-                var allprojectforecast = _appDbContext.ForecastTasks
-                                              .Include(f=>f.Resource).Include(f=>f.Supplier)
-                                               .Where(f=>(f.ProjectId==projectId) && (f.CompanyId==companyId)&&(f.Year==i)).ToList();
-
-
-                return allprojectforecast;
-            }
-
-            var allprojectforecastLifetime =  _appDbContext.ForecastTasks
-                                                  .Where(f=>(f.ProjectId==projectId) && (f.CompanyId==companyId))
-                                                  .Include(f=>f.Resource).Include(f=>f.Supplier)
-                                                  .Include(f=>f.ReconciledActuals).ToList();
-
-            return allprojectforecastLifetime;
-        }
-
-        public async Task<ForecastTask> GetOneForecast(string companyId, string projectId, string id, string reportingyear, bool lifetime)
-        {
-
-            int? i = 0;
-            string s = reportingyear;
-            i =int.Parse(s);
-            i = Convert.ToInt32(s);
-
-
-            if (lifetime==false)
-            {
-                var oneforecast = await  _appDbContext.ForecastTasks
-                                         .Include(f=>f.Resource)
-                                         .Include(f=>f.Supplier)
-                                         .Include(f=>f.ReconciledActuals)
-                                        .SingleOrDefaultAsync(f => (f.CompanyId == companyId) &&
-                                               (f.ProjectId == projectId)&& (f.Year==i) &&
-                                               (f.ForecastTaskId == id));
-                return oneforecast;
-            }
-
-            var oneforecastLifetime = await  _appDbContext.ForecastTasks
-                                         .Include(f=>f.Resource)
-                                         .Include(f=>f.Supplier)
-                                        .Include(b=>b.ReconciledActuals)
-                                        .SingleOrDefaultAsync(f => (f.CompanyId == companyId) &&
-                                               (f.ProjectId == projectId)&&
-                                               (f.ForecastTaskId == id));
-
-            return oneforecastLifetime;
-        }
-
-
-
-
-        [Authorize]
-        [HttpGet("pastyearsprojectspend/{companyId}/{projectId}/{reportingyear}")]
-        public async Task<ActionResult> PastYearsForecast(string companyId, string projectId, string reportingyear)
-        {
-
-            var comp = _userService.GetSecureUserCompany();
-            var userreportingperiod = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepperiod).Value;
-            var userreportingyear = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepyear).Value;
-
-            int? i = 0;
-            string s = userreportingyear;
-            i =int.Parse(s);
-            i = Convert.ToInt32(s);
-
-            if(companyId != comp  || reportingyear != userreportingyear){
-                return BadRequest();
-            }
-
-            var projectDb = _appDbContext.Projects.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectId == projectId));
-            if(projectDb == null){
-                return BadRequest();
-            }
-
-
-            var allprojectforecasts = await _appDbContext.ForecastTasks.Where(f=>(f.ProjectId==projectDb.ProjectId) &&
-                                     (f.CompanyId==projectDb.CompanyId)&& (f.Year<i)).Include(f=>f.Resource).Include(f=>f.Supplier)
-                                     .Include(f=>f.ReconciledActuals.Where(fr=>f.ProjectId == fr.ProjectId)).ToListAsync();
-
-            if(allprojectforecasts == null){
-                return null;
-            }
-
-
-            List<ForecastTaskEAC> forecastTask = new List<ForecastTaskEAC>();
-
-            foreach (var item in allprojectforecasts)
-            {
-                var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(item);
-
-                forecast.JanAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 1);
-                forecast.FebAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 2);
-                forecast.MarAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 3);
-                forecast.AprAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 4);
-                forecast.MayAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 5);
-                forecast.JunAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 6);
-                forecast.JulAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 7);
-                forecast.AugAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 8);
-                forecast.SepAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 9);
-                forecast.OctAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 10);
-                forecast.NovAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 11);
-                forecast.DecAmount = GetTotalActualReconciled(allprojectforecasts, item.ForecastTaskId, 12);
-                forecast.ResourcePerCost = GetResourcePerCost(item);
-
-                forecastTask.Add(forecast);
-                continue;
-            }
-            return Ok(forecastTask);
-
-        }
-
-
-
-        [Authorize]
-        [HttpGet("futureyearsprojectforecast/{companyId}/{projectId}/{reportingyear}")]
-        public async Task<ActionResult> FutureYearsForecast(string companyId, string projectId, string reportingyear)
-        {
-
-            var comp = _userService.GetSecureUserCompany();
-            var userreportingperiod = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepperiod).Value;
-            var userreportingyear = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepyear).Value;
-
-            int? i = 0;
-            string s = userreportingyear;
-            i =int.Parse(s);
-            i = Convert.ToInt32(s);
-
-            if(companyId != comp  || reportingyear != userreportingyear){
-                return BadRequest();
-            }
-
-            var projectDb = _appDbContext.Projects.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectId == projectId));
-            if(projectDb == null){
-                return BadRequest();
-            }
-
-
-            var allprojectforecasts = await _appDbContext.ForecastTasks.Where(f=>(f.ProjectId==projectDb.ProjectId) &&
-                                     (f.CompanyId==projectDb.CompanyId)&& (f.Year>i))
-                                     .Include(f=>f.ReconciledActuals.Where(fr=>f.ProjectId == fr.ProjectId)).ToListAsync();
-
-            if(allprojectforecasts == null){
-                return null;
-            }
-
-
-            List<ForecastTaskEAC> forecastTask = new List<ForecastTaskEAC>();
-
-            foreach (var item in allprojectforecasts)
-            {
-                var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(item);
-
-                forecast.JanAmount = item.JanForecastAmount;
-                forecast.FebAmount = item.FebForecastAmount;
-                forecast.MarAmount = item.MarForecastAmount;
-                forecast.AprAmount = item.AprForecastAmount;
-                forecast.MayAmount = item.MayForecastAmount;
-                forecast.JunAmount = item.JunForecastAmount;
-                forecast.JulAmount = item.JulForecastAmount;
-                forecast.AugAmount = item.AugForecastAmount;
-                forecast.SepAmount = item.SepForecastAmount;
-                forecast.OctAmount = item.OctForecastAmount;
-                forecast.NovAmount = item.NovForecastAmount;
-                forecast.DecAmount = item.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(item);
-
-                forecastTask.Add(forecast);
-                continue;
-            }
-            return Ok(forecastTask);
-
-        }
-
         public decimal? GetActualsReconciledSum(ForecastTask  forecast, string forecastId, int month)
         {
 
@@ -625,6 +407,7 @@ namespace ProjectCentreBackend.Controllers
                                         (a.ForecastTaskId == forecastId)).Select(a=> a.AllocatedAmount).Sum();
           return forecastactuals;
         }
+
         public ActualSumAndDuration GetActualsReconciled(ForecastTask  forecast, string forecastId, int month)
         {
 
@@ -651,340 +434,6 @@ namespace ProjectCentreBackend.Controllers
             public decimal? TimeDuration { get; set; }
         }
 
-
-        [Authorize]
-        [HttpGet("currentprojectforecast/{companyId}/{projectId}/{id}/{reportingperiod}/{reportingyear}")]
-        public IActionResult GetCurrentYearOneForecast(string companyId, string projectId, string id, string reportingperiod, string reportingyear)
-        {
-
-            var comp = _userService.GetSecureUserCompany();
-            var userreportingperiod = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepperiod).Value;
-            var userreportingyear = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepyear).Value;
-
-            if(companyId != comp){
-                return BadRequest();
-            }
-
-            var forecastTaskDb = GetOneForecast( companyId, projectId, id, userreportingyear, false).Result;
-
-            if(forecastTaskDb == null)
-            return NotFound("Forecast not found");
-
-            List<ForecastTaskEAC> forecastTask = new List<ForecastTaskEAC>();
-            // var forecastEac =  Mapper.Map<List<ForecastTask>, List<ForecastTaskEAC>>(allprojectforecast);
-
-            if (reportingperiod == Constants.Strings.ReportingPeriods.January)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanAmount = forecastTaskDb.JanForecastAmount;
-                forecast.FebAmount = forecastTaskDb.FebForecastAmount;
-                forecast.MarAmount = forecastTaskDb.MarForecastAmount;
-                forecast.AprAmount = forecastTaskDb.AprForecastAmount;
-                forecast.MayAmount = forecastTaskDb.MayForecastAmount;
-                forecast.JunAmount = forecastTaskDb.JunForecastAmount;
-                forecast.JulAmount = forecastTaskDb.JulForecastAmount;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.February)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = forecastTaskDb.FebForecastAmount;
-                forecast.MarAmount = forecastTaskDb.MarForecastAmount;
-                forecast.AprAmount = forecastTaskDb.AprForecastAmount;
-                forecast.MayAmount = forecastTaskDb.MayForecastAmount;
-                forecast.JunAmount = forecastTaskDb.JunForecastAmount;
-                forecast.JulAmount = forecastTaskDb.JulForecastAmount;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.March)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = forecastTaskDb.MarForecastAmount;
-                forecast.AprAmount = forecastTaskDb.AprForecastAmount;
-                forecast.MayAmount = forecastTaskDb.MayForecastAmount;
-                forecast.JunAmount = forecastTaskDb.JunForecastAmount;
-                forecast.JulAmount = forecastTaskDb.JulForecastAmount;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.April)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = forecastTaskDb.AprForecastAmount;
-                forecast.MayAmount = forecastTaskDb.MayForecastAmount;
-                forecast.JunAmount = forecastTaskDb.JunForecastAmount;
-                forecast.JulAmount = forecastTaskDb.JulForecastAmount;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.May)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = forecastTaskDb.MayForecastAmount;
-                forecast.JunAmount = forecastTaskDb.JunForecastAmount;
-                forecast.JulAmount = forecastTaskDb.JulForecastAmount;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.June)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.MayForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).TimeDuration;
-
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).AmountSum;
-
-                forecast.JunAmount = forecastTaskDb.JunForecastAmount;
-                forecast.JulAmount = forecastTaskDb.JulForecastAmount;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.July)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.MayForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).TimeDuration;
-                forecast.JunForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).AmountSum;
-                forecast.JunAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).AmountSum;
-                forecast.JulAmount = forecastTaskDb.JulForecastAmount;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.August)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.MayForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).TimeDuration;
-                forecast.JunForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).TimeDuration;
-                forecast.JulForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).AmountSum;
-                forecast.JunAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).AmountSum;
-                forecast.JulAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).AmountSum;
-                forecast.AugAmount = forecastTaskDb.AugForecastAmount;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.September)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.MayForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).TimeDuration;
-                forecast.JunForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).TimeDuration;
-                forecast.JulForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).TimeDuration;
-                forecast.AugForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).AmountSum;
-                forecast.JunAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).AmountSum;
-                forecast.JulAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).AmountSum;
-                forecast.AugAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).AmountSum;
-                forecast.SepAmount = forecastTaskDb.SepForecastAmount;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.October)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.MayForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).TimeDuration;
-                forecast.JunForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).TimeDuration;
-                forecast.JulForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).TimeDuration;
-                forecast.AugForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).TimeDuration;
-                forecast.SepForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 9).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).AmountSum;
-                forecast.JunAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).AmountSum;
-                forecast.JulAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).AmountSum;
-                forecast.AugAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).AmountSum;
-                forecast.SepAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 9).AmountSum;
-                forecast.OctAmount = forecastTaskDb.OctForecastAmount;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.November)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.MayForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).TimeDuration;
-                forecast.JunForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).TimeDuration;
-                forecast.JulForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).TimeDuration;
-                forecast.AugForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).TimeDuration;
-                forecast.SepForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 9).TimeDuration;
-                forecast.OctForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 10).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).AmountSum;
-                forecast.JunAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).AmountSum;
-                forecast.JulAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).AmountSum;
-                forecast.AugAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).AmountSum;
-                forecast.SepAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 9).AmountSum;
-                forecast.OctAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 10).AmountSum;
-                forecast.NovAmount = forecastTaskDb.NovForecastAmount;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-            if (reportingperiod == Constants.Strings.ReportingPeriods.December)
-            {
-               var forecast = _mapper.Map<ForecastTask, ForecastTaskEAC>(forecastTaskDb);
-
-                forecast.JanForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).TimeDuration;
-                forecast.FebForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).TimeDuration;
-                forecast.MarForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).TimeDuration;
-                forecast.AprForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).TimeDuration;
-                forecast.MayForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).TimeDuration;
-                forecast.JunForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).TimeDuration;
-                forecast.JulForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).TimeDuration;
-                forecast.AugForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).TimeDuration;
-                forecast.SepForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 9).TimeDuration;
-                forecast.OctForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 10).TimeDuration;
-                forecast.NovForecastPreciseDuration = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 11).TimeDuration;
-                forecast.JanAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 1).AmountSum;
-                forecast.FebAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 2).AmountSum;
-                forecast.MarAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 3).AmountSum;
-                forecast.AprAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 4).AmountSum;
-                forecast.MayAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 5).AmountSum;
-                forecast.JunAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 6).AmountSum;
-                forecast.JulAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 7).AmountSum;
-                forecast.AugAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 8).AmountSum;
-                forecast.SepAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 9).AmountSum;
-                forecast.OctAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 10).AmountSum;
-                forecast.NovAmount = GetActualsReconciled(forecastTaskDb, forecastTaskDb.ForecastTaskId, 11).AmountSum;
-                forecast.DecAmount = forecastTaskDb.DecForecastAmount;
-                forecast.ResourcePerCost = GetResourcePerCost(forecastTaskDb);
-                forecastTask.Add(forecast);
-               return Ok(forecastTask);
-            }
-
-            return BadRequest();
-        }
-
-
         public decimal? Getforecastitemtotal(ForecastTaskEAC  forecast)
         {
             var total = forecast.JanAmount + forecast.FebAmount +
@@ -996,6 +445,7 @@ namespace ProjectCentreBackend.Controllers
 
             return total;
         }
+
         public Project UpdateProjectSummaries(Project project, GetForecastAndActualMinAndMaxDates _summaries)
         {
             // _summaries =_projectService.GetForecastAndActual(project.ProjectId, _userService.GetSecureUserCompany(), p);
@@ -4102,7 +3552,7 @@ namespace ProjectCentreBackend.Controllers
             return newutility;
         }
 
-         public decimal? CalculateAmount(decimal? days, decimal? rate)
+        public decimal? CalculateAmount(decimal? days, decimal? rate)
         {
             if (days == 0 || rate == 0)
             {
@@ -4113,33 +3563,7 @@ namespace ProjectCentreBackend.Controllers
         }
 
 
-        AppUser GetSecureUser()
-        {
-            //var id = HttpContext.User.Claims.First().Value;
-            var id = HttpContext.User.Claims.Single(c=>c.Type=="id").Value;
-            return _appDbContext.Users.SingleOrDefault(u => u.Id == id);
-        }
-
-
-        Resource Getresource(string companyId, string resourceId)
-        {
-            var resourceDb = _appDbContext.Resources.Include(r => r.CompanyRateCard).SingleOrDefault(r => (r.CompanyId == companyId)&& (r.ResourceId == resourceId));
-            return resourceDb;
-        }
-        Project Getproject(string companyId, string projectId)
-        {
-            var projectDb = _appDbContext.Projects.Include(r => r.ProjectBudgetTracker).SingleOrDefault(r => (r.CompanyId == companyId)&& (r.ProjectId == projectId));
-            return projectDb;
-        }
-
-        Company GetSecureUserCompany()
-        {
-
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == comp);
-        }
+        
 
 
         [HttpGet("{companyId}/{projectId}")]
@@ -4152,11 +3576,6 @@ namespace ProjectCentreBackend.Controllers
             return allProjectForecastTasks.Select(Mapper.Map<ForecastTask, ForecastTaskViewModel>);
         }
 
-        ForecastTask GetforecastTask(string companyId, string forecastTaskId)
-        {
-            var forecastTaskDb = _appDbContext.ForecastTasks.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ForecastTaskId == forecastTaskId));
-            return forecastTaskDb;
-        }
 
         public decimal NewResourceRate(decimal duration, decimal rate)
         {

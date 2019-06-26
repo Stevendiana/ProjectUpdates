@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
@@ -123,7 +123,7 @@ namespace ProjectCentreBackend.Controllers
             {
                 ProjectBudgetTrackerId = id,
                 ProjectBudgetTrackerCode = "BUDGET" + "-" + CreateNewId(id).ToUpper() + "-" + "TRACK",
-                BudgetBadgetVersion = projectDb.LastBatchCount+1,
+                BudgetBadgetVersion = projectDb.LastBudgetBatchVersion+1,
                 CompanyId = comp,
                 ProjectId = projectDb.ProjectId,
                 BudgetBadgetStatus = Constants.Strings.StatusTypes.PendingApproval,
@@ -208,7 +208,7 @@ namespace ProjectCentreBackend.Controllers
             //var newbudget = _mapper.Map<EditProjectBudgetTracker, ProjectBudgetTracker>(tracker, budget);
 
             newbudget.CompanyId = comp;
-            newbudget.ProjectBudgetTrackerCode = "ASSUMP" + "-" + CreateNewId(budget.ProjectBudgetTrackerId).ToUpper();
+            newbudget.ProjectBudgetTrackerCode = "BUDGET" + "-" + CreateNewId(budget.ProjectBudgetTrackerId).ToUpper();
 
             project.ProjectCurrentBudgetTrackerId = _unitOfWork.BudgetTracker.GetLastApprovedBudget(project.ProjectId, comp).ProjectBudgetTrackerId;
 
@@ -221,6 +221,38 @@ namespace ProjectCentreBackend.Controllers
 
             return Ok(result);
 
+        }
+
+
+        [HttpDelete("{companyId}/{id}")]
+        [Authorize]
+        public IActionResult DeletebudgetTrackerAndSchedule(string companyId, string id)
+        {
+            var comp = _userService.GetSecureUserCompany();
+
+            if (companyId != comp)
+            {
+                return BadRequest("You are not authorised to perform this action.");
+
+            }
+
+            var tracker = _unitOfWork.BudgetTracker.GetOneTracker(id, comp);
+
+            if (tracker == null)
+                return BadRequest();
+
+            if (tracker.BudgetBadgetStatus == Constants.Strings.StatusTypes.PendingApproval)
+            {
+                var allbudget = _unitOfWork.ProjectBudgets.GetAllProjectBudgetByBatch(id, comp);
+
+                _unitOfWork.ProjectBudgets.RemoveRange(allbudget);
+                _unitOfWork.BudgetTracker.Remove(tracker);
+                _unitOfWork.Complete();
+
+                return Ok();
+
+            }
+            return BadRequest();
         }
 
     }

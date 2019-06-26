@@ -1,30 +1,16 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using ProjectCentreBackend.Models;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ProjectCentreBackend.Core.Interfaces;
-using System.Net.Http;
-using System.IO;
-
-using System.Collections.Generic;
-
-using System.Net;
-using System.Threading.Tasks;
-using ProjectCentreBackend.Persistence.Blob;
-using ProjectCentreBackend.Persistence.Blob.Models;
-using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Auth;
-using System.Drawing;
+using Microsoft.WindowsAzure.Storage.Blob;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ProjectCentreBackend.Controllers
+namespace PTApi.Controllers
 {
     public class EditProfileData
     {

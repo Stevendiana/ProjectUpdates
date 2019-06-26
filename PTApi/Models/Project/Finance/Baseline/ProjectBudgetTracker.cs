@@ -18,6 +18,8 @@ namespace PTApi.Models
         public int? BudgetBadgetVersion  { get; set; }
         public string CompanyId { get; set; }
         public string ProjectId { get; set; }
+
+        [StringLength(2500, ErrorMessage = "Update cannot be longer than 2,500 characters.")]
         public string Notes { get; set; }
         public DateTime? BudgetStartDate { get; set; }
         public DateTime? BudgetEndDate { get; set; }
