@@ -4,7 +4,6 @@ using PTApi.Models;
 using PTApi.Services;
 using System.Linq;
 using static ProjectCentreBackend.Controllers.AssumptionController;
-using static ProjectCentreBackend.Controllers.BudgetController;
 using static ProjectCentreBackend.Controllers.BusinessUnitsController;
 using static ProjectCentreBackend.Controllers.CompanyRateCardController;
 using static ProjectCentreBackend.Controllers.DependencyController;
@@ -20,6 +19,7 @@ using static ProjectCentreBackend.Controllers.ResourcesController;
 using static ProjectCentreBackend.Controllers.RiskController;
 using static ProjectCentreBackend.Controllers.UploadActualsController;
 using static PTApi.Services.ProjectForecastService;
+using ForecastTaskEAC = PTApi.Models.ForecastTaskEAC;
 
 namespace PTApi.ViewModels.Mappings
 {
@@ -49,6 +49,15 @@ namespace PTApi.ViewModels.Mappings
             .ForMember(dto => dto.ProjectBudgetId, map => map.MapFrom(src => src.ProjectBudgetId))
             .ForMember(vr => vr.Resource, opt => opt.MapFrom(v => v.Resource))
             .ForMember(vr => vr.Supplier, opt => opt.MapFrom(v => v.Supplier))
+            .ForMember(vr => vr.ForecastTask, opt => opt.MapFrom(v => v.ForecastTask))
+            .ForMember(dto => dto.ReconciledActuals, opt => opt.MapFrom(src => src.ReconciledActuals));
+
+            CreateMap<ForecastTaskEAC, ProjectBudget>()
+            .ForMember(p => p.ProjectBudgetId, opt => opt.Ignore())
+            .ForMember(dto => dto.ForecastTaskId, map => map.MapFrom(src => src.ForecastTaskId))
+            .ForMember(vr => vr.Resource, opt => opt.MapFrom(v => v.Resource))
+            .ForMember(vr => vr.Supplier, opt => opt.MapFrom(v => v.Supplier))
+            //.ForMember(vr => vr.ForecastTask, opt => opt.MapFrom(v => v.ForecastTask))
             .ForMember(dto => dto.ReconciledActuals, opt => opt.MapFrom(src => src.ReconciledActuals));
 
             CreateMap<ProjectRagStatus, RagViewModel>()

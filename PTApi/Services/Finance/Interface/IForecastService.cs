@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using static PTApi.Services.ForecastService;
+﻿using PTApi.Models;
+using System.Collections.Generic;
+
 
 namespace PTApi.Services
 {

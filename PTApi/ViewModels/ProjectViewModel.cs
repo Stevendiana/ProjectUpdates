@@ -119,9 +119,11 @@ namespace PTApi.ViewModels
         public string ProjectCurrentBudgetTrackerId  { get; set; }
         [ForeignKey("ProjectCurrentBudgetTrackerId")]
         public ProjectBudgetTracker ProjectBudgetTracker  { get; set; }
-         // Draft, Approved, Rejected, Revised
-        public string BudgetCurrentStatus  { get; set; }
-        public int? CurrentBudgetBadgeVersion  { get; set; }
+
+        public int LastBatchCount { get; set; }
+        // Draft, Approved, Rejected, Revised
+        //public string BudgetCurrentStatus  { get; set; }
+        //public int? CurrentBudgetBadgeVersion  { get; set; }
 
 
         // [NotMapped]

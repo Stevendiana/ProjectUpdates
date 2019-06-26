@@ -22,6 +22,10 @@ namespace PTApi.Data.Repositories
 
         IActualRepository Actuals { get; }
         IProjectBudgetRepository ProjectBudgets { get; }
+        IForecastTaskRepository LifetimeForecast { get; }
+        IProjectBudgetTrackerRepository BudgetTracker { get; }
+
+
 
         IProjectRagStatusRepository Rags { get; }
         IAssumptionRepository Assumptions { get; }

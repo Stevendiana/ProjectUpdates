@@ -1,32 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 
 namespace PTApi.Models
 {
-    [Table("ProjectBudget")]
-    public class ProjectBudget : BaseEntity
+    public class ForecastTaskEAC: BaseEntity
     {
+        // public string ForecastCode { get{return "FOR" + "-" + CreateNewId(ForecastTaskId,8).ToUpper();}}
 
-        public ProjectBudget()
-        {
-            ReconciledActuals = new Collection<ReconciledActual>();
-            // ResourceWorkTimesheets = new Collection<ResourceWorkTimesheet>();
-        }
-
-
-        [Key]
-        public string ProjectBudgetId { get; set; }
-        public string BudgetCode { get; set; }
-        public string ProjectBudgetTrackerId { get; set; }
-        // public string BudgetBadgetStatus  { get; set; }
-        // public string BudgetBadgetVersion  { get; set; }
         public string ForecastTaskId { get; set; }
-        public ForecastTask ForecastTask { get; set; }
-
         [Required]
         public string ParentTaskId { get; set; }
         public ParentTask ParentTask { get; set; }
@@ -57,75 +40,70 @@ namespace PTApi.Models
         public Company Company { get; set; }
         public DateTime? JanStartDate { get; set; }
         public DateTime? JanEndDate { get; set; }
-
         public decimal? ResourceRateJan { get; set; }
         public decimal? JanForecastPreciseDuration { get; set; }
-        public decimal? JanForecastAmount { get; set; }
+        public decimal? JanAmount { get; set; }
         public DateTime? FebStartDate { get; set; }
         public DateTime? FebEndDate { get; set; }
         public decimal? ResourceRateFeb { get; set; }
         public decimal? FebForecastPreciseDuration { get; set; }
-
-        public decimal? FebForecastNet { get; set; }
-        public decimal? FebForecastVat { get; set; }
-        public decimal? FebForecastAmount { get; set; }
-        public decimal? FebForecastIrrecoverableVat { get; set; }
-        public decimal? FebForecastRecoverableVat { get; set; }
-
+        public decimal? FebAmount { get; set; }
         public DateTime? MarStartDate { get; set; }
         public DateTime? MarEndDate { get; set; }
         public decimal? ResourceRateMar { get; set; }
         public decimal? MarForecastPreciseDuration { get; set; }
-        public decimal? MarForecastAmount { get; set; }
+        public decimal? MarAmount { get; set; }
         public DateTime? AprStartDate { get; set; }
         public DateTime? AprEndDate { get; set; }
         public decimal? ResourceRateApr { get; set; }
         public decimal? AprForecastPreciseDuration { get; set; }
-        public decimal? AprForecastAmount { get; set; }
+        public decimal? AprAmount { get; set; }
         public DateTime? MayStartDate { get; set; }
         public DateTime? MayEndDate { get; set; }
         public decimal? ResourceRateMay { get; set; }
         public decimal? MayForecastPreciseDuration { get; set; }
-        public decimal? MayForecastAmount { get; set; }
+        public decimal? MayAmount { get; set; }
         public DateTime? JunStartDate { get; set; }
         public DateTime? JunEndDate { get; set; }
         public decimal? ResourceRateJun { get; set; }
         public decimal? JunForecastPreciseDuration { get; set; }
-        public decimal? JunForecastAmount { get; set; }
+        public decimal? JunAmount { get; set; }
         public DateTime? JulStartDate { get; set; }
         public DateTime? JulEndDate { get; set; }
         public decimal? ResourceRateJul { get; set; }
         public decimal? JulForecastPreciseDuration { get; set; }
-        public decimal? JulForecastAmount { get; set; }
+        public decimal? JulAmount { get; set; }
         public DateTime? AugStartDate { get; set; }
         public DateTime? AugEndDate { get; set; }
         public decimal? ResourceRateAug { get; set; }
         public decimal? AugForecastPreciseDuration { get; set; }
-        public decimal? AugForecastAmount { get; set; }
+        public decimal? AugAmount { get; set; }
         public DateTime? SepStartDate { get; set; }
         public DateTime? SepEndDate { get; set; }
         public decimal? ResourceRateSep { get; set; }
         public decimal? SepForecastPreciseDuration { get; set; }
-        public decimal? SepForecastAmount { get; set; }
+        public decimal? SepAmount { get; set; }
         public DateTime? OctEndDate { get; set; }
         public DateTime? OctStartDate { get; set; }
         public decimal? ResourceRateOct { get; set; }
         public decimal? OctForecastPreciseDuration { get; set; }
-        public decimal? OctForecastAmount { get; set; }
+        public decimal? OctAmount { get; set; }
         public DateTime? NovStartDate { get; set; }
         public DateTime? NovEndDate { get; set; }
         public decimal? ResourceRateNov { get; set; }
         public decimal? NovForecastPreciseDuration { get; set; }
-        public decimal? NovForecastAmount { get; set; }
+        public decimal? NovAmount { get; set; }
         public DateTime? DecStartDate { get; set; }
         public DateTime? DecEndDate { get; set; }
-        public DateTime? TaskEarliestStartDate { get; set; }
-        public DateTime? TaskLatestndEDate { get; set; }
         public decimal? ResourceRateDec { get; set; }
         public decimal? DecForecastPreciseDuration { get; set; }
-        public decimal? DecForecastAmount { get; set; }
-
         public decimal? DecAmount { get; set; }
+
+        public decimal? QoneForecastAmount { get; set; }
+        public decimal? QtwoForecastAmount { get; set; }
+        public decimal? QthreeForecastAmount { get; set; }
+        public decimal? QfourForecastAmount { get; set; }
+
         public decimal? TotalForecastPreciseDuration { get; set; }
         public decimal? TotalAmount { get; set; }
 
@@ -159,6 +137,12 @@ namespace PTApi.Models
 
         public ICollection<ReconciledActual> ReconciledActuals { get; set; }
 
+        public ForecastTaskEAC()
+        {
+            ReconciledActuals = new Collection<ReconciledActual>();
+        }
 
     }
+
+
 }

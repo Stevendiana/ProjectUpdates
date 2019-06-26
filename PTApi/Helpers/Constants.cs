@@ -70,10 +70,10 @@
             }
             public static class StatusTypes
             {
-                public const string Draft = "Draft";
+                public const string PendingApproval = "Pending Approval";
                 public const string Approved = "Approved";
                 public const string Rejected = "Rejected";
-                public const string Revised = "Revised";
+                //public const string Revised = "Revised";
             }
 
 

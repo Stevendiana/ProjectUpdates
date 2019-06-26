@@ -1,3 +1,4 @@
+using PTApi.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,10 +18,25 @@ namespace PTApi.Models
         public int? BudgetBadgetVersion  { get; set; }
         public string CompanyId { get; set; }
         public string ProjectId { get; set; }
+        public string Notes { get; set; }
         public DateTime? BudgetStartDate { get; set; }
         public DateTime? BudgetEndDate { get; set; }
 
         public decimal? TotalLifeTimeBudget  { get; set; }
+
+
+        [NotMapped]
+        public bool CanApproveRejectOrDelete {
+            get
+            { if (BudgetBadgetStatus == Constants.Strings.StatusTypes.PendingApproval)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        
 
         public ProjectBudgetTracker()
         {
@@ -28,8 +44,5 @@ namespace PTApi.Models
         }
 
         public ICollection<ProjectBudget> ProjectBudgets { get; set; }
-
-
-
     }
 }

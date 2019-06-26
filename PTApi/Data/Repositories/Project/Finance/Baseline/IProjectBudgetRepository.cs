@@ -5,9 +5,9 @@ namespace PTApi.Data.Repositories
 {
     public interface IProjectBudgetRepository : IRepository<ProjectBudget>
     {
-        IEnumerable<ProjectBudgetTracker> GetAllProjectBudgetBatches(string id, string companyId);
-        IEnumerable<ProjectBudgetTracker> GetAllProjectBudgetByBatchId(string id, string companyId);
 
+        IEnumerable<ProjectBudget> GetAllProjectBudgetByBatch(string id, string companyId);
+        
 
 
     }

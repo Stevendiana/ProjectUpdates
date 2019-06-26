@@ -16,18 +16,16 @@ namespace PTApi.Repositories
         }
 
   
-        public IEnumerable<ProjectBudgetTracker> GetAllProjectBudgetBatches(string id, string companyId)
+        public IEnumerable<ProjectBudget> GetAllProjectBudgetByBatch(string id, string companyId)
         {
-            return ApplicationDbContext.ProjectBudgetTrackers.Where(d => d.ProjectId == id && d.CompanyId == companyId).ToList().OrderByDescending(d => d.BudgetBadgetVersion);
+            return ApplicationDbContext.ProjectBudgets
+                .Include(d => d.ReconciledActuals)
+                .Include(d => d.Supplier)
+                .Include(d => d.Resource)
+                .Include(d => d.ForecastTaskId).Where(d => d.ProjectBudgetTrackerId == id && d.CompanyId == companyId).ToList();
         }
 
-        public IEnumerable<ProjectBudgetTracker> GetAllProjectBudgetByBatchId(string id, string companyId)
-        {
-            return ApplicationDbContext.ProjectBudgetTrackers
-                .Include(d => d.ProjectBudgets)
-                .Where(d => d.ProjectBudgetTrackerId == id && d.CompanyId == companyId).ToList()
-                .OrderByDescending(d => d.BudgetBadgetVersion);
-        }
+       
 
         public ApplicationDbContext ApplicationDbContext
         {

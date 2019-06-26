@@ -1,7 +1,8 @@
+using PTApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using PTApi.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace PTApi.ViewModels
 {
@@ -15,26 +16,27 @@ namespace PTApi.ViewModels
         }
 
 
+       
         public string ProjectBudgetId { get; set; }
+        public string BudgetCode { get; set; }
         public string ProjectBudgetTrackerId { get; set; }
-        public string BudgetBadgetStatus  { get; set; }
-        public string BudgetBadgetVersion  { get; set; }
-        public string CompanyId { get; set; }
-        public string ProjectId { get; set; }
-
+        // public string BudgetBadgetStatus  { get; set; }
+        // public string BudgetBadgetVersion  { get; set; }
         public string ForecastTaskId { get; set; }
-        public string TextTaskCostDescription { get; set; }
-        public byte? ForecastPeriodType { get; set; }
-        public int? Order { get; set; }
-        public decimal Progress { get; set; }
-        public bool Open { get; set; }
-        public string Parent { get; set; }
+        public ForecastTask ForecastTask { get; set; }
+
+        [Required]
+        public string ParentTaskId { get; set; }
+        public ParentTask ParentTask { get; set; }
         public int? Year { get; set; }
-        public byte? Month { get; set; }
-        public int? BaselinePeriod { get; set; }
+        //public byte? Month { get; set; }
+        //public int? BaselinePeriod { get; set; }
         public string ForecastCode { get; set; }
-        public string ProjectStageRefid { get; set; }
-        public string ProjectStage { get; set; }
+        //public string ProjectStageRefid { get; set; }
+        //public string ProjectStage { get; set; }
+
+        public decimal? VAT { get; set; }
+
         public string CostType { get; set; }
         public string CostCat { get; set; }
         public string ResourceId { get; set; }
@@ -43,8 +45,17 @@ namespace PTApi.ViewModels
         public Supplier Supplier { get; set; }
         public Resource Resource { get; set; }
         public string OrderNumber { get; set; }
+
+        [Required]
+        public string ProjectId { get; set; }
+        public Project Project { get; set; }
+
+        [Required]
+        public string CompanyId { get; set; }
+        public Company Company { get; set; }
         public DateTime? JanStartDate { get; set; }
         public DateTime? JanEndDate { get; set; }
+
         public decimal? ResourceRateJan { get; set; }
         public decimal? JanForecastPreciseDuration { get; set; }
         public decimal? JanAmount { get; set; }
@@ -100,6 +111,9 @@ namespace PTApi.ViewModels
         public decimal? NovAmount { get; set; }
         public DateTime? DecStartDate { get; set; }
         public DateTime? DecEndDate { get; set; }
+        public DateTime? TaskEarliestStartDate { get; set; }
+        public DateTime? TaskLatestndEDate { get; set; }
+
         public decimal? ResourceRateDec { get; set; }
         public decimal? DecForecastPreciseDuration { get; set; }
         public decimal? DecAmount { get; set; }

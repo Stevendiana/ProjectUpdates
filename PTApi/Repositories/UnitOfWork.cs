@@ -31,6 +31,7 @@ namespace PTApi.Repositories
 
             Actuals = new ActualRepository(_context);
             ProjectBudgets = new ProjectBudgetRepository(_context);
+            BudgetTracker = new ProjectBudgetTrackerRepository(_context);
             LifetimeForecast = new ForecastTaskRepository(_context, _forecastService);
 
             Rags = new ProjectRagStatusRepository(_context);
@@ -58,9 +59,11 @@ namespace PTApi.Repositories
         public ICurrencySymbolRepository CurrencySymbols { get; private set; }
         public IResourceTimesheetRepository ResourceTimesheets { get; private set; }
 
+       
         public IActualRepository Actuals { get; private set; }
         public IProjectBudgetRepository ProjectBudgets { get; private set; }
         public IForecastTaskRepository LifetimeForecast { get; private set; }
+        public IProjectBudgetTrackerRepository BudgetTracker { get; private set; }
 
         public IProjectRagStatusRepository Rags { get; private set; }
         public IAssumptionRepository Assumptions { get; private set; }
