@@ -48,7 +48,7 @@ namespace PTApi.Services
             }
         }
 
-        public string GetSecureUser()
+        public string GetSecureUserEmail()
         {
             // var user = _httpContextAccessor.HttpContext.User.Claims.Single(c=>c.Type=="name").Value;
             var user = _httpContextAccessor.HttpContext.User.Claims.Single(c=>c.Type=="email").Value;

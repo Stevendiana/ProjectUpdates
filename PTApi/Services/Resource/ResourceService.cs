@@ -372,8 +372,6 @@ namespace PTApi.Services
 
         }
 
-
-
         public GetResourceTimesheetsTotalsByForecast GetTotalAllocatedAmountFromReconcileActual(string companyId, string projectId, string forecastTaskId, int? year, int? month)
         {
 

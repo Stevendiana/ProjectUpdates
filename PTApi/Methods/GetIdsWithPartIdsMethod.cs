@@ -1,24 +1,26 @@
-using System;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PTApi.Data;
-using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using System;
+using System.Linq;
 
 namespace PTApi.Methods
 {
-    public class GetIdsWithPartIdsMethod : IGetIdsWithPartIdsMethod
+    public class GetIdsWithPartIdsMethod : Repository<Project>, IGetIdsWithPartIdsMethod
     {
          private readonly ApplicationDbContext _appDbContext;
 
         public GetIdsWithPartIdsMethod(ApplicationDbContext appDbContext)
+            : base(appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public GetIdsWithPartIdsMethod()
-        {
+        //public GetIdsWithPartIdsMethod()
+        //{
 
-        }
+        //}
 
         public class ResourceUtilization
         {

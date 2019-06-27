@@ -2,7 +2,7 @@ namespace PTApi.Services
 {
     public interface IUserService
     {
-        string GetSecureUser();
+        string GetSecureUserEmail();
         string GetSecureUserId();
         string GetSecureUserCompany();
         string GetSecureUserRole();

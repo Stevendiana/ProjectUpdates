@@ -152,9 +152,6 @@ namespace PTApi.Services
 
         }
 
-
-
-
         public DaysPerMonth GetDaysPerMonth(int year, byte month)
         {
              //Monday to Friday are business days.
@@ -419,10 +416,6 @@ namespace PTApi.Services
             return  await Task.FromResult<IEnumerable<Forecast>>(null);
         }
 
-
-
-
-
         public GetForecastAndActualMinAndMaxDates SumForecastAndActual(GetForecastAndActualMinAndMaxDates _summaries){
 
             int? currentYear = Convert.ToInt32(_userService.GetSecureUserCompanyReportingYear());
@@ -639,6 +632,7 @@ namespace PTApi.Services
 
             return forecastAndActualMinandMaxDateObj;
         }
+
         public GetForecastAndActualMinAndMaxDates ForecastAndActual(string projectId, string companyId, int month){
 
            string thiscompanyId = companyId ?? "0";

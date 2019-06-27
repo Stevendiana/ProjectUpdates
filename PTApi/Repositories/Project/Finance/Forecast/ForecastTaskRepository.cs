@@ -3,7 +3,6 @@ using PTApi.Data.Repositories;
 using PTApi.Models;
 using PTApi.Services;
 using System.Collections.Generic;
-using static PTApi.Services.ForecastService;
 
 namespace PTApi.Repositories
 {
@@ -17,13 +16,15 @@ namespace PTApi.Repositories
             _forecastService = forecastService;
         }
 
-      
+        
 
         public IEnumerable<ForecastTaskEAC> GetLifeTimeForecast(string companyId, string projectId, string reportingperiod, string reportingyear)
         {
             var lifetimeforecast = _forecastService.GetLifeTimeForecast(companyId, projectId, reportingperiod, reportingyear);
             return lifetimeforecast;
         }
+
+        
 
         public ApplicationDbContext ApplicationDbContext
         {

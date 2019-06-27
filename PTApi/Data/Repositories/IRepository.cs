@@ -20,6 +20,8 @@ namespace PTApi.Data.Repositories
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
 
+        void Update(TEntity entity);
+
 
         //IEnumerable<TEntity> GetAll(string companyId);
     }

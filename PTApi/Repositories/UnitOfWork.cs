@@ -29,6 +29,8 @@ namespace PTApi.Repositories
             CurrencySymbols = new CurrencySymbolRepository(_context);
             ResourceTimesheets = new ResourceTimesheetRepository(_context);
 
+            Resources = new ResourceRepository(_context);
+
             Actuals = new ActualRepository(_context);
             ProjectBudgets = new ProjectBudgetRepository(_context);
             BudgetTracker = new ProjectBudgetTrackerRepository(_context);
@@ -59,7 +61,8 @@ namespace PTApi.Repositories
         public ICurrencySymbolRepository CurrencySymbols { get; private set; }
         public IResourceTimesheetRepository ResourceTimesheets { get; private set; }
 
-       
+        public IResourceRepository Resources { get; private set; }
+
         public IActualRepository Actuals { get; private set; }
         public IProjectBudgetRepository ProjectBudgets { get; private set; }
         public IForecastTaskRepository LifetimeForecast { get; private set; }
@@ -72,11 +75,11 @@ namespace PTApi.Repositories
         public IRiskRepository Risks { get; private set; }
 
 
-
         public int Complete()
         {
             return _context.SaveChanges();
         }
+
 
         public void Dispose()
         {

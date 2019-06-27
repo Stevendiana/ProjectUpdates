@@ -25,6 +25,8 @@ namespace PTApi.Data.Repositories
         IForecastTaskRepository LifetimeForecast { get; }
         IProjectBudgetTrackerRepository BudgetTracker { get; }
 
+        IResourceRepository Resources { get; }
+
 
 
         IProjectRagStatusRepository Rags { get; }

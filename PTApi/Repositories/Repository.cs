@@ -68,6 +68,11 @@ namespace PTApi.Services
             Context.Set<TEntity>().RemoveRange(entities);
         }
 
+        public void Update(TEntity entity)
+        {
+            Context.Update(entity);
+        }
+
 
 
         // Here we are working with a DbContext, not ApplicationDbContext. So we don't have DbSets 
