@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Issues")]
+    [Route("api/[controller]")]
     //[Authorize(Policy = "ApiUser")]
-    public class IssueController : Controller
+    public class IssuesController : Controller
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -30,7 +30,7 @@ namespace PTApi.Controllers
         private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public IssueController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
+        public IssuesController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
             _projectService = projectService;

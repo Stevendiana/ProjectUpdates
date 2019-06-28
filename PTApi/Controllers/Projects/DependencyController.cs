@@ -15,9 +15,9 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/dependencies")]
+    [Route("api/[controller]")]
     //[Authorize(Policy = "ApiUser")]
-    public class DependencyController : Controller
+    public class DependenciesController : Controller
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -29,7 +29,7 @@ namespace PTApi.Controllers
         private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public DependencyController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
+        public DependenciesController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
             _projectService = projectService;

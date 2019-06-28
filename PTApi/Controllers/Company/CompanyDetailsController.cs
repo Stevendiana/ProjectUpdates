@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/companydetails")]
+    [Route("api/[controller]")]
     public class CompanyDetailsController: Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -15,9 +15,9 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Actuals")]
+    [Route("api/[controller]")]
     //[Authorize(Policy = "ApiUser")]
-    public class ActualController : Controller
+    public class ActualsController : Controller
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -26,7 +26,7 @@ namespace PTApi.Controllers
         private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
         private readonly IGeneratePublicIdMethod _getpublicId;
 
-        public ActualController(UserManager<ApplicationUser> userManager, IMapper mapper, IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IUnitOfWork unitOfWork)
+        public ActualsController(UserManager<ApplicationUser> userManager, IMapper mapper, IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IUnitOfWork unitOfWork)
         {
             _getIdsWithPartIds = getIdsWithPartIds;
             _getpublicId = getpublicId;

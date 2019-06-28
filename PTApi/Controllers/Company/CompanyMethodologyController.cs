@@ -15,8 +15,8 @@ namespace PTApi.Controllers
 {
 
     [Produces("application/json")]
-    [Route("api/companymethodologies")]
-    public class CompanyMethodologyController: Controller
+    [Route("api/[controller]")]
+    public class CompanyMethodologiesController: Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUnitOfWork _unitOfWork;
@@ -25,7 +25,7 @@ namespace PTApi.Controllers
         private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
         private readonly IGeneratePublicIdMethod _getpublicId;
 
-        public CompanyMethodologyController(UserManager<ApplicationUser> userManager, IUserService userService,
+        public CompanyMethodologiesController(UserManager<ApplicationUser> userManager, IUserService userService,
             IMapper mapper, IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IUnitOfWork unitOfWork)
         {
             _getIdsWithPartIds = getIdsWithPartIds;

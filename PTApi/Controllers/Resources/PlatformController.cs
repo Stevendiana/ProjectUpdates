@@ -2,7 +2,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using PTApi.Data.Repositories;
+using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using PTApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,28 +17,30 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/platforms")]
-    public class PlatformController: Controller
+    [Route("api/[controller]")]
+    public class PlatformsController: Controller
     {
 
-        private readonly UserManager<AppUser> _userManager;
-        private readonly ProjectCentreDbContext _appDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
+        private readonly IProjectService _projectService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
+        private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public PlatformController(UserManager<AppUser> userManager, IUserService userService, ProjectCentreDbContext appDbContext, IMapper mapper)
+        public PlatformsController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
+            _projectService = projectService;
             _userManager = userManager;
-            _appDbContext = appDbContext;
             _mapper = mapper;
         }
 
-        private static string CreateNewId(string businessUnitId)
+        private string CreateNewId(string id)
         {
-            GeneratePublicId generatePublicId = new GeneratePublicId();
-            return generatePublicId.PartId(businessUnitId, 8);
+            return _getpublicId.PartId(id, 8);
         }
 
 
@@ -64,7 +70,7 @@ namespace PTApi.Controllers
                 return BadRequest("You are not authorised to perform this action.");
 
             }
-            var platformDb = _appDbContext.Platforms.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.PlatformId == id));
+            var platformDb = _unitOfWork.Platforms.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.PlatformId == id));
 
             if(platformDb == null)
             return NotFound("Platform not found");
@@ -86,7 +92,7 @@ namespace PTApi.Controllers
             {
                 if ( companyId == comp)
                 {
-                    var allPlatForms = await _appDbContext.Platforms.Where(p => p.CompanyId == companyId).ToListAsync();
+                    var allPlatForms = _unitOfWork.Platforms.GetAllPlatformsWithResources(comp);
 
                     return allPlatForms.Select(Mapper.Map<Platform, PlatformViewModel>);
                 }
@@ -117,7 +123,7 @@ namespace PTApi.Controllers
             if (roleGroup=="Admin_Group")
             {
                 var companyId = comp;
-                var platform = Getplatform(companyId, platFormData.PlatformId);
+                var platform = _unitOfWork.Platforms.GetOnePlatform(platFormData.PlatformId, comp);
 
                 if (platform == null)
                     return NotFound();
@@ -127,12 +133,12 @@ namespace PTApi.Controllers
                 platform.CompanyId = comp;
                 platform.PlatformName = platFormData.PlatformName ?? platform.PlatformName;
                 platform.HeadOfPlatform = platFormData.HeadOfPlatform ?? platform.HeadOfPlatform;
-                platform.PlatformCode =  "PLAT" + "-" + CreateNewId(platform.PlatformId).ToUpper();
+                platform.PlatformCode =  "PLATFORM" + "-" + CreateNewId(platform.PlatformId).ToUpper();
 
 
-                _appDbContext.SaveChanges();
+                _unitOfWork.Complete();
 
-                platform = Getplatform(comp, platform.PlatformId);
+                platform = _unitOfWork.Platforms.GetOnePlatform(platFormData.PlatformId, comp);
 
                 var result = _mapper.Map<Platform, PlatformViewModel>(platform);
 
@@ -143,22 +149,7 @@ namespace PTApi.Controllers
         }
 
 
-        Company GetSecureUserCompany()
-        {
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == comp);
-        }
-
-
-
-        Platform Getplatform(string companyId, string platformId)
-        {
-            var platformDb =  _appDbContext.Platforms.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.PlatformId == platformId));
-            return platformDb;
-        }
-
+       
 
         [HttpPost]
         [Authorize(Policy="Admin_Group")]
@@ -185,10 +176,10 @@ namespace PTApi.Controllers
                 platform.PlatformId = id;
                 platform.PlatformCode = "PLAT" + "-" + CreateNewId(platform.PlatformId).ToUpper();
 
-                var newPlatform = _appDbContext.Platforms.Add(platform).Entity;
-                _appDbContext.SaveChanges();
+                _unitOfWork.Platforms.Add(platform);
+                _unitOfWork.Complete();
 
-                platform = Getplatform(comp, id);
+                platform = _unitOfWork.Platforms.GetOnePlatform(id, comp);
 
                 var results = _mapper.Map<Platform, EditPlatformData>(platform);
 
@@ -219,13 +210,13 @@ namespace PTApi.Controllers
 
                 // var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
                 var company = comp;
-                var platform = Getplatform(company, id);
+                var platform = _unitOfWork.Platforms.GetOnePlatform(id, comp);
 
                 if (platform == null)
                 return BadRequest("You are not authorised to perform this action.");
 
-                _appDbContext.Remove(platform);
-                _appDbContext.SaveChanges();
+                _unitOfWork.Platforms.Remove(platform);
+                _unitOfWork.Complete();
 
                 return Json("Success");
             }

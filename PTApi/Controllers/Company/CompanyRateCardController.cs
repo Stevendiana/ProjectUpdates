@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/companyratecards")]
+    [Route("api/[controller]")]
     //[Authorize(Policy = "ApiUser")]
-    public class CompanyRateCardController : Controller
+    public class CompanyRateCardsController : Controller
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -28,7 +28,7 @@ namespace PTApi.Controllers
         private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
         private readonly IGeneratePublicIdMethod _getpublicId;
 
-        public CompanyRateCardController(UserManager<ApplicationUser> userManager, IUserService userService, 
+        public CompanyRateCardsController(UserManager<ApplicationUser> userManager, IUserService userService, 
             IMapper mapper, IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IUnitOfWork unitOfWork)
         {
             _getIdsWithPartIds = getIdsWithPartIds;

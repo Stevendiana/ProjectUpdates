@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PTApi.Data;
 using PTApi.Models;
+using System.Linq;
 
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/CurrencySymbols")]
-    public class CurrencySymbolController : Controller
+    [Route("api/[controller]")]
+    public class CurrencySymbolsController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _appDbContext;
 
-        public CurrencySymbolController(UserManager<ApplicationUser> userManager, ApplicationDbContext appDbContext)
+        public CurrencySymbolsController(UserManager<ApplicationUser> userManager, ApplicationDbContext appDbContext)
         {
             _userManager = userManager;
             _appDbContext = appDbContext;

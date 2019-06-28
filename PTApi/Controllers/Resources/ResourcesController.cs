@@ -1,11 +1,13 @@
-
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using PTApi.Data.Repositories;
+using PTApi.Helpers;
+using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using PTApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,32 +22,60 @@ namespace PTApi.Controllers
     [Route("api/[controller]")]
     public class ResourcesController : Controller
     {
-        private readonly UserManager<AppUser> _userManager;
-        private readonly ProjectCentreDbContext _appDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
-        private readonly IForecastService _forecastService;
+        private readonly IProjectService _projectService;
         private readonly IResourceService _resourceService;
-        private readonly IPermissionsMethods _permissionsMethods;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
+        private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public ResourcesController(UserManager<AppUser> userManager, IUserService userService, IPermissionsMethods permissionsMethods, IForecastService forecastService, IResourceService resourceService, ProjectCentreDbContext appDbContext, IMapper mapper)
+        public ResourcesController(UserManager<ApplicationUser> userManager, IUserService userService, IResourceService resourceService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
-            _userManager = userManager;
-            _permissionsMethods = permissionsMethods;
-            _appDbContext = appDbContext;
-            _forecastService = forecastService;
             _resourceService = resourceService;
+            _projectService = projectService;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
-        private static string CreateNewId(string businessUnitId)
+        private string CreateNewId(string id)
         {
-            GeneratePublicId generatePublicId = new GeneratePublicId();
-            return generatePublicId.PartId(businessUnitId, 8);
+            return _getpublicId.PartId(id, 8);
         }
 
+        public string ConvertImage(byte[] image)
+        {
+            if (image != null)
+            {
+                return System.Convert.ToBase64String(image);
+            }
+
+            return null;
+        }
+
+        public byte[] GetInMemoryPhoto(string imagename)
+        {
+            if (imagename != null)
+            {
+                var reportsFolder = "Images";
+                var photopath = $"~/{reportsFolder}/{imagename}";
+
+                byte[] bytes = System.IO.File.ReadAllBytes(photopath);
+
+                if (photopath != null)
+                {
+                    return bytes;
+                    // return File(bytes, "image/jpeg");
+
+                }
+                return null;
+
+            }
+            return null;
+        }
 
 
 
@@ -101,8 +131,6 @@ namespace PTApi.Controllers
 
             public ICollection<ResourceEffortSummary> ResourceEffortSummaries { get; set; }
 
-
-
         }
 
         public class GetAllResourceUtilizationByMonth
@@ -142,7 +170,6 @@ namespace PTApi.Controllers
         }
 
 
-
         [Authorize]
         [HttpGet("{companyId}/{id}")]
         public ActionResult Get(string companyId, string id)
@@ -155,7 +182,7 @@ namespace PTApi.Controllers
                 return BadRequest("You are not authorised to perform this action.");
 
             }
-            var resourceDb = _appDbContext.Resources.Include(p=>p.CompanyRateCard).SingleOrDefault(b => (b.CompanyId == companyId) && (b.ResourceId == id));
+            var resourceDb = _unitOfWork.Resources.GetOneResouce(id, comp);
 
             if (resourceDb == null)
                 return NotFound("Resource not found");
@@ -168,39 +195,6 @@ namespace PTApi.Controllers
 
             return Ok(resourceData);
         }
-
-        public string ConvertImage(byte[] image)
-        {
-            if (image != null)
-            {
-                return System.Convert.ToBase64String(image);
-            }
-
-            return null;
-        }
-
-        public byte[] GetInMemoryPhoto(string imagename)
-        {
-            if (imagename != null)
-            {
-              var reportsFolder = "Images";
-              var photopath = $"~/{reportsFolder}/{imagename}";
-
-              byte[] bytes = System.IO.File.ReadAllBytes(photopath);
-
-              if (photopath != null)
-              {
-                return bytes;
-                // return File(bytes, "image/jpeg");
-
-              }
-              return null;
-
-            }
-            return null;
-        }
-
-
 
         [HttpGet("{companyId}")]
         [Authorize(Policy = "Admin_Group")]
@@ -215,7 +209,7 @@ namespace PTApi.Controllers
             {
                 if ( companyId == comp)
                 {
-                    var allResources = await _appDbContext.Resources?.Include(p=>p.CompanyRateCard).Where(p => p.CompanyId == companyId).ToListAsync();
+                    var allResources =  _unitOfWork.Resources.GetAllResources(comp);
 
                     // foreach (var item in allResources)
                     // {
@@ -257,7 +251,7 @@ namespace PTApi.Controllers
             {
                 if (companyId == comp)
                 {
-                    var allResources = await _appDbContext.Resources?.Include(p=>p.CompanyRateCard).Where(p => p.CompanyId == companyId).ToListAsync();
+                    var allResources = _unitOfWork.Resources.GetAllResources(comp);
 
                     List<ResourceAdminViewModel> resources = new List<ResourceAdminViewModel>();
 
@@ -449,13 +443,7 @@ namespace PTApi.Controllers
             return BadRequest("You are not authorised to perform this action.");
         }
 
-        // AppUser GetSecureUser()
-        // {
-
-        //     //var id = HttpContext.User.Claims.First().Value;
-        //    var id = User.Claims.Single(c=>c.Type=="id").Value;
-        //     return _appDbContext.Users.SingleOrDefault(u => u.Id == id);
-        // }
+       
 
         [HttpPost]
         [Authorize(Policy="Admin_Group")]
@@ -618,173 +606,6 @@ namespace PTApi.Controllers
             return BadRequest("You are not authorised to perform this action.");
         }
 
-        // [HttpPost("resourceaccess")]
-        // [Authorize(Policy = "Admin_Group")]
-        // public async Task<IActionResult> PostResourceAccess([FromBody] EditResourceData resourceData)
-        // {
-
-        //     var roleGroup = _userService.UserRoleGroup();
-        //     var comp = _userService.GetSecureUserCompany();
-        //     var userreportingyear = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepyear).Value;
-        //     var userstandarddailyhrs = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Standarddailyhrs).Value;
-
-        //     int i = 0;
-        //     int j = 0;
-        //     string s = userreportingyear;
-        //     string h = userstandarddailyhrs;
-        //     i =int.Parse(s);
-        //     j =int.Parse(h);
-        //     i = Convert.ToInt32(s);
-        //     j = Convert.ToInt32(h);
-
-
-        //     var email = HttpContext.User.Claims.Single(c => c.Type == "email").Value;
-        //     // return validation error if email already exists
-
-
-        //     if (resourceData.CompanyId != comp)
-        //     {
-        //         return BadRequest("You are not authorised to perform this action.");
-
-        //     }
-        //     if (string.IsNullOrEmpty(resourceData.ResourceEmailAddress)) // if emial field is empty or null.
-        //     {
-        //         ModelState.AddModelError("email", string.Format("The resource email field cannot be null.", resourceData.ResourceEmailAddress));
-        //         return BadRequest(ModelState);
-        //     }
-        //     // return validation error if required fields aren't filled in
-        //     if (!ModelState.IsValid) // return validation error if client side validation is not passed.
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-        //     if (roleGroup == "Admin_Group")
-        //     {
-        //         Resource existingPerson = _appDbContext.Resources
-        //                             .Where(r => r.ResourceEmailAddress == resourceData.ResourceEmailAddress).FirstOrDefault();
-
-        //         if (existingPerson != null) // if id is NOT null,then email already exists.
-        //         {
-        //             ModelState.AddModelError("email", string.Format("Woops! It appears {0} is already listed in the database as your company resource. Duplicate entries are not allowed.", resourceData.ResourceEmailAddress));
-        //             return BadRequest(ModelState);
-        //         }
-
-
-        //         var newresource = _mapper.Map<EditResourceData, Resource>(resourceData);
-
-        //         decimal? resourcecontracthours = (newresource.ResourceContractEffortInPercentage??100)/100 * j;
-
-        //         // var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-        //         var resourceId = Guid.NewGuid().ToString();
-        //         newresource.ResourceId = resourceId;
-        //         newresource.AddedBy = email;
-        //         newresource.Billable = true;
-        //         newresource.CompanyId = comp;
-        //         // newresource.AppUserRole = "None_User";
-        //         newresource.ResourceNumber = "RES" + "-" + CreateNewId(resourceId).ToUpper();
-        //         newresource.IsDisabled = false;
-        //         newresource.ResourceManagerId = resourceData.ResourceManagerId;
-        //         newresource.ResourceRateCardId = resourceData.ResourceRateCardId;
-
-        //         if (newresource.AppUserRole == Constants.Strings.JwtClaims.AccountOwner ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.SuperAdmin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.Admin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.ProjectManager ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.SeniorProjectManager ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.PortfolioAdmin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.FinanceAdmin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.FinanceManager ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.ReadOnly ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.ReadWriteTimesheetOnly)
-        //         {
-        //             newresource.Identity = new AppUser{
-
-        //                 UserName = newresource.ResourceEmailAddress,
-        //                 Email = newresource.ResourceEmailAddress,
-        //             };
-
-        //             await _userManager.CreateAsync(newresource.Identity, "Psalm91:1");
-        //         }
-
-        //         // var resourceIdentity = newresource.Identity;
-        //         // var createusingresource = await _userManager.CreateAsync(resourceIdentity, "Psalm91:1");
-
-
-        //         // newresource.Identity = new AppUser{
-
-        //         //     UserName = newresource.ResourceEmailAddress,
-        //         //     Email = newresource.ResourceEmailAddress,
-        //         // };
-
-        //         // var resourceIdentity = newresource.Identity;
-
-        //         // var createusingresource = await _userManager.CreateAsync(resourceIdentity, "Psalm91:1");
-        //         _appDbContext.Resources.Add(newresource);
-
-        //         if (newresource.AppUserRole == Constants.Strings.JwtClaims.AccountOwner ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.SuperAdmin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.Admin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.ProjectManager ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.SeniorProjectManager ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.PortfolioAdmin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.FinanceAdmin ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.FinanceManager ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.ReadOnly ||
-        //             newresource.AppUserRole == Constants.Strings.JwtClaims.ReadWriteTimesheetOnly)
-        //         {
-        //             newresource.Identity.Resource = newresource;
-        //             newresource.Identity.CompanyId = comp;
-        //             newresource.Identity.ResourceId = resourceId;
-        //             newresource.IdentityId = newresource.Identity.Id;
-        //         }
-
-        //         // newresource.IdentityId = newresource.Identity.Id;
-
-        //         newresource.JanAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 1)*(resourcecontracthours/j);
-        //         newresource.FebAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 2)*(resourcecontracthours/j);
-        //         newresource.MarAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 3)*(resourcecontracthours/j);
-        //         newresource.AprAvailabilityBeforeHolidaysInDays = _resourceService.GetNumberOfWorkingDaysInMonth(i, 4)*(resourcecontracthours/j);
-        //         newresource.MayAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 5)*(resourcecontracthours/j);
-        //         newresource.JunAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 6)*(resourcecontracthours/j);
-        //         newresource.JulAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 7)*(resourcecontracthours/j);
-        //         newresource.AugAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 8)*(resourcecontracthours/j);
-        //         newresource.SepAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 9)*(resourcecontracthours/j);
-        //         newresource.OctAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 10)*(resourcecontracthours/j);
-        //         newresource.NovAvailabilityBeforeHolidaysInDays = _resourceService.GetNumberOfWorkingDaysInMonth(i, 11)*(resourcecontracthours/j);
-        //         newresource.DecAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 12)*(resourcecontracthours/j);
-
-        //         newresource.TotalAvailabilityBeforeHolidaysInDays = newresource.JanAvailabilityBeforeHolidaysInDays + newresource.FebAvailabilityBeforeHolidaysInDays + newresource.MarAvailabilityBeforeHolidaysInDays + newresource.AprAvailabilityBeforeHolidaysInDays
-        //         + newresource.MayAvailabilityBeforeHolidaysInDays + newresource.JunAvailabilityBeforeHolidaysInDays +  newresource.JulAvailabilityBeforeHolidaysInDays + newresource.AugAvailabilityBeforeHolidaysInDays
-        //         + newresource.SepAvailabilityBeforeHolidaysInDays + newresource.OctAvailabilityBeforeHolidaysInDays +  newresource.NovAvailabilityBeforeHolidaysInDays + newresource.DecAvailabilityBeforeHolidaysInDays;
-
-
-        //         _appDbContext.SaveChanges();
-
-        //         newresource = Getresource(comp, resourceId);
-
-        //         var result = _mapper.Map<Resource, ResourceViewModel>(newresource);
-        //         return Ok(result);
-        //     }
-
-        //     return BadRequest("You are not authorised to perform this action.");
-        // }
-
-        Company GetSecureUserCompany()
-        {
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == comp);
-        }
-
-
-        Resource Getresource(string companyId, string id)
-        {
-            var resourceDb = _appDbContext.Resources.SingleOrDefault(b => (b.CompanyId == companyId) && (b.ResourceId == id));
-            return resourceDb;
-        }
-
-
         [HttpDelete("{companyId}/{id}")]
         [Authorize(Policy = "Admin_Group")]
         public IActionResult DeleteResource(string companyId, string id)
@@ -816,12 +637,6 @@ namespace PTApi.Controllers
                 return Json("Success");
             }
             return BadRequest("You are not authorised to perform this action.");
-        }
-        AppUser GetSecureUser()
-        {
-            //var id = HttpContext.User.Claims.First().Value;
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            return _appDbContext.Users.SingleOrDefault(u => u.Id == id);
         }
 
         public GetResourceHolidaysTotalsByResource GetResourceHolidayTotals(List<ResourceHolidayBooked>  holidays, string resourceId, int year)

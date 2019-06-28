@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/businessUnits")]
+    [Route("api/[controller]")]
     //[Authorize(Policy = "ApiUser")]
     public class BusinessUnitsController : Controller
     {

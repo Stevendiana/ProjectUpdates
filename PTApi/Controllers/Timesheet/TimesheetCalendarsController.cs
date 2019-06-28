@@ -1,18 +1,15 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjectCentreBackend.Models;
-using ProjectCentreBackend.Models.Entities;
-using ProjectCentreBackend.Persistence;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ProjectCentreBackend.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Timesheetcalendars")]
+    [Route("api/[controller]")]
     public class TimesheetCalendarsController : Controller
     {
 

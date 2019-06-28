@@ -2,7 +2,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using PTApi.Data.Repositories;
+using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using PTApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,37 +16,31 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/rags")]
+    [Route("api/[controller]")]
     //[Authorize(Policy = "ApiUser")]
-    public class RagController : Controller
+    public class RagsController : Controller
     {
 
-        private readonly UserManager<AppUser> _userManager;
-        private readonly ProjectCentreDbContext _appDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
+        private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public RagController(UserManager<AppUser> userManager, IUserService userService, IProjectService projectService, ProjectCentreDbContext appDbContext, IMapper mapper)
+        public RagsController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
             _projectService = projectService;
             _userManager = userManager;
-            _appDbContext = appDbContext;
             _mapper = mapper;
         }
 
-        private static string CreateNewId(string businessUnitId)
+        private string CreateNewId(string id)
         {
-            GeneratePublicId generatePublicId = new GeneratePublicId();
-            return generatePublicId.PartId(businessUnitId, 8);
-        }
-
-        public static string WriteMonthInWords(int period){
-
-           ConvertPeriodNumbersToWords convertPeriodNumbersToWords = new ConvertPeriodNumbersToWords();
-           return convertPeriodNumbersToWords.ConvertMonthNumbersToWords(period);
+            return _getpublicId.PartId(id, 8);
         }
 
 
@@ -108,7 +106,7 @@ namespace PTApi.Controllers
                 return BadRequest("You are not authorised to perform this action.");
 
             }
-            var ragDb = _appDbContext.ProjectRagStatus.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectRagStatusId == id));
+            var ragDb = _unitOfWork.Rags.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectRagStatusId == id));
 
             if(ragDb == null)
             return NotFound("Rag not found");
@@ -132,7 +130,7 @@ namespace PTApi.Controllers
 
             }
 
-            var allRags = await _appDbContext.ProjectRagStatus.Where(p => (p.CompanyId == companyId) && (p.ProjectId == projectId)).ToListAsync();
+            var allRags =  _unitOfWork.Rags.GetAllProjectRagStatusOnly(projectId, comp);
 
             return allRags.Select(Mapper.Map<ProjectRagStatus, RagViewModel>);
         }
@@ -157,7 +155,7 @@ namespace PTApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var project = Getproject(comp, ragData.ProjectId);
+            var project = _unitOfWork.Projects.GetOneProject(ragData.ProjectId, comp);
 
             if (project==null) // return validation error if client side validation is not passed.
             {
@@ -165,7 +163,7 @@ namespace PTApi.Controllers
             }
 
             var companyId = comp;
-            var rag = Getrag(companyId, ragData.ProjectRagStatusId);
+            var rag = _unitOfWork.Rags.GetOneRag(ragData.ProjectRagStatusId, comp);
 
             if (rag == null)
                 return NotFound();
@@ -181,9 +179,9 @@ namespace PTApi.Controllers
             project.RagStatusSummary = rag.RagNarrativeSummary;
             project.Activitythisperiod = rag.HighlightsThisPeriod;
 
-            _appDbContext.SaveChanges();
+            _unitOfWork.Complete();
 
-            rag = Getrag(comp, rag.ProjectRagStatusId);
+            rag = _unitOfWork.Rags.GetOneRag(ragData.ProjectRagStatusId, comp);
 
             var result = _mapper.Map<ProjectRagStatus, RagViewModel>(rag);
 
@@ -191,22 +189,6 @@ namespace PTApi.Controllers
 
         }
 
-
-        Company GetSecureUserCompany()
-        {
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == comp);
-        }
-
-
-
-        ProjectRagStatus Getrag(string companyId, string id)
-        {
-            var ragDb =  _appDbContext.ProjectRagStatus.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.ProjectRagStatusId == id));
-            return ragDb;
-        }
 
 
         [HttpPost]
@@ -230,7 +212,7 @@ namespace PTApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var project = Getproject(comp, ragData.ProjectId);
+            var project = _unitOfWork.Projects.GetOneProject(ragData.ProjectId, comp);
 
             if (project==null) // return validation error if client side validation is not passed.
             {
@@ -249,21 +231,16 @@ namespace PTApi.Controllers
             project.RagStatusSummary = rag.RagNarrativeSummary;
             project.Activitythisperiod = rag.HighlightsThisPeriod;
 
-            var newRag = _appDbContext.ProjectRagStatus.Add(rag).Entity;
-            _appDbContext.SaveChanges();
+            _unitOfWork.Rags.Add(rag);
+            _unitOfWork.Complete();
 
-            rag = Getrag(comp, id);
+            rag = _unitOfWork.Rags.GetOneRag(id, comp);
 
             var results = _mapper.Map<ProjectRagStatus, RagViewModel>(rag);
 
             return Ok(results);
         }
 
-        Project Getproject(string companyId, string projectId)
-        {
-            var projectDb = _appDbContext.Projects.SingleOrDefault(r => (r.CompanyId == companyId)&& (r.ProjectId == projectId));
-            return projectDb;
-        }
 
 
 
@@ -284,13 +261,13 @@ namespace PTApi.Controllers
             }
             // var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
             var company = comp;
-            var rag = Getrag(company, id);
+            var rag = _unitOfWork.Rags.GetOneRag(id, comp);
 
             if (rag == null)
             return BadRequest("You are not authorised to perform this action.");
 
-            _appDbContext.Remove(rag);
-            _appDbContext.SaveChanges();
+            _unitOfWork.Rags.Remove(rag);
+            _unitOfWork.Complete();
 
             return Json("Success");
         }

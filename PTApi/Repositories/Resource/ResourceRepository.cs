@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PTApi.Data;
 using PTApi.Data.Repositories;
 using PTApi.Models;
@@ -16,12 +17,13 @@ namespace PTApi.Repositories
 
         public Resource GetOneResouce(string id, string companyId)
         {
-            return ApplicationDbContext.Resources.SingleOrDefault(d => d.ResourceId == id && d.CompanyId == companyId);
+            return ApplicationDbContext.Resources.Include(d => d.CompanyRateCard).SingleOrDefault(d => d.ResourceId == id && d.CompanyId == companyId);
         }
 
         public IEnumerable<Resource> GetAllResources(string companyId)
         {
             return ApplicationDbContext.Resources
+                .Include(d => d.CompanyRateCard)
                 .Where(r => r.CompanyId == companyId)
                 .OrderByDescending(d => d.ResourceStartDate).ThenBy(r => r.LastName).ToList();
         }

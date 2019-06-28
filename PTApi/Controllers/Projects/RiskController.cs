@@ -2,7 +2,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using PTApi.Data.Repositories;
+using PTApi.Methods;
+using PTApi.Models;
+using PTApi.Services;
+using PTApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,39 +15,32 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/risks")]
+    [Route("api/[controller]")]
     //[Authorize(Policy = "ApiUser")]
-    public class RiskController : Controller
+    public class RisksController : Controller
     {
 
-        private readonly UserManager<AppUser> _userManager;
-        private readonly ProjectCentreDbContext _appDbContext;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
+        private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public RiskController(UserManager<AppUser> userManager, IUserService userService, IProjectService projectService, ProjectCentreDbContext appDbContext, IMapper mapper)
+        public RisksController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
             _projectService = projectService;
             _userManager = userManager;
-            _appDbContext = appDbContext;
             _mapper = mapper;
         }
 
-        private static string CreateNewId(string id)
+        private string CreateNewId(string id)
         {
-            GeneratePublicId generatePublicId = new GeneratePublicId();
-            return generatePublicId.PartId(id, 8);
+            return _getpublicId.PartId(id, 8);
         }
-
-        public static string WriteMonthInWords(int period){
-
-           ConvertPeriodNumbersToWords convertPeriodNumbersToWords = new ConvertPeriodNumbersToWords();
-           return convertPeriodNumbersToWords.ConvertMonthNumbersToWords(period);
-        }
-
 
 
         public class EditRiskData
@@ -80,7 +77,7 @@ namespace PTApi.Controllers
                 return BadRequest("You are not authorised to perform this action.");
 
             }
-            var RiskDb = _appDbContext.Risks.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.RiskId == id));
+            var RiskDb = _unitOfWork.Risks.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.RiskId == id));
 
             if(RiskDb == null)
             return NotFound("Risk not found");
@@ -103,7 +100,7 @@ namespace PTApi.Controllers
               return  await Task.FromResult<IEnumerable<RiskViewModel>>(null);
             }
 
-            var allRisk = await _appDbContext.Risks.Where(p => (p.CompanyId == companyId) && (p.ProjectId == projectId)).ToListAsync();
+            var allRisk = _unitOfWork.Risks.GetAllRisksOnly(projectId, comp);
 
             return allRisk.Select(Mapper.Map<Risk, RiskViewModel>);
         }
@@ -128,7 +125,7 @@ namespace PTApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var project = Getproject(comp, RiskData.ProjectId);
+            var project = _unitOfWork.Projects.GetOneProject(RiskData.ProjectId, comp);
 
             if (project==null) // return validation error if client side validation is not passed.
             {
@@ -136,7 +133,7 @@ namespace PTApi.Controllers
             }
 
             var companyId = comp;
-            var Risk = GetRisk(companyId, RiskData.RiskId);
+            var Risk = _unitOfWork.Risks.GetOneRisk(RiskData.RiskId, comp);
 
             if (Risk == null)
                 return NotFound();
@@ -147,9 +144,9 @@ namespace PTApi.Controllers
             Risk.RiskCode = "RISK" + "-" + CreateNewId(Risk.RiskId).ToUpper();
 
 
-            _appDbContext.SaveChanges();
+            _unitOfWork.Complete();
 
-            Risk = GetRisk(comp, Risk.RiskId);
+            Risk = _unitOfWork.Risks.GetOneRisk(RiskData.RiskId, comp);
 
             var result = _mapper.Map<Risk, RiskViewModel>(Risk);
 
@@ -157,22 +154,6 @@ namespace PTApi.Controllers
 
         }
 
-
-        Company GetSecureUserCompany()
-        {
-            var id = HttpContext.User.Claims.Single(c => c.Type == "id").Value;
-            var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == comp);
-        }
-
-
-
-        Risk GetRisk(string companyId, string id)
-        {
-            var RiskDb =  _appDbContext.Risks.SingleOrDefault(b => (b.CompanyId == companyId)&& (b.RiskId == id));
-            return RiskDb;
-        }
 
 
         [HttpPost]
@@ -196,7 +177,7 @@ namespace PTApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var project = Getproject(comp, RiskData.ProjectId);
+            var project = _unitOfWork.Projects.GetOneProject(RiskData.ProjectId, comp);
 
             if (project==null) // return validation error if client side validation is not passed.
             {
@@ -211,23 +192,17 @@ namespace PTApi.Controllers
 
             Risk.RiskCode = "Risk" + "-" + CreateNewId(Risk.RiskId).ToUpper();
 
-            var newRisk = _appDbContext.Risks.Add(Risk).Entity;
-            _appDbContext.SaveChanges();
+            _unitOfWork.Risks.Add(Risk);
+            _unitOfWork.Complete();
 
-            Risk = GetRisk(comp, id);
+            Risk = _unitOfWork.Risks.GetOneRisk(id, comp);
 
             var results = _mapper.Map<Risk, RiskViewModel>(Risk);
 
             return Ok(results);
         }
 
-        Project Getproject(string companyId, string projectId)
-        {
-            var projectDb = _appDbContext.Projects.SingleOrDefault(r => (r.CompanyId == companyId)&& (r.ProjectId == projectId));
-            return projectDb;
-        }
-
-
+       
 
         [HttpDelete("{companyId}/{id}")]
         [Authorize]
@@ -246,13 +221,13 @@ namespace PTApi.Controllers
             }
             // var comp = HttpContext.User.Claims.Single(c => c.Type == "comp").Value;
             var company = comp;
-            var Risk = GetRisk(company, id);
+            var Risk = _unitOfWork.Risks.GetOneRisk(id, comp);
 
             if (Risk == null)
             return BadRequest("You are not authorised to perform this action.");
 
-            _appDbContext.Remove(Risk);
-            _appDbContext.SaveChanges();
+            _unitOfWork.Risks.Remove(Risk);
+            _unitOfWork.Complete();
 
             return Json("Success");
         }

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/programmes")]
+    [Route("api/[controller]")]
     public class ProgrammesController: Controller
     {
 

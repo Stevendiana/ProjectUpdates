@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using static PTApi.CustomValidation.CustomValidation;
 using static PTApi.Services.ProjectForecastService;
 
 namespace PTApi.Controllers
@@ -399,7 +400,6 @@ namespace PTApi.Controllers
                                         (a.ForecastTaskId == forecastId)).Select(a=> a.AllocatedAmount).Sum();
           return forecastactuals;
         }
-
         
         public decimal? Getforecastitemtotal(ForecastTaskEAC  forecast)
         {
