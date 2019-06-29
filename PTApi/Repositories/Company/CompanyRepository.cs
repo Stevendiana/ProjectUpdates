@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using PTApi.Data;
 using PTApi.Data.Repositories;
 using PTApi.Models;
@@ -15,7 +16,7 @@ namespace PTApi.Repositories
 
         public Company Getcompany(string companyId)
         {
-            return ApplicationDbContext.Companies.SingleOrDefault(b => b.CompanyId == companyId);
+            return ApplicationDbContext.Companies.Include(c=>c.CompanyCurrency).SingleOrDefault(b => b.CompanyId == companyId);
         }
 
      

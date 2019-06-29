@@ -215,6 +215,21 @@ namespace PTApi
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IActualRepository, ActualRepository>();
+            services.AddScoped<IProjectBudgetRepository, ProjectBudgetRepository>();
+
+            services.AddScoped<IForecastTaskRepository, ForecastTaskRepository>();
+            services.AddScoped<IProjectBudgetTrackerRepository, ProjectBudgetTrackerRepository>();
+            services.AddScoped<IResourceRepository, ResourceRepository>();
+            services.AddScoped<IProjectRagStatusRepository, ProjectRagStatusRepository>();
+            services.AddScoped<IAssumptionRepository, AssumptionRepository>();
+            services.AddScoped<IDependencyRepository, DependencyRepository>();
+            services.AddScoped<IIssueRepository, IssueRepository>();
+            services.AddScoped<IRiskRepository, RiskRepository>();
+
             services.AddScoped<IResourceTimesheetRepository, ResourceTimesheetRepository>();
             services.AddScoped<ICompanyMethodologyRepository, CompanyMethodologyRepository>();
             services.AddScoped<ICompanyMethodologyStageRepository, CompanyMethodologyStageRepository>();

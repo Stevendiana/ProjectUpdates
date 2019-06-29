@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,7 +10,7 @@ namespace PTApi.Models
     {
         public Company()
         {
-           // Users = new Collection<AppUser>();
+           Users = new Collection<ApplicationUser>();
         }
 
         [Key]
@@ -25,7 +27,7 @@ namespace PTApi.Models
         public string Sector { get; set; }
         public string Industry { get; set; }
         public string Country { get; set; }
-        public int? CompanyCurrencyId { get; set; }
+        public int CompanyCurrencyId { get; set; }
         public bool AllowReconciliation { get; set; }
         public string FinanceReportingPeriod { get; set; }
         public int FinanceReportingYear { get; set; }
@@ -39,9 +41,10 @@ namespace PTApi.Models
         public string LogoUrl { get; set; }
         public string LogoName { get; set; }
         public string LogoId { get; set; }
-        // public CurrencySymbol CurrencySymbol { get; set; }
 
-       // public ICollection<AppUser> Users { get; set; }
+        public CurrencySymbol CompanyCurrency { get; set; }
+
+        public ICollection<ApplicationUser> Users { get; set; }
 
     }
 

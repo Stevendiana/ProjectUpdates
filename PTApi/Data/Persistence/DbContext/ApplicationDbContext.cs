@@ -63,7 +63,8 @@ namespace PTApi.Data
         
         public DbSet<BusinessCustomer> BusinessCustomers { get; set; }
        
-        public DbSet<ProjectPermitted> ProjectPermitted { get; set; }
+        public DbSet<ProjectsPermitted> ProjectsIamPermitted { get; set; }
+        public DbSet<ProjectsFollowing> ProjectsIamFollowing { get; set; }
         //public DbSet<ProgrammePermitted> ProgrammePermitted { get; set; }
         //public DbSet<PortfolioPermitted> PortfolioPermitted { get; set; }
         //public DbSet<DomainPermitted> DomainPermitted { get; set; }

@@ -100,6 +100,7 @@ namespace PTApi.Models
         public string RevexCostCode { get; set; }
         public string CapexCostCode { get; set; }
         public string OpexCostCode { get; set; }
+       
         // [NotMapped]
         public decimal? TotalLifeTimeForecast  { get; set; }
 

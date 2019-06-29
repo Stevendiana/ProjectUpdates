@@ -1,6 +1,7 @@
 ﻿using PTApi.Data;
 using PTApi.Data.Repositories;
 using PTApi.Services;
+using System.Threading.Tasks;
 
 namespace PTApi.Repositories
 {
@@ -14,6 +15,8 @@ namespace PTApi.Repositories
             _context = context;
             _forecastService = forecastService;
  
+            Users = new UserRepository(_context);
+
             Companies = new CompanyRepository(_context);
             Businessunits = new BusinessunitRepository(_context);
             Domains = new DomainRepository(_context);
@@ -45,6 +48,7 @@ namespace PTApi.Repositories
 
         }
 
+        public IUserRepository Users { get; private set; }
         public ICompanyRepository Companies { get; private set; }
 
         public IBusinessunitRepository Businessunits{ get; private set; }
@@ -78,6 +82,11 @@ namespace PTApi.Repositories
         public int Complete()
         {
             return _context.SaveChanges();
+        }
+
+        public Task<int> CompleteAsync()
+        {
+            return _context.SaveChangesAsync();
         }
 
 

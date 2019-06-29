@@ -7,7 +7,8 @@ namespace PTApi.Data.Repositories
     {
         Project GetOneProject(string id, string companyId);
         IEnumerable<Project> GetAllProjects(string companyId);
-        
+        IEnumerable<myProjects> GetAllProjectsandthoseIamFollowing(string id, string companyId);
+        IEnumerable<myProjects> GetAllProjectsIamPermittedandFollowing(string id, string companyId);
     }
 }
 

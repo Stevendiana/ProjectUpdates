@@ -7,13 +7,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using Newtonsoft.Json;
-using PTApi.Data;
+using PTApi.Data.Repositories;
 using PTApi.Helpers;
 using PTApi.Methods;
 using PTApi.Models;
 using PTApi.Services;
 using PTApi.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -53,7 +55,8 @@ namespace PTApi.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ApplicationDbContext _appDbContext;
+        //private readonly ApplicationDbContext _appDbContext;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IProjectService _projectService;
         private readonly IUserService _userService;
         private readonly IResourceService _resourceService;
@@ -71,13 +74,13 @@ namespace PTApi.Controllers
 
 
         public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,IJwtFactory jwtFactory ,IHttpContextAccessor httpContextAccessor,
-                              IOptions<JwtIssuerOptions> jwtOptions, IMapper mapper, ApplicationDbContext appDbContext,IEmailService emailService, IGeneratePublicIdMethod getpublicId, 
+                              IOptions<JwtIssuerOptions> jwtOptions, IMapper mapper, IUnitOfWork unitOfWork, IEmailService emailService, IGeneratePublicIdMethod getpublicId, 
                               IGetIdsWithPartIdsMethod getIdsWithPartIds, ISmsSender smsSender, ILoggerFactory loggerFactory, IProjectService projectService, IUserService userService,IResourceService resourceService)
         {
             _userManager = userManager; _signInManager = signInManager;_jwtFactory = jwtFactory; _jwtOptions = jwtOptions.Value;_resourceService = resourceService;
             _userManager = userManager; _httpContextAccessor = httpContextAccessor; _mapper=mapper; _emailService=emailService; _getIdsWithPartIds = getIdsWithPartIds;
             _getpublicId = getpublicId;
-            _appDbContext = appDbContext; _smsSender = smsSender;_projectService = projectService;_userService=userService;
+            _unitOfWork = unitOfWork; _smsSender = smsSender;_projectService = projectService;_userService=userService;
             _logger = loggerFactory.CreateLogger<AuthController>();
 
             _serializerSettings = new JsonSerializerSettings
@@ -86,14 +89,14 @@ namespace PTApi.Controllers
             };
         }
 
-        public string CreateNewId(string param, int length)
+        public string CreateNewId(string param, int lenght)
         {
-            return _getpublicId.PartId(param, 8);
+            return _getpublicId.PartId(param, lenght);
         }
 
         public JsonResult ValidateEmailAddress(string email)
         {
-            bool dBuser = _appDbContext.Users.Any(x => x.UserName == email);
+            bool dBuser = _unitOfWork.Users.CheckUserExist(email);
 
              if (dBuser == true)
              return Json(data: string.Format("an account for address {0} already exists.", email));
@@ -101,16 +104,52 @@ namespace PTApi.Controllers
           return Json(data: true);
         }
 
+        public static string ReadFile(string FileName)
+        {
+            try
+            {
+                var builder = new BodyBuilder();
+                using (StreamReader reader = System.IO.File.OpenText(FileName))
+                {
+                    // string fileContent = reader.ReadToEnd();
+                    builder.HtmlBody = reader.ReadToEnd();
+                    if (builder.HtmlBody != null && builder.HtmlBody != "")
+                    {
+                        // string editedFileContent = fileContent.Replace("\r\n", "<br />");
+                        // return fileContent;
+                        return builder.HtmlBody;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //Log
+                throw ex;
+            }
+            return null;
+        }
 
-       // POST api/auth/register
+        // [Produces("text/html")]
+        [HttpGet("welcome")]
+        public string WelcomeEmail()
+        {
+            // var pageName = "welcomeemail.html";
+            // var pageFolder = "htmlpages";
+            // var file = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", $"{pageFolder}", $"{pageName}");
+            // string email = "stevendi23@yahoo.com";
+
+            string emailContent = ReadFile("./wwwroot/htmlpages/welcomeemail.html");
+            return emailContent;
+        }
+
+        // POST api/auth/register
         [HttpPost("register")]
         public async Task<IActionResult> Register ([FromBody]RegistrationViewModel model)
         {
             // return validation error if email already exists
-            ApplicationUser existingPerson = _appDbContext.Users.Where(e => e.UserName == model.Email).FirstOrDefault();
-            //bool dBuser = _appDbContext.Users.Any(x => x.UserName == model.Email);
+            bool dBuser = _unitOfWork.Users.CheckUserExist(model.Email);
 
-            if (existingPerson != null)
+            if (dBuser)
             {
                  ModelState.AddModelError("email", string.Format("an account for {0} already exists.", model.Email));
                 return BadRequest(ModelState);
@@ -125,9 +164,8 @@ namespace PTApi.Controllers
                 var Resource =
                 new Resource {
 
-                    AppUserRole = "AccountOwner",
+                    
                     FirstName = model.Email,
-                    AddedBy = model.Email,
                     IsDisabled = false,
                     ResourceEmailAddress = model.Email,
                     UserCreatedEmail = model.Email,
@@ -140,7 +178,7 @@ namespace PTApi.Controllers
                     {
                         CompanyAccountName = model.CompanyName,
                         CompanyContactEmail = model.Email,
-                        ReportingCurrency = GetCurrency(56).CompanyCurrencySymbol,
+                        ReportingCurrency = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencySymbol,
                         UserCreatedEmail = model.Email,
                         UserModifiedEmail = model.Email,
                         DateCreated =  DateTime.UtcNow,
@@ -156,8 +194,8 @@ namespace PTApi.Controllers
                         StandardDailyHours= 8,
                         DoEmployeesWorkWeekends = false,
 
-                        CompanyCurrentShortName = GetCurrency(56).CompanyCurrencyShortName,
-                        CompanyCurrentLongName = GetCurrency(56).CompanyCurrencyLongName,
+                        CompanyCurrentShortName = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencyShortName,
+                        CompanyCurrentLongName = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencyLongName,
                     },
 
                      //project = new Project(IProjectService ProjectService);
@@ -186,6 +224,11 @@ namespace PTApi.Controllers
 
                         UserName = model.Email,
                         Email = model.Email,
+                        AppUserRole = "AccountOwner",
+
+                        DateCreated = DateTime.Now.ToUniversalTime(),
+                        DateModified = DateTime.Now.ToUniversalTime(),
+
                     },
 
                 };
@@ -195,9 +238,24 @@ namespace PTApi.Controllers
 
                 var result = await _userManager.CreateAsync(userIdentity, model.Password);
 
-                _appDbContext.Add(Resource);
+                _unitOfWork.Resources.Add(Resource);
 
                 userIdentity.CompanyId = Resource.CompanyId;
+
+                userIdentity.UserCreatedId = userIdentity.Id;
+                userIdentity.UserCreatedResourceId = Resource.ResourceId;
+                userIdentity.UserCreatedEmail = userIdentity.Email;
+                userIdentity.UserCreatedFirstName = Resource.FirstName;
+                userIdentity.UserCreatedLastName = Resource.LastName;
+                userIdentity.UserCreatedAvatar = Resource.ImageUrl;
+
+                
+                userIdentity.UserModifiedId = userIdentity.Id;
+                userIdentity.UserModifiedEmail = Resource.ResourceId;
+                userIdentity.UserModifiedResourceId = userIdentity.Email;
+                userIdentity.UserModifiedFirstName = Resource.FirstName;
+                userIdentity.UserModifiedLastName = Resource.LastName;
+                userIdentity.UserModifiedAvartar = Resource.ImageUrl;
 
                 var projectId = Guid.NewGuid().ToString();
 
@@ -246,7 +304,7 @@ namespace PTApi.Controllers
                 var notification = Notification.ProjectCreated(Resource.Project, Resource.IdentityId, resourceId);
                 userIdentity.UserNotifications.Add(new UserNotification(userIdentity, notification));
 
-                await _appDbContext.SaveChangesAsync();
+                await _unitOfWork.CompleteAsync();
 
                 string ctoken = _userManager.GenerateEmailConfirmationTokenAsync(userIdentity).Result;
 
@@ -263,74 +321,114 @@ namespace PTApi.Controllers
             }
         }
 
-        public static string ReadFile(string FileName)
+
+        public class AddNewuser
         {
-            try
+            [Required]
+            public string ResourceId { get; set; }
+            [Required]
+            public string Role { get; set; }
+            [Required]
+            public string CompanyId { get; set; }
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+
+        }
+
+
+        [HttpPost("createuser/{companyId}")]
+        [Authorize(Policy = "Admin_Group")]
+        public async Task<IActionResult> CreateUsers(string companyId, [FromBody]IEnumerable<AddNewuser> uList)
+        {
+            var comp = _userService.GetSecureUserCompany();
+            var currentuser = _userService.GetSecureUserId();
+            var currentuseremail = _userService.GetSecureUserEmail();
+            var currentresourceId = _userService.GetSecureResource();
+
+            var currentresource = _unitOfWork.Resources.GetOneResouce(currentresourceId, comp);
+
+
+            if (!ModelState.IsValid)
             {
-                var builder = new BodyBuilder();
-                using (StreamReader reader = System.IO.File.OpenText(FileName))
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                if (companyId == comp)
                 {
-                    // string fileContent = reader.ReadToEnd();
-                    builder.HtmlBody = reader.ReadToEnd();
-                    if (builder.HtmlBody != null && builder.HtmlBody != "")
+                    foreach (var model in uList)
                     {
-                       // string editedFileContent = fileContent.Replace("\r\n", "<br />");
-                       // return fileContent;
-                        return builder.HtmlBody;
-                    }
+                        var res = _unitOfWork.Resources.GetOneResouce(model.ResourceId, comp);
+                        var resemail = res.ResourceEmailAddress;
+
+                        bool dBuser = _unitOfWork.Users.CheckUserExist(resemail);
+
+                        if (dBuser)
+                        {
+                            ModelState.AddModelError("email", string.Format("an account for {0} already exists.", resemail));
+                            return BadRequest(ModelState);
+                        }
+                        else
+                        {
+                            var Identity = new ApplicationUser
+                            {
+
+                                UserName = resemail,
+                                Email = resemail,
+                                CompanyId = comp,
+                                ResourceId = model.ResourceId,
+
+
+                                AppUserRole = model.Role,
+                                DateCreated = DateTime.Now.ToUniversalTime(),
+                                UserCreatedId = currentuser,
+                                UserCreatedResourceId = currentresourceId,
+                                UserCreatedEmail = currentuseremail,
+                                UserCreatedFirstName = currentresource.FirstName,
+                                UserCreatedLastName = currentresource.LastName,
+                                UserCreatedAvatar = currentresource.ImageUrl,
+
+                                DateModified = DateTime.Now.ToUniversalTime(),
+                                UserModifiedId = currentuser,
+                                UserModifiedEmail = currentuseremail,
+                                UserModifiedResourceId = currentresourceId,
+                                UserModifiedFirstName = currentresource.FirstName,
+                                UserModifiedLastName = currentresource.LastName,
+                                UserModifiedAvartar = currentresource.ImageUrl,
+                            };
+
+                            var newuser = Identity;
+
+                            await _userManager.CreateAsync(newuser, model.Password);
+
+                            //_unitOfWork.Resources.Add(Resource);
+
+                            newuser.Resource.IdentityId = newuser.Id;
+
+
+                            await _unitOfWork.CompleteAsync();
+
+                            string ctoken = _userManager.GenerateEmailConfirmationTokenAsync(newuser).Result;
+
+                            string messageBodyIncludeEmail = WelcomeEmail().Replace("{0}", resemail);
+                            string messageBodyIncludeId = messageBodyIncludeEmail.Replace("{1}", newuser.Id);
+                            string messageBody = messageBodyIncludeId.Replace("{2}", ctoken);
+
+                            await _emailService.SendEmailAsync(resemail, "Welcome To The ProjectOffice Community!", messageBody);
+
+                            await _signInManager.SignInAsync(newuser, isPersistent: false);
+                            _logger.LogInformation(3, "User created a new account with password.");
+                        }
+
+                        continue;
+
+                    };
                 }
+
+                return BadRequest("You dont have the right permission to perform this action.");
             }
-            catch (Exception ex)
-            {
-                //Log
-                throw ex;
-            }
-            return null;
         }
 
-
-
-
-       // [Produces("text/html")]
-        // [HttpGet("welcome")]
-        public string WelcomeEmail()
-        {
-            // var pageName = "welcomeemail.html";
-            // var pageFolder = "htmlpages";
-            // var file = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", $"{pageFolder}", $"{pageName}");
-            // string email = "stevendi23@yahoo.com";
-
-            string emailContent = ReadFile("./wwwroot/htmlpages/welcomeemail.html");
-            return emailContent;
-        }
-
-        // [Produces("text/html")]
-        [HttpGet("welcome")]
-        public IActionResult SendWelcomeEmail()
-        {
-            string email = "stevendi23@yahoo.com";
-            string resourceId = "b6140394-1c0f-4846-9be4-a8c9187e67fd";
-            string messageBodyIncludeEmail = WelcomeEmail().Replace("{0}", email);
-            string messageBody = messageBodyIncludeEmail.Replace("{1}", resourceId);
-
-            _emailService.SendEmailAsync(email, "Welcome To The ProjectOffice Community!", messageBody);
-            return Ok();
-        }
-
-        [HttpPost("confirmemail/{id}")]
-        public IActionResult confirmemail(string id)
-        {
-            ApplicationUser user = _appDbContext.Users.SingleOrDefault(u => u.ResourceId == id);
-
-            if (user!=null)
-            {
-                user.HasConfirmEmail = true;
-                user.EmailConfirmed = true;
-                _appDbContext.SaveChanges();
-            }
-
-           return Ok();
-        }
 
         [HttpGet("confirmEmail/{id}/{token}")]
         [AllowAnonymous]
@@ -348,17 +446,9 @@ namespace PTApi.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             return Ok();
         }
-
-
-        public string GetLoginUrl()
-        {
-            var url = this.Url.Link("Default", new { Controller = "Auth", Action = "Login" });
-            return url;
-        }
-
-
         // POST api/auth/login
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody]CredentialsViewModel credentials)
         {
             // get the user to verifty
@@ -380,7 +470,7 @@ namespace PTApi.Controllers
             var comp=identity.Claims.Single(c=>c.Type=="comp").Value;
             var resourceId=identity.Claims.Single(c=>c.Type=="resourceid").Value;
 
-            var userResource = GetResource(resourceId,comp);
+            var userResource = _unitOfWork.Resources.GetOneResouce(resourceId,comp);
 
             if (userResource.IsDisabled)
             {
@@ -394,37 +484,6 @@ namespace PTApi.Controllers
            return Ok(CreateJwtPacket(user, credentials));
         }
 
-        private async Task<ApplicationUser> GetCurrentUser()
-        {
-            return await _userManager.GetUserAsync(HttpContext.User);
-        }
-
-
-        ApplicationUser GetSecureUser()
-        {
-
-            //var id = HttpContext.User.Claims.First().Value;
-           var id = User.Claims.Single(c=>c.Type=="id").Value;
-            return _appDbContext.Users.SingleOrDefault(u => u.Id == id);
-        }
-
-        Company GetCompany(string id){
-
-            return _appDbContext.Companies.SingleOrDefault(c => c.CompanyId == id);
-        }
-
-        CurrencySymbol GetCurrency(int? id)
-        {
-           var compcurrency = _appDbContext.CurrencySymbols.SingleOrDefault(c => c.CurrencySymbolId == id);
-            return compcurrency ;
-        }
-
-        Resource GetResource(string id, string companyid)
-        {
-           var resourceInDb = _appDbContext.Resources.SingleOrDefault(r => (r.ResourceId == id) && (r.CompanyId == companyid));
-            return resourceInDb ;
-        }
-
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
         {
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
@@ -434,9 +493,10 @@ namespace PTApi.Controllers
 
                 // var userResource = GetResource(userToVerify.Id);
                 // var userCompany = GetCompany(userToVerify.CompanyId);
-                var userResource = GetResource(userToVerify.ResourceId, userToVerify.CompanyId );
-                var userCompany = GetCompany(userToVerify.CompanyId);
-                var userCompanyCurrency = GetCurrency(userCompany.CompanyCurrencyId);
+                var userResource = _unitOfWork.Resources.GetOneResouce(userToVerify.ResourceId, userToVerify.CompanyId );
+                var userCompany = _unitOfWork.Companies.Getcompany(userToVerify.CompanyId);
+                var userCompanyCurrency = _unitOfWork.CurrencySymbols.GetOneCurrency(userCompany.CompanyCurrencyId);
+                var thisuser = _unitOfWork.Users.GetOneUser(userToVerify.Id, userToVerify.CompanyId);
 
 
                 if (userToVerify != null)
@@ -445,8 +505,8 @@ namespace PTApi.Controllers
                     if (await _userManager.CheckPasswordAsync(userToVerify, password))
                     {
                         return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(
-                            userName,userToVerify.Id,userToVerify.CompanyId,userResource.AppUserRole,
-                            _userService.GetAppResourceRole(userResource.AppUserRole),
+                            userName,userToVerify.Id,userToVerify.CompanyId, thisuser.AppUserRole,
+                            _userService.GetAppResourceRole(thisuser.AppUserRole),
                             userResource.FirstName, userResource.ImageUrl??"", userResource.LastName, userToVerify.Email, userResource.ResourceId,
                             userCompany.AllowReconciliation.ToString(),  userCompany.FinanceReportingPeriod,
                             userCompany.CompanyAccountName,
@@ -465,38 +525,6 @@ namespace PTApi.Controllers
             return await Task.FromResult<ClaimsIdentity>(null);
         }
 
-        public string ConvertImage(byte[] image)
-        {
-            if (image != null)
-            {
-                return System.Convert.ToBase64String(image);
-            }
-
-            return null;
-        }
-
-        public byte[] GetInMemoryPhoto(string imagename)
-        {
-            if (imagename != null)
-            {
-              var reportsFolder = "Images";
-              var photopath = $"wwwroot/{reportsFolder}/{imagename}";
-
-              byte[] bytes = System.IO.File.ReadAllBytes(photopath);
-
-              if (photopath != null)
-              {
-                return bytes;
-                // return File(bytes, "image/jpeg");
-
-              }
-              return null;
-
-            }
-            return null;
-        }
-
-
         public async Task<JwtPacket> CreateRegisterJwtPacket(ApplicationUser user, RegistrationViewModel credentials)
         {
             var identity = await GetClaimsIdentity(credentials.Email, credentials.Password);
@@ -505,18 +533,19 @@ namespace PTApi.Controllers
             var comp=identity.Claims.Single(c=>c.Type=="comp").Value;
             var email=identity.Claims.Single(c=>c.Type=="email").Value;
             var resourceId=identity.Claims.Single(c=>c.Type=="resourceid").Value;
-            var userResource = GetResource(resourceId,comp);
+            var userResource = _unitOfWork.Resources.GetOneResouce(resourceId, comp);
+            var thisuser = _unitOfWork.Users.GetOneUser(id, comp);
 
 
             var firstname = userResource.FirstName;
             var lastname = userResource.LastName;
             var avatar = userResource.ImageUrl;
 
-            var rol = userResource.AppUserRole;
-            var rolGroup =_userService.GetAppResourceRole(userResource.AppUserRole);
+            var rol = thisuser.AppUserRole;
+            var rolGroup =_userService.GetAppResourceRole(thisuser.AppUserRole);
             var resourceid = userResource.ResourceId;
 
-            var userCompany = GetCompany(comp);
+            var userCompany = _unitOfWork.Companies.Getcompany(comp);
 
             var allowrec = userCompany.AllowReconciliation;
             var financerepperiod = userCompany.FinanceReportingPeriod;
@@ -552,7 +581,6 @@ namespace PTApi.Controllers
             };
         }
 
-
         public async Task<JwtPacket> CreateJwtPacket(ApplicationUser user, CredentialsViewModel credentials)
         {
             var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
@@ -563,16 +591,17 @@ namespace PTApi.Controllers
             var resourceId=identity.Claims.Single(c=>c.Type=="resourceid").Value;
 
 
-            var userResource = GetResource(resourceId,comp);
+            var userResource = _unitOfWork.Resources.GetOneResouce(resourceId,comp);
+            var thisuser = _unitOfWork.Users.GetOneUser(id,comp);
             var firstname = userResource.FirstName;
             var lastname = userResource.LastName;
             var avatar = userResource.ImageUrl;
 
-            var rol = userResource.AppUserRole;
-            var rolGroup =_userService.GetAppResourceRole(userResource.AppUserRole);
+            var rol = thisuser.AppUserRole;
+            var rolGroup =_userService.GetAppResourceRole(thisuser.AppUserRole);
             var resourceid = userResource.ResourceId;
 
-            var userCompany = GetCompany(comp);
+            var userCompany = _unitOfWork.Companies.Getcompany(comp);
 
             var allowrec = userCompany.AllowReconciliation;
             var financerepperiod = userCompany.FinanceReportingPeriod;
@@ -610,7 +639,84 @@ namespace PTApi.Controllers
                 StandardDailyHrs = standarddailyhrs, DoEmployeesWorkWeekends = doempsworkweekends.ToString()
             };
         }
+
         private static long ToUnixEpochDate(DateTime date) => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
+
+        // [Produces("text/html")]
+        //[HttpGet("welcome")]
+        //public IActionResult SendWelcomeEmail()
+        //{
+        //    string email = "stevendi23@yahoo.com";
+        //    string resourceId = "b6140394-1c0f-4846-9be4-a8c9187e67fd";
+        //    string messageBodyIncludeEmail = WelcomeEmail().Replace("{0}", email);
+        //    string messageBody = messageBodyIncludeEmail.Replace("{1}", resourceId);
+
+        //    _emailService.SendEmailAsync(email, "Welcome To The ProjectOffice Community!", messageBody);
+        //    return Ok();
+        //}
+
+        //[HttpPost("confirmemail/{id}")]
+        //public IActionResult confirmemail(string id)
+        //{
+        //    ApplicationUser user = _appDbContext.Users.SingleOrDefault(u => u.ResourceId == id);
+
+        //    if (user!=null)
+        //    {
+        //        user.HasConfirmEmail = true;
+        //        user.EmailConfirmed = true;
+        //        _appDbContext.SaveChanges();
+        //    }
+
+        //   return Ok();
+        //}
+
+
+        //private async Task<ApplicationUser> GetCurrentUser()
+        //{
+        //    return await _userManager.GetUserAsync(HttpContext.User);
+        //}
+        //public string ConvertImage(byte[] image)
+        //{
+        //    if (image != null)
+        //    {
+        //        return System.Convert.ToBase64String(image);
+        //    }
+
+        //    return null;
+        //}
+
+        //public byte[] GetInMemoryPhoto(string imagename)
+        //{
+        //    if (imagename != null)
+        //    {
+        //        var reportsFolder = "Images";
+        //        var photopath = $"wwwroot/{reportsFolder}/{imagename}";
+
+        //        byte[] bytes = System.IO.File.ReadAllBytes(photopath);
+
+        //        if (photopath != null)
+        //        {
+        //            return bytes;
+        //            // return File(bytes, "image/jpeg");
+
+        //        }
+        //        return null;
+
+        //    }
+        //    return null;
+        //}
+
+        //public string GetLoginUrl()
+        //{
+        //    var url = this.Url.Link("Default", new { Controller = "Auth", Action = "Login" });
+        //    return url;
+        //}
+
+
+
+
+
+
     }
 
 

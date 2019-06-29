@@ -9,7 +9,6 @@
     <Folder Include="Data\Repositories\Project\Task\" />
     <Folder Include="Repositories\Project\Task\" />
     <Folder Include="Services\Timesheet\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

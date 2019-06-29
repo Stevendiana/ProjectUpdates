@@ -201,21 +201,22 @@ namespace PTApi.ViewModels.Mappings
             CreateMap<Programme, ProgrammeViewModel>().ForMember(vm => vm.ProgrammeId, map => map.MapFrom(b => b.Id));
 
             //.ForMember(vm => vm.Id, opt => opt.MapFrom(r => r.Id));
-            CreateMap<Project, ProjectPermittedViewModel>()
+            CreateMap<Project, ProjectsPermittedViewModel>()
               .ForMember(vm => vm.ProjectId, map => map.MapFrom(p => p.ProjectId))
               .ForMember(vr => vr.CompanyId, map => map.MapFrom(p => p.CompanyId))
-              .ForMember(vr => vr.Company, opt => opt.MapFrom(p => p.Company))
             // .ForMember(vm => vm.ProjectId, opt => opt.MapFrom(r => r.Id))
             .ForMember(vm => vm.Project, opt => opt.MapFrom(p => new Project(_projectService, _userService, _resourceService) { ProjectName = p.ProjectName, ProjectRef = p.ProjectRef, Company = p.Company }));
 
-            
-             
-            CreateMap<ProjectPermitted, ProjectPermittedViewModel>()
+
+
+            CreateMap<ProjectsPermitted, ProjectsPermittedViewModel>()
               .ForMember(vm => vm.ProjectId, map => map.MapFrom(r => r.ProjectId))
               .ForMember(vm => vm.ProjectId, opt => opt.MapFrom(r => r.Project.ProjectId))
-              .ForMember(vr => vr.ResourcesPermitted, opt => opt.MapFrom(p => p.ResourcesPermitted.Select(pp => pp.ProjectId)))
-              .ForMember(vr => vr.CompanyId, map => map.MapFrom(p => p.CompanyId))
-              .ForMember(vr => vr.CompanyId, opt => opt.MapFrom(p => p.Company.CompanyId));
+              .ForMember(vr => vr.CompanyId, map => map.MapFrom(p => p.CompanyId));
+
+            CreateMap<myProjects, myProjectsViewModel>()
+              .ForMember(vm => vm.ProjectId, map => map.MapFrom(r => r.ProjectId))
+              .ForMember(vm => vm.ProjectId, opt => opt.MapFrom(r => r.Project.ProjectId));
 
 
             CreateMap<Project, ProjectViewModel>()
@@ -310,25 +311,25 @@ namespace PTApi.ViewModels.Mappings
 
 
 
-            CreateMap<ProjectPermittedViewModel, ProjectPermitted>()
-                //.ForMember(p => p.ProjectId, opt => opt.Ignore())
+            CreateMap<ProjectsPermittedViewModel, ProjectsPermitted>()
+                .ForMember(p => p.UserId, opt => opt.Ignore())
                 // .ForMember(v => v.Id, opt => opt.Ignore())
                 .ForMember(vm => vm.ProjectId, map => map.MapFrom(p => p.ProjectId))
                 .ForMember(vm => vm.ResourceId, map => map.MapFrom(p => p.ResourceId))
-                .ForMember(vm => vm.CompanyId, map => map.MapFrom(p => p.CompanyId))
-                .ForMember(p => p.ResourcesPermitted, opt => opt.Ignore())
-                .AfterMap((pp, p) =>
-                {
-                        // Remove unselected resourcesPermitted
-                        var removedResourcesPermitted = p.ResourcesPermitted.Where(f => !pp.ResourcesPermitted.Contains(f.Id)).ToList();
-                    foreach (var f in removedResourcesPermitted)
-                        p.ResourcesPermitted.Remove(f);
+                .ForMember(vm => vm.CompanyId, map => map.MapFrom(p => p.CompanyId));
+                //.ForMember(p => p.ResourcesPermitted, opt => opt.Ignore())
+                //.AfterMap((pp, p) =>
+                //{
+                //        // Remove unselected resourcesPermitted
+                //        var removedResourcesPermitted = p.ResourcesPermitted.Where(f => !pp.ResourcesPermitted.Contains(f.Id)).ToList();
+                //    foreach (var f in removedResourcesPermitted)
+                //        p.ResourcesPermitted.Remove(f);
 
-                        // Add new features
-                        var addedResourcesPermitted = pp.ResourcesPermitted.Where(id => !p.ResourcesPermitted.Any(f => f.Id == id)).Select(id => new ProjectPermitted { Id = id }).ToList();
-                    foreach (var f in addedResourcesPermitted)
-                        p.ResourcesPermitted.Add(f);
-                });
+                //        // Add new features
+                //        var addedResourcesPermitted = pp.ResourcesPermitted.Where(id => !p.ResourcesPermitted.Any(f => f.Id == id)).Select(id => new ProjectPermitted { Id = id }).ToList();
+                //    foreach (var f in addedResourcesPermitted)
+                //        p.ResourcesPermitted.Add(f);
+                //});
 
 
            

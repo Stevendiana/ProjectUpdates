@@ -14,6 +14,12 @@ namespace PTApi.Repositories
         {
         }
 
+        public CurrencySymbol GetOneCurrency(int id)
+        {
+            return ApplicationDbContext.CurrencySymbols.SingleOrDefault(d => d.CurrencySymbolId == id);
+        }
+
+
 
         public IEnumerable<CurrencySymbol> GetAllCurrencySymbols()
         {

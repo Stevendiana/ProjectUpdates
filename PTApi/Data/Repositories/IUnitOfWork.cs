@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace PTApi.Data.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
+        IUserRepository Users { get; }
         ICompanyRepository Companies { get; }
 
         IBusinessunitRepository Businessunits { get; }
@@ -27,8 +29,6 @@ namespace PTApi.Data.Repositories
 
         IResourceRepository Resources { get; }
 
-
-
         IProjectRagStatusRepository Rags { get; }
         IAssumptionRepository Assumptions { get; }
         IDependencyRepository Dependencies { get; }
@@ -37,5 +37,6 @@ namespace PTApi.Data.Repositories
 
 
         int Complete();
+        Task<int> CompleteAsync();
     }
 }

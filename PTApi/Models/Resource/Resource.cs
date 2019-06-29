@@ -50,8 +50,7 @@ namespace PTApi.Models
 
         [Required]
         public string CompanyId { get; set; }
-        [Required]
-        public string AppUserRole {get;set;}
+        
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
         public string ProjectId { get; set; }
@@ -70,7 +69,7 @@ namespace PTApi.Models
         public byte[] AvatarImage { get; set; }
         [NotMapped]
         public string DisplayName { get; set; }
-        public string AddedBy { get; set; }
+       
         public string Gender { get; set; }
         [NotMapped]
         public decimal? TotalForecastHours { get; }
@@ -159,8 +158,21 @@ namespace PTApi.Models
         [NotMapped]
         public decimal? DecTotalHolidays { get; }
 
+        //public bool FullyReconciledYesOrNo
+        //{
+        //    get
+        //    {
+        //        if (TotalAllocatedAmount != Amount)
+        //            return false;
 
-         //[NotMapped]
+        //        return true;
+        //    }
+        //    private set { }
+        //}
+
+
+
+        //[NotMapped]
         //public int? TotalCountProjects { get{ return _permissionsMethods?.TotalCountProjects(ResourceId, CompanyId, AppUserRole).Value; } private set{} }
         //public int? TotalCountProjects { get{ if(IdentityId==null)return 0; return _permissionsMethods?.TotalCountProjects(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
         // [NotMapped]
@@ -181,10 +193,6 @@ namespace PTApi.Models
         // public int? TotalCountBusinessUnits { get{ if(IdentityId==null)return 0;  return _permissionsMethods?.TotalCountBusinessUnits(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
         // [NotMapped]
         // public int? TotalCountBusinessUnitsPermitted { get{ if(IdentityId==null)return 0;  return _permissionsMethods?.TotalCountBusinessUnits(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        public ICollection<BusinessUnit> BusinessUnits { get; set; }
-        public ICollection<Domain> Domains { get; set; }
-        public ICollection<Portfolio> Portfolios { get; set; }
-        public ICollection<Programme> Programmes { get; set; }
         public ICollection<Project> Projects { get; set; }
         
         public ICollection<ProjectPermitted> ProjectsPermitted { get; set; }
@@ -203,11 +211,6 @@ namespace PTApi.Models
            
             ProjectsPermitted = new Collection<ProjectPermitted>();
             ResourceWorkTimesheets = new Collection<ResourceWorkTimesheet>();
-
-            BusinessUnits = new Collection<BusinessUnit>();
-            Domains = new Collection<Domain>();
-            Portfolios = new Collection<Portfolio>();
-            Programmes = new Collection<Programme>();
             Projects = new Collection<Project>();
         }
 
