@@ -23,7 +23,10 @@ namespace PTApi.Repositories
             Platforms = new PlatformRepository(_context);
             Portfolios = new PortfolioRepository(_context);
             Programmes = new ProgrammeRepository(_context);
+
             Projects = new ProjectRepository(_context);
+            Permissions = new ProjectsPermittedRepository(_context);
+            Following = new ProjectsFollowingRepository(_context);
 
             CompanyMethodologies = new CompanyMethodologyRepository(_context);
             CompanyMethodologyStages = new CompanyMethodologyStageRepository(_context);
@@ -56,7 +59,10 @@ namespace PTApi.Repositories
         public IPlatformRepository Platforms { get; private set; }
         public IPortfolioRepository Portfolios { get; private set; }
         public IProgrammeRepository Programmes { get; private set; }
+
         public IProjectRepository Projects { get; private set; }
+        public IProjectsPermittedRepository Permissions { get; private set; }
+        public IProjectsFollowingRepository Following { get; private set; }
 
         public ICompanyMethodologyRepository CompanyMethodologies { get; private set; }
         public ICompanyMethodologyStageRepository CompanyMethodologyStages { get; private set; }

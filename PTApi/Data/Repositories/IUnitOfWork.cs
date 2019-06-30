@@ -13,7 +13,10 @@ namespace PTApi.Data.Repositories
         IPlatformRepository Platforms { get; }
         IPortfolioRepository Portfolios { get; }
         IProgrammeRepository Programmes { get; }
+
         IProjectRepository Projects { get; }
+        IProjectsPermittedRepository Permissions { get; }
+        IProjectsFollowingRepository Following { get; }
 
         ICompanyMethodologyRepository CompanyMethodologies { get; }
         ICompanyMethodologyStageRepository CompanyMethodologyStages { get; }

@@ -19,12 +19,14 @@ namespace PTApi.Repositories
             return ApplicationDbContext.Projects.SingleOrDefault(d => d.ProjectId == id && d.CompanyId == companyId);
         }
 
+       
         public IEnumerable<Project> GetAllProjects(string companyId)
         {
             return ApplicationDbContext.Projects
                 .Where(r => r.CompanyId == companyId)
                 .OrderByDescending(d => d.ProjectStartDate).ThenBy(r => r.ProjectStatus).ToList();
         }
+
 
         public IEnumerable<myProjects> GetAllProjectsandthoseIamFollowing(string id, string companyId)
         {

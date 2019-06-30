@@ -206,7 +206,6 @@ namespace PTApi
             services.AddScoped<IProjectForecastService, ProjectForecastService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IResourceService, ResourceService>();
-            services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IProjectService, ProjectService>();
             
 
@@ -218,6 +217,7 @@ namespace PTApi
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped< IProjectsPermittedRepository, ProjectsPermittedRepository>();
             services.AddScoped<IActualRepository, ActualRepository>();
             services.AddScoped<IProjectBudgetRepository, ProjectBudgetRepository>();
 

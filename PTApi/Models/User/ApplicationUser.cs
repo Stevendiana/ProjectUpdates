@@ -12,10 +12,13 @@ namespace PTApi.Models
         public string CompanyId { get; set; }
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
+
         public string ResourceId { get; set; }
         [ForeignKey("CompanyId,ResourceId")]
         public Resource Resource { get; set; }
+
         public bool HasConfirmEmail { get; set; }
+        public bool IsDisabled { get; set; }
 
         [Required]
         public string AppUserRole { get; set; }
@@ -36,16 +39,15 @@ namespace PTApi.Models
         public string UserModifiedLastName { get; set; }
         public string UserModifiedAvartar { get; set; }
 
-        // Extended Properties
 
         public ICollection<ProjectsFollowing> ProjectsIamFollowing { get; set; }
         public ICollection<ProjectsPermitted> ProjectsIamPermitted { get; set; }
-        public ICollection<ProjectPermitted> ProjectsPermitted { get; set; }
         public ICollection<UserNotification> UserNotifications { get; set; }
 
         public ApplicationUser()
         {
-            ProjectsPermitted = new Collection<ProjectPermitted>();
+            ProjectsIamFollowing = new Collection<ProjectsFollowing>();
+            ProjectsIamPermitted = new Collection<ProjectsPermitted>();
             UserNotifications = new Collection<UserNotification>();
         }
 

@@ -287,8 +287,6 @@ namespace PTApi.Controllers
             return await Task.FromResult<IEnumerable<ResourceAdminViewModel>>(null);
         }
 
-
-
         [HttpPost("resource")]
         [Authorize(Policy = "Admin_Group")]
         public ActionResult Post([FromBody] EditResourceData resourceData)
@@ -296,23 +294,13 @@ namespace PTApi.Controllers
 
             var roleGroup = _userService.UserRoleGroup();
             var comp = _userService.GetSecureUserCompany();
-            var userreportingyear = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Financerepyear).Value;
-            var userstandarddailyhrs = HttpContext.User.Claims.Single(c => c.Type == Constants.Strings.JwtClaimIdentifiers.Standarddailyhrs).Value;
 
-            int i = 0;
-            int j = 0;
-            string s = userreportingyear;
-            string h = userstandarddailyhrs;
-            i =int.Parse(s);
-            j =int.Parse(h);
-            i = Convert.ToInt32(s);
-            j = Convert.ToInt32(h);
+            
 
-
-           // var email = HttpContext.User.Claims.Single(c => c.Type == "email").Value;
-            // return validation error if email already exists
-
-
+            if (!ModelState.IsValid) // return validation error if client side validation is not passed.
+            {
+                return BadRequest(ModelState);
+            }
             if (resourceData.CompanyId != comp)
             {
                 return BadRequest("You are not authorised to perform this action.");
@@ -323,117 +311,36 @@ namespace PTApi.Controllers
                 ModelState.AddModelError("email", string.Format("The resource email field cannot be null.", resourceData.ResourceEmailAddress));
                 return BadRequest(ModelState);
             }
-            // return validation error if required fields aren't filled in
-            if (!ModelState.IsValid) // return validation error if client side validation is not passed.
+            if (!_unitOfWork.Users.CheckUserExist(resourceData.ResourceEmailAddress))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Email already exist.");
+
             }
+            // return validation error if required fields aren't filled in
+            
             if (roleGroup == "Admin_Group")
             {
-                var resource = Getresource(resourceData.CompanyId, resourceData.ResourceId);
-                var resourcerole = resource.AppUserRole;
+                var resource = _unitOfWork.Resources.GetOneResouce(resourceData.ResourceId, resourceData.CompanyId);
 
                 decimal? resourcecontracthours = (resource.ResourceContractEffortInPercentage??100)/100 * j;
 
                 if (resource != null)
                 {
-                    var incomingrole = resourceData.AppUserRole;
                     _mapper.Map<EditResourceData, Resource>(resourceData, resource);
 
-                    if (incomingrole == Constants.Strings.JwtClaims.AccountOwner ||
-                        incomingrole == Constants.Strings.JwtClaims.SuperAdmin ||
-                        incomingrole == Constants.Strings.JwtClaims.Admin ||
-                        incomingrole == Constants.Strings.JwtClaims.ProjectManager ||
-                        incomingrole == Constants.Strings.JwtClaims.SeniorProjectManager ||
-                        incomingrole == Constants.Strings.JwtClaims.PortfolioAdmin ||
-                        incomingrole == Constants.Strings.JwtClaims.FinanceAdmin ||
-                        incomingrole == Constants.Strings.JwtClaims.FinanceManager ||
-                        incomingrole == Constants.Strings.JwtClaims.ReadOnly ||
-                        incomingrole == Constants.Strings.JwtClaims.ResourceOnly ||
-                        incomingrole == Constants.Strings.JwtClaims.ReadWriteTimesheetOnly)
-                    {
-                        resource.Agency = resourceData.Agency ?? resource.Agency;
-                        resource.Billable = resourceData.Billable;
-                        resource.Gender = resourceData.Gender ?? resource.Gender;
-                        resource.ContractedHours = resourceData.ContractedHours ?? resource.ContractedHours;
-                        resource.ResourceRateCardId = resourceData.ResourceRateCardId ?? resource.ResourceRateCardId;
-                        resource.EmployeeJobTitle = resourceData.EmployeeJobTitle ?? resource.EmployeeJobTitle;
-                        resource.EmployeeRef = resourceData.EmployeeRef ?? resource.EmployeeRef;
-                        resource.EmployeeType = resourceData.EmployeeType ?? resource.EmployeeType;
-                        resource.Location = resourceData.Location ?? resource.Location;
-                        resource.LocationName = resourceData.LocationName ?? resource.LocationName;
 
-                        resource.PlatformId = resourceData.PlatformId ?? resource.PlatformId;
-                        resource.ResourceContractEffortInPercentage = resourceData.ResourceContractEffortInPercentage ?? resource.ResourceContractEffortInPercentage;
-                        resource.ResourceEndDate = resourceData.ResourceEndDate ?? resource.ResourceEndDate;
-                        resource.ResourceManagerId = resourceData.ResourceManagerId ?? resource.ResourceManagerId;
+                    resource.CompanyId = comp;
+                    //resource.ProjectId = resourceData.ProjectId ?? resource.ProjectId;
+                    resource.ResourceId = resource.ResourceId;
+                    resource.ResourceNumber = "RESOURCE" + "-" + CreateNewId(resource.ResourceId).ToUpper();
 
+                    _unitOfWork.Complete();
 
-                        resource.ResourceStartDate = resourceData.ResourceStartDate ?? resource.ResourceStartDate;
-                        // resource.ResourceStartDate = DateTime.ParseExact(resourceData.ResourceStartDate, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)?? resource.ResourceStartDate;
-                        resource.ResourceType = resourceData.ResourceType ?? resource.ResourceType;
-                        resource.ResourceNumber = resourceData.ResourceNumber ?? resource.ResourceNumber;
+                    resource = _unitOfWork.Resources.GetOneResouce(resourceData.ResourceId, resourceData.CompanyId);
 
-                        resource.CompanyId = resourceData.CompanyId ?? resource.CompanyId;
-                        //resource.ProjectId = resourceData.ProjectId ?? resource.ProjectId;
-                        resource.ResourceId = resource.ResourceId;
+                    var result = _mapper.Map<Resource, ResourceViewModel>(resource);
 
-
-                        resource.JanAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 1)*(resourcecontracthours/j);
-                        resource.FebAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 2)*(resourcecontracthours/j);
-                        resource.MarAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 3)*(resourcecontracthours/j);
-                        resource.AprAvailabilityBeforeHolidaysInDays = _resourceService.GetNumberOfWorkingDaysInMonth(i, 4)*(resourcecontracthours/j);
-                        resource.MayAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 5)*(resourcecontracthours/j);
-                        resource.JunAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 6)*(resourcecontracthours/j);
-                        resource.JulAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 7)*(resourcecontracthours/j);
-                        resource.AugAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 8)*(resourcecontracthours/j);
-                        resource.SepAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 9)*(resourcecontracthours/j);
-                        resource.OctAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 10)*(resourcecontracthours/j);
-                        resource.NovAvailabilityBeforeHolidaysInDays = _resourceService.GetNumberOfWorkingDaysInMonth(i, 11)*(resourcecontracthours/j);
-                        resource.DecAvailabilityBeforeHolidaysInDays =  _resourceService.GetNumberOfWorkingDaysInMonth(i, 12)*(resourcecontracthours/j);
-
-                        resource.TotalAvailabilityBeforeHolidaysInDays = resource.JanAvailabilityBeforeHolidaysInDays + resource.FebAvailabilityBeforeHolidaysInDays + resource.MarAvailabilityBeforeHolidaysInDays + resource.AprAvailabilityBeforeHolidaysInDays
-                     + resource.MayAvailabilityBeforeHolidaysInDays + resource.JunAvailabilityBeforeHolidaysInDays +  resource.JulAvailabilityBeforeHolidaysInDays + resource.AugAvailabilityBeforeHolidaysInDays
-                     + resource.SepAvailabilityBeforeHolidaysInDays + resource.OctAvailabilityBeforeHolidaysInDays +  resource.NovAvailabilityBeforeHolidaysInDays + resource.DecAvailabilityBeforeHolidaysInDays;
-
-
-                        if (resourcerole == resourceData.AppUserRole)
-                        {
-                            resource.AppUserRole = resourceData.AppUserRole;
-                            resource.ResourceEmailAddress = resourceData.ResourceEmailAddress ?? resource.ResourceEmailAddress;
-                        }
-                        if (resourcerole == Constants.Strings.JwtClaims.ResourceOnly && resourceData.AppUserRole!=Constants.Strings.JwtClaims.ResourceOnly )
-                        {
-                            // Go create a user
-
-                            var userIdentity =
-                            new AppUser
-                            {
-                                UserName = resourceData.ResourceEmailAddress,
-                                Email = resourceData.ResourceEmailAddress,
-                            };
-
-                            var result = _userManager.CreateAsync(userIdentity, "Password4:1");
-                            userIdentity.CompanyId = resource.CompanyId;
-                            resource.IdentityId = userIdentity.Id;
-
-                            resource.AppUserRole = resourceData.AppUserRole;
-                            resource.ResourceEmailAddress = resourceData.ResourceEmailAddress ?? resource.ResourceEmailAddress;
-                        }
-
-                        resource.ResourceEmailAddress = resourceData.ResourceEmailAddress ?? resource.ResourceEmailAddress;
-                        resource.AppUserRole = resourceData.AppUserRole;
-
-                        _appDbContext.SaveChanges();
-
-                        resource = Getresource(comp, resource.ResourceId); ;
-
-                        var editedResource = _mapper.Map<Resource, ResourceViewModel>(resource);
-                        return Ok(editedResource);
-                    }
-
-                    ModelState.AddModelError("appUserRole", string.Format("{0} is not recognized as a valid role. Please use one of the roles available to you based on your permission level. ", resourceData.AppUserRole));
-                    return BadRequest(ModelState);
+                    return Ok(result);
                 }
                 else
                 {
@@ -442,8 +349,6 @@ namespace PTApi.Controllers
             }
             return BadRequest("You are not authorised to perform this action.");
         }
-
-       
 
         [HttpPost]
         [Authorize(Policy="Admin_Group")]

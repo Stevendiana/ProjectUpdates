@@ -42,7 +42,6 @@ namespace PTApi.ViewModels.Mappings
 
             CreateMap<Resource, ResourceViewModel>()
             .ForMember(dto => dto.ResourceId, map => map.MapFrom(src => src.ResourceId))
-            .ForMember(dto => dto.Identity, opt => opt.MapFrom(src => src.Identity))
             .ForMember(dto => dto.Company, opt => opt.MapFrom(src => src.Company))
             .ForMember(dto => dto.CompanyRateCard, opt => opt.MapFrom(src => src.CompanyRateCard));
 

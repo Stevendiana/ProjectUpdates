@@ -7,9 +7,11 @@ namespace PTApi.Models
         [Key]
         [Required]
         public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         [Key]
         [Required]
         public string ResourceId { get; set; }
+        public Resource Resource { get; set; }
         [Key]
         [Required]
         public string CompanyId { get; set; }

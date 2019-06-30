@@ -1,5 +1,3 @@
-
-using PTApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,19 +11,15 @@ namespace PTApi.Models
     public class Resource : BaseEntity
     {
 
-        private readonly IPermissionService _permissionService;
-
         [Key]
         public string ResourceId { get; set; }
         public string ResourceNumber { get; set;}
         [Required]
         public string ResourceEmailAddress { get; set; }
-        // public string ResourceSecondaryEmailAddress { get; set; }
         public string EmployeeRef { get; set; }
         public DateTime? ResourceStartDate { get; set; }
         public DateTime? ResourceEndDate { get; set; }
-        // public string Domain { get; set; }
-        // public string BusinessUnit { get; set; }
+        
         public string PlatformId { get; set; }
         public Platform Platform { get; set; }
         public string Agency { get; set; }
@@ -45,8 +39,6 @@ namespace PTApi.Models
 
         public string ResourceType { get; set; }
         public string EmployeeType { get; set; }
-
-
 
         [Required]
         public string CompanyId { get; set; }
@@ -76,7 +68,6 @@ namespace PTApi.Models
         [NotMapped]
         public decimal? TotalForecastReconciledHours { get; }
 
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [NotMapped]
         public int? TotalProjectsForecastCount { get; }
         [NotMapped]
@@ -101,7 +92,6 @@ namespace PTApi.Models
         public int? TotalCountBusinessUnitsPermitted { get; }
 
 
-        // [NotMapped]
         public decimal? JanResourceUtilizationInDays { get; set; }
         public decimal? FebResourceUtilizationInDays { get; set; }
         public decimal? MarResourceUtilizationInDays { get; set; }
@@ -158,62 +148,32 @@ namespace PTApi.Models
         [NotMapped]
         public decimal? DecTotalHolidays { get; }
 
-        //public bool FullyReconciledYesOrNo
-        //{
-        //    get
-        //    {
-        //        if (TotalAllocatedAmount != Amount)
-        //            return false;
-
-        //        return true;
-        //    }
-        //    private set { }
-        //}
-
+        public bool IsAppUser
+        {
+            get
+            {
+                if (IdentityId != null)
+                    return true;
+                return false;
+            }
+            private set { }
+        }
 
 
-        //[NotMapped]
-        //public int? TotalCountProjects { get{ return _permissionsMethods?.TotalCountProjects(ResourceId, CompanyId, AppUserRole).Value; } private set{} }
-        //public int? TotalCountProjects { get{ if(IdentityId==null)return 0; return _permissionsMethods?.TotalCountProjects(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountProjectsPermitted { get{ return _permissionsMethods?.TotalCountProjects(ResourceId, CompanyId, AppUserRole); } private set { } }
-        // [NotMapped]
-        // public int? TotalCountProgrammes { get{ if(IdentityId==null)return 0; return _permissionsMethods?.TotalCountProgrammes(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountProgrammesPermitted { get{ if(IdentityId==null)return 0;  return _permissionsMethods?.TotalCountProgrammes(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountDomains { get{ if(IdentityId==null)return 0; return _permissionsMethods?.TotalCountDomains(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountDomainsPermitted { get{ if(IdentityId==null)return 0; return _permissionsMethods?.TotalCountDomains(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountPortfolios { get{ if(IdentityId==null)return 0; return _permissionsMethods?.TotalCountPortfolios(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountPortfoliosPermitted { get{ if(IdentityId==null)return 0;  return _permissionsMethods?.TotalCountPortfolios(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountBusinessUnits { get{ if(IdentityId==null)return 0;  return _permissionsMethods?.TotalCountBusinessUnits(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        // [NotMapped]
-        // public int? TotalCountBusinessUnitsPermitted { get{ if(IdentityId==null)return 0;  return _permissionsMethods?.TotalCountBusinessUnits(ResourceId, CompanyId, AppUserRole)??0; } private set { } }
-        public ICollection<Project> Projects { get; set; }
-        
-        public ICollection<ProjectPermitted> ProjectsPermitted { get; set; }
-        // public ICollection<Resource> Resources { get; set; }
         public ICollection<ResourceWorkTimesheet> ResourceWorkTimesheets { get; set; }
+        public ICollection<ResourceEffortSummary> ResourceEffortSummaries { get; set; }
+        public ICollection<ResourceHolidayBooked> ResourceHolidaysBooked { get; set; }
         public ICollection<ForecastTask> ForecastTasks { get; set; }
+       
+
         public Resource()
         {
 
-        }
-
-        public Resource(IPermissionService permissionService)
-        {
-            _permissionService = permissionService;
-            // Resources = new Collection<Resource>();
-           
-            ProjectsPermitted = new Collection<ProjectPermitted>();
             ResourceWorkTimesheets = new Collection<ResourceWorkTimesheet>();
-            Projects = new Collection<Project>();
+            ResourceEffortSummaries = new Collection<ResourceEffortSummary>();
+            ResourceHolidaysBooked = new Collection<ResourceHolidayBooked>();
+            ForecastTasks = new Collection<ForecastTask>();
         }
 
-       // navigation property
     }
 }
