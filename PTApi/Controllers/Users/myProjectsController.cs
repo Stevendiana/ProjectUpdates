@@ -51,11 +51,11 @@ namespace PTApi.Controllers
             {
                 if (_userService.UserRoleGroup() == "Admin_Group")
                 {
-                    var allProjectsPermittedAdmin = _unitOfWork.Projects.GetAllProjectsandthoseIamFollowing(user, comp);
+                    var allProjectsPermittedAdmin = _unitOfWork.Projects.CombineAllProjectsAndProjectsFollowingForAdmin(user, comp);
                     return Mapper.Map<IEnumerable<myProjects>, IEnumerable<myProjectsViewModel>>(allProjectsPermittedAdmin);
                 }
 
-                var allProjectsPermittedNon_Admin = _unitOfWork.Projects.GetAllProjectsIamPermittedandFollowing(user, comp);
+                var allProjectsPermittedNon_Admin = _unitOfWork.Projects.CombineAllProjectsPermitted(user, comp);
 
                 return Mapper.Map<IEnumerable<myProjects>, IEnumerable < myProjectsViewModel>>(allProjectsPermittedNon_Admin);
 

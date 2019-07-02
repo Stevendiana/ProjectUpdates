@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PTApi.Models
 {
-    public class ProjectsPermitted : BaseEntity
+    [Table("DomainsPermitted")]
+    public class DomainsPermitted: BaseEntity
     {
+
         [Key]
         [Required]
         public string UserId { get; set; }
@@ -19,16 +22,20 @@ namespace PTApi.Models
         public string CompanyId { get; set; }
         [Key]
         [Required]
-        public string ProjectId { get; set; }
-        public Project Project { get; set; }
+        public string DomainId { get; set; }
+        public Domain Domain { get; set; }
 
         public bool CanEdit { get; set; }
 
         public ICollection<Resource> ResourcesPermitted { get; set; }
 
-        public ProjectsPermitted()
+        public DomainsPermitted()
         {
             ResourcesPermitted = new Collection<Resource>();
         }
+
+
+
+
     }
 }

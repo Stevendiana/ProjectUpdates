@@ -65,10 +65,16 @@ namespace PTApi.Data
        
         public DbSet<ProjectsPermitted> ProjectsIamPermitted { get; set; }
         public DbSet<ProjectsFollowing> ProjectsIamFollowing { get; set; }
-        //public DbSet<ProgrammePermitted> ProgrammePermitted { get; set; }
-        //public DbSet<PortfolioPermitted> PortfolioPermitted { get; set; }
-        //public DbSet<DomainPermitted> DomainPermitted { get; set; }
-        //public DbSet<BusinessUnitPermitted> BusinessUnitPermitted { get; set; }
+        public DbSet<ProgrammesFollowing> ProgrammesIamFollowing { get; set; }
+        public DbSet<PortfoliosFollowing> PortfoliosIamFollowing { get; set; }
+        public DbSet<BusinessunitsFollowing> BusinessunitsIamFollowing { get; set; }
+        public DbSet<DomainsFollowing> DomainsIamFollowing { get; set; }
+        
+
+        public DbSet<ProgrammesPermitted> ProgrammesPermitted { get; set; }
+        public DbSet<PortfoliosPermitted> PortfoliosPermitted { get; set; }
+        public DbSet<DomainsPermitted> DomainsPermitted { get; set; }
+        public DbSet<BusinessUnitsPermitted> BusinessUnitsPermitted { get; set; }
 
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserNotification> UserNotifications { get; set; }
@@ -100,7 +106,7 @@ namespace PTApi.Data
 
             modelBuilder.Entity<ApplicationUser>().HasOne(u => u.Company);
 
-            modelBuilder.Entity<ProjectPermitted>().HasMany(p => p.ResourcesPermitted);
+            //modelBuilder.Entity<ProjectsPermitted>().HasMany(p => p.ResourcesPermitted);
 
             //modelBuilder.Entity<ParentTask>().HasKey(f => new { f.ParentTaskId, f.ProjectId, f.CompanyId });
 
@@ -113,15 +119,17 @@ namespace PTApi.Data
 
             modelBuilder.Entity<ProjectPlanBudgetBenefit>().HasKey(ppbb => new { ppbb.Year, ppbb.ProjectId, ppbb.CompanyId, ppbb.CostCategory });
 
-            //modelBuilder.Entity<BusinessUnitPermitted>().HasKey(bup => new { bup.ResourceId, bup.CompanyId, bup.BusinessUnitId });
 
-            //modelBuilder.Entity<DomainPermitted>().HasKey(dp => new { dp.ResourceId, dp.CompanyId, dp.DomainId });
+            modelBuilder.Entity<BusinessUnitsPermitted>().HasKey(bup => new { bup.UserId, bup.ResourceId, bup.CompanyId, bup.BusinessUnitId });
 
-            //modelBuilder.Entity<PortfolioPermitted>().HasKey(pfp => new { pfp.ResourceId, pfp.CompanyId, pfp.PortfolioId });
+            modelBuilder.Entity<DomainsPermitted>().HasKey(dp => new { dp.UserId, dp.ResourceId, dp.CompanyId, dp.DomainId });
 
-            //modelBuilder.Entity<ProgrammePermitted>().HasKey(pgp => new { pgp.ResourceId, pgp.CompanyId, pgp.ProgrammeId });
+            modelBuilder.Entity<PortfoliosPermitted>().HasKey(pfp => new { pfp.UserId, pfp.ResourceId, pfp.CompanyId, pfp.PortfolioId });
 
-            modelBuilder.Entity<ProjectPermitted>().HasKey(pjp => new { pjp.ResourceId, pjp.ProjectId, pjp.CompanyId, pjp.UserId });
+            modelBuilder.Entity<ProgrammesPermitted>().HasKey(pgp => new { pgp.UserId, pgp.ResourceId, pgp.CompanyId, pgp.ProgrammeId });
+
+
+            modelBuilder.Entity<ProjectsPermitted>().HasKey(pjp => new { pjp.ResourceId, pjp.ProjectId, pjp.CompanyId, pjp.UserId });
 
             modelBuilder.Entity<Resource>().HasKey(res => new { res.CompanyId, res.ResourceId });
 

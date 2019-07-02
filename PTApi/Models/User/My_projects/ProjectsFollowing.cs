@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace PTApi.Models
 {
@@ -19,6 +21,13 @@ namespace PTApi.Models
         [Required]
         public string ProjectId { get; set; }
         public bool Following { get; set; }
+
+        public ICollection<Resource> ResourcesPermitted { get; set; }
+
+        public ProjectsFollowing()
+        {
+            ResourcesPermitted = new Collection<Resource>();
+        }
 
     }
 }

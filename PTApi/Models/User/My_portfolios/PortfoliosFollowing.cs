@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PTApi.Models
 {
-    public class ProjectsPermitted : BaseEntity
+    public class PortfoliosFollowing : BaseEntity
     {
         [Key]
         [Required]
@@ -19,16 +19,15 @@ namespace PTApi.Models
         public string CompanyId { get; set; }
         [Key]
         [Required]
-        public string ProjectId { get; set; }
-        public Project Project { get; set; }
-
-        public bool CanEdit { get; set; }
+        public string PortfolioId { get; set; }
+        public bool Following { get; set; }
 
         public ICollection<Resource> ResourcesPermitted { get; set; }
 
-        public ProjectsPermitted()
+        public PortfoliosFollowing()
         {
             ResourcesPermitted = new Collection<Resource>();
         }
+
     }
 }

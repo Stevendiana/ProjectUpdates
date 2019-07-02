@@ -40,13 +40,13 @@ namespace PTApi.Models
         public string UserModifiedAvartar { get; set; }
 
 
-        public ICollection<ProjectsFollowing> ProjectsIamFollowing { get; set; }
+        public ICollection<BusinessunitsFollowing> ProjectsIamFollowing { get; set; }
         public ICollection<ProjectsPermitted> ProjectsIamPermitted { get; set; }
         public ICollection<UserNotification> UserNotifications { get; set; }
 
         public ApplicationUser()
         {
-            ProjectsIamFollowing = new Collection<ProjectsFollowing>();
+            ProjectsIamFollowing = new Collection<BusinessunitsFollowing>();
             ProjectsIamPermitted = new Collection<ProjectsPermitted>();
             UserNotifications = new Collection<UserNotification>();
         }

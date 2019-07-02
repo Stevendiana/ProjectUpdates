@@ -1,8 +1,7 @@
-using PTApi.Methods;
 using PTApi.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace PTApi.ViewModels
 {
@@ -10,32 +9,30 @@ namespace PTApi.ViewModels
     {
         public DomainViewModel()
         {
+            Businessunits = new Collection<BusinessUnit>();
             Portfolios = new Collection<Portfolio>();
+            Programmes = new Collection<Programme>();
+            Projects = new Collection<Project>();
         }
-
-        private static string CreateNewId(string domainId, int length)
-        {
-            GeneratePublicIdMethod generatePublicId = new GeneratePublicIdMethod();
-            return generatePublicId.PartId(domainId, 8);
-        }
-
-        public string DomainId { get; set; }
-        public string DomainCode
-        {
-            get { return "DOM" + "-" + CreateNewId(DomainId, 8).ToUpper(); }
-        }
-
-
-        public string CompanyId { get; set; }
-
-        public string BusinessUnitId { get; set; }
-        public string DivisionOrDomainName { get; set; }
-        public string HeadOfDomain { get; set; }
-
-        public BusinessUnit BusinessUnit { get; set; }
-        public Company Company { get; set; }
-        public ICollection<Portfolio> Portfolios { get; set; }
 
         
+        public string Id { get; set; }
+        public string DomainCode { get; set; }
+        public string DomainName { get; set; }
+
+        [Required]
+        public string CompanyId { get; set; }
+        
+        public Company Company { get; set; }
+
+        public string HeadOfDomainId { get; set; }
+        
+        public Resource HeadOfDomain { get; set; }
+
+        public ICollection<BusinessUnit> Businessunits { get; set; }
+        public ICollection<Portfolio> Portfolios { get; set; }
+        public ICollection<Programme> Programmes { get; set; }
+        public ICollection<Project> Projects { get; set; }
+
     }
 }

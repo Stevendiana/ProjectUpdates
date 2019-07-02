@@ -1,5 +1,5 @@
-using PTApi.Methods;
 using PTApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,37 +10,38 @@ namespace PTApi.ViewModels
 {
     public class PortfolioViewModel: BaseEntity
     {
-         public PortfolioViewModel()
+        public PortfolioViewModel()
         {
 
             Projects = new Collection<Project>();
             Programmes = new Collection<Programme>();
         }
 
-        private static string CreateNewId(string portfolioId, int length)
-        {
-            GeneratePublicIdMethod generatePublicId = new GeneratePublicIdMethod();
-            return generatePublicId.PartId(portfolioId, 8);
-        }
-
-
-        public string PortfolioId { get; set; }
-        public string PortfolioCode
-        {
-            get { return "PORT" + "-" + CreateNewId(PortfolioId, 8).ToUpper(); }
-        }
-
-
-        [Display(Name = "Portfolio")]
+        
+        public string Id { get; set; }
         public string PortfolioName { get; set; }
-
-        public string CompanyId { get; set; }
+        public string PortfolioCode { get; set; }
 
         public string UniquePortfolioRef { get; set; }
-        public string DomainId { get; set; }
-        public string HeadOfPortfolio { get; set; }
+
+        [Required]
+        public string BusinessunitId { get; set; }
+        
+        public BusinessUnit BusinessUnit { get; set; }
+
+        public string HeadOfPortfolioId { get; set; }
+        
+        public Resource HeadOfPortfolio { get; set; }
+
+        public DateTime? PortfolioStartDate { get; set; }
+        public DateTime? PortfolioEndDate { get; set; }
+
+        [Required]
+        public string CompanyId { get; set; }
+        
         public Company Company { get; set; }
-        public Domain Domains { get; set; }
+
+
         public ICollection<Project> Projects { get; set; }
         public ICollection<Programme> Programmes { get; set; }
     }

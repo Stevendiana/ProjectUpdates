@@ -53,7 +53,7 @@ namespace PTApi.Controllers
             public string PlatformName { get; set; }
             [Required]
             public string CompanyId { get; set; }
-            public string HeadOfPlatform { get; set; }
+            public string HeadOfPlatformId { get; set; }
 
         }
 
@@ -132,7 +132,7 @@ namespace PTApi.Controllers
 
                 platform.CompanyId = comp;
                 platform.PlatformName = platFormData.PlatformName ?? platform.PlatformName;
-                platform.HeadOfPlatform = platFormData.HeadOfPlatform ?? platform.HeadOfPlatform;
+                platform.HeadOfPlatformId = platFormData.HeadOfPlatformId ?? platform.HeadOfPlatformId;
                 platform.PlatformCode =  "PLATFORM" + "-" + CreateNewId(platform.PlatformId).ToUpper();
 
 

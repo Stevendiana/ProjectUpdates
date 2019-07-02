@@ -11,24 +11,29 @@ namespace PTApi.Models
     {
         public Domain()
         {
+            Businessunits = new Collection<BusinessUnit>();
             Portfolios = new Collection<Portfolio>();
+            Programmes = new Collection<Programme>();
+            Projects = new Collection<Project>();
         }
 
         [Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
+        public string DomainCode { get; set; }
+        public string DomainName { get; set; }
 
         [Required]
         public string CompanyId { get; set; }
-        public string DomainCode { get; set; }
-        public string BusinessUnitId { get; set; }
-        public string DivisionOrDomainName { get; set; }
-        public string HeadOfDomain { get; set; }
-        public BusinessUnit BusinessUnit { get; set; }
-        public string NodeId { get; set; }
-
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
+
+        public string HeadOfDomainId { get; set; }
+        [ForeignKey("CompanyId,HeadOfDomainId")]
+        public Resource HeadOfDomain { get; set; }
+
+        public ICollection<BusinessUnit> Businessunits { get; set; }
         public ICollection<Portfolio> Portfolios { get; set; }
+        public ICollection<Programme> Programmes { get; set; }
+        public ICollection<Project> Projects { get; set; }
     }
 }

@@ -140,8 +140,8 @@ namespace PTApi.ViewModels.Mappings
             CreateMap<BusinessUnit, EditBusinessUnitData>()
               .ForMember(vm => vm.BusinessUnitId, map => map.MapFrom(b => b.Id));
             CreateMap<BusinessUnit, BusinessUnitViewModel>()
-              .ForMember(vm => vm.BusinessUnitId, map => map.MapFrom(b => b.Id))
-              .ForMember(vm => vm.Domains, opt => opt.MapFrom(b => b.Domains));
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
+              .ForMember(vm => vm.Portfolios, opt => opt.MapFrom(b => b.Portfolios));
 
             CreateMap<Platform, EditPlatformData>()
               .ForMember(vm => vm.PlatformId, map => map.MapFrom(b => b.PlatformId));
@@ -152,21 +152,20 @@ namespace PTApi.ViewModels.Mappings
             CreateMap<Domain, EditDomainData>()
               .ForMember(vm => vm.DomainId, map => map.MapFrom(b => b.Id));
             CreateMap<Domain, DomainViewModel>()
-              .ForMember(vm => vm.DomainId, map => map.MapFrom(b => b.Id))
-              .ForMember(vm => vm.BusinessUnitId, map => map.MapFrom(b => b.BusinessUnitId))
-              .ForMember(vm => vm.Portfolios, opt => opt.MapFrom(b => b.Portfolios));
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
+              .ForMember(vm => vm.Businessunits, opt => opt.MapFrom(b => b.Businessunits));
 
             CreateMap<Portfolio, EditPortfolioData>()
               .ForMember(vm => vm.PortfolioId, map => map.MapFrom(b => b.Id));
             CreateMap<Portfolio, PortfolioViewModel>()
-              .ForMember(vm => vm.PortfolioId, map => map.MapFrom(b => b.Id))
-              .ForMember(vm => vm.DomainId, map => map.MapFrom(b => b.DomainId))
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
+              .ForMember(vm => vm.BusinessunitId, map => map.MapFrom(b => b.BusinessunitId))
               .ForMember(vm => vm.Programmes, opt => opt.MapFrom(b => b.Programmes));
 
             CreateMap<Programme, EditProgrammeData>()
               .ForMember(vm => vm.ProgrammeId, map => map.MapFrom(b => b.Id));
             CreateMap<Programme, ProgrammeViewModel>()
-              .ForMember(vm => vm.ProgrammeId, map => map.MapFrom(b => b.Id))
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
               .ForMember(vm => vm.PortfolioId, map => map.MapFrom(b => b.PortfolioId))
               .ForMember(vm => vm.Projects, opt => opt.MapFrom(b => b.Projects));
 
@@ -194,10 +193,10 @@ namespace PTApi.ViewModels.Mappings
             CreateMap<ForecastTask, ForecastTaskViewModel>().ForMember(vm => vm.ForecastTaskId, map => map.MapFrom(b => b.ForecastTaskId));
 
 
-            CreateMap<BusinessUnit, BusinessUnitViewModel>().ForMember(vm => vm.BusinessUnitId, map => map.MapFrom(b => b.Id));
-            CreateMap<Domain, DomainViewModel>().ForMember(vm => vm.DomainId, map => map.MapFrom(b => b.Id));
-            CreateMap<Portfolio, PortfolioViewModel>().ForMember(vm => vm.PortfolioId, map => map.MapFrom(b => b.Id));
-            CreateMap<Programme, ProgrammeViewModel>().ForMember(vm => vm.ProgrammeId, map => map.MapFrom(b => b.Id));
+            CreateMap<BusinessUnit, BusinessUnitViewModel>().ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
+            CreateMap<Domain, DomainViewModel>().ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
+            CreateMap<Portfolio, PortfolioViewModel>().ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
+            CreateMap<Programme, ProgrammeViewModel>().ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
 
             //.ForMember(vm => vm.Id, opt => opt.MapFrom(r => r.Id));
             CreateMap<Project, ProjectsPermittedViewModel>()

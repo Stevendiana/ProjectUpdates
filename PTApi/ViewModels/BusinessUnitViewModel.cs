@@ -1,4 +1,3 @@
-using PTApi.Methods;
 using PTApi.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,24 +7,34 @@ namespace PTApi.ViewModels
 {
     public class BusinessUnitViewModel
     {
+        public string Id { get; set; }
+        public string BusinessunitCode { get; set; }
+        public string BusinessunitName { get; set; }
+
+        public string HeadOfBusinessunitId { get; set; }
+       
+        public Resource HeadOfBusinessunit { get; set; }
+
+        public string DomainId { get; set; }
+        public Domain Domain { get; set; }
+
+       
+        public string CompanyId { get; set; }
+        
+        public Company Company { get; set; }
+
+        public ICollection<Portfolio> Portfolios { get; set; }
+        public ICollection<Programme> Programmes { get; set; }
+        public ICollection<Project> Projects { get; set; }
+
+
+
         public BusinessUnitViewModel()
         {
-            Domains = new Collection<Domain>();
-           
+            Portfolios = new Collection<Portfolio>();
+            Programmes = new Collection<Programme>();
+            Projects = new Collection<Project>();
         }
 
-        private static string CreateNewId(string businessUnitId)
-        {
-            GeneratePublicIdMethod generatePublicId = new GeneratePublicIdMethod();
-            return generatePublicId.PartId(businessUnitId, 8);
-        }
-
-        public string BusinessUnitId { get; set; }
-        public string BusinessUnitCode { get{ return "BUU" + "-" + CreateNewId(BusinessUnitId).ToUpper(); } }
-        public string BusinessUnitName { get; set; }
-        public string CompanyId { get; set; }
-        public string HeadOfBusinessUnit { get; set; }
-        public ICollection<Domain> Domains { get; set; }
-      
     }
 }

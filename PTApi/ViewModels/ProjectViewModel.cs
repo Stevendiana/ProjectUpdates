@@ -13,7 +13,7 @@ namespace PTApi.ViewModels
     {
         public ProjectViewModel()
         {
-           PermittedUsers = new Collection<ProjectPermitted>();
+           PermittedUsers = new Collection<ProjectsPermitted>();
 
         }
 
@@ -161,7 +161,7 @@ namespace PTApi.ViewModels
         public string ProjectManagementRankId { get; set; }
         [ForeignKey("ProjectManagementRankId")]
         public ProjectManagementRank ProjectManagementRank { get; set; }
-        public ICollection<ProjectPermitted> PermittedUsers { get; private set; }
+        public ICollection<ProjectsPermitted> PermittedUsers { get; private set; }
     }
 
 

@@ -20,12 +20,15 @@ namespace PTApi.Models
 
         [Required]
         public string PlatformName { get; set; }
+
         [Required]
         public string CompanyId { get; set; }
-        public string HeadOfPlatform { get; set; }
-
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
+
+        public string HeadOfPlatformId { get; set; }
+        [ForeignKey("CompanyId,HeadOfPlatformId")]
+        public Resource HeadOfPlatform { get; set; }
 
         public ICollection<Resource> Resources { get; set; }
 

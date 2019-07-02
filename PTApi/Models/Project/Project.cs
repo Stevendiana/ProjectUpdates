@@ -161,11 +161,12 @@ namespace PTApi.Models
         public ProjectManagementRank ProjectManagementRank { get; set; }
 
 
-        public ICollection<ProjectPermitted> PermittedUsers { get; private set; }
+        public ICollection<ProjectsPermitted> PermittedUsers { get; private set; }
         public ICollection<Risk> Risks { get; private set; }
         public ICollection<Assumption> Assumptions { get; private set; }
         public ICollection<Issue> Issues { get; private set; }
         public ICollection<Dependency> Dependencies { get; private set; }
+        public ICollection<ProjectsFollowing> ProjectsIamFollowing { get; private set; }
 
 
         public Project(IProjectService projectService, IUserService userService, IResourceService resourceService)
@@ -173,11 +174,12 @@ namespace PTApi.Models
             _projectService = projectService;
             _userService = userService;
             _resourceService = resourceService;
-            PermittedUsers = new Collection<ProjectPermitted>();
+            PermittedUsers = new Collection<ProjectsPermitted>();
             Risks = new Collection<Risk>();
             Assumptions = new Collection<Assumption>();
             Issues = new Collection<Issue>();
             Dependencies = new Collection<Dependency>();
+            ProjectsIamFollowing = new Collection<ProjectsFollowing>();
 
             // ForecastTasks = new Collection<ForecastTask>();
             // Actuals = new Collection<Actual>();
