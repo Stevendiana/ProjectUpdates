@@ -45,8 +45,8 @@ namespace PTApi.Models
         
         [ForeignKey("CompanyId")]
         public Company Company { get; set; }
-        public string ProjectId { get; set; }
-        public Project Project { get; set; }
+        //public string ProjectId { get; set; }
+        //public Project Project { get; set; }
         public string ResourceManagerId { get; set; }
         public string IdentityId { get; set; }
         [ForeignKey("IdentityId")]
@@ -72,7 +72,7 @@ namespace PTApi.Models
         public int? TotalProjectsForecastCount { get; }
         [NotMapped]
         public int? TotalCountProjects { get; }
-         [NotMapped]
+        [NotMapped]
         public int? TotalCountProjectsPermitted { get; }
         [NotMapped]
         public int? TotalCountProgrammes { get; }

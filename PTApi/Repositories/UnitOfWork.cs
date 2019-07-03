@@ -36,6 +36,7 @@ namespace PTApi.Repositories
             ResourceTimesheets = new ResourceTimesheetRepository(_context);
 
             Resources = new ResourceRepository(_context);
+            ResourceUtilizations = new ResourceUtilizationRepository(_context);
 
             Actuals = new ActualRepository(_context);
             ProjectBudgets = new ProjectBudgetRepository(_context);
@@ -69,7 +70,9 @@ namespace PTApi.Repositories
         public ICompanyRateCardRepository CompanyRateCards { get; private set; }
 
         public ICurrencySymbolRepository CurrencySymbols { get; private set; }
+
         public IResourceTimesheetRepository ResourceTimesheets { get; private set; }
+        public IResourceUtilizationRepository ResourceUtilizations { get; private set; }
 
         public IResourceRepository Resources { get; private set; }
 

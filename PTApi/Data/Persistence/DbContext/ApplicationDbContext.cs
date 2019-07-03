@@ -57,7 +57,8 @@ namespace PTApi.Data
         public DbSet<Actual> Actuals { get; set; }
         public DbSet<ForecastTask> ForecastTasks { get; set; }
 
-        public DbSet<ResourceEffortSummary> ResourceEffortSummaries { get; set; }
+        public DbSet<ResourceUtilizationSummary> ResourceUtilizationSummaries { get; set; }
+        //public DbSet<ResourceEffortSummary> ResourceEffortSummaries { get; set; }
         public DbSet<ResourceHolidayBooked> ResourceHolidays { get; set; }
         public DbSet<ResourceWorkTimesheet> ResourceWorkTimesheets { get; set; }
         
@@ -139,7 +140,7 @@ namespace PTApi.Data
 
             modelBuilder.Entity<UserNotification>().HasKey(un => new { un.UserId, un.NotificationId });
 
-            modelBuilder.Entity<ResourceEffortSummary>().HasKey(res => new { res.ResourceId, res.ProjectId, res.CompanyId });
+            modelBuilder.Entity<ResourceEffortSummary>().HasKey(res => new { res.ResourceId, res.CompanyId });
 
             modelBuilder.Entity<ResourceHolidayBooked>().HasKey(rhb => new { rhb.ResourceId, rhb.TimesheetCalendarTsId, rhb.CompanyId });
 

@@ -46,16 +46,23 @@ namespace PTApi.Controllers
 
         public class EditPortfolioData
         {
-            public string PortfolioId { get; set; }
-            [Required]
+            public string Id { get; set; }
             public string PortfolioName { get; set; }
+            public string PortfolioCode { get; set; }
 
-            public string CompanyId { get; set; }
             public string UniquePortfolioRef { get; set; }
-            public string NodeId { get; set; }
-            public string DomainId { get; set; }
-            public string HeadOfPortfolio { get; set; }
 
+            [Required]
+            public string BusinessunitId { get; set; }
+            [Required]
+            public string HeadOfPortfolioId { get; set; }
+
+            public DateTime? PortfolioStartDate { get; set; }
+            public DateTime? PortfolioEndDate { get; set; }
+
+            [Required]
+            public string CompanyId { get; set; }
+            
         }
 
 
@@ -124,7 +131,7 @@ namespace PTApi.Controllers
             if (roleGroup=="Admin_Group")
             {
                 var companyId = comp;
-                var portfolio = _unitOfWork.Portfolios.GetOnePortfolio(portfolioData.PortfolioId, comp);
+                var portfolio = _unitOfWork.Portfolios.GetOnePortfolio(portfolioData.Id, comp);
 
                 if (portfolio == null)
                     return NotFound();
@@ -133,8 +140,8 @@ namespace PTApi.Controllers
 
                 portfolio.CompanyId = comp;
                 portfolio.PortfolioName = portfolioData.PortfolioName ?? portfolio.PortfolioName;
-                portfolio.HeadOfPortfolio = portfolioData.HeadOfPortfolio ?? portfolio.HeadOfPortfolio;
-                portfolio.DomainId = portfolioData.DomainId ?? portfolio.DomainId;
+                portfolio.HeadOfPortfolioId = portfolioData.HeadOfPortfolioId ?? portfolio.HeadOfPortfolioId;
+                portfolio.BusinessunitId = portfolioData.BusinessunitId ?? portfolio.BusinessunitId;
                 portfolio.PortfolioCode = "PORT" + "-" + CreateNewId(portfolio.Id).ToUpper();
 
                 _unitOfWork.Complete();

@@ -61,7 +61,7 @@ namespace PTApi.Controllers
             public string ProjectObjective { get; set; }
             public string FinancialStatus { get; set; }
             public string ProjectPrioritisation { get; set; }
-            public string Sponsor { get; set; }
+            public string SponsorId { get; set; }
             public string ProjectCustomer { get; set; }
             public string ProjectManagerUserId { get; set; }
             public string ProjectSeniorManagerUserId { get; set; }
@@ -199,7 +199,7 @@ namespace PTApi.Controllers
 
                 project.ProjectPrioritisation = projectData.ProjectPrioritisation ?? project.ProjectPrioritisation;
                 project.RfqNumber = projectData.RfqNumber ?? project.RfqNumber;
-                project.Sponsor = projectData.Sponsor ?? project.Sponsor;
+                project.SponsorId = projectData.SponsorId ?? project.SponsorId;
 
                 project.RevexCostCode =  "30" + "-"+ CreateNewId(project.ProjectId).ToString().ToUpper();
                 project.CapexCostCode =  "40"+ "-" + CreateNewId(project.ProjectId).ToString().ToUpper();

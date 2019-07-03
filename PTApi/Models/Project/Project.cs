@@ -74,7 +74,8 @@ namespace PTApi.Models
         public string Activitythisperiod { get; set; }
         public string FinancialStatus { get; set; }
         public string ProjectPrioritisation { get; set; }
-        public string Sponsor { get; set; }
+        public string SponsorId { get; set; }
+        public Resource Sponsor { get; set; }
         public string ProjectCustomer { get; set; }
         public string ProjectManagerUserName { get; set; }
 

@@ -138,7 +138,7 @@ namespace PTApi.ViewModels.Mappings
               .ForMember(vm => vm.Id, map => map.MapFrom(b => b.ResourceId));
 
             CreateMap<BusinessUnit, EditBusinessUnitData>()
-              .ForMember(vm => vm.BusinessUnitId, map => map.MapFrom(b => b.Id));
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
             CreateMap<BusinessUnit, BusinessUnitViewModel>()
               .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
               .ForMember(vm => vm.Portfolios, opt => opt.MapFrom(b => b.Portfolios));
@@ -150,20 +150,20 @@ namespace PTApi.ViewModels.Mappings
 
 
             CreateMap<Domain, EditDomainData>()
-              .ForMember(vm => vm.DomainId, map => map.MapFrom(b => b.Id));
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
             CreateMap<Domain, DomainViewModel>()
               .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
               .ForMember(vm => vm.Businessunits, opt => opt.MapFrom(b => b.Businessunits));
 
             CreateMap<Portfolio, EditPortfolioData>()
-              .ForMember(vm => vm.PortfolioId, map => map.MapFrom(b => b.Id));
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
             CreateMap<Portfolio, PortfolioViewModel>()
               .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
               .ForMember(vm => vm.BusinessunitId, map => map.MapFrom(b => b.BusinessunitId))
               .ForMember(vm => vm.Programmes, opt => opt.MapFrom(b => b.Programmes));
 
             CreateMap<Programme, EditProgrammeData>()
-              .ForMember(vm => vm.ProgrammeId, map => map.MapFrom(b => b.Id));
+              .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id));
             CreateMap<Programme, ProgrammeViewModel>()
               .ForMember(vm => vm.Id, map => map.MapFrom(b => b.Id))
               .ForMember(vm => vm.PortfolioId, map => map.MapFrom(b => b.PortfolioId))
@@ -246,7 +246,7 @@ namespace PTApi.ViewModels.Mappings
 
             // API Resource to Domain
             CreateMap<EditBusinessUnitData, BusinessUnit>()
-              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.BusinessUnitId));
+              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.Id));
 
             CreateMap<EditRagData, ProjectRagStatus>()
               .ForMember(b => b.ProjectRagStatusId, map => map.MapFrom(vm => vm.ProjectRagStatusId));
@@ -267,13 +267,13 @@ namespace PTApi.ViewModels.Mappings
               .ForMember(b => b.ResourceId, map => map.MapFrom(vm => vm.ResourceId));
 
             CreateMap<EditDomainData, Domain>()
-              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.DomainId));
+              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.Id));
 
             CreateMap<EditPortfolioData, Portfolio>()
-              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.PortfolioId));
+              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.Id));
 
             CreateMap<EditProgrammeData, Programme>()
-              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.ProgrammeId));
+              .ForMember(b => b.Id, map => map.MapFrom(vm => vm.Id));
 
             CreateMap<EditProjectData, Project>()
               .ForMember(b => b.ProjectId, map => map.MapFrom(vm => vm.ProjectId));

@@ -46,22 +46,44 @@ namespace PTApi.Controllers
 
         public class EditProgrammeData
         {
-            public string ProgrammeId { get; set; }
-            public string CompanyId { get; set; }
+            public string Id { get; set; }
+
             public string UniqueProgrammeRef { get; set; }
-            [Required]
             public string ProgrammeName { get; set; }
+            public string ProgrammeCode { get; set; }
             public string ProgrammeLead { get; set; }
             public string NextYearIndicator { get; set; }
+
             public bool AuthorisedYesOrNo { get; set; }
-            public string DeliveryDirector { get; set; }
-            public string DeliveryManager { get; set; }
-            public string ProgrammeManager { get; set; }
+
+            [Required]
+            public string BusinessunitId { get; set; }
+            public BusinessUnit BusinessUnit { get; set; }
+            [Required]
+            public string DomainId { get; set; }
+            public Domain Domain { get; set; }
+
+            public string DeliveryDirectorId { get; set; }
+            public Resource DeliveryDirector { get; set; }
+
+            public string DeliveryManagerId { get; set; }
+            public Resource DeliveryManager { get; set; }
+
+            public string ProgrammeManagerId { get; set; }
+            public Resource ProgrammeManager { get; set; }
+
             public DateTime? ProgramStartDate { get; set; }
             public DateTime? ProgramEndDate { get; set; }
-            public string NodeId { get; set; }
-            public string Sponsor { get; set; }
+            [Required]
+            public string SponsorId { get; set; }
+            public Resource Sponsor { get; set; }
+
+            [Required]
+            public string CompanyId { get; set; }
+            public Company Company { get; set; }
+            [Required]
             public string PortfolioId { get; set; }
+            public Portfolio Portfolio { get; set; }
 
         }
 
@@ -131,7 +153,7 @@ namespace PTApi.Controllers
             if (roleGroup=="Admin_Group")
             {
                 var companyId = comp;
-                var programme = _unitOfWork.Programmes.GetOneProgramme(programmeData.ProgrammeId, comp);
+                var programme = _unitOfWork.Programmes.GetOneProgramme(programmeData.Id, comp);
 
                 if (programme == null)
                     return NotFound();
@@ -141,14 +163,14 @@ namespace PTApi.Controllers
                 programme.CompanyId = comp;
                 programme.ProgrammeName = programmeData.ProgrammeName ?? programme.ProgrammeName;
                 programme.AuthorisedYesOrNo = programmeData.AuthorisedYesOrNo;
-                programme.DeliveryDirector = programmeData.DeliveryDirector ?? programme.DeliveryDirector;
-                programme.DeliveryManager = programmeData.DeliveryManager ?? programme.DeliveryManager;
+                programme.DeliveryDirectorId = programmeData.DeliveryDirectorId ?? programme.DeliveryDirectorId;
+                programme.DeliveryManagerId = programmeData.DeliveryManagerId ?? programme.DeliveryManagerId;
                 programme.NextYearIndicator = programmeData.NextYearIndicator ?? programme.NextYearIndicator;
                 programme.ProgramEndDate = programmeData.ProgramEndDate ?? programme.ProgramEndDate;
                 programme.ProgramStartDate = programmeData.ProgramStartDate ?? programme.ProgramStartDate;
                 programme.ProgramEndDate = programmeData.ProgramEndDate;
                 programme.ProgrammeLead = programmeData.ProgrammeLead ?? programme.ProgrammeLead;
-                programme.ProgrammeManager = programmeData.ProgrammeManager ?? programme.ProgrammeManager;
+                programme.ProgrammeManagerId = programmeData.ProgrammeManagerId ?? programme.ProgrammeManagerId;
                 programme.UniqueProgrammeRef = programmeData.UniqueProgrammeRef ?? programme.UniqueProgrammeRef;
 
                 programme.ProgrammeCode = "PROG" + "-" + CreateNewId(programme.Id).ToUpper();

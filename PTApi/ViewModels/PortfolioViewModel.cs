@@ -23,6 +23,9 @@ namespace PTApi.ViewModels
         public string PortfolioCode { get; set; }
 
         public string UniquePortfolioRef { get; set; }
+        
+        public string DomainId { get; set; }
+        public Domain Domain { get; set; }
 
         [Required]
         public string BusinessunitId { get; set; }

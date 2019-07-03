@@ -47,12 +47,16 @@ namespace PTApi.Controllers
 
         public class EditBusinessUnitData
         {
-            public string BusinessUnitId { get; set; }
-            public string BusinessUnitCode { get; set; }
+            public string Id { get; set; }
+            public string BusinessunitCode { get; set; }
+            public string BusinessunitName { get; set; }
             [Required]
-            public string BusinessUnitName { get; set; }
+            public string HeadOfBusinessunitId { get; set; }
+            [Required]
+            public string DomainId { get; set; }
+            [Required]
             public string CompanyId { get; set; }
-            public string HeadOfBusinessUnit { get; set; }
+            
         }
 
 
@@ -121,7 +125,7 @@ namespace PTApi.Controllers
             if (roleGroup=="Admin_Group")
             {
                 var companyId = comp;
-                var businessunit = _unitOfWork.Businessunits.Get(businessUnitData.BusinessUnitId, comp);
+                var businessunit = _unitOfWork.Businessunits.Get(businessUnitData.Id, comp);
 
                 if (businessunit == null)
                     return NotFound();
@@ -129,9 +133,12 @@ namespace PTApi.Controllers
                 _mapper.Map<EditBusinessUnitData, BusinessUnit>(businessUnitData, businessunit);
 
                 businessunit.CompanyId = comp;
-                businessunit.BusinessUnitName = businessUnitData.BusinessUnitName ?? businessunit.BusinessUnitName;
-                businessunit.HeadOfBusinessUnit = businessUnitData.HeadOfBusinessUnit ?? businessunit.HeadOfBusinessUnit;
-                businessunit.BusinessUnitCode = "BUU" + "-" + CreateNewId(businessunit.Id).ToUpper();
+
+
+                businessunit.DomainId = businessUnitData.DomainId ?? businessunit.DomainId;
+                businessunit.BusinessunitName = businessUnitData.BusinessunitName ?? businessunit.BusinessunitName;
+                businessunit.HeadOfBusinessunitId = businessUnitData.HeadOfBusinessunitId ?? businessunit.HeadOfBusinessunitId;
+                businessunit.BusinessunitCode = "BUU" + "-" + CreateNewId(businessunit.Id).ToUpper();
 
                 _unitOfWork.Complete();
 
@@ -170,7 +177,7 @@ namespace PTApi.Controllers
                 var businessUnit = _mapper.Map<EditBusinessUnitData, BusinessUnit>(businessUnitData);
                 businessUnit.CompanyId = comp;
                 businessUnit.Id = id;
-                businessUnit.BusinessUnitCode = "BUU" + "-" + CreateNewId(id).ToUpper();
+                businessUnit.BusinessunitCode = "BUU" + "-" + CreateNewId(id).ToUpper();
 
                 _unitOfWork.Businessunits.Add(businessUnit);
                 _unitOfWork.Complete();

@@ -25,6 +25,12 @@ namespace PTApi.ViewModels
 
         public bool AuthorisedYesOrNo { get; set; }
 
+       
+        public string BusinessunitId { get; set; }
+        public BusinessUnit BusinessUnit { get; set; }
+        public string DomainId { get; set; }
+        public Domain Domain { get; set; }
+
         public string DeliveryDirectorId { get; set; }
         public Resource DeliveryDirector { get; set; }
 

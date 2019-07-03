@@ -181,7 +181,7 @@ namespace PTApi.Services
 
         public GetResourceAvailabilityAndUtility GetAllResourceAvailabilityAndUtility(string companyId, string resourceId, int? year){
 
-           var getResourceAvailabilityAndUtility =  _appDbContext.ResourceEffortSummaries.Where(re => (re.CompanyId == companyId)).ToList();
+           var getResourceAvailabilityAndUtility =  _appDbContext.ResourceUtilizationSummaries.Where(re => (re.CompanyId == companyId)).ToList();
 
            var getResourceAvailabilityAndUtilityTotals =  getResourceAvailabilityAndUtility
              .Where(re => (re.ResourceId == resourceId)
@@ -326,7 +326,7 @@ namespace PTApi.Services
         public GetResourceAvailabilityAndUtility GetAllResourceAvailabilityAndUtility(string companyId, string resourceId, int? year, int? month)
         {
 
-            var getResourceAvailabilityAndUtility = _appDbContext.ResourceEffortSummaries.Where(re => (re.CompanyId == companyId)).ToList();
+            var getResourceAvailabilityAndUtility = _appDbContext.ResourceUtilizationSummaries.Where(re => (re.CompanyId == companyId)).ToList();
 
             var getResourceAvailabilityAndUtilityTotals = getResourceAvailabilityAndUtility
               .Where(re => (re.ResourceId == resourceId)

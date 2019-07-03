@@ -1,22 +1,27 @@
-using PTApi.Data;
+using PTApi.Data.Repositories;
 using PTApi.Services;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace PTApi.Models
 {
-  [Table("ResourceEffortSummaries")]
+    [Table("ResourceEffortSummaries")]
   public class ResourceEffortSummary
   {
 
         private readonly IResourceService _resourceService;
         private readonly IProjectService _projectService;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
 
-        public ResourceEffortSummary (IResourceService resourceService, IProjectService projectService)
+        public ResourceEffortSummary (IResourceService resourceService, IProjectService projectService, IUnitOfWork unitOfWork, IUserService userService)
         {
             _resourceService = resourceService;
             _projectService = projectService;
+            _unitOfWork = unitOfWork;
+            _userService = userService;
         }
 
         public ResourceEffortSummary()
@@ -35,34 +40,16 @@ namespace PTApi.Models
             return _projectService.GetDaysPerMonth(year, month).WorkingdaysInMonth;
         }
 
-        // public  decimal? GetResourceCompanyStandardDailyHours(string resourceId){
+       
 
-        //     //GetIdsWithPartIds.ResourceUtilization getIdsWithPartIds = new GetIdsWithPartIds.ResourceUtilization();
-        //     GetIdsWithPartIds getIdsWithPartIds = new GetIdsWithPartIds();
-        //     return getIdsWithPartIds.GetCompanyStandardDailyHours(resourceId).ResourceCompanyStandardHours;
-        // }
-
-        // public  decimal? GetResourceContractedEffortHours(string resourceId){
-
-        //     //GetIdsWithPartIds.ResourceUtilization getIdsWithPartIds = new GetIdsWithPartIds.ResourceUtilization();
-        //     GetIdsWithPartIds getIdsWithPartIds = new GetIdsWithPartIds();
-        //     return getIdsWithPartIds.GetCompanyStandardDailyHours(resourceId).ResourceContractedEffortHours;
-        // }
-
-        public  decimal? GetResourceCompanyStandardDailyHours(string resourceId)
+        public decimal? GetResourceCompanyStandardDailyHours()
         {
-
-            //GetIdsWithPartIds.ResourceUtilization getIdsWithPartIds = new GetIdsWithPartIds.ResourceUtilization();
-            //GetIdsWithPartIdMethod getIdsWithPartIds = new GetIdsWithPartIds();
-            return 8;
+            return Convert.ToInt32(_userService.GetSecureUserCompanyStandardHrs());
         }
 
-        public  decimal? GetResourceContractedEffortHours(string resourceId)
+        public decimal? GetResourceContractedEffortHours(string resourceId, string companyId)
         {
-
-            //GetIdsWithPartIds.ResourceUtilization getIdsWithPartIds = new GetIdsWithPartIds.ResourceUtilization();
-            //GetIdsWithPartIds getIdsWithPartIds = new GetIdsWithPartIds();
-            return 8;
+            return _unitOfWork.Resources.GetResourceContractedEffortHours(resourceId, companyId );
         }
 
 
@@ -154,18 +141,18 @@ namespace PTApi.Models
 
         //standard daily hours = 8hrs.
 
-        public decimal? JanAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 1) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? FebAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 2) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? MarAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 3) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? AprAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 4) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? MayAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 5) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? JunAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 6) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? JulAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 7) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? AugAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 8) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? SepAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 9) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? OctAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 10) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? NovAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 11) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
-        public decimal? DecAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 12) * (GetResourceContractedEffortHours(ResourceId) / GetResourceCompanyStandardDailyHours(ResourceId))); } }
+        public decimal? JanAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 1) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? FebAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 2) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? MarAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 3) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? AprAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 4) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? MayAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 5) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? JunAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 6) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? JulAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 7) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? AugAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 8) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? SepAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 9) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? OctAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 10) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? NovAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 11) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
+        public decimal? DecAvailabilityBeforeHolidaysInDays { get { return (GetNumberOfWorkingDaysInMonth(Year, 12) * (GetResourceContractedEffortHours(ResourceId, CompanyId) / GetResourceCompanyStandardDailyHours())); } }
 
         public decimal? TotalAvailabilityBeforeHolidaysInDays
         {
@@ -230,9 +217,7 @@ namespace PTApi.Models
         public decimal? DecUtilizationPercentage { get { return (DecResourceUtilizationInDays / DecAvailabilityAfterHolidaysInDays); } }
 
 
-        public string ProjectId { get; set; }
-    [ForeignKey("ProjectId")]
-    public Project Project { get; set; }
+       
     public string CompanyId { get; set; }
     public Company Company { get; set; }
     public string ResourceId { get; set; }

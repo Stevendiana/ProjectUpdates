@@ -29,6 +29,11 @@ namespace PTApi.Models
         [ForeignKey("BusinessunitId")]
         public BusinessUnit BusinessUnit { get; set; }
 
+        [Required]
+        public string DomainId { get; set; }
+        [ForeignKey("DomainId")]
+        public Domain Domain { get; set; }
+
         public string HeadOfPortfolioId { get; set; }
         [ForeignKey("CompanyId,HeadOfPortfolioId")]
         public Resource HeadOfPortfolio { get; set; }

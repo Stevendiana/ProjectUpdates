@@ -161,18 +161,25 @@ namespace PTApi.Controllers
             }
             else
             {
-                var Resource =
-                new Resource {
+                var Project = new Project(_projectService, _userService, _resourceService)
+                {
 
-                    
-                    FirstName = model.Email,
-                    IsDisabled = false,
-                    ResourceEmailAddress = model.Email,
+                    ProjectName = "My First Project",
+                    ProjectManagerUserName = model.Email,
+                    ProjectStatus = "Active",
+
                     UserCreatedEmail = model.Email,
                     UserModifiedEmail = model.Email,
-                    DateCreated =  DateTime.UtcNow,
-                    DateModified =  DateTime.UtcNow,
+                    DateCreated = DateTime.UtcNow,
+                    DateModified = DateTime.UtcNow,
 
+                    ProjectManagementRank = new ProjectManagementRank
+                    {
+                        UserCreatedEmail = model.Email,
+                        UserModifiedEmail = model.Email,
+                        DateCreated = DateTime.UtcNow,
+                        DateModified = DateTime.UtcNow,
+                    },
 
                     Company = new Company
                     {
@@ -181,127 +188,197 @@ namespace PTApi.Controllers
                         ReportingCurrency = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencySymbol,
                         UserCreatedEmail = model.Email,
                         UserModifiedEmail = model.Email,
-                        DateCreated =  DateTime.UtcNow,
-                        DateModified =  DateTime.UtcNow,
+                        DateCreated = DateTime.UtcNow,
+                        DateModified = DateTime.UtcNow,
 
 
-                        CompanyCurrencyId= 56,
-                        AllowReconciliation=true,
-                        FinanceReportingPeriod= "January",
-                        FinanceReportingYear= DateTime.Now.Year,
-                        RecurringReportingDay= 1,
-                        FreezeForecast= false,
-                        StandardDailyHours= 8,
+                        CompanyCurrencyId = 56,
+                        AllowReconciliation = true,
+                        FinanceReportingPeriod = "January",
+                        FinanceReportingYear = DateTime.Now.Year,
+                        RecurringReportingDay = 1,
+                        FreezeForecast = false,
+                        StandardDailyHours = 8,
                         DoEmployeesWorkWeekends = false,
 
                         CompanyCurrentShortName = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencyShortName,
                         CompanyCurrentLongName = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencyLongName,
                     },
 
-                     //project = new Project(IProjectService ProjectService);
-
-                    Project = new Project(_projectService, _userService, _resourceService){
-
-                        ProjectName = "My First Project",
-                        ProjectManagerUserName = model.Email,
-                        ProjectStatus = "Active",
-
+                    Sponsor = new Resource
+                    {
+                        FirstName = model.Email,
+                        IsDisabled = false,
+                        ResourceEmailAddress = model.Email,
                         UserCreatedEmail = model.Email,
                         UserModifiedEmail = model.Email,
-                        DateCreated =  DateTime.UtcNow,
-                        DateModified =  DateTime.UtcNow,
+                        DateCreated = DateTime.UtcNow,
+                        DateModified = DateTime.UtcNow,
 
-                        ProjectManagementRank = new ProjectManagementRank{
-                            UserCreatedEmail = model.Email,
-                            UserModifiedEmail = model.Email,
-                            DateCreated =  DateTime.UtcNow,
-                            DateModified =  DateTime.UtcNow,
+                        Identity = new ApplicationUser
+                        {
+
+                            UserName = model.Email,
+                            Email = model.Email,
+                            AppUserRole = "AccountOwner",
+
+                            DateCreated = DateTime.Now.ToUniversalTime(),
+                            DateModified = DateTime.Now.ToUniversalTime(),
+
                         },
                     },
 
-                    Identity = new ApplicationUser
+                    Domain = new Domain
                     {
-
-                        UserName = model.Email,
-                        Email = model.Email,
-                        AppUserRole = "AccountOwner",
-
+                        DomainName = "Autonomous - (stand-alone)",
                         DateCreated = DateTime.Now.ToUniversalTime(),
                         DateModified = DateTime.Now.ToUniversalTime(),
+                    },
 
+                    BusinessUnit = new BusinessUnit
+                    {
+                        BusinessunitName = "Autonomous - (stand-alone)",
+                        DateCreated = DateTime.Now.ToUniversalTime(),
+                        DateModified = DateTime.Now.ToUniversalTime(),
+                    },
+
+                    Portfolio = new Portfolio
+                    {
+                        PortfolioName = "Autonomous - (stand-alone)",
+                        DateCreated = DateTime.Now.ToUniversalTime(),
+                        DateModified = DateTime.Now.ToUniversalTime(),
+                    },
+
+                    Programme = new Programme
+                    {
+                        ProgrammeName = "Autonomous - (stand-alone)",
+                        DateCreated = DateTime.Now.ToUniversalTime(),
+                        DateModified = DateTime.Now.ToUniversalTime(),
                     },
 
                 };
 
 
-                var userIdentity = Resource.Identity;
+                var userIdentity = Project.Sponsor.Identity;
+                var resource = Project.Sponsor;
+                var company = Project.Company;
+                var domain = Project.Domain;
+                var businessunit = Project.BusinessUnit;
+                var portfolio = Project.Portfolio;
+                var programme = Project.Programme;
+                var projectManagementRank = Project.ProjectManagementRank;
 
                 var result = await _userManager.CreateAsync(userIdentity, model.Password);
 
-                _unitOfWork.Resources.Add(Resource);
+                _unitOfWork.Projects.Add(Project);
 
-                userIdentity.CompanyId = Resource.CompanyId;
+                userIdentity.CompanyId = company.CompanyId;
 
                 userIdentity.UserCreatedId = userIdentity.Id;
-                userIdentity.UserCreatedResourceId = Resource.ResourceId;
+                userIdentity.UserCreatedResourceId = resource.ResourceId;
                 userIdentity.UserCreatedEmail = userIdentity.Email;
-                userIdentity.UserCreatedFirstName = Resource.FirstName;
-                userIdentity.UserCreatedLastName = Resource.LastName;
-                userIdentity.UserCreatedAvatar = Resource.ImageUrl;
+                userIdentity.UserCreatedFirstName = resource.FirstName;
+                userIdentity.UserCreatedLastName = resource.LastName;
+                userIdentity.UserCreatedAvatar = resource.ImageUrl;
 
-                
                 userIdentity.UserModifiedId = userIdentity.Id;
-                userIdentity.UserModifiedEmail = Resource.ResourceId;
+                userIdentity.UserModifiedEmail = resource.ResourceId;
                 userIdentity.UserModifiedResourceId = userIdentity.Email;
-                userIdentity.UserModifiedFirstName = Resource.FirstName;
-                userIdentity.UserModifiedLastName = Resource.LastName;
-                userIdentity.UserModifiedAvartar = Resource.ImageUrl;
+                userIdentity.UserModifiedFirstName = resource.FirstName;
+                userIdentity.UserModifiedLastName = resource.LastName;
+                userIdentity.UserModifiedAvartar = resource.ImageUrl;
+
+                var domainId = Guid.NewGuid().ToString();
+                domain.Id = domainId;
+                domain.DomainCode = "DOM" + "-" + CreateNewId(domainId, 8).ToUpper();
+                domain.CompanyId = company.CompanyId;
+                
+                var businessunitId = Guid.NewGuid().ToString();
+                businessunit.Id = businessunitId;
+                businessunit.DomainId = domainId;
+                businessunit.BusinessunitCode = "BUU" + "-" + CreateNewId(businessunitId, 8).ToUpper();
+                businessunit.CompanyId = company.CompanyId;
+
+                var portfolioId = Guid.NewGuid().ToString();
+                portfolio.Id = portfolioId;
+                portfolio.BusinessunitId = businessunitId;
+                portfolio.DomainId = domainId;
+                portfolio.PortfolioCode = "PORT" + "-" + CreateNewId(domainId, 8).ToUpper();
+                portfolio.CompanyId = company.CompanyId;
+
+                var programmeId = Guid.NewGuid().ToString();
+                programme.Id = programmeId;
+                programme.PortfolioId = portfolioId;
+                programme.BusinessunitId = businessunitId;
+                programme.DomainId = domainId;
+                programme.ProgrammeCode = "PROG" + "-" + CreateNewId(domainId, 8).ToUpper();
+                programme.CompanyId = company.CompanyId;
 
                 var projectId = Guid.NewGuid().ToString();
 
-                Resource.CompanyId = Resource.Company.CompanyId;
-                Resource.IdentityId = Resource.Identity.Id;
-                Resource.Project.ProjectId = projectId;
+                resource.CompanyId = company.CompanyId;
+                resource.IdentityId = resource.Identity.Id;
+                Project.ProjectId = projectId;
 
-                Resource.Project.CompanyId = Resource.Company.CompanyId;
+                Project.CompanyId = company.CompanyId;
 
-                Resource.Project.ProjectRef = "PRJ" + "-" + CreateNewId(Resource.Project.ProjectId, 8).ToUpper();
-                Resource.Project.ProjectCode = "PRJ" + "-" + CreateNewId(Resource.Project.ProjectId, 8).ToUpper();
-                Resource.Company.CompanyRef = "COM" + "-" + CreateNewId(Resource.Company.CompanyId, 8).ToUpper();
+                Project.ProjectRef = "PRJ" + "-" + CreateNewId(projectId, 8).ToUpper();
+                Project.ProjectCode = "PRJ" + "-" + CreateNewId(projectId, 8).ToUpper();
+                company.CompanyRef = "COM" + "-" + CreateNewId(company.CompanyId, 8).ToUpper();
 
-                Resource.Project.RevexCostCode =  "300" + CreateNewId(Resource.Project.ProjectId, 7).ToString().ToUpper();
-                Resource.Project.CapexCostCode =  "400"+ CreateNewId(Resource.Project.ProjectId, 7).ToString().ToUpper();
-                Resource.Project.OpexCostCode =  "500" + CreateNewId(Resource.Project.ProjectId, 7).ToString().ToUpper();
+                Project.RevexCostCode =  "300" + CreateNewId(projectId, 7).ToString().ToUpper();
+                Project.CapexCostCode =  "400"+ CreateNewId(projectId, 7).ToString().ToUpper();
+                Project.OpexCostCode =  "500" + CreateNewId(projectId, 7).ToString().ToUpper();
 
-                Resource.Project.ProjectManagementRank.ProjectId = projectId;
-                Resource.Project.ProjectManagementRank.ProjectManagerUserId = userIdentity.Id;
+                Project.ProjectManagementRank.ProjectId = projectId;
+                Project.ProjectManagementRank.ProjectManagerUserId = userIdentity.Id;
 
                 var resourceId = Guid.NewGuid().ToString();
-                Resource.ResourceId = resourceId;
+                resource.ResourceId = resourceId;
                 userIdentity.ResourceId = resourceId;
-                Resource.ResourceNumber = "RES" + "-" + CreateNewId(resourceId, 8).ToUpper();
+                resource.ResourceNumber = "RES" + "-" + CreateNewId(resourceId, 8).ToUpper();
 
-                Resource.UserCreatedId = Resource.Identity.Id;
-                Resource.UserCreatedResourceId = resourceId;
-                Resource.UserModifiedResourceId = resourceId;
-                Resource.UserModifiedId = Resource.Identity.Id;
+                resource.UserCreatedId = resource.Identity.Id;
+                resource.UserCreatedResourceId = resourceId;
+                resource.UserModifiedResourceId = resourceId;
+                resource.UserModifiedId = resource.Identity.Id;
 
-                Resource.Project.UserCreatedId = Resource.Identity.Id;
-                Resource.Project.UserCreatedResourceId = resourceId;
-                Resource.Project.UserModifiedId = Resource.Identity.Id;
-                Resource.Project.UserModifiedResourceId = resourceId;
+                Project.UserCreatedId = resource.Identity.Id;
+                Project.UserCreatedResourceId = resourceId;
+                Project.UserModifiedId = resource.Identity.Id;
+                Project.UserModifiedResourceId = resourceId;
 
-                Resource.Company.UserCreatedId = Resource.Identity.Id;
-                Resource.Company.UserCreatedResourceId = resourceId;
-                Resource.Company.UserModifiedResourceId = resourceId;
-                Resource.Company.UserModifiedId = Resource.Identity.Id;
+                company.UserCreatedId = resource.Identity.Id;
+                company.UserCreatedResourceId = resourceId;
+                company.UserModifiedResourceId = resourceId;
+                company.UserModifiedId = resource.Identity.Id;
 
-                Resource.Project.ProjectManagementRank.UserCreatedId = Resource.Identity.Id;
-                Resource.Project.ProjectManagementRank.UserCreatedResourceId = resourceId;
-                Resource.Project.ProjectManagementRank.UserModifiedResourceId = resourceId;
-                Resource.Project.ProjectManagementRank.UserModifiedId = Resource.Identity.Id;
+                projectManagementRank.UserCreatedId = resource.Identity.Id;
+                projectManagementRank.UserCreatedResourceId = resourceId;
+                projectManagementRank.UserModifiedResourceId = resourceId;
+                projectManagementRank.UserModifiedId = resource.Identity.Id;
 
-                var notification = Notification.ProjectCreated(Resource.Project, Resource.IdentityId, resourceId);
+                domain.UserCreatedId = resource.Identity.Id;
+                domain.UserCreatedResourceId = resourceId;
+                domain.UserModifiedResourceId = resourceId;
+                domain.UserModifiedId = resource.Identity.Id;
+
+                businessunit.UserCreatedId = resource.Identity.Id;
+                businessunit.UserCreatedResourceId = resourceId;
+                businessunit.UserModifiedResourceId = resourceId;
+                businessunit.UserModifiedId = resource.Identity.Id;
+
+                portfolio.UserCreatedId = resource.Identity.Id;
+                portfolio.UserCreatedResourceId = resourceId;
+                portfolio.UserModifiedResourceId = resourceId;
+                portfolio.UserModifiedId = resource.Identity.Id;
+
+                programme.UserCreatedId = resource.Identity.Id;
+                programme.UserCreatedResourceId = resourceId;
+                programme.UserModifiedResourceId = resourceId;
+                programme.UserModifiedId = resource.Identity.Id;
+
+                var notification = Notification.ProjectCreated(Project, resource.IdentityId, resourceId);
                 userIdentity.UserNotifications.Add(new UserNotification(userIdentity, notification));
 
                 await _unitOfWork.CompleteAsync();
@@ -321,7 +398,7 @@ namespace PTApi.Controllers
             }
         }
 
-
+        
         public class AddNewuser
         {
             [Required]

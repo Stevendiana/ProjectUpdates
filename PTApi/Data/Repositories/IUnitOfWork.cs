@@ -31,6 +31,7 @@ namespace PTApi.Data.Repositories
         IProjectBudgetTrackerRepository BudgetTracker { get; }
 
         IResourceRepository Resources { get; }
+        IResourceUtilizationRepository ResourceUtilizations { get; }
 
         IProjectRagStatusRepository Rags { get; }
         IAssumptionRepository Assumptions { get; }

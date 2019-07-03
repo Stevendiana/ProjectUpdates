@@ -27,6 +27,16 @@ namespace PTApi.Models
 
         public bool AuthorisedYesOrNo { get; set; }
 
+        [Required]
+        public string BusinessunitId { get; set; }
+        [ForeignKey("BusinessunitId")]
+        public BusinessUnit BusinessUnit { get; set; }
+
+        [Required]
+        public string DomainId { get; set; }
+        [ForeignKey("DomainId")]
+        public Domain Domain { get; set; }
+
         public string DeliveryDirectorId { get; set; }
         [ForeignKey("CompanyId,DeliveryDirectorId")]
         public Resource DeliveryDirector { get; set; }

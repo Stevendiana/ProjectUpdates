@@ -47,17 +47,14 @@ namespace PTApi.Controllers
 
         public class EditDomainData
         {
-            public string DomainId { get; set; }
-            public string CompanyId { get; set; }
+            public string Id { get; set; }
             public string DomainCode { get; set; }
-            public string BusinessUnitId { get; set; }
+            public string DomainName { get; set; }
             [Required]
-            public string DivisionOrDomainName { get; set; }
+            public string CompanyId { get; set; }
             [Required]
-            public string HeadOfDomain { get; set; }
-            public BusinessUnit BusinessUnit { get; set; }
-            public string NodeId { get; set; }
-            public Company Company { get; set; }
+            public string HeadOfDomainId { get; set; }
+            
         }
 
 
@@ -126,7 +123,7 @@ namespace PTApi.Controllers
             if (roleGroup=="Admin_Group")
             {
                 var companyId = comp;
-                var domain = _unitOfWork.Domains.GetOneDomain(domainData.DomainId, comp);
+                var domain = _unitOfWork.Domains.GetOneDomain(domainData.Id, comp);
 
                 if (domain == null)
                     return NotFound();
@@ -134,9 +131,8 @@ namespace PTApi.Controllers
                 _mapper.Map<EditDomainData, Domain>(domainData, domain);
 
                 domain.CompanyId = comp;
-                domain.DivisionOrDomainName = domainData.DivisionOrDomainName ?? domain.DivisionOrDomainName;
-                domain.BusinessUnitId = domainData.BusinessUnitId ?? domain.BusinessUnitId;
-                domain.HeadOfDomain = domainData.HeadOfDomain ?? domain.HeadOfDomain;
+                domain.DomainName = domainData.DomainName ?? domain.DomainName;
+                domain.HeadOfDomainId = domainData.HeadOfDomainId ?? domain.HeadOfDomainId;
                 domain.DomainCode = "DOM" + "-" + CreateNewId(domain.Id).ToUpper();
 
                 _unitOfWork.Complete();

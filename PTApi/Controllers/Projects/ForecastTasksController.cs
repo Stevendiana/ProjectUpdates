@@ -598,7 +598,7 @@ namespace PTApi.Controllers
 
             var oldforecasttask = _unitOfWork.LifetimeForecast.SingleOrDefault(b => (b.CompanyId == comp) && (b.ForecastTaskId == forecasttaskData.ForecastTaskId));
             
-            var resource = _unitOfWork.Resources.SingleOrDefault(b => (b.CompanyId == comp) && (b.ProjectId == forecasttaskData.ProjectId));
+            var resource = _unitOfWork.Resources.SingleOrDefault(b => (b.CompanyId == comp) && (b.ResourceId == forecasttaskData.ResourceId));
             var project = _unitOfWork.Projects.SingleOrDefault(b => (b.CompanyId == comp) && (b.ProjectId == forecasttaskData.ProjectId));
 
             oldforecasttask.CostType = oldforecasttask.CostType ?? forecasttaskData.CostType;
@@ -671,7 +671,7 @@ namespace PTApi.Controllers
               return BadRequest();
             }
 
-            var resource = _unitOfWork.Resources.SingleOrDefault(b => (b.CompanyId == comp) && (b.ProjectId == forecasttaskData.ProjectId));
+            var resource = _unitOfWork.Resources.SingleOrDefault(b => (b.CompanyId == comp) && (b.ResourceId == forecasttaskData.ResourceId));
             var project = _unitOfWork.Projects.SingleOrDefault(b => (b.CompanyId == comp) && (b.ProjectId == forecasttaskData.ProjectId));
 
             if (forecasttaskData.VendorId == null && forecasttaskData.CostType == Constants.Strings.CostTypes.LabourCost)

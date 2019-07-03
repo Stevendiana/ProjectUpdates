@@ -1,0 +1,74 @@
+﻿  JanResourceUtilizationInDays 
+         FebResourceUtilizationInDays 
+         MarResourceUtilizationInDays 
+         AprResourceUtilizationInDays 
+         MayResourceUtilizationInDays 
+         JunResourceUtilizationInDays 
+         JulResourceUtilizationInDays 
+         AugResourceUtilizationInDays 
+         SepResourceUtilizationInDays 
+         OctResourceUtilizationInDays 
+         NovResourceUtilizationInDays 
+         DecResourceUtilizationInDays 
+        
+         TotalUtilizationInDays 
+
+        
+
+         JanAvailabilityBeforeHolidaysInDays 
+         FebAvailabilityBeforeHolidaysInDays 
+         MarAvailabilityBeforeHolidaysInDays 
+         AprAvailabilityBeforeHolidaysInDays 
+         MayAvailabilityBeforeHolidaysInDays 
+         JunAvailabilityBeforeHolidaysInDays 
+         JulAvailabilityBeforeHolidaysInDays 
+         AugAvailabilityBeforeHolidaysInDays 
+         SepAvailabilityBeforeHolidaysInDays 
+         OctAvailabilityBeforeHolidaysInDays 
+         NovAvailabilityBeforeHolidaysInDays 
+         DecAvailabilityBeforeHolidaysInDays 
+
+         TotalAvailabilityBeforeHolidaysInDays 
+         JanTotalHolidays 
+         FebTotalHolidays 
+         MarTotalHolidays 
+         AprTotalHolidays 
+         MayTotalHolidays 
+         JunTotalHolidays 
+         JulTotalHolidays 
+         AugTotalHolidays 
+         SepTotalHolidays 
+         OctTotalHolidays 
+         NovTotalHolidays 
+         DecTotalHolidays 
+
+
+         JanAvailabilityAfterHolidaysInDays 
+         FebAvailabilityAfterHolidaysInDays 
+         MarAvailabilityAfterHolidaysInDays 
+         AprAvailabilityAfterHolidaysInDays 
+         MayAvailabilityAfterHolidaysInDays 
+         JunAvailabilityAfterHolidaysInDays 
+         JulAvailabilityAfterHolidaysInDays 
+         AugAvailabilityAfterHolidaysInDays 
+         SepAvailabilityAfterHolidaysInDays 
+         OctAvailabilityAfterHolidaysInDays 
+         NovAvailabilityAfterHolidaysInDays 
+         DecAvailabilityAfterHolidaysInDays 
+
+
+       
+         TotalAvailabilityAfterHolidaysInDays 
+
+         JanUtilizationPercentage 
+         FebUtilizationPercentage 
+         MarUtilizationPercentage 
+         AprUtilizationPercentage 
+         MayUtilizationPercentage 
+         JunUtilizationPercentage 
+         JulUtilizationPercentage 
+         AugUtilizationPercentage 
+         SepUtilizationPercentage 
+         OctUtilizationPercentage 
+         NovUtilizationPercentage 
+         DecUtilizationPercentage 
