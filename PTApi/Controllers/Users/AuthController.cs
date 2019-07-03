@@ -200,6 +200,8 @@ namespace PTApi.Controllers
                         FreezeForecast = false,
                         StandardDailyHours = 8,
                         DoEmployeesWorkWeekends = false,
+                        IrrecoverableVATPercentage = 0,
+                        UseRateCard = true,
 
                         CompanyCurrentShortName = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencyShortName,
                         CompanyCurrentLongName = _unitOfWork.CurrencySymbols.GetOneCurrency(56).CompanyCurrencyLongName,

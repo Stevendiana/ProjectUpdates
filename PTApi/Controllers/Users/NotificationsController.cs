@@ -2,6 +2,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PTApi.Data.Repositories;
+using PTApi.Models;
+using PTApi.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,32 +18,26 @@ namespace PTApi.Controllers
     [Route("api/Notifications")]
     public class NotificationsController: Controller
     {
-        private readonly ProjectCentreDbContext _appDbContext;
         private readonly IUserService _userService;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public NotificationsController(IUserService userService,ProjectCentreDbContext appDbContext, IMapper mapper)
+        public NotificationsController(IUserService userService, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _appDbContext = appDbContext;
+            _unitOfWork = unitOfWork;
             _userService = userService;
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IEnumerable<SummarisedNotification> GetNotifications()
-        {
-            var userId = _userService.GetSecureUserId();
-            var companyId = _userService.GetSecureUserCompany();
-            var notifications = _appDbContext.UserNotifications
-                .Where(un => (un.UserId == userId) && (un.User.CompanyId == companyId) && (!un.IsRead))
-                .Include(un => un.Notification)
-                .Include(un => un.Notification.Project)
-                .Include(un => un.Notification.UpdatedByResource)
-                .Select(un => un.Notification)
-                .ToList();
+        //[HttpGet]
+        //public IEnumerable<SummarisedNotification> GetNotifications()
+        //{
+        //    var userId = _userService.GetSecureUserId();
+        //    var companyId = _userService.GetSecureUserCompany();
+        //    var notifications = _unitOfWork.Notifications.GetAllMyNotifications(companyId,userId);
 
-            return notifications.Select(_mapper.Map<Notification, SummarisedNotification>);
-        }
+        //    return notifications.Select(_mapper.Map<IEnumerable<UserNotification>, IEnumerable<SummarisedNotification>>);
+        //}
 
         public class SummarisedNotification
         {
@@ -96,20 +93,20 @@ namespace PTApi.Controllers
 
 
 
-        [HttpPost]
-        public IActionResult MarkAsRead()
-        {
-            var userId = _userService.GetSecureUserId();
-            var notifications = _appDbContext.UserNotifications
-                .Where(un => un.UserId == userId && !un.IsRead)
-                .ToList();
+        //[HttpPost]
+        //public IActionResult MarkAsRead()
+        //{
+        //    var userId = _userService.GetSecureUserId();
+        //    var notifications = _appDbContext.UserNotifications
+        //        .Where(un => un.UserId == userId && !un.IsRead)
+        //        .ToList();
 
-            notifications.ForEach(n => n.Read());
+        //    notifications.ForEach(n => n.Read());
 
-            _appDbContext.SaveChanges();
+        //    _appDbContext.SaveChanges();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
 
     }
 }

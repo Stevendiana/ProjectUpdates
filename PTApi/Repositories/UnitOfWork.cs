@@ -16,6 +16,7 @@ namespace PTApi.Repositories
             _forecastService = forecastService;
  
             Users = new UserRepository(_context);
+            Notifications = new UserNotificationRepository(_context);
 
             Companies = new CompanyRepository(_context);
             Businessunits = new BusinessunitRepository(_context);
@@ -34,6 +35,7 @@ namespace PTApi.Repositories
 
             CurrencySymbols = new CurrencySymbolRepository(_context);
             ResourceTimesheets = new ResourceTimesheetRepository(_context);
+            ResourceHolidays = new ResourceHolidayBookedRepository(_context);
 
             Resources = new ResourceRepository(_context);
             ResourceUtilizations = new ResourceUtilizationRepository(_context);
@@ -53,6 +55,7 @@ namespace PTApi.Repositories
         }
 
         public IUserRepository Users { get; private set; }
+        public IUserNotificationRepository Notifications { get; private set; }
         public ICompanyRepository Companies { get; private set; }
 
         public IBusinessunitRepository Businessunits{ get; private set; }
@@ -72,6 +75,7 @@ namespace PTApi.Repositories
         public ICurrencySymbolRepository CurrencySymbols { get; private set; }
 
         public IResourceTimesheetRepository ResourceTimesheets { get; private set; }
+        public IResourceHolidayBookedRepository ResourceHolidays { get; private set; }
         public IResourceUtilizationRepository ResourceUtilizations { get; private set; }
 
         public IResourceRepository Resources { get; private set; }

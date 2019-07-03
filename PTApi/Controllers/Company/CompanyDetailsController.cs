@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace PTApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
+     [Route("api/[controller]")]
     public class CompanyDetailsController: Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -41,6 +41,7 @@ namespace PTApi.Controllers
         public CompanyDetailsController(UserManager<ApplicationUser> userManager, IMapper mapper,IBlobStorage blobStorage, IUserService userService,
             IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IUnitOfWork unitOfWork)
         {
+            _userService = userService;
             _userManager = userManager;
             _mapper = mapper;
              _blobStorage = blobStorage;

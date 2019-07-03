@@ -33,6 +33,8 @@ namespace PTApi.Models
         public int FinanceReportingYear { get; set; }
         public int RecurringReportingDay { get; set; }
         public bool FreezeForecast { get; set; }
+        public bool UseRateCard { get; set; }
+        public decimal IrrecoverableVATPercentage { get; set; }
         public byte? StandardDailyHours { get; set; }
         public bool DoEmployeesWorkWeekends { get; set; }
         public string CompanyCurrentShortName { get; set; }

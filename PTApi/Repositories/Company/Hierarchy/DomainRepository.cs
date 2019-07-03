@@ -22,7 +22,7 @@ namespace PTApi.Repositories
 
         public Domain GetOneDomainWithBusinessUnit(string id, string companyId)
         {
-            return ApplicationDbContext.Domains.Include(d => d.BusinessUnit).SingleOrDefault(d => d.Id == id && d.CompanyId == companyId );
+            return ApplicationDbContext.Domains.SingleOrDefault(d => d.Id == id && d.CompanyId == companyId );
         }
 
         public Domain GetOneDomainWithPortfolios(string id, string companyId)
@@ -32,20 +32,20 @@ namespace PTApi.Repositories
 
         public Domain GetOneDomainWithPortfoliosAndBusinessUnit(string id, string companyId)
         {
-            return ApplicationDbContext.Domains.Include(d => d.Portfolios).Include(d => d.BusinessUnit)
+            return ApplicationDbContext.Domains.Include(d => d.Portfolios).Include(d => d.Businessunits)
                 .SingleOrDefault(d => d.Id == id && d.CompanyId == companyId);
         }
 
         public IEnumerable<Domain> GetAllDomainsOnly(string companyId)
         {
-            return ApplicationDbContext.Domains.OrderByDescending(d => d.DivisionOrDomainName).ToList();
+            return ApplicationDbContext.Domains.OrderByDescending(d => d.DomainName).ToList();
         }
 
         public IEnumerable<Domain> GetAllDomainsWithPortfoliosAndBusinessUnit(string companyId)
         {
             return ApplicationDbContext.Domains
-                .Include(d => d.Portfolios).Include(d => d.BusinessUnit)
-                .OrderBy(d => d.DivisionOrDomainName)
+                .Include(d => d.Portfolios).Include(d => d.Businessunits)
+                .OrderBy(d => d.DomainName)
                 .ToList();
         }
 

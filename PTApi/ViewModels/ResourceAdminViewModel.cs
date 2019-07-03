@@ -11,7 +11,7 @@ namespace PTApi.ViewModels
 
     public class ResourceAdminViewModel: BaseEntity
    {
-        private readonly IPermissionService _permissionService;
+        //private readonly IPermissionService _permissionService;
         private readonly IResourceService _resourceService;
 
         public string ResourceId { get; set; }
@@ -140,10 +140,10 @@ namespace PTApi.ViewModels
 
         }
 
-        public ResourceAdminViewModel(IPermissionService permissionService, IResourceService resourceService)
+        public ResourceAdminViewModel(IResourceService resourceService)
         {
 
-             _permissionService = permissionService;
+             //_permissionService = permissionService;
              _resourceService = resourceService;
             ResourceWorkTimesheets = new Collection<ResourceWorkTimesheet>();
             Projects = new Collection<Project>();

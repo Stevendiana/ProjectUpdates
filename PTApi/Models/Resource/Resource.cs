@@ -21,6 +21,7 @@ namespace PTApi.Models
         public DateTime? ResourceEndDate { get; set; }
         
         public string PlatformId { get; set; }
+        [ForeignKey("PlatformId")]
         public Platform Platform { get; set; }
         public string Agency { get; set; }
         public string Vendor { get; set; }

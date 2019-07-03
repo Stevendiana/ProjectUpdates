@@ -112,6 +112,7 @@ namespace PTApi.Data
             //modelBuilder.Entity<ParentTask>().HasKey(f => new { f.ParentTaskId, f.ProjectId, f.CompanyId });
 
             modelBuilder.Entity<ForecastTask>().HasKey(f => new { f.ForecastTaskId });
+          
             //modelBuilder.Entity<ForecastTask>().HasOne(f => f.ParentTaskId);
 
             modelBuilder.Entity<ReconciledActual>().HasKey(ra => new { ra.ActualId,  ra.ForecastTaskId });
@@ -130,11 +131,22 @@ namespace PTApi.Data
             modelBuilder.Entity<ProgrammesPermitted>().HasKey(pgp => new { pgp.UserId, pgp.ResourceId, pgp.CompanyId, pgp.ProgrammeId });
 
 
+            modelBuilder.Entity<BusinessunitsFollowing>().HasKey(pjp => new { pjp.ResourceId, pjp.BusinessUnitId, pjp.CompanyId, pjp.UserId });
+            modelBuilder.Entity<DomainsFollowing>().HasKey(pjp => new { pjp.ResourceId, pjp.DomainId, pjp.CompanyId, pjp.UserId });
+            modelBuilder.Entity<PortfoliosFollowing>().HasKey(pjp => new { pjp.ResourceId, pjp.PortfolioId, pjp.CompanyId, pjp.UserId });
+            modelBuilder.Entity<ProgrammesFollowing>().HasKey(pjp => new { pjp.ResourceId, pjp.ProgrammeId, pjp.CompanyId, pjp.UserId });
+            modelBuilder.Entity<ProjectsFollowing>().HasKey(pjp => new { pjp.ResourceId, pjp.ProjectId, pjp.CompanyId, pjp.UserId });
             modelBuilder.Entity<ProjectsPermitted>().HasKey(pjp => new { pjp.ResourceId, pjp.ProjectId, pjp.CompanyId, pjp.UserId });
 
             modelBuilder.Entity<Resource>().HasKey(res => new { res.CompanyId, res.ResourceId });
 
             modelBuilder.Entity<ProjectManagementRank>().HasOne(pm => pm.Project);
+            modelBuilder.Entity<Platform>().HasOne(pm => pm.HeadOfPlatform);
+           
+            //modelBuilder.Entity<Portfolio>().HasOne(pm => pm.HeadOfPortfolio);
+            //modelBuilder.Entity<Programme>().HasMany(pm => pm.DeliveryManager);
+            //modelBuilder.Entity<BusinessUnit>().HasOne(pm => pm.Resource);
+            //modelBuilder.Entity<Domain>().HasOne(pm => pm.Resource);
 
             modelBuilder.Entity<Project>().HasOne(pm => pm.ProjectManagementRank).WithOne(c => c.Project);
 

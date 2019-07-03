@@ -30,7 +30,7 @@ namespace PTApi.ViewModels
         public ICollection<KeyValuePairViewModel> DomainsPermitted { get; set; }
         public ICollection<KeyValuePairViewModel> PortfoliosPermitted { get; set; }
         public ICollection<KeyValuePairViewModel> ProgrammesPermitted { get; set; }
-        public ICollection<ProjectPermitted> ProjectsPermitted { get; set; }
+        public ICollection<ProjectsPermitted> ProjectsPermitted { get; set; }
         public ICollection<ResourceWorkTimesheet> ResourceWorkTimesheets { get; set; }
         public ResourceProfileViewModel()
         {
@@ -39,7 +39,7 @@ namespace PTApi.ViewModels
             DomainsPermitted = new Collection<KeyValuePairViewModel>();
             PortfoliosPermitted = new Collection<KeyValuePairViewModel>();
             ProgrammesPermitted = new Collection<KeyValuePairViewModel>();
-            ProjectsPermitted = new Collection<ProjectPermitted>();
+            ProjectsPermitted = new Collection<ProjectsPermitted>();
             ResourceWorkTimesheets = new Collection<ResourceWorkTimesheet>();
 
             BusinessUnits = new Collection<BusinessUnit>();

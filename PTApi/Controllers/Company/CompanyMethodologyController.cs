@@ -28,6 +28,7 @@ namespace PTApi.Controllers
         public CompanyMethodologiesController(UserManager<ApplicationUser> userManager, IUserService userService,
             IMapper mapper, IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IUnitOfWork unitOfWork)
         {
+            _userService = userService;
             _getIdsWithPartIds = getIdsWithPartIds;
             _getpublicId = getpublicId;
             _unitOfWork = unitOfWork;

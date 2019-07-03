@@ -27,8 +27,12 @@ namespace PTApi.Models
         public string ApproverFeedBackNote { get; set; }
         public string CompanyId { get; set; }
         public Company Company { get; set; }
+        [Key]
+        [Required]
         public string ResourceId { get; set; }
         public Resource Resource { get; set; }
+        [Key]
+        [Required]
         public int TimesheetCalendarTsId { get; set; }
         public TimesheetCalendar TimesheetCalendar { get; set; }
     }

@@ -22,12 +22,12 @@ namespace PTApi.Repositories
 
         public BusinessUnit GetBusinessUnitWithDomains(string id, string companyId)
         {
-            return ApplicationDbContext.BusinessUnits.Include(b => b.Domains).SingleOrDefault(b => b.Id == id && b.CompanyId == companyId);
+            return ApplicationDbContext.BusinessUnits.Include(b => b.Portfolios).SingleOrDefault(b => b.Id == id && b.CompanyId == companyId);
         }
 
         public IEnumerable<BusinessUnit> GetAllBusinessUnits(string companyId)
         {
-            return ApplicationDbContext.BusinessUnits.OrderByDescending(b => b.BusinessUnitName).ToList();
+            return ApplicationDbContext.BusinessUnits.OrderByDescending(b => b.BusinessunitName).ToList();
         }
 
         public ApplicationDbContext ApplicationDbContext

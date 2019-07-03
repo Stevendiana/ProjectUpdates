@@ -11,7 +11,7 @@ namespace PTApi.Models
     {
         public Platform()
         {
-            Resources = new Collection<Resource>();
+            //Resources = new Collection<Resource>();
         }
 
         [Key]
@@ -27,11 +27,9 @@ namespace PTApi.Models
         public Company Company { get; set; }
 
         public string HeadOfPlatformId { get; set; }
-        [ForeignKey("CompanyId,HeadOfPlatformId")]
+        [ForeignKey("CompanyId, HeadOfPlatformId")]
         public Resource HeadOfPlatform { get; set; }
 
-        public ICollection<Resource> Resources { get; set; }
-
-
+        //public ICollection<Resource> Resources { get; set; }
     }
 }

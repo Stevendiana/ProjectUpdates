@@ -23,7 +23,7 @@ namespace PTApi.Repositories
 
         public Platform GetOnePlatformWithPortfolios(string id, string companyId)
         {
-            return ApplicationDbContext.Platforms.Include(d => d.Resources).SingleOrDefault(d => d.PlatformId == id && d.CompanyId == companyId);
+            return ApplicationDbContext.Platforms.SingleOrDefault(d => d.PlatformId == id && d.CompanyId == companyId);
         }
 
         public IEnumerable<Platform> GetAllPlatformsOnly(string companyId)
@@ -34,7 +34,6 @@ namespace PTApi.Repositories
         public IEnumerable<Platform> GetAllPlatformsWithResources(string companyId)
         {
             return ApplicationDbContext.Platforms
-                .Include(d => d.Resources)
                 .OrderBy(d => d.PlatformName)
                 .ToList();
         }

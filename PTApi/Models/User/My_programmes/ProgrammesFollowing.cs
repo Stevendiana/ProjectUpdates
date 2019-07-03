@@ -19,7 +19,7 @@ namespace PTApi.Models
         public string CompanyId { get; set; }
         [Key]
         [Required]
-        public string ProjectId { get; set; }
+        public string ProgrammeId { get; set; }
         public bool Following { get; set; }
 
         public ICollection<Resource> ResourcesPermitted { get; set; }

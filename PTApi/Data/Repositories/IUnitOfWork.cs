@@ -6,6 +6,7 @@ namespace PTApi.Data.Repositories
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository Users { get; }
+        IUserNotificationRepository Notifications { get; }
         ICompanyRepository Companies { get; }
 
         IBusinessunitRepository Businessunits { get; }
@@ -31,6 +32,7 @@ namespace PTApi.Data.Repositories
         IProjectBudgetTrackerRepository BudgetTracker { get; }
 
         IResourceRepository Resources { get; }
+        IResourceHolidayBookedRepository ResourceHolidays { get; }
         IResourceUtilizationRepository ResourceUtilizations { get; }
 
         IProjectRagStatusRepository Rags { get; }

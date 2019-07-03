@@ -249,7 +249,7 @@ namespace PTApi.Controllers
             var comp = _userService.GetSecureUserCompany();
             var userId = _userService.GetSecureUserId();
             int CompanyStandardHrs = Convert.ToInt32(_userService.GetSecureUserCompanyStandardHrs());
-            int j = 0;
+            int j = CompanyStandardHrs;
 
 
             if (!ModelState.IsValid) // return validation error if client side validation is not passed.
@@ -279,7 +279,7 @@ namespace PTApi.Controllers
                     {
                         var Years =  GetYears(resourceData.ResourceStartDate, resourceData.ResourceEndDate);
                         var resid = resource.ResourceId;
-                        var resourceStandardHrs = (resource.ResourceContractEffortInPercentage ?? 100) / 100 * j; ;
+                        var resourceStandardHrs = (resource.ResourceContractEffortInPercentage ?? 100) / 100 * j; 
 
                         foreach (var year in Years)
                         {
@@ -369,6 +369,7 @@ namespace PTApi.Controllers
                     _mapper.Map<EditResourceData, Resource>(resourceData, resource);
 
                     resource.CompanyId = comp;
+                    resource.ContractedHours = (resource.ResourceContractEffortInPercentage ?? 100) / 100 * j;
                     resource.ResourceEmailAddress = resource.ResourceEmailAddress;
                     resource.ResourceId = resource.ResourceId;
                     resource.ResourceNumber = "RESOURCE" + "-" + CreateNewId(resource.ResourceId).ToUpper();
@@ -400,7 +401,7 @@ namespace PTApi.Controllers
             var adminres= _userService.GetSecureResource();
             var userId = _userService.GetSecureUserId();
             int CompanyStandardHrs = Convert.ToInt32(_userService.GetSecureUserCompanyStandardHrs());
-            int j = 0;
+            int j = CompanyStandardHrs;
 
             if (resourceData.CompanyId != comp)
             {
@@ -425,7 +426,7 @@ namespace PTApi.Controllers
 
                 var newresource = _mapper.Map<EditResourceData, Resource>(resourceData);
 
-                decimal? resourcecontracthours = (newresource.ResourceContractEffortInPercentage??100)/100 * j;
+                //decimal? resourcecontracthours = (newresource.ResourceContractEffortInPercentage??100)/100 * j;
 
                 newresource.FirstName = resourceData.FirstName;
                 newresource.UserCreatedEmail = email;
@@ -443,13 +444,15 @@ namespace PTApi.Controllers
 
                 newresource.Billable = true;
                 newresource.CompanyId = comp;
+                
                 newresource.ResourceManagerId = resourceData.ResourceManagerId;
                 newresource.ResourceRateCardId = resourceData.ResourceRateCardId;
 
 
                 var Years = GetYears(resourceData.ResourceStartDate, resourceData.ResourceEndDate);
                 var resid = id;
-                var resourceStandardHrs = (newresource.ResourceContractEffortInPercentage ?? 100) / 100 * j; ;
+                var resourceStandardHrs = (newresource.ResourceContractEffortInPercentage ?? 100) / 100 * j;
+                newresource.ContractedHours = resourceStandardHrs;
 
                 foreach (var year in Years)
                 {
@@ -572,6 +575,9 @@ namespace PTApi.Controllers
 
                 if (resource == null)
                     return BadRequest("You are not authorised to perform this action.");
+
+                if (_unitOfWork.LifetimeForecast.CheckForecastExistForResource(id, comp))
+                    return BadRequest("This resource has a forecast record. Please delete associated forecast first, then try again.");
 
                 _unitOfWork.Resources.Remove(resource);
                 _unitOfWork.Complete();
