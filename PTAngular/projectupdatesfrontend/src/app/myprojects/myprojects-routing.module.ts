@@ -5,10 +5,20 @@ import { MyprojectsComponent } from './myprojects.component';
 const routes: Routes = [
   {
     path: '',
-     component: MyprojectsComponent,
-    data: {
-      title: 'My Projects'
-    },
+    children: [
+      {
+        path: 'myprojects',
+        component: MyprojectsComponent,
+        data: {
+          title: 'Projects'
+        }
+      },
+    ]
+    // path: '',
+    //  component: MyprojectsComponent,
+    // data: {
+    //   title: 'Projects'
+    // },
 
   }
 ];

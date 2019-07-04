@@ -14,12 +14,17 @@ var map = {
 	],
 	"./dashboard/dashboard.module": [
 		"./src/app/dashboard/dashboard.module.ts",
-		"default~dashboard-dashboard-module~pages-full-pages-full-pages-module~project-project-module",
+		"default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~c56f867b",
 		"default~dashboard-dashboard-module~project-project-module"
 	],
 	"./inbox/inbox.module": [
 		"./src/app/inbox/inbox.module.ts",
 		"default~inbox-inbox-module~project-project-module~timesheets-timesheets-module"
+	],
+	"./myprojects/myprojects.module": [
+		"./src/app/myprojects/myprojects.module.ts",
+		"default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~c56f867b",
+		"myprojects-myprojects-module"
 	],
 	"./pages/content-pages/content-pages.module": [
 		"./src/app/pages/content-pages/content-pages.module.ts",
@@ -27,16 +32,20 @@ var map = {
 	],
 	"./pages/full-pages/full-pages.module": [
 		"./src/app/pages/full-pages/full-pages.module.ts",
-		"default~dashboard-dashboard-module~pages-full-pages-full-pages-module~project-project-module",
+		"default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~c56f867b",
 		"pages-full-pages-full-pages-module"
 	],
 	"./project/project.module": [
 		"./src/app/project/project.module.ts",
+		"default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~c56f867b",
 		"default~inbox-inbox-module~project-project-module~timesheets-timesheets-module",
-		"default~dashboard-dashboard-module~pages-full-pages-full-pages-module~project-project-module",
 		"default~dashboard-dashboard-module~project-project-module",
 		"default~project-project-module~timesheets-timesheets-module",
 		"project-project-module"
+	],
+	"./resources/resources.module": [
+		"./src/app/resources/resources.module.ts",
+		"resources-resources-module"
 	],
 	"./timesheets/timesheets.module": [
 		"./src/app/timesheets/timesheets.module.ts",
@@ -96,9 +105,19 @@ __webpack_require__.r(__webpack_exports__);
 var appRoutes = [
     {
         path: '',
-        redirectTo: 'dashboard/dashboard2',
+        redirectTo: '/myprojects/myprojects',
         pathMatch: 'full',
     },
+    // {
+    //   path: '',
+    //   redirectTo: 'myprojects',
+    //   pathMatch: 'full',
+    // },
+    // {
+    //   path: '',
+    //   redirectTo: 'dashboard/dashboard2',
+    //   pathMatch: 'full',
+    // },
     { path: '', component: _layouts_full_full_layout_component__WEBPACK_IMPORTED_MODULE_3__["FullLayoutComponent"], data: { title: 'full Views' }, children: _shared_routes_full_layout_routes__WEBPACK_IMPORTED_MODULE_5__["Full_ROUTES"], canActivate: [_shared_auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
     { path: '', component: _layouts_content_content_layout_component__WEBPACK_IMPORTED_MODULE_4__["ContentLayoutComponent"], data: { title: 'content Views' }, children: _shared_routes_content_layout_routes__WEBPACK_IMPORTED_MODULE_6__["CONTENT_ROUTES"], canActivate: [_shared_auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
     {
@@ -2081,6 +2100,14 @@ var Full_ROUTES = [
         loadChildren: './project/project.module#ProjectModule'
     },
     {
+        path: 'resources',
+        loadChildren: './resources/resources.module#ResourcesModule'
+    },
+    {
+        path: 'myprojects',
+        loadChildren: './myprojects/myprojects.module#MyprojectsModule'
+    },
+    {
         path: 'chat',
         loadChildren: './chat/chat.module#ChatModule'
     },
@@ -2219,20 +2246,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
-/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
-/* harmony import */ var _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/shared/navbar/navbar.component.ts");
-/* harmony import */ var _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sidebar/sidebar.component */ "./src/app/shared/sidebar/sidebar.component.ts");
-/* harmony import */ var _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./customizer/customizer.component */ "./src/app/shared/customizer/customizer.component.ts");
-/* harmony import */ var _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./notification-sidebar/notification-sidebar.component */ "./src/app/shared/notification-sidebar/notification-sidebar.component.ts");
-/* harmony import */ var _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./directives/toggle-fullscreen.directive */ "./src/app/shared/directives/toggle-fullscreen.directive.ts");
-/* harmony import */ var _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./directives/sidebar.directive */ "./src/app/shared/directives/sidebar.directive.ts");
-/* harmony import */ var _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./directives/sidebarlink.directive */ "./src/app/shared/directives/sidebarlink.directive.ts");
-/* harmony import */ var _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./directives/sidebarlist.directive */ "./src/app/shared/directives/sidebarlist.directive.ts");
-/* harmony import */ var _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./directives/sidebaranchortoggle.directive */ "./src/app/shared/directives/sidebaranchortoggle.directive.ts");
-/* harmony import */ var _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./directives/sidebartoggle.directive */ "./src/app/shared/directives/sidebartoggle.directive.ts");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
+/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
+/* harmony import */ var _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/shared/navbar/navbar.component.ts");
+/* harmony import */ var _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./sidebar/sidebar.component */ "./src/app/shared/sidebar/sidebar.component.ts");
+/* harmony import */ var _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./customizer/customizer.component */ "./src/app/shared/customizer/customizer.component.ts");
+/* harmony import */ var _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./notification-sidebar/notification-sidebar.component */ "./src/app/shared/notification-sidebar/notification-sidebar.component.ts");
+/* harmony import */ var _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./directives/toggle-fullscreen.directive */ "./src/app/shared/directives/toggle-fullscreen.directive.ts");
+/* harmony import */ var _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./directives/sidebar.directive */ "./src/app/shared/directives/sidebar.directive.ts");
+/* harmony import */ var _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./directives/sidebarlink.directive */ "./src/app/shared/directives/sidebarlink.directive.ts");
+/* harmony import */ var _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./directives/sidebarlist.directive */ "./src/app/shared/directives/sidebarlist.directive.ts");
+/* harmony import */ var _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./directives/sidebaranchortoggle.directive */ "./src/app/shared/directives/sidebaranchortoggle.directive.ts");
+/* harmony import */ var _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./directives/sidebartoggle.directive */ "./src/app/shared/directives/sidebartoggle.directive.ts");
 
 
 
@@ -2240,13 +2268,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//COMPONENTS
+
+// COMPONENTS
 
 
 
 
 
-//DIRECTIVES
+// DIRECTIVES
 
 
 
@@ -2260,35 +2289,37 @@ var SharedModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             exports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _footer_footer_component__WEBPACK_IMPORTED_MODULE_7__["FooterComponent"],
-                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_8__["NavbarComponent"],
-                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_9__["SidebarComponent"],
-                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_10__["CustomizerComponent"],
-                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_11__["NotificationSidebarComponent"],
-                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_12__["ToggleFullscreenDirective"],
-                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_13__["SidebarDirective"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__["NgbModule"],
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateModule"]
+                _footer_footer_component__WEBPACK_IMPORTED_MODULE_8__["FooterComponent"],
+                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_9__["NavbarComponent"],
+                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_10__["SidebarComponent"],
+                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_11__["CustomizerComponent"],
+                angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTablesModule"],
+                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_12__["NotificationSidebarComponent"],
+                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_13__["ToggleFullscreenDirective"],
+                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_14__["SidebarDirective"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"]
             ],
             imports: [
                 _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__["NgbModule"],
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateModule"],
-                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_6__["PerfectScrollbarModule"]
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModule"],
+                angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTablesModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateModule"],
+                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_7__["PerfectScrollbarModule"]
             ],
             declarations: [
-                _footer_footer_component__WEBPACK_IMPORTED_MODULE_7__["FooterComponent"],
-                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_8__["NavbarComponent"],
-                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_9__["SidebarComponent"],
-                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_10__["CustomizerComponent"],
-                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_11__["NotificationSidebarComponent"],
-                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_12__["ToggleFullscreenDirective"],
-                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_13__["SidebarDirective"],
-                _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_14__["SidebarLinkDirective"],
-                _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_15__["SidebarListDirective"],
-                _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_16__["SidebarAnchorToggleDirective"],
-                _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_17__["SidebarToggleDirective"]
+                _footer_footer_component__WEBPACK_IMPORTED_MODULE_8__["FooterComponent"],
+                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_9__["NavbarComponent"],
+                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_10__["SidebarComponent"],
+                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_11__["CustomizerComponent"],
+                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_12__["NotificationSidebarComponent"],
+                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_13__["ToggleFullscreenDirective"],
+                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_14__["SidebarDirective"],
+                _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_15__["SidebarLinkDirective"],
+                _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_16__["SidebarListDirective"],
+                _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_17__["SidebarAnchorToggleDirective"],
+                _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_18__["SidebarToggleDirective"]
             ]
         })
     ], SharedModule);
@@ -2311,14 +2342,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ROUTES", function() { return ROUTES; });
 //Sidebar menu Routes and data
 var ROUTES = [
-    {
-        path: '', title: 'Dashboard', icon: 'ft-home', class: 'has-sub', badge: '2', badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1', isExternalLink: false, submenu: [
-            { path: '/dashboard/dashboard1', title: 'Dashboard1', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-            { path: '/dashboard/dashboard2', title: 'Dashboard2', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-        ]
-    },
-    { path: '/project', title: 'project', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-    { path: '/timesheets', title: 'Timesheets', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    // {
+    //     path: '', title: 'Dashboard', icon: 'ft-home', class: 'has-sub', badge: '2', badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1', isExternalLink: false, submenu: [
+    //         { path: '/dashboard/dashboard1', title: 'Dashboard1', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    //         { path: '/dashboard/dashboard2', title: 'Dashboard2', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    //     ]
+    // },
+    { path: '/myprojects/myprojects', title: 'My projects', icon: 'ft-home', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    { path: '/timesheets', title: 'My timesheets', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    { path: '/resources', title: 'Our Resources', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    { path: '/project', title: 'Project', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
     // { path: '/colorpalettes', title: 'Color Palette', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
     { path: '/inbox', title: 'Inbox', icon: 'ft-mail', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
     { path: '/chat', title: 'Chat', icon: 'ft-message-square', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },

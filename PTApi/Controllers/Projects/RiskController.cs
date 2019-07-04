@@ -23,16 +23,22 @@ namespace PTApi.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
+        private readonly IForecastService _forecastService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
         private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public RisksController(UserManager<ApplicationUser> userManager, IUserService userService, IProjectService projectService, IMapper mapper)
+        public RisksController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IGetIdsWithPartIdsMethod getIdsWithPartIds,
+            IGeneratePublicIdMethod getpublicId, IForecastService forecastService, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
             _projectService = projectService;
+            _forecastService = forecastService;
+            _unitOfWork = unitOfWork;
+            _getIdsWithPartIds = getIdsWithPartIds;
+            _getpublicId = getpublicId;
             _userManager = userManager;
             _mapper = mapper;
         }

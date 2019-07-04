@@ -16,9 +16,24 @@ namespace PTApi.Models
         private readonly IUserService _userService;
         private readonly IResourceService _resourceService;
 
+        public Project(IProjectService projectService, IUserService userService, IResourceService resourceService)
+        {
+            _projectService = projectService;
+            _userService = userService;
+            _resourceService = resourceService;
+            PermittedUsers = new Collection<ProjectsPermitted>();
+            Risks = new Collection<Risk>();
+            Assumptions = new Collection<Assumption>();
+            Issues = new Collection<Issue>();
+            Dependencies = new Collection<Dependency>();
+            ProjectsIamFollowing = new Collection<ProjectsFollowing>();
+
+
+        }
+
         public Project()
         {
-
+            
         }
 
 
@@ -170,25 +185,7 @@ namespace PTApi.Models
         public ICollection<ProjectsFollowing> ProjectsIamFollowing { get; private set; }
 
 
-        public Project(IProjectService projectService, IUserService userService, IResourceService resourceService)
-        {
-            _projectService = projectService;
-            _userService = userService;
-            _resourceService = resourceService;
-            PermittedUsers = new Collection<ProjectsPermitted>();
-            Risks = new Collection<Risk>();
-            Assumptions = new Collection<Assumption>();
-            Issues = new Collection<Issue>();
-            Dependencies = new Collection<Dependency>();
-            ProjectsIamFollowing = new Collection<ProjectsFollowing>();
-
-            // ForecastTasks = new Collection<ForecastTask>();
-            // Actuals = new Collection<Actual>();
-            // ProjectStageGates = new Collection<ProjectStageGate>();
-            // ProjectRagStatuses = new Collection<ProjectRagStatus>();
-            // ProjectPlanBudgetBenefits = new Collection<ProjectPlanBudgetBenefit>();
-
-        }
+        
 
 
         public void CancelProjectNotification()

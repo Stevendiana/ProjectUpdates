@@ -98,7 +98,7 @@ var DashboardModule = /** @class */ (function () {
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModule"],
                 _shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_6__["MatchHeightModule"]
             ],
-            exports: [_dashboard2_dashboard2_component__WEBPACK_IMPORTED_MODULE_8__["Dashboard2Component"]],
+            exports: [_dashboard1_dashboard1_component__WEBPACK_IMPORTED_MODULE_7__["Dashboard1Component"], _dashboard2_dashboard2_component__WEBPACK_IMPORTED_MODULE_8__["Dashboard2Component"]],
             declarations: [
                 _dashboard1_dashboard1_component__WEBPACK_IMPORTED_MODULE_7__["Dashboard1Component"],
                 _dashboard2_dashboard2_component__WEBPACK_IMPORTED_MODULE_8__["Dashboard2Component"]

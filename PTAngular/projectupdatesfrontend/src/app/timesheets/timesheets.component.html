@@ -67,17 +67,17 @@
                       <!-- <img *ngIf="mail.hasImage" class="media-object rounded-circle" [src]="mail.imagePath" alt="Generic placeholder image"> -->
                     </span>
                     <div class="media-body text-left">
-                      <h6 [ngClass]="false === false ? 'list-group-item-heading text-bold-400' : 'list-group-item-heading' ">{{
+                      <h6 [ngClass]="false === false ? 'list-group-item-heading text-bold-400' : 'list-group-item-heading' ">Week From: {{
                         timesheet.calendarTime.sunday | date}}
                         <span class="float-right">
                           <!-- <i class="fa-paperclip fa" *ngIf="true"></i> -->
-                          <span [ngClass]="false === false ? 'font-small-2 primary' : 'font-small-2 float-right'">{{
+                          <span [ngClass]="false === false ? 'font-small-2 primary' : 'font-small-2 float-right'">To: {{
                             timesheet.calendarTime.saturday | date }}</span>
                         </span>
                       </h6>
-                      <p [ngClass]="true === false ? 'list-group-item-text text-truncate text-bold-500' : 'list-group-item-text text-truncate' ">{{
-                        timesheet.calendarTime.sundayYear }}</p>
-                      <p class="list-group-item-text">{{ timesheet.calendarTime.sundayYear }}
+                      <p [ngClass]="true === false ? 'list-group-item-text text-truncate text-bold-500' : 'list-group-item-text text-truncate' ">Billable Hours: {{
+                        timesheet.totalBillableHours }}</p>
+                      <p class="list-group-item-text">Total Hours: {{ timesheet.totalHours }}
                         <span class="float-right primary" *ngIf="true">
                           <span class="badge mr-1 + ' ' + 'badge badge-success mr-1'">Approved</span>
                           <!-- <span class="badge mr-1 + ' ' + {{mail.labelClass}}">{{

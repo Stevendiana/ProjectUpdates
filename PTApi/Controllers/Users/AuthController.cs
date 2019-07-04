@@ -129,6 +129,20 @@ namespace PTApi.Controllers
             return null;
         }
 
+
+        public class AddNewuser
+        {
+            [Required]
+            public string ResourceId { get; set; }
+            [Required]
+            public string Role { get; set; }
+            [Required]
+            public string CompanyId { get; set; }
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+
+        }
+
         // [Produces("text/html")]
         [HttpGet("welcome")]
         public string WelcomeEmail()
@@ -399,21 +413,6 @@ namespace PTApi.Controllers
                 return Ok(CreateRegisterJwtPacket(userIdentity, model));
             }
         }
-
-        
-        public class AddNewuser
-        {
-            [Required]
-            public string ResourceId { get; set; }
-            [Required]
-            public string Role { get; set; }
-            [Required]
-            public string CompanyId { get; set; }
-            [DataType(DataType.Password)]
-            public string Password { get; set; }
-
-        }
-
 
         [HttpPost("createuser/{companyId}")]
         [Authorize(Policy = "Admin_Group")]

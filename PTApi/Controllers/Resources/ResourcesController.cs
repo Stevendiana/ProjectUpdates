@@ -24,6 +24,7 @@ namespace PTApi.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
+        private readonly IForecastService _forecastService;
         private readonly IResourceService _resourceService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -31,12 +32,16 @@ namespace PTApi.Controllers
         private readonly IGeneratePublicIdMethod _getpublicId;
 
 
-        public ResourcesController(UserManager<ApplicationUser> userManager, IUserService userService, IUnitOfWork unitOfWork, IResourceService resourceService, IProjectService projectService, IMapper mapper)
+        public ResourcesController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IGetIdsWithPartIdsMethod getIdsWithPartIds, IResourceService resourceService,
+        IGeneratePublicIdMethod getpublicId, IForecastService forecastService, IUserService userService, IProjectService projectService, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
             _userService = userService;
             _resourceService = resourceService;
             _projectService = projectService;
+            _forecastService = forecastService;
+            _unitOfWork = unitOfWork;
+            _getIdsWithPartIds = getIdsWithPartIds;
+            _getpublicId = getpublicId;
             _userManager = userManager;
             _mapper = mapper;
         }

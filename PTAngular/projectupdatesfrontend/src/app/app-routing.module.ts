@@ -8,13 +8,19 @@ import { Full_ROUTES } from './shared/routes/full-layout.routes';
 import { CONTENT_ROUTES } from './shared/routes/content-layout.routes';
 
 import { AuthGuard } from './shared/auth/auth-guard.service';
+import { MyprojectsComponent } from './myprojects/myprojects.component';
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'myprojects',
+    redirectTo: '/myprojects/myprojects',
     pathMatch: 'full',
   },
+  // {
+  //   path: '',
+  //   redirectTo: 'myprojects',
+  //   pathMatch: 'full',
+  // },
   // {
   //   path: '',
   //   redirectTo: 'dashboard/dashboard2',

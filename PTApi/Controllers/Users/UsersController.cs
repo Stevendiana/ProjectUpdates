@@ -41,6 +41,7 @@ namespace PTApi.Controllers
         public UsersController(UserManager<ApplicationUser> userManager, IMapper mapper, IBlobStorage blobStorage, IUserService userService,
             IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IUnitOfWork unitOfWork)
         {
+            _userService = userService;
             _userManager = userManager;
             _mapper = mapper;
             _blobStorage = blobStorage;

@@ -3,7 +3,6 @@ C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Release\netcoreapp2.1\PTApi.runt
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Release\netcoreapp2.1\PTApi.runtimeconfig.dev.json
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Release\netcoreapp2.1\PTApi.dll
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Release\netcoreapp2.1\PTApi.pdb
-C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Release\netcoreapp2.1\PTApi.csprojAssemblyReference.cache
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Release\netcoreapp2.1\PTApi.csproj.CoreCompileInputs.cache
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Release\netcoreapp2.1\PTApi.RazorAssemblyInfo.cache
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Release\netcoreapp2.1\PTApi.RazorAssemblyInfo.cs
@@ -15,3 +14,4 @@ C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Release\netcoreapp2.1\PTApi.dll
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Release\netcoreapp2.1\PTApi.pdb
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Release\netcoreapp2.1\Microsoft.Azure.Documents.ServiceInterop.dll
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Release\netcoreapp2.1\Cosmos.CRTCompat.dll
+C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Release\netcoreapp2.1\PTApi.csprojAssemblyReference.cache

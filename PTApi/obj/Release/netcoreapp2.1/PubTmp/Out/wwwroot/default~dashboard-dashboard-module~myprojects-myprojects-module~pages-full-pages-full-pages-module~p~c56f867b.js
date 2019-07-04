@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~dashboard-dashboard-module~pages-full-pages-full-pages-module~project-project-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~c56f867b"],{
 
 /***/ "./node_modules/chartist/dist/chartist.js":
 /*!************************************************!*\
@@ -4737,4 +4737,4 @@ module.exports = {"Bar":{"labels":["Jan","Feb","Mar","Apr"],"series":[[5,4,3,7],
 /***/ })
 
 }]);
-//# sourceMappingURL=default~dashboard-dashboard-module~pages-full-pages-full-pages-module~project-project-module.js.map
+//# sourceMappingURL=default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~c56f867b.js.map
