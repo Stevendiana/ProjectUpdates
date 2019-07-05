@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import * as $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt';
-// import 'datatables.net-bs4';
+import 'datatables.net-bs4';
 
 // import pdfMake from 'pdfmake/build/pdfmake';
 // import pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -443,7 +443,7 @@ export class MyprojectsComponent implements OnInit {
     this.dtOptions = {
 
       pagingType: 'full_numbers',
-      pageLength: 15,
+      pageLength: 100,
       processing: true,
       'paging':   true,
       'ordering': true,
@@ -503,14 +503,17 @@ export class MyprojectsComponent implements OnInit {
         },
 
       ],
-      // fixedHeader: {
-      //   header: true,
-      //   bottom: true,
-      //   // footer: false,
-      //   zTop: 1000
-      //   // headerOffset: 400
+      'bLengthChange': true,
+      'Filter': true,
+      'Info': true,
+      fixedHeader: {
+        header: true,
+        bottom: true,
+        // footer: false,
+        zTop: 1000
+        // headerOffset: 400
 
-      // },
+      },
 
     };
 

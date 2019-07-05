@@ -12,6 +12,14 @@ export const Full_ROUTES: Routes = [
     loadChildren: './pages/full-pages/full-pages.module#FullPagesModule'
   },
   {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule'
+  },
+  {
+    path: 'support',
+    loadChildren: './support/support.module#SupportModule'
+  },
+  {
     path: 'project',
     loadChildren: './project/project.module#ProjectModule'
   },
