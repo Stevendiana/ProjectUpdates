@@ -1,3 +1,54 @@
-<p>
-  hierarchy works!
-</p>
+<div classs ="m-2 p-2">
+    <div classs ="row">
+        <div class="col-12">
+            <ngb-tabset  type="pills">
+                <hr>
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Domains</ng-template>
+                  <ng-template ngbTabContent>
+                    <hr>
+                    <div class="container-fluid m-2">
+                      <app-domain></app-domain>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Business units</ng-template>
+                  <ng-template ngbTabContent>
+                    <hr>
+                    <div class="container-fluid m-2">
+                      <app-businessunit></app-businessunit>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Portfolios</ng-template>
+                  <ng-template ngbTabContent>
+                    <hr>
+                    <div class="container-fluid m-2">
+                      <app-portfolio></app-portfolio>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Programmes</ng-template>
+                  <ng-template ngbTabContent>
+                    <hr>
+                    <div class="container-fluid m-2">
+                      <app-programme></app-programme>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                  <ng-template ngbTabTitle>Projects</ng-template>
+                  <ng-template ngbTabContent>
+                    <hr>
+                    <div class="container-fluid m-2">
+                      <app-project></app-project>
+                    </div>
+                  </ng-template>
+              </ngb-tab>
+          </ngb-tabset>
+      </div>
+  </div>
+</div>

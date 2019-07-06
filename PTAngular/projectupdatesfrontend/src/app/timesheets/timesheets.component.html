@@ -7,35 +7,33 @@
           <!-- <button type="button" class="btn btn-raised btn-danger btn-block my-2" (click)="open(content)">
             <i class="ft-mail"></i> Compose</button> -->
         </div>
-        <h6 class="text-muted text-bold-500 mb-1 text-left">My Timesheets</h6>
+        <h6 class="text-muted text-bold-500 mb-1 text-left"> My Time (Weekly)</h6>
         <div class="list-group list-group-messages">
-          <a class="list-group-item active no-border text-left" (click)="GetEmailsByType($event, 'Inbox')">
-            <i class="ft-inbox mr-1 pr-1 float-left"></i> Inbox
+          <a class="list-group-item active no-border text-left" (click)="GetWeeklyTimesheets($event)">
+            <i class="ft-inbox mr-1 pr-1 float-left"></i> Timesheets
             <span class="badge badge-dark badge-pill float-right">8</span>
           </a>
           <a class="list-group-item list-group-item-action no-border text-left" (click)="GetEmailsByType($event, 'Sent')">
-            <i class="fa fa-paper-plane-o mr-1 pr-1 float-left"></i> Sent</a>
+            <i class="fa fa-paper-plane-o mr-1 pr-1 float-left"></i> Utilization</a>
           <a class="list-group-item list-group-item-action no-border text-left" (click)="GetEmailsByType($event, 'Work')">
-            <i class="ft-file mr-1 pr-1 float-left"></i> Draft</a>
+            <i class="ft-file mr-1 pr-1 float-left"></i> Availability</a>
           <a class="list-group-item list-group-item-action no-border text-left" (click)="GetStarredEmails($event)">
-            <i class="ft-star mr-1 pr-1 float-left"></i> Starred
+            <i class="ft-star mr-1 pr-1 float-left"></i> Holidays
             <span class="badge badge-danger badge-pill float-right">3</span>
           </a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetEmailsByType($event, 'Trash')">
-            <i class="ft-trash-2 mr-1 pr-1 float-left"></i> Trash</a>
         </div>
         <h6 class="text-muted text-bold-500 mt-1 mb-1 text-left">Labels</h6>
         <div class="list-group list-group-messages">
           <a class="list-group-item list-group-item-action no-border text-left" (click)="GetEmailsByLabel($event, 'Work')">
-            <i class="ft-circle mr-1 pr-1 float-left warning"></i> Work
+            <i class="ft-circle mr-1 pr-1 float-left warning"></i>Approved
             <span class="badge badge-warning badge-pill float-right">5</span>
           </a>
           <a class="list-group-item list-group-item-action no-border text-left" (click)="GetEmailsByLabel($event, 'Family')">
-            <i class="ft-circle mr-1 pr-1 float-left danger"></i> Family</a>
+            <i class="ft-circle mr-1 pr-1 float-left danger"></i>Pending</a>
           <a class="list-group-item list-group-item-action no-border text-left" (click)="GetEmailsByLabel($event, 'Friends')">
-            <i class="ft-circle mr-1 pr-1 float-left primary"></i> Friends</a>
+            <i class="ft-circle mr-1 pr-1 float-left primary"></i>Rejected </a>
           <a class="list-group-item list-group-item-action no-border text-left" (click)="GetEmailsByLabel($event, 'Private')">
-            <i class="ft-circle mr-1 pr-1 float-left success"></i> Private
+            <i class="ft-circle mr-1 pr-1 float-left success"></i> Pending Holidays
             <span class="badge badge-success badge-pill float-right">3</span>
           </a>
         </div>

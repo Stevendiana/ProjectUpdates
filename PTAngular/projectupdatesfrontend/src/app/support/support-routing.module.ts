@@ -7,11 +7,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'howtoguide',
+        path: '',
         component: SupportHowToDoGuideComponent,
         data: {
-          title: 'Projects'
-        }
+          title: '"How to" guide'
+        },
       },
     ]
     // path: '',
@@ -28,4 +28,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class SupportRoutingModule { }
-// export const routedComponents = [MyprojectsComponent];
+export const routedComponents = [SupportHowToDoGuideComponent];

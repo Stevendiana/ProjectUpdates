@@ -10,15 +10,15 @@ export class KnowledgeBaseComponent  {
   title: string;
   constructor(private modalService: NgbModal) {}
 
- 
+
   GetDetails(content, titleText) {
     this.title = titleText;
-    this.modalService.open(content, { size: 'lg' }).result.then((result) => {      
-    }, (reason) => {     
+    this.modalService.open(content, { size: 'lg' }).result.then((result) => {
+    }, (reason) => {
     });
   }
 
-  
-  
+
+
 
 }

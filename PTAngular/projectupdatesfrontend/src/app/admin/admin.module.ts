@@ -1,3 +1,4 @@
+import { AdminRoutingModule } from './admin-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
@@ -13,6 +14,9 @@ import { ResourceUserComponent } from './resource-user/resource-user.component';
 import { UploadCentreComponent } from './upload-centre/upload-centre.component';
 import { UploadCentreActualComponent } from './upload-centre-actual/upload-centre-actual.component';
 import { CompanSettingsComponent } from './compan-settings/compan-settings.component';
+import { ChartistModule } from 'ng-chartist';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatchHeightModule } from 'app/shared/directives/match-height.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { CompanSettingsComponent } from './compan-settings/compan-settings.compo
     ResourceResourceComponent, ResourcePlatformComponent, ResourceUserComponent,
     UploadCentreComponent, UploadCentreActualComponent, CompanSettingsComponent],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    AdminRoutingModule,
+    ChartistModule,
+    NgbModule,
+    MatchHeightModule
+]
 })
 export class AdminModule { }

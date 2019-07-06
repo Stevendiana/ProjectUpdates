@@ -43,13 +43,13 @@ export class TimesheetsComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: NgbModal, private timesheetsService: TimesheetsService,
     private layoutService: LayoutService, private configService: ConfigService) {
 
-      this.timesheetsService.getTimesheets();
+    this.timesheetsService.getTimesheets();
     setTimeout(() => {this.timesheets = this.timesheetsService.timesheetsData; }, 1500);
 
-    this.mail = this.timesheetsService.timesheets.filter((mail: Mail) => mail.mailType === 'Inbox');
-    this.message = this.timesheetsService.message.filter((message: Message) => message.mailId === this.selectedMailId)[0];
-    this.markAsRead();
-    this.checkEmailImportantStatus();
+    this.timesheets = this.timesheetsService.timesheetsData;
+    // this.message = this.timesheetsService.message.filter((message: Message) => message.mailId === this.selectedMailId)[0];
+    // this.markAsRead();
+    // this.checkEmailImportantStatus();
 
     this.layoutSub = layoutService.changeEmitted$.subscribe(
       direction => {
@@ -104,36 +104,36 @@ export class TimesheetsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  markAsRead() {
-    const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
-    const index = this.mail.indexOf(updateItem);
-    this.mail[index].isRead = true;
-  }
+  // markAsRead() {
+  //   const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
+  //   const index = this.mail.indexOf(updateItem);
+  //   this.mail[index].isRead = true;
+  // }
 
-  markAsUnread() {
-    const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
-    const index = this.mail.indexOf(updateItem);
-    this.mail[index].isRead = false;
-  }
+  // markAsUnread() {
+  //   const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
+  //   const index = this.mail.indexOf(updateItem);
+  //   this.mail[index].isRead = false;
+  // }
 
-  markAsImportant() {
-    const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
-    const index = this.mail.indexOf(updateItem);
-    this.mail[index].isImportant = true;
-    this.isEmailImportant = true;
-  }
+  // markAsImportant() {
+  //   const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
+  //   const index = this.mail.indexOf(updateItem);
+  //   this.mail[index].isImportant = true;
+  //   this.isEmailImportant = true;
+  // }
 
-  markAsUnimportant() {
-    const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
-    const index = this.mail.indexOf(updateItem);
-    this.mail[index].isImportant = false;
-    this.isEmailImportant = false;
-  }
+  // markAsUnimportant() {
+  //   const updateItem = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
+  //   const index = this.mail.indexOf(updateItem);
+  //   this.mail[index].isImportant = false;
+  //   this.isEmailImportant = false;
+  // }
 
-  checkEmailImportantStatus() {
-    const selectedEmail = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
-    this.isEmailImportant = selectedEmail.isImportant;
-  }
+  // checkEmailImportantStatus() {
+  //   const selectedEmail = this.mail.find(item => item.mailId.toString() === this.selectedMailId.toString());
+  //   this.isEmailImportant = selectedEmail.isImportant;
+  // }
 
 
 
@@ -142,8 +142,8 @@ export class TimesheetsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedMailId = mailId;
     this.message = this.timesheetsService.message.filter((message: Message) => message.mailId.toString() === mailId.toString())[0];
     this.isMessageSelected = true;
-    this.markAsRead();
-    this.checkEmailImportantStatus();
+    // this.markAsRead();
+    // this.checkEmailImportantStatus();
 
     const hElement: HTMLElement = this.elRef.nativeElement;
     // now you can simply get your elements with their class name
@@ -180,6 +180,11 @@ export class TimesheetsComponent implements OnInit, AfterViewInit, OnDestroy {
   // timesheets labels click event function
   GetEmailsByLabel(event, labelType: string) {
     this.mail = this.timesheetsService.timesheets.filter((mail: Mail) => mail.labelType === labelType);
+    this.SetItemActive(event);
+  }
+
+  // timesheets type click event function
+  GetWeeklyTimesheets(event) {
     this.SetItemActive(event);
   }
 
