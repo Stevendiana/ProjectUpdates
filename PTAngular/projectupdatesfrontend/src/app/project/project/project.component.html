@@ -1,66 +1,73 @@
-<div class="email-application">
-  <div #contentOverlay class="content-overlay" (click)="onContentOverlay()"></div>
-  <div #emailSidebar class="email-app-sidebar float-left d-none d-xl-block">
-    <div [perfectScrollbar] class="email-app-sidebar-content">
-      <div class="email-app-menu">
-        <div class="list-group list-group-messages">
-          <a class="list-group-item active no-border text-left" (click)="GetElement($event,'Dashboard')">
-            <i class="ft-inbox mr-1 pr-1 float-left"></i> Dashboard
-          </a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Forecast')">
-            <i class="fa fa-bar-chart mr-1 pr-1 float-left"></i> Forecast</a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Budget')">
-            <i class="ft-target mr-1 pr-1 float-left"></i> Budget
-          </a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Actual')">
-            <i class="fa fa-dollar mr-1 pr-1 float-left"></i> Actual
-          </a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Milestones')">
-            <i class="ft-trash-2 mr-1 pr-1 float-left"></i> Milestones</a>
-        </div>
-        <h6 class="text-muted text-primary text-bold-500 mt-1 mb-1 text-left">Reporting Logs</h6>
-        <div class="list-group list-group-messages">
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Actions')">
-              <i class="fa fa-paper-plane-o mr-1 pr-1 float-left"></i> RAG Status</a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Rags')">
-              <i class="fa fa-paper-plane-o mr-1 pr-1 float-left"></i> Action log</a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Risks')">
-            <i class="ft-circle mr-1 pr-1 float-left warning"></i> Risks
-            <span class="badge badge-warning badge-pill float-right">5</span>
-          </a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Assumptions')">
-            <i class="ft-circle mr-1 pr-1 float-left danger"></i> Assumptions</a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Issues')">
-            <i class="ft-circle mr-1 pr-1 float-left primary"></i> Issue</a>
-          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Dependencies')">
-            <i class="ft-circle mr-1 pr-1 float-left success"></i> Dependency
-            <span class="badge badge-success badge-pill float-right">3</span>
-          </a>
+<div class="row">
+    <h1 class="card-title m-1 pl-2 pull-left mb-2 text-muted text-primary">Demo Project name</h1>
+</div>
+<section>
+  <div class="email-application">
+      <div #contentOverlay class="content-overlay" (click)="onContentOverlay()"></div>
+      <div #emailSidebar class="email-app-sidebar float-left d-none d-xl-block">
+        <div [perfectScrollbar] class="email-app-sidebar-content">
+          <div class="email-app-menu">
+            <div class="list-group list-group-messages">
+              <a class="list-group-item active no-border text-left" (click)="GetElement($event,'Dashboard')">
+                <i class="ft-inbox mr-1 pr-1 float-left"></i> Dashboard
+              </a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Forecast')">
+                <i class="fa fa-bar-chart mr-1 pr-1 float-left"></i> Forecast</a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Budget')">
+                <i class="ft-target mr-1 pr-1 float-left"></i> Budget
+              </a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Actual')">
+                <i class="fa fa-dollar mr-1 pr-1 float-left"></i> Actual
+              </a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Milestones')">
+                <i class="ft-trash-2 mr-1 pr-1 float-left"></i> Milestones</a>
+            </div>
+            <h6 class="text-muted text-primary text-bold-500 mt-1 mb-1 text-left">Reporting Logs</h6>
+            <div class="list-group list-group-messages">
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Actions')">
+                  <i class="fa fa-paper-plane-o mr-1 pr-1 float-left"></i> RAG Status</a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Rags')">
+                  <i class="fa fa-paper-plane-o mr-1 pr-1 float-left"></i> Action log</a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Risks')">
+                <i class="ft-circle mr-1 pr-1 float-left warning"></i> Risks
+                <span class="badge badge-warning badge-pill float-right">5</span>
+              </a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Assumptions')">
+                <i class="ft-circle mr-1 pr-1 float-left danger"></i> Assumptions</a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Issues')">
+                <i class="ft-circle mr-1 pr-1 float-left primary"></i> Issue</a>
+              <a class="list-group-item list-group-item-action no-border text-left" (click)="GetElement($event,'Dependencies')">
+                <i class="ft-circle mr-1 pr-1 float-left success"></i> Dependency
+                <span class="badge badge-success badge-pill float-right">3</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="email-app-content row">
-    <div class="email-search-box w-100 bg-white p-2">
-      <div class="media">
-        <span class="email-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-xl-none" (click)="onSidebarToggle()"></span>
-        <div class="media-body">
-          <input *ngIf="!displayDashboard" type="text" class="form-control round" placeholder="search this page">
-          <div class="container-fluid m-2">
-            <app-project-forecast *ngIf="displayForecast"></app-project-forecast>
-            <app-project-action-log *ngIf="displayActionlog"></app-project-action-log>
-            <app-project-assumption *ngIf="displayAssumption"></app-project-assumption>
-            <app-project-milestone *ngIf="displayMilestone"></app-project-milestone>
-            <app-project-budget *ngIf="displayBudget"></app-project-budget>
-            <app-project-risk *ngIf="displayRisk"></app-project-risk>
-            <app-project-rag *ngIf="displayRag"></app-project-rag>
-            <app-project-issue *ngIf="displayIssue"></app-project-issue>
-            <app-project-dependency *ngIf="displayDependency"></app-project-dependency>
-            <app-project-dashboard *ngIf="displayDashboard"></app-project-dashboard>
-            <app-project-actual *ngIf="displayActual"></app-project-actual>
+      <div class="email-app-content row">
+        <div class="email-search-box w-100 bg-white p-2">
+          <div class="media">
+            <span class="email-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-xl-none" (click)="onSidebarToggle()"></span>
+            <div class="media-body">
+              <input *ngIf="!displayDashboard" type="text" class="form-control round" placeholder="search this page">
+              <div class="container-fluid m-2">
+                <app-project-forecast *ngIf="displayForecast"></app-project-forecast>
+                <app-project-action-log *ngIf="displayActionlog"></app-project-action-log>
+                <app-project-assumption *ngIf="displayAssumption"></app-project-assumption>
+                <app-project-milestone *ngIf="displayMilestone"></app-project-milestone>
+                <app-project-budget *ngIf="displayBudget"></app-project-budget>
+                <app-project-risk *ngIf="displayRisk"></app-project-risk>
+                <app-project-rag *ngIf="displayRag"></app-project-rag>
+                <app-project-issue *ngIf="displayIssue"></app-project-issue>
+                <app-project-dependency *ngIf="displayDependency"></app-project-dependency>
+                <app-project-dashboard *ngIf="displayDashboard"></app-project-dashboard>
+                <app-project-actual *ngIf="displayActual"></app-project-actual>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+</section>
+

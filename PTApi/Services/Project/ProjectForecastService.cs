@@ -306,7 +306,7 @@ namespace PTApi.Services
             int? currentYear = Convert.ToInt32(_userService.GetSecureUserCompanyReportingYear());
             var lifetimeforecastwithactuals = GetLifetimeforecastwithactuals(projectId, companyId).Result.ToAsyncEnumerable();
 
-            var futureyearfullyearforecastforallperiods = lifetimeforecastwithactuals?.Where(f => (f.ForecastTasks.Year !=null && (f.ForecastTasks.Year > currentYear))).ToList();
+            var futureyearfullyearforecastforallperiods = lifetimeforecastwithactuals?.Where(f => ((f.ForecastTasks.Year > currentYear))).ToList();
             if (futureyearfullyearforecastforallperiods!=null)
             {
                 return await futureyearfullyearforecastforallperiods;
@@ -667,7 +667,7 @@ namespace PTApi.Services
 
                 //Future CurrentYear+ Forecast List.
 
-                var futureyearfullyearforecastforallperiods = fullyearforecastforallperiods?.Where(f => (f.Year !=null && (f.Year > currentYear))).ToList();
+                var futureyearfullyearforecastforallperiods = fullyearforecastforallperiods?.Where(f => ((f.Year > currentYear))).ToList();
                 // var futureyearfullyearforecastforallperiods = lifetimeforecastwithactuals?.Where(f => (f.ForecastTasks.Year !=null && (f.ForecastTasks.Year > currentYear))).ToList();
 
 

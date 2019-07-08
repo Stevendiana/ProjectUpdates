@@ -22,7 +22,7 @@ namespace PTApi.Models
         [Required]
         public string ParentTaskId { get; set; }
         public ParentTask ParentTask { get; set; }
-        public int? Year { get; set; }
+        public int Year { get; set; }
         //public byte? Month { get; set; }
         //public int? BaselinePeriod { get; set; }
         public string ForecastCode { get; set; }

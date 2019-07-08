@@ -93,61 +93,61 @@ namespace PTApi.Models
         public int? TotalCountBusinessUnitsPermitted { get; }
 
 
-        public decimal? JanResourceUtilizationInDays { get; set; }
-        public decimal? FebResourceUtilizationInDays { get; set; }
-        public decimal? MarResourceUtilizationInDays { get; set; }
-        public decimal? AprResourceUtilizationInDays { get; set; }
-        public decimal? MayResourceUtilizationInDays { get; set; }
-        public decimal? JunResourceUtilizationInDays { get; set; }
-        public decimal? JulResourceUtilizationInDays { get; set; }
-        public decimal? AugResourceUtilizationInDays { get; set; }
-        public decimal? SepResourceUtilizationInDays { get; set; }
-        public decimal? OctResourceUtilizationInDays { get; set; }
-        public decimal? NovResourceUtilizationInDays { get; set; }
-        public decimal? DecResourceUtilizationInDays { get; set; }
+        //public decimal? JanResourceUtilizationInDays { get; set; }
+        //public decimal? FebResourceUtilizationInDays { get; set; }
+        //public decimal? MarResourceUtilizationInDays { get; set; }
+        //public decimal? AprResourceUtilizationInDays { get; set; }
+        //public decimal? MayResourceUtilizationInDays { get; set; }
+        //public decimal? JunResourceUtilizationInDays { get; set; }
+        //public decimal? JulResourceUtilizationInDays { get; set; }
+        //public decimal? AugResourceUtilizationInDays { get; set; }
+        //public decimal? SepResourceUtilizationInDays { get; set; }
+        //public decimal? OctResourceUtilizationInDays { get; set; }
+        //public decimal? NovResourceUtilizationInDays { get; set; }
+        //public decimal? DecResourceUtilizationInDays { get; set; }
 
-        // Schedule - Actual Days taken From ForecastTaskTimesheet
+        //// Schedule - Actual Days taken From ForecastTaskTimesheet
 
-        public decimal? TotalUtilizationInDays { get; set; }
+        //public decimal? TotalUtilizationInDays { get; set; }
 
-        public decimal? JanAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? FebAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? MarAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? AprAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? MayAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? JunAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? JulAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? AugAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? SepAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? OctAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? NovAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? DecAvailabilityBeforeHolidaysInDays { get; set; }
-        public decimal? TotalAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? JanAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? FebAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? MarAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? AprAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? MayAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? JunAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? JulAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? AugAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? SepAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? OctAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? NovAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? DecAvailabilityBeforeHolidaysInDays { get; set; }
+        //public decimal? TotalAvailabilityBeforeHolidaysInDays { get; set; }
 
-        [NotMapped]
-        public decimal? JanTotalHolidays { get; }
-        [NotMapped]
-        public decimal? FebTotalHolidays { get; }
-        [NotMapped]
-        public decimal? MarTotalHolidays { get; }
-        [NotMapped]
-        public decimal? AprTotalHolidays { get; }
-        [NotMapped]
-        public decimal? MayTotalHolidays { get; }
-        [NotMapped]
-        public decimal? JunTotalHolidays { get; }
-        [NotMapped]
-        public decimal? JulTotalHolidays { get; }
-        [NotMapped]
-        public decimal? AugTotalHolidays { get; }
-        [NotMapped]
-        public decimal? SepTotalHolidays { get; }
-        [NotMapped]
-        public decimal? OctTotalHolidays { get; }
-        [NotMapped]
-        public decimal? NovTotalHolidays { get; }
-        [NotMapped]
-        public decimal? DecTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? JanTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? FebTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? MarTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? AprTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? MayTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? JunTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? JulTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? AugTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? SepTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? OctTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? NovTotalHolidays { get; }
+        //[NotMapped]
+        //public decimal? DecTotalHolidays { get; }
 
         public bool IsAppUser
         {

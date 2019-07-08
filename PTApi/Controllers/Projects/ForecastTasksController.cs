@@ -25,6 +25,7 @@ namespace PTApi.Controllers
         private readonly IUserService _userService;
         private readonly IProjectService _projectService;
         private readonly IForecastService _forecastService;
+        private readonly IResourceService _resourceService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
@@ -32,9 +33,10 @@ namespace PTApi.Controllers
 
 
         public ForecastTasksController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IGetIdsWithPartIdsMethod getIdsWithPartIds, 
-            IGeneratePublicIdMethod getpublicId, IForecastService forecastService, IUserService userService, IProjectService projectService, IMapper mapper)
+            IGeneratePublicIdMethod getpublicId, IForecastService forecastService, IResourceService resourceService, IUserService userService, IProjectService projectService, IMapper mapper)
         {
             _userService = userService;
+            _resourceService = resourceService;
             _projectService = projectService;
             _forecastService = forecastService;
             _unitOfWork = unitOfWork;
@@ -581,6 +583,7 @@ namespace PTApi.Controllers
             var comp = _userService.GetSecureUserCompany();
             var systemreportingperiod = HttpContext.User.Claims.Single(c => c.Type == "financerepperiod").Value;
             int period = Convertwordmonthtonum(systemreportingperiod);
+            int CompanyStandardHrs = Convert.ToInt32(_userService.GetSecureUserCompanyStandardHrs());
 
             if (!ModelState.IsValid) // return validation error if client side validation is not passed.
             {
@@ -613,10 +616,17 @@ namespace PTApi.Controllers
             }
 
             var forecasttask = _mapper.Map<ForecastTaskEAC, ForecastTask>(forecasttaskData);
-            
+
+
             //saveforecast
             _forecastService.SaveForecast(forecasttask, forecasttaskData, oldforecasttask, resource, systemreportingperiod);
             _unitOfWork.LifetimeForecast.Update(forecasttask);
+
+            var resourceStandardHrs = (resource.ResourceContractEffortInPercentage ?? 100) / 100 * CompanyStandardHrs;
+            var resourceUtil = _unitOfWork.ResourceUtilizations.GetOneResourceUtilization(resource.ResourceId, oldforecasttask.Year);
+            var Util = _resourceService.CalculateResourceUtilAvail(resourceUtil, resource.ResourceId, comp, oldforecasttask.Year, resourceStandardHrs, CompanyStandardHrs);
+
+            _unitOfWork.ResourceUtilizations.Update(Util);
 
            var _summaries =_projectService.GetForecastAndActual(project.ProjectId, _userService.GetSecureUserCompany(), period);
            _summaries.Lifetimeforecast.Add(forecasttask);
@@ -645,6 +655,7 @@ namespace PTApi.Controllers
             var comp = _userService.GetSecureUserCompany();
             var systemreportingperiod = HttpContext.User.Claims.Single(c => c.Type == "financerepperiod").Value;
             int period = Convertwordmonthtonum(systemreportingperiod);
+            int CompanyStandardHrs = Convert.ToInt32(_userService.GetSecureUserCompanyStandardHrs());
 
 
             if (!ModelState.IsValid) // return validation error if client side validation is not passed.
@@ -698,6 +709,12 @@ namespace PTApi.Controllers
             _forecastService.CreateForecast(newforecast, forecasttaskData, resource);
 
             _unitOfWork.LifetimeForecast.Add(newforecast);
+
+            var resourceStandardHrs = (resource.ResourceContractEffortInPercentage ?? 100) / 100 * CompanyStandardHrs;
+            var resourceUtil = _unitOfWork.ResourceUtilizations.GetOneResourceUtilization(resource.ResourceId, newforecast.Year);
+            var Util = _resourceService.CalculateResourceUtilAvail(resourceUtil, resource.ResourceId, comp, newforecast.Year, resourceStandardHrs, CompanyStandardHrs);
+
+            _unitOfWork.ResourceUtilizations.Update(Util);
 
             var _summaries = _projectService.GetForecastAndActual(project.ProjectId, _userService.GetSecureUserCompany(), period);
             _summaries.Lifetimeforecast.Add(newforecast);

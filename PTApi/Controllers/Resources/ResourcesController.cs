@@ -299,74 +299,10 @@ namespace PTApi.Controllers
 
                             _unitOfWork.ResourceUtilizations.Add(Utility);
 
-                            var GetUtilizeByMonth = _resourceService.GetAllResourceUtilization(resid, year);
-                           
+                            Utility = _resourceService.CalculateResourceUtilAvail(Utility, resid, comp, year, resourceStandardHrs, CompanyStandardHrs);
+
                             Utility.ResourceUtilizationSummaryId = utilityid;
-                            Utility.JanResourceUtilizationInDays = GetUtilizeByMonth.GetJanResourceUtilizationByMonth;
-                            Utility.FebResourceUtilizationInDays = GetUtilizeByMonth.GetFebResourceUtilizationByMonth;
-                            Utility.MarResourceUtilizationInDays = GetUtilizeByMonth.GetMarResourceUtilizationByMonth;
-                            Utility.AprResourceUtilizationInDays = GetUtilizeByMonth.GetAprResourceUtilizationByMonth;
-                            Utility.MayResourceUtilizationInDays = GetUtilizeByMonth.GetMayResourceUtilizationByMonth;
-                            Utility.JunResourceUtilizationInDays = GetUtilizeByMonth.GetJunResourceUtilizationByMonth;
-                            Utility.JulResourceUtilizationInDays = GetUtilizeByMonth.GetJulResourceUtilizationByMonth;
-                            Utility.AugResourceUtilizationInDays = GetUtilizeByMonth.GetAugResourceUtilizationByMonth;
-                            Utility.SepResourceUtilizationInDays = GetUtilizeByMonth.GetSepResourceUtilizationByMonth;
-                            Utility.OctResourceUtilizationInDays = GetUtilizeByMonth.GetOctResourceUtilizationByMonth;
-                            Utility.NovResourceUtilizationInDays = GetUtilizeByMonth.GetNovResourceUtilizationByMonth;
-                            Utility.DecResourceUtilizationInDays = GetUtilizeByMonth.GetDecResourceUtilizationByMonth;
-
-                            Utility.JanAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 1) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.FebAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 2) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.MarAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 3) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.AprAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 4) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.MayAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 5) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.JunAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 6) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.JulAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 7) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.AugAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 8) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.SepAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 9) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.OctAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 10) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.NovAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 11) * (resourceStandardHrs / CompanyStandardHrs);
-                            Utility.DecAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 12) * (resourceStandardHrs / CompanyStandardHrs);
-
-                            Utility.JanTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 1);
-                            Utility.FebTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 2);
-                            Utility.MarTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 3);
-                            Utility.AprTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 4);
-                            Utility.MayTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 5);
-                            Utility.JunTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 6);
-                            Utility.JulTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 7);
-                            Utility.AugTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 8);
-                            Utility.SepTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 9);
-                            Utility.OctTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 10);
-                            Utility.NovTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 12);
-                            Utility.DecTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 12);
-
-                            Utility.JanAvailabilityAfterHolidaysInDays = Utility.JanAvailabilityBeforeHolidaysInDays - Utility.JanTotalHolidays; 
-                            Utility.FebAvailabilityAfterHolidaysInDays = Utility.FebAvailabilityBeforeHolidaysInDays - Utility.FebTotalHolidays;
-                            Utility.MarAvailabilityAfterHolidaysInDays = Utility.MarAvailabilityBeforeHolidaysInDays - Utility.MarTotalHolidays;
-                            Utility.AprAvailabilityAfterHolidaysInDays = Utility.AprAvailabilityBeforeHolidaysInDays - Utility.AprTotalHolidays;
-                            Utility.MayAvailabilityAfterHolidaysInDays = Utility.MayAvailabilityBeforeHolidaysInDays - Utility.MayTotalHolidays;
-                            Utility.JunAvailabilityAfterHolidaysInDays = Utility.JunAvailabilityBeforeHolidaysInDays - Utility.JunTotalHolidays;
-                            Utility.JulAvailabilityAfterHolidaysInDays = Utility.JulAvailabilityBeforeHolidaysInDays - Utility.JulTotalHolidays;
-                            Utility.AugAvailabilityAfterHolidaysInDays = Utility.AugAvailabilityBeforeHolidaysInDays - Utility.AugTotalHolidays;
-                            Utility.SepAvailabilityAfterHolidaysInDays = Utility.SepAvailabilityBeforeHolidaysInDays - Utility.SepTotalHolidays;
-                            Utility.OctAvailabilityAfterHolidaysInDays = Utility.OctAvailabilityBeforeHolidaysInDays - Utility.OctTotalHolidays;
-                            Utility.NovAvailabilityAfterHolidaysInDays = Utility.NovAvailabilityBeforeHolidaysInDays - Utility.NovTotalHolidays;
-                            Utility.DecAvailabilityAfterHolidaysInDays = Utility.DecAvailabilityBeforeHolidaysInDays - Utility.DecTotalHolidays;
-
-                            Utility.JanUtilizationPercentage = Utility.JanResourceUtilizationInDays / Utility.JanAvailabilityAfterHolidaysInDays;
-                            Utility.FebUtilizationPercentage = Utility.FebResourceUtilizationInDays / Utility.FebAvailabilityAfterHolidaysInDays;
-                            Utility.MarUtilizationPercentage = Utility.MarResourceUtilizationInDays / Utility.MarAvailabilityAfterHolidaysInDays;
-                            Utility.AprUtilizationPercentage = Utility.AprResourceUtilizationInDays / Utility.AprAvailabilityAfterHolidaysInDays;
-                            Utility.MayUtilizationPercentage = Utility.MayResourceUtilizationInDays / Utility.MayAvailabilityAfterHolidaysInDays;
-                            Utility.JunUtilizationPercentage = Utility.JunResourceUtilizationInDays / Utility.JunAvailabilityAfterHolidaysInDays;
-                            Utility.JulUtilizationPercentage = Utility.JulResourceUtilizationInDays / Utility.JulAvailabilityAfterHolidaysInDays;
-                            Utility.AugUtilizationPercentage = Utility.AugResourceUtilizationInDays / Utility.AugAvailabilityAfterHolidaysInDays;
-                            Utility.SepUtilizationPercentage = Utility.SepResourceUtilizationInDays / Utility.SepAvailabilityAfterHolidaysInDays;
-                            Utility.OctUtilizationPercentage = Utility.OctResourceUtilizationInDays / Utility.OctAvailabilityAfterHolidaysInDays;
-                            Utility.NovUtilizationPercentage = Utility.NovResourceUtilizationInDays / Utility.NovAvailabilityAfterHolidaysInDays;
-                            Utility.DecUtilizationPercentage = Utility.DecResourceUtilizationInDays / Utility.DecAvailabilityAfterHolidaysInDays;
-
+                           
                             continue;
                         }
                     }
@@ -472,76 +408,11 @@ namespace PTApi.Controllers
 
                     _unitOfWork.ResourceUtilizations.Add(Utility);
 
-                    var GetUtilizeByMonth = _resourceService.GetAllResourceUtilization(resid, year);
+                    Utility = _resourceService.CalculateResourceUtilAvail(Utility, resid, comp, year, resourceStandardHrs, CompanyStandardHrs);
 
                     Utility.ResourceUtilizationSummaryId = utilityid;
-                    Utility.JanResourceUtilizationInDays = 0;
-                    Utility.FebResourceUtilizationInDays = GetUtilizeByMonth.GetFebResourceUtilizationByMonth;
-                    Utility.MarResourceUtilizationInDays = GetUtilizeByMonth.GetMarResourceUtilizationByMonth;
-                    Utility.AprResourceUtilizationInDays = GetUtilizeByMonth.GetAprResourceUtilizationByMonth;
-                    Utility.MayResourceUtilizationInDays = GetUtilizeByMonth.GetMayResourceUtilizationByMonth;
-                    Utility.JunResourceUtilizationInDays = GetUtilizeByMonth.GetJunResourceUtilizationByMonth;
-                    Utility.JulResourceUtilizationInDays = GetUtilizeByMonth.GetJulResourceUtilizationByMonth;
-                    Utility.AugResourceUtilizationInDays = GetUtilizeByMonth.GetAugResourceUtilizationByMonth;
-                    Utility.SepResourceUtilizationInDays = GetUtilizeByMonth.GetSepResourceUtilizationByMonth;
-                    Utility.OctResourceUtilizationInDays = GetUtilizeByMonth.GetOctResourceUtilizationByMonth;
-                    Utility.NovResourceUtilizationInDays = GetUtilizeByMonth.GetNovResourceUtilizationByMonth;
-                    Utility.DecResourceUtilizationInDays = GetUtilizeByMonth.GetDecResourceUtilizationByMonth;
-
-                    Utility.JanAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 1) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.FebAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 2) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.MarAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 3) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.AprAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 4) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.MayAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 5) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.JunAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 6) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.JulAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 7) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.AugAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 8) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.SepAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 9) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.OctAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 10) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.NovAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 11) * (resourceStandardHrs / CompanyStandardHrs);
-                    Utility.DecAvailabilityBeforeHolidaysInDays = GetNumberOfWorkingDaysInMonth(year, 12) * (resourceStandardHrs / CompanyStandardHrs);
-
-                    Utility.JanTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 1);
-                    Utility.FebTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 2);
-                    Utility.MarTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 3);
-                    Utility.AprTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 4);
-                    Utility.MayTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 5);
-                    Utility.JunTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 6);
-                    Utility.JulTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 7);
-                    Utility.AugTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 8);
-                    Utility.SepTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 9);
-                    Utility.OctTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 10);
-                    Utility.NovTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 12);
-                    Utility.DecTotalHolidays = GetAllResourceHolidaysTotalsByMonth(comp, resid, year, 12);
-
-                    Utility.JanAvailabilityAfterHolidaysInDays = Utility.JanAvailabilityBeforeHolidaysInDays - Utility.JanTotalHolidays;
-                    Utility.FebAvailabilityAfterHolidaysInDays = Utility.FebAvailabilityBeforeHolidaysInDays - Utility.FebTotalHolidays;
-                    Utility.MarAvailabilityAfterHolidaysInDays = Utility.MarAvailabilityBeforeHolidaysInDays - Utility.MarTotalHolidays;
-                    Utility.AprAvailabilityAfterHolidaysInDays = Utility.AprAvailabilityBeforeHolidaysInDays - Utility.AprTotalHolidays;
-                    Utility.MayAvailabilityAfterHolidaysInDays = Utility.MayAvailabilityBeforeHolidaysInDays - Utility.MayTotalHolidays;
-                    Utility.JunAvailabilityAfterHolidaysInDays = Utility.JunAvailabilityBeforeHolidaysInDays - Utility.JunTotalHolidays;
-                    Utility.JulAvailabilityAfterHolidaysInDays = Utility.JulAvailabilityBeforeHolidaysInDays - Utility.JulTotalHolidays;
-                    Utility.AugAvailabilityAfterHolidaysInDays = Utility.AugAvailabilityBeforeHolidaysInDays - Utility.AugTotalHolidays;
-                    Utility.SepAvailabilityAfterHolidaysInDays = Utility.SepAvailabilityBeforeHolidaysInDays - Utility.SepTotalHolidays;
-                    Utility.OctAvailabilityAfterHolidaysInDays = Utility.OctAvailabilityBeforeHolidaysInDays - Utility.OctTotalHolidays;
-                    Utility.NovAvailabilityAfterHolidaysInDays = Utility.NovAvailabilityBeforeHolidaysInDays - Utility.NovTotalHolidays;
-                    Utility.DecAvailabilityAfterHolidaysInDays = Utility.DecAvailabilityBeforeHolidaysInDays - Utility.DecTotalHolidays;
-
-                    Utility.JanUtilizationPercentage = Utility.JanResourceUtilizationInDays / Utility.JanAvailabilityAfterHolidaysInDays;
-                    Utility.FebUtilizationPercentage = Utility.FebResourceUtilizationInDays / Utility.FebAvailabilityAfterHolidaysInDays;
-                    Utility.MarUtilizationPercentage = Utility.MarResourceUtilizationInDays / Utility.MarAvailabilityAfterHolidaysInDays;
-                    Utility.AprUtilizationPercentage = Utility.AprResourceUtilizationInDays / Utility.AprAvailabilityAfterHolidaysInDays;
-                    Utility.MayUtilizationPercentage = Utility.MayResourceUtilizationInDays / Utility.MayAvailabilityAfterHolidaysInDays;
-                    Utility.JunUtilizationPercentage = Utility.JunResourceUtilizationInDays / Utility.JunAvailabilityAfterHolidaysInDays;
-                    Utility.JulUtilizationPercentage = Utility.JulResourceUtilizationInDays / Utility.JulAvailabilityAfterHolidaysInDays;
-                    Utility.AugUtilizationPercentage = Utility.AugResourceUtilizationInDays / Utility.AugAvailabilityAfterHolidaysInDays;
-                    Utility.SepUtilizationPercentage = Utility.SepResourceUtilizationInDays / Utility.SepAvailabilityAfterHolidaysInDays;
-                    Utility.OctUtilizationPercentage = Utility.OctResourceUtilizationInDays / Utility.OctAvailabilityAfterHolidaysInDays;
-                    Utility.NovUtilizationPercentage = Utility.NovResourceUtilizationInDays / Utility.NovAvailabilityAfterHolidaysInDays;
-                    Utility.DecUtilizationPercentage = Utility.DecResourceUtilizationInDays / Utility.DecAvailabilityAfterHolidaysInDays;
-
+                   
                     continue;
-
                 }
 
                 _unitOfWork.Resources.Add(newresource);

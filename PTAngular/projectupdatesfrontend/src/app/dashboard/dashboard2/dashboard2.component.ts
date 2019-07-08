@@ -327,7 +327,7 @@ export class Dashboard2Component {
 
     };
     // Line chart configuration Ends
-    
+
     // Line chart configuration Starts
     lineChart1: Chart = {
         type: 'Line', data: data['line1'],

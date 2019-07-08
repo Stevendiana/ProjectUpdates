@@ -18,6 +18,7 @@ namespace PTApi.Services
         GetResourceTimesheetsTotalsByForecast GetResourceTimesheetsTotals(string companyId, string resourceId, string projectId, string forecastTaskId, int? year, int? month);
         GetResourceAvailabilityAndUtility GetAllResourceAvailabilityAndUtility(string companyId, string resourceId, int? year, int? month);
         GetResourceTimesheetsTotalsByForecast GetTotalAllocatedAmountFromReconcileActual(string companyId, string projectId, string forecastTaskId, int? year, int? month);
+        ResourceUtilizationSummary CalculateResourceUtilAvail(ResourceUtilizationSummary Utility, string resid, string comp, int year, decimal resourceStandardHrs, int CompanyStandardHrs);
 
     }
 }

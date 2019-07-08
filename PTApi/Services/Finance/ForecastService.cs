@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PTApi.Data;
+using PTApi.Data.Repositories;
 using PTApi.Helpers;
 using PTApi.Methods;
 using PTApi.Models;
@@ -17,15 +18,18 @@ namespace PTApi.Services
         private readonly IProjectService _projectService;
         private readonly IResourceService _resourceService;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ApplicationDbContext _appDbContext;
         private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
         private readonly IGeneratePublicIdMethod _getpublicId;
 
-        public ForecastService(IUserService userService, IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, IResourceService resourceService, IMapper mapper, ApplicationDbContext appDbContext, IProjectService projectService)
+        public ForecastService(IUserService userService, IGeneratePublicIdMethod getpublicId, IGetIdsWithPartIdsMethod getIdsWithPartIds, 
+            IResourceService resourceService, IMapper mapper, ApplicationDbContext appDbContext, IProjectService projectService, IUnitOfWork unitOfWork)
             : base(appDbContext)
         {
             _userService = userService;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
             _projectService = projectService;
             _getpublicId = getpublicId;
             _getIdsWithPartIds = getIdsWithPartIds;
@@ -553,10 +557,10 @@ namespace PTApi.Services
 
         public void CreateForecast(ForecastTask newforecast, ForecastTaskEAC forecasttaskData, Resource resource)
         {
-           
 
-            var newJanEndDate = newforecast.JanEndDate ?? new DateTime(newforecast.Year.Value, 1, 1);
-            var newJanStartDate = newforecast.JanStartDate ?? new DateTime(newforecast.Year.Value, 1, 1);
+
+            var newJanEndDate = newforecast.JanEndDate ?? new DateTime(newforecast.Year, 1, 1);
+            var newJanStartDate = newforecast.JanStartDate ?? new DateTime(newforecast.Year, 1, 1);
             var newJanForecastPreciseDuration = newforecast.JanForecastPreciseDuration ?? 0;
             var newResourceRateJan = NewResourceRate(newJanForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -565,8 +569,8 @@ namespace PTApi.Services
             newforecast.ResourceRateJan = newResourceRateJan;
             newforecast.JanForecastPreciseDuration = newJanForecastPreciseDuration;
 
-            var newFebEndDate = newforecast.FebEndDate ?? new DateTime(newforecast.Year.Value, 2, 1);
-            var newFebStartDate = newforecast.FebStartDate ?? new DateTime(newforecast.Year.Value, 2, 1);
+            var newFebEndDate = newforecast.FebEndDate ?? new DateTime(newforecast.Year, 2, 1);
+            var newFebStartDate = newforecast.FebStartDate ?? new DateTime(newforecast.Year, 2, 1);
             var newFebForecastPreciseDuration = newforecast.FebForecastPreciseDuration ?? 0;
             var newResourceRateFeb = NewResourceRate(newFebForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -575,8 +579,8 @@ namespace PTApi.Services
             newforecast.ResourceRateFeb = newResourceRateFeb;
             newforecast.FebForecastPreciseDuration = newFebForecastPreciseDuration;
 
-            var newMarEndDate = newforecast.MarEndDate ?? new DateTime(newforecast.Year.Value, 3, 1);
-            var newMarStartDate = newforecast.MarStartDate ?? new DateTime(newforecast.Year.Value, 3, 1);
+            var newMarEndDate = newforecast.MarEndDate ?? new DateTime(newforecast.Year, 3, 1);
+            var newMarStartDate = newforecast.MarStartDate ?? new DateTime(newforecast.Year, 3, 1);
             var newMarForecastPreciseDuration = newforecast.MarForecastPreciseDuration ?? 0;
             var newResourceRateMar = NewResourceRate(newMarForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -585,8 +589,8 @@ namespace PTApi.Services
             newforecast.ResourceRateMar = newResourceRateMar;
             newforecast.MarForecastPreciseDuration = newMarForecastPreciseDuration;
 
-            var newAprEndDate = newforecast.AprEndDate ?? new DateTime(newforecast.Year.Value, 4, 1);
-            var newAprStartDate = newforecast.AprStartDate ?? new DateTime(newforecast.Year.Value, 4, 1);
+            var newAprEndDate = newforecast.AprEndDate ?? new DateTime(newforecast.Year, 4, 1);
+            var newAprStartDate = newforecast.AprStartDate ?? new DateTime(newforecast.Year, 4, 1);
             var newAprForecastPreciseDuration = newforecast.AprForecastPreciseDuration ?? 0;
             var newResourceRateApr = NewResourceRate(newAprForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -595,8 +599,8 @@ namespace PTApi.Services
             newforecast.ResourceRateApr = newResourceRateApr;
             newforecast.AprForecastPreciseDuration = newAprForecastPreciseDuration;
 
-            var newMayEndDate = newforecast.MayEndDate ?? new DateTime(newforecast.Year.Value, 5, 1);
-            var newMayStartDate = newforecast.MayStartDate ?? new DateTime(newforecast.Year.Value, 5, 1);
+            var newMayEndDate = newforecast.MayEndDate ?? new DateTime(newforecast.Year, 5, 1);
+            var newMayStartDate = newforecast.MayStartDate ?? new DateTime(newforecast.Year, 5, 1);
             var newMayForecastPreciseDuration = newforecast.MayForecastPreciseDuration ?? 0;
             var newResourceRateMay = NewResourceRate(newMayForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -606,8 +610,8 @@ namespace PTApi.Services
             newforecast.MayForecastPreciseDuration = newMayForecastPreciseDuration;
 
 
-            var newJunEndDate = newforecast.JunEndDate ?? new DateTime(newforecast.Year.Value, 6, 1);
-            var newJunStartDate = newforecast.JunStartDate ?? new DateTime(newforecast.Year.Value, 6, 1);
+            var newJunEndDate = newforecast.JunEndDate ?? new DateTime(newforecast.Year, 6, 1);
+            var newJunStartDate = newforecast.JunStartDate ?? new DateTime(newforecast.Year, 6, 1);
             var newJunForecastPreciseDuration = newforecast.JunForecastPreciseDuration ?? 0;
             var newResourceRateJun = NewResourceRate(newJunForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -617,8 +621,8 @@ namespace PTApi.Services
             newforecast.JunForecastPreciseDuration = newJunForecastPreciseDuration;
 
 
-            var newJulEndDate = newforecast.JulEndDate ?? new DateTime(newforecast.Year.Value, 7, 1);
-            var newJulStartDate = newforecast.JulStartDate ?? new DateTime(newforecast.Year.Value, 7, 1);
+            var newJulEndDate = newforecast.JulEndDate ?? new DateTime(newforecast.Year, 7, 1);
+            var newJulStartDate = newforecast.JulStartDate ?? new DateTime(newforecast.Year, 7, 1);
             var newJulForecastPreciseDuration = newforecast.JulForecastPreciseDuration ?? 0;
             var newResourceRateJul = NewResourceRate(newJulForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -628,8 +632,8 @@ namespace PTApi.Services
             newforecast.JulForecastPreciseDuration = newJulForecastPreciseDuration;
 
 
-            var newAugEndDate = newforecast.AugEndDate ?? new DateTime(newforecast.Year.Value, 8, 1);
-            var newAugStartDate = newforecast.AugStartDate ?? new DateTime(newforecast.Year.Value, 8, 1);
+            var newAugEndDate = newforecast.AugEndDate ?? new DateTime(newforecast.Year, 8, 1);
+            var newAugStartDate = newforecast.AugStartDate ?? new DateTime(newforecast.Year, 8, 1);
             var newAugForecastPreciseDuration = newforecast.AugForecastPreciseDuration ?? 0;
             var newResourceRateAug = NewResourceRate(newAugForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -638,8 +642,8 @@ namespace PTApi.Services
             newforecast.ResourceRateAug = newResourceRateAug;
             newforecast.AugForecastPreciseDuration = newAugForecastPreciseDuration;
 
-            var newSepEndDate = newforecast.SepEndDate ?? new DateTime(newforecast.Year.Value, 9, 1);
-            var newSepStartDate = newforecast.SepStartDate ?? new DateTime(newforecast.Year.Value, 9, 1);
+            var newSepEndDate = newforecast.SepEndDate ?? new DateTime(newforecast.Year, 9, 1);
+            var newSepStartDate = newforecast.SepStartDate ?? new DateTime(newforecast.Year, 9, 1);
             var newSepForecastPreciseDuration = newforecast.SepForecastPreciseDuration ?? 0;
             var newResourceRateSep = NewResourceRate(newSepForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -648,8 +652,8 @@ namespace PTApi.Services
             newforecast.ResourceRateSep = newResourceRateSep;
             newforecast.SepForecastPreciseDuration = newSepForecastPreciseDuration;
 
-            var newOctEndDate = newforecast.OctEndDate ?? new DateTime(newforecast.Year.Value, 10, 1);
-            var newOctStartDate = newforecast.OctStartDate ?? new DateTime(newforecast.Year.Value, 10, 1);
+            var newOctEndDate = newforecast.OctEndDate ?? new DateTime(newforecast.Year, 10, 1);
+            var newOctStartDate = newforecast.OctStartDate ?? new DateTime(newforecast.Year, 10, 1);
             var newOctForecastPreciseDuration = newforecast.OctForecastPreciseDuration ?? 0;
             var newResourceRateOct = NewResourceRate(newOctForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -658,8 +662,8 @@ namespace PTApi.Services
             newforecast.ResourceRateOct = newResourceRateOct;
             newforecast.OctForecastPreciseDuration = newOctForecastPreciseDuration;
 
-            var newNovEndDate = newforecast.NovEndDate ?? new DateTime(newforecast.Year.Value, 11, 1);
-            var newNovStartDate = newforecast.NovStartDate ?? new DateTime(newforecast.Year.Value, 11, 1);
+            var newNovEndDate = newforecast.NovEndDate ?? new DateTime(newforecast.Year, 11, 1);
+            var newNovStartDate = newforecast.NovStartDate ?? new DateTime(newforecast.Year, 11, 1);
             var newNovForecastPreciseDuration = newforecast.NovForecastPreciseDuration ?? 0;
             var newResourceRateNov = NewResourceRate(newNovForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -668,8 +672,8 @@ namespace PTApi.Services
             newforecast.ResourceRateNov = newResourceRateNov;
             newforecast.NovForecastPreciseDuration = newNovForecastPreciseDuration;
 
-            var newDecEndDate = newforecast.DecEndDate ?? new DateTime(newforecast.Year.Value, 12, 1);
-            var newDecStartDate = newforecast.DecStartDate ?? new DateTime(newforecast.Year.Value, 12, 1);
+            var newDecEndDate = newforecast.DecEndDate ?? new DateTime(newforecast.Year, 12, 1);
+            var newDecStartDate = newforecast.DecStartDate ?? new DateTime(newforecast.Year, 12, 1);
             var newDecForecastPreciseDuration = newforecast.DecForecastPreciseDuration ?? 0;
             var newResourceRateDec = NewResourceRate(newDecForecastPreciseDuration, resource.CompanyRateCard.DailyRate);
 
@@ -748,25 +752,6 @@ namespace PTApi.Services
 
             newforecast.TaskEarliestStartDate = dates.MinStartDate;
             newforecast.TaskLatestndEDate = dates.MaxEndDate;
-
-
-            resource.JanResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.JanResourceUtilizationInDays ?? 0, forecasttaskData.JanForecastPreciseDuration);
-            resource.FebResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.FebResourceUtilizationInDays ?? 0, forecasttaskData.FebForecastPreciseDuration);
-            resource.MarResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.MarResourceUtilizationInDays ?? 0, forecasttaskData.MarForecastPreciseDuration);
-            resource.AprResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.AprResourceUtilizationInDays ?? 0, forecasttaskData.AprForecastPreciseDuration);
-            resource.MayResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.MayResourceUtilizationInDays ?? 0, forecasttaskData.MayForecastPreciseDuration);
-            resource.JunResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.JunResourceUtilizationInDays ?? 0, forecasttaskData.JunForecastPreciseDuration);
-            resource.JulResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.JulResourceUtilizationInDays ?? 0, forecasttaskData.JulForecastPreciseDuration);
-            resource.AugResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.AugResourceUtilizationInDays ?? 0, forecasttaskData.AugForecastPreciseDuration);
-            resource.SepResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.SepResourceUtilizationInDays ?? 0, forecasttaskData.SepForecastPreciseDuration);
-            resource.OctResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.OctResourceUtilizationInDays ?? 0, forecasttaskData.OctForecastPreciseDuration);
-            resource.NovResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.NovResourceUtilizationInDays ?? 0, forecasttaskData.NovForecastPreciseDuration);
-            resource.DecResourceUtilizationInDays = CalculateUtilizationNewForecast(resource.DecResourceUtilizationInDays ?? 0, forecasttaskData.DecForecastPreciseDuration);
-
-            resource.TotalUtilizationInDays = resource.JanResourceUtilizationInDays + resource.FebResourceUtilizationInDays + resource.MarResourceUtilizationInDays + resource.AprResourceUtilizationInDays
-                     + resource.MayResourceUtilizationInDays + resource.JunResourceUtilizationInDays + resource.JulResourceUtilizationInDays + resource.AugResourceUtilizationInDays
-                     + resource.SepResourceUtilizationInDays + resource.OctResourceUtilizationInDays + resource.NovResourceUtilizationInDays + resource.DecResourceUtilizationInDays;
-
 
         }
 
@@ -1992,22 +1977,6 @@ namespace PTApi.Services
 
             forecasttask.ForecastTaskId = oldforecasttask.ForecastTaskId;
 
-            resource.JanResourceUtilizationInDays = CalculateUtilization(resource.JanResourceUtilizationInDays, forecasttask.JanForecastPreciseDuration, forecasttaskData.JanForecastPreciseDuration);
-            resource.FebResourceUtilizationInDays = CalculateUtilization(resource.FebResourceUtilizationInDays, forecasttask.FebForecastPreciseDuration, forecasttaskData.FebForecastPreciseDuration);
-            resource.MarResourceUtilizationInDays = CalculateUtilization(resource.MarResourceUtilizationInDays, forecasttask.MarForecastPreciseDuration, forecasttaskData.MarForecastPreciseDuration);
-            resource.AprResourceUtilizationInDays = CalculateUtilization(resource.AprResourceUtilizationInDays, forecasttask.AprForecastPreciseDuration, forecasttaskData.AprForecastPreciseDuration);
-            resource.MayResourceUtilizationInDays = CalculateUtilization(resource.MayResourceUtilizationInDays, forecasttask.MayForecastPreciseDuration, forecasttaskData.MayForecastPreciseDuration);
-            resource.JunResourceUtilizationInDays = CalculateUtilization(resource.JunResourceUtilizationInDays, forecasttask.JunForecastPreciseDuration, forecasttaskData.JunForecastPreciseDuration);
-            resource.JulResourceUtilizationInDays = CalculateUtilization(resource.JulResourceUtilizationInDays, forecasttask.JulForecastPreciseDuration, forecasttaskData.JulForecastPreciseDuration);
-            resource.AugResourceUtilizationInDays = CalculateUtilization(resource.AugResourceUtilizationInDays, forecasttask.AugForecastPreciseDuration, forecasttaskData.AugForecastPreciseDuration);
-            resource.SepResourceUtilizationInDays = CalculateUtilization(resource.SepResourceUtilizationInDays, forecasttask.SepForecastPreciseDuration, forecasttaskData.SepForecastPreciseDuration);
-            resource.OctResourceUtilizationInDays = CalculateUtilization(resource.OctResourceUtilizationInDays, forecasttask.OctForecastPreciseDuration, forecasttaskData.OctForecastPreciseDuration);
-            resource.NovResourceUtilizationInDays = CalculateUtilization(resource.NovResourceUtilizationInDays, forecasttask.NovForecastPreciseDuration, forecasttaskData.NovForecastPreciseDuration);
-            resource.DecResourceUtilizationInDays = CalculateUtilization(resource.DecResourceUtilizationInDays, forecasttask.DecForecastPreciseDuration, forecasttaskData.DecForecastPreciseDuration);
-
-            resource.TotalUtilizationInDays = resource.JanResourceUtilizationInDays + resource.FebResourceUtilizationInDays + resource.MarResourceUtilizationInDays + resource.AprResourceUtilizationInDays
-                     + resource.MayResourceUtilizationInDays + resource.JunResourceUtilizationInDays + resource.JulResourceUtilizationInDays + resource.AugResourceUtilizationInDays
-                     + resource.SepResourceUtilizationInDays + resource.OctResourceUtilizationInDays + resource.NovResourceUtilizationInDays + resource.DecResourceUtilizationInDays;
         }
 
         public decimal? CalculateAmount(decimal? days, decimal? rate)

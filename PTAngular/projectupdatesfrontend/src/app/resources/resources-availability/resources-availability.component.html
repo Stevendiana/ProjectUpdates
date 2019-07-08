@@ -1,0 +1,174 @@
+<div class="row">
+    <h1 class="card-title m-1 pl-2 pull-left text-muted text-primary">Resource Availability</h1>
+</div>
+<!-- Minimal statistics with bg color section start -->
+<section id="minimal-statistics-bg">
+  <div class="row text-left" matchHeight="card">
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card bg-primary">
+        <div class="card-content">
+          <div class="px-3 py-3">
+            <div class="media">
+              <div class="media-left align-self-center">
+                <i class="icon-pencil white font-large-2 float-left"></i>
+              </div>
+              <div class="media-body white text-right">
+                <h3>278</h3>
+                <span>New Posts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card bg-danger">
+        <div class="card-content">
+          <div class="px-3 py-3">
+            <div class="media">
+              <div class="media-left align-self-center">
+                <i class="icon-speech white font-large-2 float-left"></i>
+              </div>
+              <div class="media-body white text-right">
+                <h3>156</h3>
+                <span>New Comments</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card bg-success">
+        <div class="card-content">
+          <div class="px-3 py-3">
+            <div class="media">
+              <div class="media-left align-self-center">
+                <i class="icon-graph white font-large-2 float-left"></i>
+              </div>
+              <div class="media-body white text-right">
+                <h3>64.89 %</h3>
+                <span>Bounce Rate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-3 col-lg-6 col-12">
+      <div class="card bg-warning">
+        <div class="card-content">
+          <div class="px-3 py-3">
+            <div class="media">
+              <div class="media-left align-self-center">
+                <i class="icon-pointer white font-large-2 float-left"></i>
+              </div>
+              <div class="media-body white text-right">
+                <h3>423</h3>
+                <span>Total Visits</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Minimal statistics with bg color section end -->
+
+<section id="extended">
+    <div class="row text-left">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+              <h2 class="card-title text-capitalize text-monospace">Yearly Availability</h2>
+          </div>
+          <div class="card-content p-2 m-2">
+            <div class="card-body">
+                <div classs ="m-2 p-2">
+                    <div classs ="row">
+                        <div class="col-12">
+                            <ngb-tabset  type="pills">
+                                <hr>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year1}} </b><span class="text-danger">- Current year</span></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year2}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year3}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year4}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                    <ng-template ngbTabTitle><b>{{year5}}</b></ng-template>
+                                    <ng-template ngbTabContent>
+                                      <hr>
+                                      <app-resources-availability-table></app-resources-availability-table>
+                                    </ng-template>
+                                  </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year6}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year7}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year8}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year9}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                                <ngb-tab>
+                                  <ng-template ngbTabTitle><b>{{year10}}</b></ng-template>
+                                  <ng-template ngbTabContent>
+                                    <hr>
+                                    <app-resources-availability-table></app-resources-availability-table>
+                                  </ng-template>
+                                </ngb-tab>
+                            </ngb-tabset>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+

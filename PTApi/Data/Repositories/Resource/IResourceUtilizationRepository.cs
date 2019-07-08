@@ -5,7 +5,8 @@ namespace PTApi.Data.Repositories
 {
     public interface IResourceUtilizationRepository : IRepository<ResourceUtilizationSummary>
     {
-        ResourceUtilizationSummary GetOneResourceUtilization(string id, string companyId);
+        ResourceUtilizationSummary GetAllResourceUtilization(string id, string companyId);
+        ResourceUtilizationSummary GetOneResourceUtilization(string id, int year);
         IEnumerable<ResourceUtilizationSummary> GetAllResourcesUtilization(string id, string companyId);
     }
 }

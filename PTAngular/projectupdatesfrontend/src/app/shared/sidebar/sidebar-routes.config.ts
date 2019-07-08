@@ -10,8 +10,15 @@ export const ROUTES: RouteInfo[] = [
     //     ]
     // },
     { path: '/myprojects/myprojects', title: 'My projects', icon: 'ft-home', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+
+    { path: '', title: 'Resource Pool', icon: 'ft-droplet', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
+    submenu: [
+      { path: '/resources/resources', title: 'Resources', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/resources/demand', title: 'Demand', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/resources/availability', title: 'Availability', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+      { path: '/resources/utilization', title: 'Utilization', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
+    ] },
     { path: '/timesheets', title: 'My timesheets', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
-    { path: '/resources', title: 'Our Resources', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
     { path: '/project', title: 'Project', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
     // { path: '/colorpalettes', title: 'Color Palette', icon: 'ft-droplet', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
     { path: '/inbox', title: 'Inbox', icon: 'ft-mail', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
