@@ -21,6 +21,18 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Principal;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Html;
+
+
 namespace PTApi.Controllers
 {
     public class JwtPacket: ActionResult
@@ -66,7 +78,7 @@ namespace PTApi.Controllers
         private readonly JsonSerializerSettings _serializerSettings;
         private readonly JwtIssuerOptions _jwtOptions;
         //private readonly IEmailSender _emailSender;
-        private readonly ISmsSender _smsSender;
+        //private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private readonly IEmailService _emailService;
         private readonly IGetIdsWithPartIdsMethod _getIdsWithPartIds;
@@ -75,13 +87,11 @@ namespace PTApi.Controllers
 
         public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,IJwtFactory jwtFactory ,IHttpContextAccessor httpContextAccessor,
                               IOptions<JwtIssuerOptions> jwtOptions, IMapper mapper, IUnitOfWork unitOfWork, IEmailService emailService, IGeneratePublicIdMethod getpublicId, 
-                              IGetIdsWithPartIdsMethod getIdsWithPartIds, ISmsSender smsSender, ILoggerFactory loggerFactory, IProjectService projectService, IUserService userService,IResourceService resourceService)
+                              IGetIdsWithPartIdsMethod getIdsWithPartIds, ILoggerFactory loggerFactory, IProjectService projectService, IUserService userService,IResourceService resourceService)
         {
             _userManager = userManager; _signInManager = signInManager;_jwtFactory = jwtFactory; _jwtOptions = jwtOptions.Value;_resourceService = resourceService;
             _userManager = userManager; _httpContextAccessor = httpContextAccessor; _mapper=mapper; _emailService=emailService; _getIdsWithPartIds = getIdsWithPartIds;
-            _getpublicId = getpublicId;
-            _unitOfWork = unitOfWork; _smsSender = smsSender;_projectService = projectService;_userService=userService;
-            _logger = loggerFactory.CreateLogger<AuthController>();
+            _getpublicId = getpublicId; _unitOfWork = unitOfWork; _projectService = projectService;_userService=userService; _logger = loggerFactory.CreateLogger<AuthController>();
 
             _serializerSettings = new JsonSerializerSettings
             {
@@ -410,7 +420,7 @@ namespace PTApi.Controllers
                 await _signInManager.SignInAsync(userIdentity, isPersistent: false);
                 _logger.LogInformation(3, "User created a new account with password.");
 
-                return Ok(CreateRegisterJwtPacket(userIdentity, model));
+                return Ok(CreateRegisterJwtPacket(userIdentity, model).Result);
             }
         }
 
@@ -559,7 +569,7 @@ namespace PTApi.Controllers
             // check the credentials
             await _userManager.CheckPasswordAsync(user, credentials.Password);
 
-           return Ok(CreateJwtPacket(user, credentials));
+           return Ok(CreateJwtPacket(identity, credentials).Result);
         }
 
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
@@ -659,9 +669,9 @@ namespace PTApi.Controllers
             };
         }
 
-        public async Task<JwtPacket> CreateJwtPacket(ApplicationUser user, CredentialsViewModel credentials)
+        public async Task<JwtPacket> CreateJwtPacket(ClaimsIdentity identity, CredentialsViewModel credentials)
         {
-            var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
+            //var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
 
             var id=identity.Claims.Single(c=>c.Type=="id").Value;
             var comp=identity.Claims.Single(c=>c.Type=="comp").Value;
@@ -717,6 +727,64 @@ namespace PTApi.Controllers
                 StandardDailyHrs = standarddailyhrs, DoEmployeesWorkWeekends = doempsworkweekends.ToString()
             };
         }
+        // public async Task<JwtPacket> CreateJwtPacket(ApplicationUser user, CredentialsViewModel credentials)
+        //{
+        //    var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
+
+        //    var id=identity.Claims.Single(c=>c.Type=="id").Value;
+        //    var comp=identity.Claims.Single(c=>c.Type=="comp").Value;
+        //    var email=identity.Claims.Single(c=>c.Type=="email").Value;
+        //    var resourceId=identity.Claims.Single(c=>c.Type=="resourceid").Value;
+
+
+        //    var userResource = _unitOfWork.Resources.GetOneResouce(resourceId,comp);
+        //    var thisuser = _unitOfWork.Users.GetOneUser(id,comp);
+        //    var firstname = userResource.FirstName;
+        //    var lastname = userResource.LastName;
+        //    var avatar = userResource.ImageUrl;
+
+        //    var rol = thisuser.AppUserRole;
+        //    var rolGroup =_userService.GetAppResourceRole(thisuser.AppUserRole);
+        //    var resourceid = userResource.ResourceId;
+
+        //    var userCompany = _unitOfWork.Companies.Getcompany(comp);
+
+        //    var allowrec = userCompany.AllowReconciliation;
+        //    var financerepperiod = userCompany.FinanceReportingPeriod;
+        //    var companyName = userCompany.CompanyAccountName;
+        //    var financerepyear = userCompany.FinanceReportingYear;
+        //    var reportingday = userCompany.RecurringReportingDay;
+
+        //    var compcurrencysym =userCompany.ReportingCurrency;
+        //    var compcurrencylng =userCompany.CompanyCurrentLongName;
+        //    var compcurrencysht =userCompany.CompanyCurrentShortName;
+
+        //    var freezefore = userCompany.FreezeForecast;
+        //    var standarddailyhrs = userCompany.StandardDailyHours;
+        //    var doempsworkweekends = userCompany.DoEmployeesWorkWeekends;
+
+        //    var companylogo = userCompany.LogoUrl;
+
+
+
+        //    var auth_token = await _jwtFactory.GenerateEncodedToken(credentials.UserName, identity);
+
+        //    // await _userManager.GetClaimsAsync(user);
+
+        //    return new JwtPacket(){
+
+        //        Token = auth_token, FirstName = firstname,
+        //        LastName = lastname, Avatar = avatar,
+        //        CompanyName = companyName,
+        //        Comp = comp, Role = rol,RoleGroup = rolGroup,
+        //        Email = email, Resource = resourceid,
+        //        AllowRec = allowrec.ToString(), FinanceRepPeriod = financerepperiod, FinanceRepYear = financerepyear.ToString(),
+        //        ReportingDay = reportingday.ToString(), CompanyLogo = companylogo,
+        //        CurrencyLongName = compcurrencylng, CurrencyShortName = compcurrencysht,
+        //        CurrencySymbol = compcurrencysym, FreezeForecast = freezefore.ToString(),
+        //        StandardDailyHrs = standarddailyhrs, DoEmployeesWorkWeekends = doempsworkweekends.ToString()
+        //    };
+        //}
 
         private static long ToUnixEpochDate(DateTime date) => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 

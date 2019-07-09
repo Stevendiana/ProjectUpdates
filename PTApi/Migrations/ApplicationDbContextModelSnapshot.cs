@@ -9,7 +9,7 @@ using PTApi.Data;
 namespace PTApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ProjectCentreDbContextModelSnapshot : ModelSnapshot
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -1346,7 +1346,7 @@ namespace PTApi.Migrations
 
                     b.Property<string>("VendorId");
 
-                    b.Property<int?>("Year");
+                    b.Property<int>("Year");
 
                     b.HasKey("ForecastTaskId");
 
@@ -3118,14 +3118,6 @@ namespace PTApi.Migrations
 
                     b.Property<string>("Agency");
 
-                    b.Property<decimal?>("AprAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("AprResourceUtilizationInDays");
-
-                    b.Property<decimal?>("AugAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("AugResourceUtilizationInDays");
-
                     b.Property<byte[]>("AvatarImage");
 
                     b.Property<bool>("Billable");
@@ -3152,10 +3144,6 @@ namespace PTApi.Migrations
 
                     b.Property<DateTime?>("DateModified");
 
-                    b.Property<decimal?>("DecAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("DecResourceUtilizationInDays");
-
                     b.Property<string>("DomainsFollowingCompanyId");
 
                     b.Property<string>("DomainsFollowingDomainId");
@@ -3178,10 +3166,6 @@ namespace PTApi.Migrations
 
                     b.Property<string>("EmployeeType");
 
-                    b.Property<decimal?>("FebAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("FebResourceUtilizationInDays");
-
                     b.Property<string>("FirstName")
                         .IsRequired();
 
@@ -3201,39 +3185,11 @@ namespace PTApi.Migrations
 
                     b.Property<bool>("IsDisabled");
 
-                    b.Property<decimal?>("JanAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("JanResourceUtilizationInDays");
-
-                    b.Property<decimal?>("JulAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("JulResourceUtilizationInDays");
-
-                    b.Property<decimal?>("JunAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("JunResourceUtilizationInDays");
-
                     b.Property<string>("LastName");
 
                     b.Property<string>("Location");
 
                     b.Property<string>("LocationName");
-
-                    b.Property<decimal?>("MarAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("MarResourceUtilizationInDays");
-
-                    b.Property<decimal?>("MayAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("MayResourceUtilizationInDays");
-
-                    b.Property<decimal?>("NovAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("NovResourceUtilizationInDays");
-
-                    b.Property<decimal?>("OctAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("OctResourceUtilizationInDays");
 
                     b.Property<string>("PlatformId");
 
@@ -3301,14 +3257,6 @@ namespace PTApi.Migrations
                     b.Property<DateTime?>("ResourceStartDate");
 
                     b.Property<string>("ResourceType");
-
-                    b.Property<decimal?>("SepAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("SepResourceUtilizationInDays");
-
-                    b.Property<decimal?>("TotalAvailabilityBeforeHolidaysInDays");
-
-                    b.Property<decimal?>("TotalUtilizationInDays");
 
                     b.Property<string>("UserCreatedAvatar");
 

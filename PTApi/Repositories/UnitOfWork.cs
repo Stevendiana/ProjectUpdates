@@ -1,4 +1,5 @@
-﻿using PTApi.Data;
+﻿using AutoMapper;
+using PTApi.Data;
 using PTApi.Data.Repositories;
 using PTApi.Services;
 using System.Threading.Tasks;
@@ -8,13 +9,12 @@ namespace PTApi.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
-        private readonly IForecastService _forecastService;
 
-        public UnitOfWork(ApplicationDbContext context, IForecastService forecastService)
+
+        public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            _forecastService = forecastService;
- 
+           
             Users = new UserRepository(_context);
             Notifications = new UserNotificationRepository(_context);
 
@@ -43,7 +43,7 @@ namespace PTApi.Repositories
             Actuals = new ActualRepository(_context);
             ProjectBudgets = new ProjectBudgetRepository(_context);
             BudgetTracker = new ProjectBudgetTrackerRepository(_context);
-            LifetimeForecast = new ForecastTaskRepository(_context, _forecastService);
+            LifetimeForecast = new ForecastTaskRepository(_context);
 
             Rags = new ProjectRagStatusRepository(_context);
             Assumptions = new AssumptionRepository(_context);
