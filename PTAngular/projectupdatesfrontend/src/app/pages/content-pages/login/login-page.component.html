@@ -1,5 +1,6 @@
 <!--Login Page Starts-->
-<section id="login">
+<form [formGroup]="loginform"   (ngSubmit)="onSubmit()"  >
+<section  id="login">
   <div class="container-fluid">
     <div class="row full-height-vh m-0">
       <div class="col-12 d-flex align-items-center justify-content-center">
@@ -18,85 +19,86 @@
                     height="230"
                   />
                 </div>
-                <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
-                  <h4 class="card-title mb-2">Login</h4>
-                  <p class="card-text mb-3">
-                    Welcome back, please login to your account.
-                  </p>
-                  <input
-                    type="text"
-                    class="form-control mb-3"
-                    placeholder="Username"
-                  />
-                  <input
-                    type="password"
-                    class="form-control mb-3"
-                    placeholder="Password"
-                  />
-                  <div class="d-flex justify-content-between mt-2">
-                    <div class="remember-me">
-                      <div
-                        class="custom-control custom-checkbox custom-control-inline mb-3"
-                      >
+
+                    <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
+                        <h4 class="card-title mb-2">Login</h4>
+                        <p class="card-text mb-3">
+                          Welcome back, please login to your account.
+                        </p>
                         <input
-                          type="checkbox"
-                          id="customCheckboxInline1"
-                          name="customCheckboxInline1"
-                          class="custom-control-input"
+                          formControlName="userName"
+                          [ngClass]= "{'error': isLogInValid('userName')}"
+                          type="email"
+                          class="form-control mb-3"
+                          placeholder="Username"
                         />
-                        <label
-                          class="custom-control-label"
-                          for="customCheckboxInline1"
-                        >
-                          Remember Me
-                        </label>
+                        <input
+                          type="password"
+                          class="form-control mb-3"
+                          placeholder="Password"
+                          formControlName="password"
+                          [ngClass]= "{'error': isLogInValid ('password')}"
+                        />
+                        <div class="d-flex justify-content-between mt-2">
+                          <div class="remember-me">
+                            <div
+                              class="custom-control custom-checkbox custom-control-inline mb-3"
+                            >
+                              <input
+                                type="checkbox"
+                                id="customCheckboxInline1"
+                                name="customCheckboxInline1"
+                                class="custom-control-input"
+                              />
+                              <label
+                                class="custom-control-label"
+                                for="customCheckboxInline1"
+                              >
+                                Remember Me
+                              </label>
+                            </div>
+                          </div>
+                          <div class="forgot-password-option">
+                            <a
+                              [routerLink]="['/pages/forgotpassword']"
+                              class="text-decoration-none text-primary"
+                              >Forgot Password ?</a
+                            >
+                          </div>
+                        </div>
+                        <div class="fg-actions d-flex justify-content-between">
+                          <div class="login-btn">
+                            <button class="btn btn-outline-primary">
+                              <a
+                                [routerLink]="['/pages/register']"
+                                class="text-decoration-none"
+                                >Register</a
+                              >
+                            </button>
+                          </div>
+                          <div class="recover-pass">
+                            <button class="btn btn-primary text-decoration-none text-white" type="submit" name="submit" (click) = "onSubmit [disabled]='!loginform.valid'">
+                                Login
+                            </button>
+                          </div>
+                        </div>
+                        <hr class="m-0" />
+                        <div class="d-flex justify-content-between mt-3">
+                          <div class="option-login">
+                            <h6 class="text-decoration-none text-primary">
+                              Or Login With
+                            </h6>
+                          </div>
+                          <div class="social-login-options">
+                            <a class="btn btn-social-icon mr-2 btn-facebook">
+                              <span class="fa fa-facebook"></span>
+                            </a>
+                            <a class="btn btn-social-icon mr-2 btn-twitter">
+                              <span class="fa fa-twitter"></span>
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div class="forgot-password-option">
-                      <a
-                        [routerLink]="['/pages/forgotpassword']"
-                        class="text-decoration-none text-primary"
-                        >Forgot Password ?</a
-                      >
-                    </div>
-                  </div>
-                  <div class="fg-actions d-flex justify-content-between">
-                    <div class="login-btn">
-                      <button class="btn btn-outline-primary">
-                        <a
-                          [routerLink]="['/pages/register']"
-                          class="text-decoration-none"
-                          >Register</a
-                        >
-                      </button>
-                    </div>
-                    <div class="recover-pass">
-                      <button class="btn btn-primary">
-                        <a
-                          [routerLink]="['/pages/login']"
-                          class="text-decoration-none text-white"
-                          >Login</a
-                        >
-                      </button>
-                    </div>
-                  </div>
-                  <hr class="m-0" />
-                  <div class="d-flex justify-content-between mt-3">
-                    <div class="option-login">
-                      <h6 class="text-decoration-none text-primary">
-                        Or Login With
-                      </h6>
-                    </div>
-                    <div class="social-login-options">
-                      <a class="btn btn-social-icon mr-2 btn-facebook">
-                        <span class="fa fa-facebook"></span>
-                      </a>
-                      <a class="btn btn-social-icon mr-2 btn-twitter">
-                        <span class="fa fa-twitter"></span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -105,4 +107,5 @@
     </div>
   </div>
 </section>
+</form>
 <!--Login Page Ends-->

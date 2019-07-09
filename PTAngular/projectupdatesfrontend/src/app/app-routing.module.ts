@@ -13,9 +13,15 @@ import { MyprojectsComponent } from './myprojects/myprojects.component';
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/myprojects/myprojects',
+    redirectTo: '/pages/login',
     pathMatch: 'full',
+
   },
+  // {
+  //   path: '',
+  //   redirectTo: '/myprojects/myprojects',
+  //   pathMatch: 'full',
+  // },
   // {
   //   path: '',
   //   redirectTo: 'myprojects',
@@ -27,7 +33,7 @@ const appRoutes: Routes = [
   //   pathMatch: 'full',
   // },
   { path: '', component: FullLayoutComponent, data: { title: 'full Views' }, children: Full_ROUTES, canActivate: [AuthGuard] },
-  { path: '', component: ContentLayoutComponent, data: { title: 'content Views' }, children: CONTENT_ROUTES, canActivate: [AuthGuard] },
+  { path: '', component: ContentLayoutComponent, data: { title: 'content Views' }, children: CONTENT_ROUTES },
   {
     path: '**',
     redirectTo: 'pages/error'

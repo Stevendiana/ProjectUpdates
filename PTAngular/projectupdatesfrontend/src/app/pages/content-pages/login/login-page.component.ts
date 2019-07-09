@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
+import { ILogin } from '../credentials';
+import { AuthService } from 'app/shared/auth/auth.service';
 
 @Component({
     selector: 'app-login-page',
@@ -10,14 +12,36 @@ import { Router, ActivatedRoute } from "@angular/router";
 
 export class LoginPageComponent {
 
-    @ViewChild('f') loginForm: NgForm;
+    // @ViewChild('f') loginForm: NgForm;
+    loginform;
+    logincredentials: ILogin;
 
-    constructor(private router: Router,
-        private route: ActivatedRoute) { }
+    constructor(private router: Router, private fb: FormBuilder, private auth: AuthService,
+        private route: ActivatedRoute) {
+          this.loginform = fb.group({
 
-    // On submit button click    
+            userName: ['', Validators.required],
+            password: ['', Validators.required],
+          });
+        }
+
+    // On submit button click
     onSubmit() {
-        this.loginForm.reset();
+
+      if (this.loginform.dirty && this.loginform.valid) {
+        // tslint:disable-next-line:no-shadowed-variable
+        const p = Object.assign({}, this.logincredentials, this.loginform.value);
+
+        console.log(this.loginform.value);
+        console.log(this.logincredentials);
+        console.log(p);
+
+        this.auth.login(p);
+
+        } else if (!this.loginform.dirty) {
+        return;
+      }
+        // this.loginForm.reset();
     }
     // On Forgot password link click
     onForgotPassword() {
@@ -26,5 +50,10 @@ export class LoginPageComponent {
     // On registration link click
     onRegister() {
         this.router.navigate(['register'], { relativeTo: this.route.parent });
+    }
+
+    isLogInValid(control) {
+
+      return this.loginform.controls[control].invalid && this.loginform.controls[control].touched;
     }
 }

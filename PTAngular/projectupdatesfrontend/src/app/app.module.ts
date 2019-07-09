@@ -24,6 +24,7 @@ import { FullLayoutComponent } from './layouts/full/full-layout.component';
 import { DragulaService } from 'ng2-dragula';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
+import { HttpModule } from '@angular/http';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -41,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     StoreModule.forRoot({}),
     AppRoutingModule,
     SharedModule,
+    HttpModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     NgbModule.forRoot(),
