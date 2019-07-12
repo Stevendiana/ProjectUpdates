@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { element } from 'protractor';
+import { Subject } from 'rxjs';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ChartEvent, ChartType } from 'ng-chartist';
 import * as Chartist from 'chartist';
+import { ResourceService } from '../resources.service';
+import { Resource, IResource, IResourceList } from '../resource';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NewResourceComponent } from '../resource/new-resource.component';
+import { DataTableDirective } from 'angular-datatables';
 
 declare var require: any;
 
@@ -17,11 +24,23 @@ export interface Chart {
 @Component({
   selector: 'app-resources',
   templateUrl: './resources.component.html',
-  styleUrls: ['./resources.component.scss']
+  styleUrls: ['./resources.component.scss'],
+  // encapsulation: ViewEncapsulation.None,
 })
 export class ResourcesComponent implements OnInit {
 
-  // constructor() { }
+  resources$ = new Subject<any>();
+  resources: IResourceList[] = [];
+  resourceCount: number;
+  search: string;
+  closeResult: string;
+
+  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
+
+  dtOptions: any = {};
+  // dtOptions: DataTables.Settings = {};
+  example: any;
+  dtTrigger: Subject<any> = new Subject();
 
   // Line chart configuration Starts
   WidgetlineChart: Chart = {
@@ -64,7 +83,7 @@ export class ResourcesComponent implements OnInit {
     events: {
         created(data: any): void {
 
-            var defs = data.svg.elem('defs');
+            const defs = data.svg.elem('defs');
             defs.elem('linearGradient', {
                 id: 'widgradient',
                 x1: 0,
@@ -108,7 +127,7 @@ export class ResourcesComponent implements OnInit {
     events: {
         created(data: any): void {
 
-            var defs = data.svg.elem('defs');
+            const defs = data.svg.elem('defs');
             defs.elem('linearGradient', {
                 id: 'widgradient1',
                 x1: 0,
@@ -243,7 +262,7 @@ export class ResourcesComponent implements OnInit {
     },
     events: {
         created(data: any): void {
-            var defs = data.svg.elem('defs');
+            const defs = data.svg.elem('defs');
             defs.elem('linearGradient', {
                 id: 'gradient',
                 x1: 0,
@@ -262,9 +281,9 @@ export class ResourcesComponent implements OnInit {
         },
         draw(data: any): void {
 
-            var circleRadius = 6;
+            const circleRadius = 6;
             if (data.type === 'point') {
-                var circle = new Chartist.Svg('circle', {
+                const circle = new Chartist.Svg('circle', {
                     cx: data.x,
                     cy: data.y,
                     r: circleRadius,
@@ -308,17 +327,16 @@ export class ResourcesComponent implements OnInit {
     ],
     events: {
         draw(data: any): void {
-            var circleRadius = 6;
+            const circleRadius = 6;
             if (data.type === 'point') {
-                var circle = new Chartist.Svg('circle', {
+                const circle = new Chartist.Svg('circle', {
                     cx: data.x,
                     cy: data.y,
                     r: circleRadius,
                     class: 'ct-point-circle'
                 });
                 data.element.replace(circle);
-            }
-            else if (data.type === 'label') {
+            } else if (data.type === 'label') {
                 // adjust label position for rotation
                 const dX = data.width / 2 + (30 - data.width)
                 data.element.attr({ x: data.element.attr('x') - dX })
@@ -372,7 +390,7 @@ export class ResourcesComponent implements OnInit {
       },
       events: {
           created(data: any): void {
-              var defs = data.svg.elem('defs');
+              const defs = data.svg.elem('defs');
               defs.elem('linearGradient', {
                   id: 'gradient',
                   x1: 0,
@@ -425,7 +443,7 @@ export class ResourcesComponent implements OnInit {
       },
       events: {
           created(data: any): void {
-              var defs = data.svg.elem('defs');
+              const defs = data.svg.elem('defs');
               defs.elem('linearGradient', {
                   id: 'linear',
                   x1: 0,
@@ -447,8 +465,7 @@ export class ResourcesComponent implements OnInit {
                       x1: data.x1 + 0.001
                   });
 
-              }
-              else if (data.type === 'label') {
+              } else if (data.type === 'label') {
                   data.element.attr({
                       y: 270
                   })
@@ -492,7 +509,7 @@ export class ResourcesComponent implements OnInit {
       ],
       events: {
           created(data: any): void {
-              var defs = data.svg.elem('defs');
+              const defs = data.svg.elem('defs');
               defs.elem('linearGradient', {
                   id: 'gradient2',
                   x1: 0,
@@ -526,18 +543,17 @@ export class ResourcesComponent implements OnInit {
               });
           },
           draw(data: any): void {
-              var circleRadius = 4;
+              const circleRadius = 4;
               if (data.type === 'point') {
 
-                  var circle = new Chartist.Svg('circle', {
+                  const circle = new Chartist.Svg('circle', {
                       cx: data.x,
                       cy: data.y,
                       r: circleRadius,
                       class: 'ct-point-circle'
                   });
                   data.element.replace(circle);
-              }
-              else if (data.type === 'label') {
+              } else if (data.type === 'label') {
                   // adjust label position for rotation
                   const dX = data.width / 2 + (30 - data.width)
                   data.element.attr({ x: data.element.attr('x') - dX })
@@ -566,9 +582,9 @@ export class ResourcesComponent implements OnInit {
       },
       events: {
           draw(data: any): void {
-              var circleRadius = 4;
+              const circleRadius = 4;
               if (data.type === 'point') {
-                  var circle = new Chartist.Svg('circle', {
+                  const circle = new Chartist.Svg('circle', {
                       cx: data.x,
                       cy: data.y,
                       r: circleRadius,
@@ -576,8 +592,7 @@ export class ResourcesComponent implements OnInit {
                   });
 
                   data.element.replace(circle);
-              }
-              else if (data.type === 'label') {
+              } else if (data.type === 'label') {
                   // adjust label position for rotation
                   const dX = data.width / 2 + (30 - data.width)
                   data.element.attr({ x: data.element.attr('x') - dX })
@@ -596,7 +611,7 @@ export class ResourcesComponent implements OnInit {
           donut: true,
           startAngle: 0,
           labelInterpolationFnc: function (value) {
-              var total = data['donutDashboard'].series.reduce(function (prev, series) {
+              const total = data['donutDashboard'].series.reduce(function (prev, series) {
                   return prev + series.value;
               }, 0);
               return total + '%';
@@ -646,7 +661,7 @@ export class ResourcesComponent implements OnInit {
       ],
       events: {
           created(data: any): void {
-              var defs = data.svg.elem('defs');
+              const defs = data.svg.elem('defs');
               defs.elem('linearGradient', {
                   id: 'gradient4',
                   x1: 0,
@@ -703,7 +718,7 @@ export class ResourcesComponent implements OnInit {
 
           },
           draw(data: any): void {
-              var barHorizontalCenter, barVerticalCenter, label, value;
+              let barHorizontalCenter, barVerticalCenter, label, value;
               if (data.type === 'bar') {
 
                   data.element.attr({
@@ -718,9 +733,159 @@ export class ResourcesComponent implements OnInit {
   };
   // Bar chart configuration Ends
 
-
-
-  ngOnInit() {
+  constructor(private resourcesService: ResourceService, private modalService: NgbModal ) {
   }
 
+  ngOnInit() {
+
+    this.dtOptions = {
+
+      pagingType: 'full_numbers',
+      pageLength: 100,
+      processing: true,
+      // data: this.resources$,
+      // 'bDestroy': true,
+      'paging':   true,
+      'ordering': true,
+      'info':     true,
+      'columnDefs':
+      [ {
+          'targets': [3],
+          'visible': true,
+          'searchable': true
+        },
+
+        {
+        'targets': [4],
+        'visible': true
+        }
+          // ,{ 'bSortable': true, 'bSort': false, 'aTargets': [ '_all' ] }
+      ],
+
+      // responsive: true,
+      searching: true,
+      select: true,
+      order: [0, 'desc'],
+      dom: `<
+             <"row"
+               <"col-lg-3 col-md-12"l>
+               <"col-lg-6 col-md-12 button-wrapper btn-sm danger"B>
+               <"col-lg-3 col-md-12"f>><hr>
+             <"row" <"col"t>>
+             <"row"
+               <"col"i>
+               <"col btn-sm"p>>
+             >`,
+
+      buttons: [
+      'copy', 'csv', 'excel', 'pdf', 'print',
+        {
+          text: 'GroupBy',
+          key: '1',
+          action: function (e, dt, node, config) {
+            alert('Button activated');
+          }
+        },
+        {
+          text: 'Some button',
+          key: '1',
+          action: function (e, dt, node, config) {
+            alert('Button activated');
+          }
+        },
+        {
+          text: 'Some button',
+          key: '1',
+          action: function (e, dt, node, config) {
+            alert('Button activated');
+          }
+        },
+
+      ],
+      'bLengthChange': true,
+      'Filter': true,
+      // retrieve: true,
+      language: {
+        search: '_INPUT_',
+       searchPlaceholder: 'Search records',
+      },
+      'Info': true,
+      // fixedHeader: {
+      //   header: true,
+      //   bottom: true,
+      //   // footer: false,
+      //   zTop: 1000
+      //   // headerOffset: 400
+
+      // },
+
+    };
+
+
+    // this.dtTrigger.unsubscribe();
+
+
+    this.resourcesService.getResourcesAndRates();
+    this.getResources();
+
+    // this.rerender();
+
+    setTimeout(() => {
+
+    }, 200);
+
+  }
+
+  getResources(): void {
+    this.resourcesService.resourcesandrates.subscribe(resources => {
+      this.resources = resources;
+      this.resources$.next(resources);
+        // this.dtTrigger.next();
+        console.log(this.resources$);
+        this.resourceCount = formatNumber(this.resources.length);
+
+      setTimeout(() => {
+
+        }, 250);
+
+    });
+  }
+
+
+  filter(search) {
+    this.resources$.next(this.resources.filter(_ => _.displayName.toLowerCase().includes(search.toLowerCase())))
+  }
+
+
+  openContent() {
+    const modalRef = this.modalService.open(NewResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
+    modalRef.componentInstance.name = 'World';
+  }
+
+  // Open default modal
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
 }
+
+// This function is used in open
+private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+    } else {
+        return `with: ${reason}`;
+    }
+}
+
+}
+
+function formatNumber (num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+

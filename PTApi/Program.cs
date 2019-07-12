@@ -29,5 +29,6 @@ namespace PTApi
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
              .UseApplicationInsights();
+
     }
 }

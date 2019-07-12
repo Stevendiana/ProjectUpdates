@@ -103,6 +103,10 @@ namespace PTApi
 
             //services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
 
             // jwt wire up
@@ -205,6 +209,18 @@ namespace PTApi
                 ValidateLifetime = false,
                 ClockSkew = TimeSpan.Zero
             };
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(configureOptions =>
+            //{
+            //    configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+            //    configureOptions.TokenValidationParameters = tokenValidationParameters;
+            //    configureOptions.SaveToken = true;
+            //});
+
 
             services.AddAuthentication(options =>
             {
@@ -342,7 +358,8 @@ namespace PTApi
                 }
             });
 
-            
+
+
             //app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();

@@ -224,8 +224,10 @@ namespace PTApi.Controllers
         }
 
         [HttpGet("{companyId}")]
-        [Authorize(Policy = "Admin_Group")]
-        public async Task<IEnumerable<ResourceAdminViewModel>> GetResources(string companyId)
+        //[Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Policy = "AccountOwner")]
+        public IActionResult GetResources(string companyId)
         {
             var roleGroup =_userService.UserRoleGroup();
             var comp = _userService.GetSecureUserCompany();
@@ -239,11 +241,13 @@ namespace PTApi.Controllers
                     var allResources =  _unitOfWork.Resources.GetAllResources(comp);
 
                    
-                    return allResources.Select(Mapper.Map<Resource, ResourceAdminViewModel>);
+                    var result = _mapper.Map<IEnumerable<Resource>, IEnumerable<ResourceAdminViewModel>>(allResources);
+                    return Ok(result);
+                    //return allResources.Select(Mapper.Map<Resource, ResourceAdminViewModel>);
                 }
-                return await Task.FromResult<IEnumerable<ResourceAdminViewModel>>(null);
+                return BadRequest();
             }
-            return  await Task.FromResult<IEnumerable<ResourceAdminViewModel>>(null);
+            return BadRequest();
         }
 
         [HttpPost("resource")]

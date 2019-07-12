@@ -27,3 +27,35 @@
 ::-webkit-scrollbar-thumb:hover {
   background:	#cccccc;
 }
+
+/* Rounded circles */
+.roundprofile {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: #555;
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  /* display: flex; */
+}
+
+.innerTEXT {
+
+  vertical-align: middle;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  top:50%;
+  left: 50%;
+
+
+}
+
+
+/* modal */
+
+.modal-xl .modal-lg {
+  max-width: 90%;
+}

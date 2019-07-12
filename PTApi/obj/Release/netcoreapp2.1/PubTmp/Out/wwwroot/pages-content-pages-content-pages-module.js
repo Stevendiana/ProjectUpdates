@@ -17894,7 +17894,8 @@ var ContentPagesModule = /** @class */ (function () {
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _content_pages_routing_module__WEBPACK_IMPORTED_MODULE_4__["ContentPagesRoutingModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"]
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"]
             ],
             declarations: [
                 _coming_soon_coming_soon_page_component__WEBPACK_IMPORTED_MODULE_5__["ComingSoonPageComponent"],
@@ -18113,7 +18114,7 @@ var LockScreenPageComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Login Page Starts-->\r\n<section id=\"login\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"row full-height-vh m-0\">\r\n      <div class=\"col-12 d-flex align-items-center justify-content-center\">\r\n        <div class=\"card\">\r\n          <div class=\"card-content\">\r\n            <div class=\"card-body login-img\">\r\n              <div class=\"row m-0\">\r\n                <div\r\n                  class=\"col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle\"\r\n                >\r\n                  <img\r\n                    src=\"../../assets/img/gallery/login.png\"\r\n                    alt=\"\"\r\n                    class=\"img-fluid mt-5\"\r\n                    width=\"400\"\r\n                    height=\"230\"\r\n                  />\r\n                </div>\r\n                <div class=\"col-lg-6 col-md-12 bg-white px-4 pt-3\">\r\n                  <h4 class=\"card-title mb-2\">Login</h4>\r\n                  <p class=\"card-text mb-3\">\r\n                    Welcome back, please login to your account.\r\n                  </p>\r\n                  <input\r\n                    type=\"text\"\r\n                    class=\"form-control mb-3\"\r\n                    placeholder=\"Username\"\r\n                  />\r\n                  <input\r\n                    type=\"password\"\r\n                    class=\"form-control mb-3\"\r\n                    placeholder=\"Password\"\r\n                  />\r\n                  <div class=\"d-flex justify-content-between mt-2\">\r\n                    <div class=\"remember-me\">\r\n                      <div\r\n                        class=\"custom-control custom-checkbox custom-control-inline mb-3\"\r\n                      >\r\n                        <input\r\n                          type=\"checkbox\"\r\n                          id=\"customCheckboxInline1\"\r\n                          name=\"customCheckboxInline1\"\r\n                          class=\"custom-control-input\"\r\n                        />\r\n                        <label\r\n                          class=\"custom-control-label\"\r\n                          for=\"customCheckboxInline1\"\r\n                        >\r\n                          Remember Me\r\n                        </label>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"forgot-password-option\">\r\n                      <a\r\n                        [routerLink]=\"['/pages/forgotpassword']\"\r\n                        class=\"text-decoration-none text-primary\"\r\n                        >Forgot Password ?</a\r\n                      >\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"fg-actions d-flex justify-content-between\">\r\n                    <div class=\"login-btn\">\r\n                      <button class=\"btn btn-outline-primary\">\r\n                        <a\r\n                          [routerLink]=\"['/pages/register']\"\r\n                          class=\"text-decoration-none\"\r\n                          >Register</a\r\n                        >\r\n                      </button>\r\n                    </div>\r\n                    <div class=\"recover-pass\">\r\n                      <button class=\"btn btn-primary\">\r\n                        <a\r\n                          [routerLink]=\"['/pages/login']\"\r\n                          class=\"text-decoration-none text-white\"\r\n                          >Login</a\r\n                        >\r\n                      </button>\r\n                    </div>\r\n                  </div>\r\n                  <hr class=\"m-0\" />\r\n                  <div class=\"d-flex justify-content-between mt-3\">\r\n                    <div class=\"option-login\">\r\n                      <h6 class=\"text-decoration-none text-primary\">\r\n                        Or Login With\r\n                      </h6>\r\n                    </div>\r\n                    <div class=\"social-login-options\">\r\n                      <a class=\"btn btn-social-icon mr-2 btn-facebook\">\r\n                        <span class=\"fa fa-facebook\"></span>\r\n                      </a>\r\n                      <a class=\"btn btn-social-icon mr-2 btn-twitter\">\r\n                        <span class=\"fa fa-twitter\"></span>\r\n                      </a>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n<!--Login Page Ends-->\r\n"
+module.exports = "<!--Login Page Starts-->\r\n<form [formGroup]=\"loginform\"   (ngSubmit)=\"onSubmit()\"  >\r\n<section  id=\"login\">\r\n  <div class=\"container-fluid\">\r\n    <div class=\"row full-height-vh m-0\">\r\n      <div class=\"col-12 d-flex align-items-center justify-content-center\">\r\n        <div class=\"card\">\r\n          <div class=\"card-content\">\r\n            <div class=\"card-body login-img\">\r\n              <div class=\"row m-0\">\r\n                <div\r\n                  class=\"col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle\"\r\n                >\r\n                  <img\r\n                    src=\"../../assets/img/gallery/login.png\"\r\n                    alt=\"\"\r\n                    class=\"img-fluid mt-5\"\r\n                    width=\"400\"\r\n                    height=\"230\"\r\n                  />\r\n                </div>\r\n\r\n                    <div class=\"col-lg-6 col-md-12 bg-white px-4 pt-3\">\r\n                        <h4 class=\"card-title mb-2\">Login</h4>\r\n                        <p class=\"card-text mb-3\">\r\n                          Welcome back, please login to your account.\r\n                        </p>\r\n                        <input\r\n                          formControlName=\"userName\"\r\n                          [ngClass]= \"{'error': isLogInValid('userName')}\"\r\n                          type=\"email\"\r\n                          class=\"form-control mb-3\"\r\n                          placeholder=\"Username\"\r\n                        />\r\n                        <input\r\n                          type=\"password\"\r\n                          class=\"form-control mb-3\"\r\n                          placeholder=\"Password\"\r\n                          formControlName=\"password\"\r\n                          [ngClass]= \"{'error': isLogInValid ('password')}\"\r\n                        />\r\n                        <div class=\"d-flex justify-content-between mt-2\">\r\n                          <div class=\"remember-me\">\r\n                            <div\r\n                              class=\"custom-control custom-checkbox custom-control-inline mb-3\"\r\n                            >\r\n                              <input\r\n                                type=\"checkbox\"\r\n                                id=\"customCheckboxInline1\"\r\n                                name=\"customCheckboxInline1\"\r\n                                class=\"custom-control-input\"\r\n                              />\r\n                              <label\r\n                                class=\"custom-control-label\"\r\n                                for=\"customCheckboxInline1\"\r\n                              >\r\n                                Remember Me\r\n                              </label>\r\n                            </div>\r\n                          </div>\r\n                          <div class=\"forgot-password-option\">\r\n                            <a\r\n                              [routerLink]=\"['/pages/forgotpassword']\"\r\n                              class=\"text-decoration-none text-primary\"\r\n                              >Forgot Password ?</a\r\n                            >\r\n                          </div>\r\n                        </div>\r\n                        <div class=\"fg-actions d-flex justify-content-between\">\r\n                          <div class=\"login-btn\">\r\n                            <button class=\"btn btn-outline-primary\">\r\n                              <a\r\n                                [routerLink]=\"['/pages/register']\"\r\n                                class=\"text-decoration-none\"\r\n                                >Register</a\r\n                              >\r\n                            </button>\r\n                          </div>\r\n                          <div class=\"recover-pass\">\r\n                            <button class=\"btn btn-primary text-decoration-none text-white\" type=\"submit\" name=\"submit\" (click) = \"onSubmit [disabled]='!loginform.valid'\">\r\n                                Login\r\n                            </button>\r\n                          </div>\r\n                        </div>\r\n                        <hr class=\"m-0\" />\r\n                        <div class=\"d-flex justify-content-between mt-3\">\r\n                          <div class=\"option-login\">\r\n                            <h6 class=\"text-decoration-none text-primary\">\r\n                              Or Login With\r\n                            </h6>\r\n                          </div>\r\n                          <div class=\"social-login-options\">\r\n                            <a class=\"btn btn-social-icon mr-2 btn-facebook\">\r\n                              <span class=\"fa fa-facebook\"></span>\r\n                            </a>\r\n                            <a class=\"btn btn-social-icon mr-2 btn-twitter\">\r\n                              <span class=\"fa fa-twitter\"></span>\r\n                            </a>\r\n                          </div>\r\n                        </div>\r\n                      </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n</form>\r\n<!--Login Page Ends-->\r\n"
 
 /***/ }),
 
@@ -18142,18 +18143,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! app/shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
+
 
 
 
 
 var LoginPageComponent = /** @class */ (function () {
-    function LoginPageComponent(router, route) {
+    function LoginPageComponent(router, fb, auth, route) {
         this.router = router;
+        this.fb = fb;
+        this.auth = auth;
         this.route = route;
+        this.loginform = fb.group({
+            userName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+        });
     }
-    // On submit button click    
+    // On submit button click
     LoginPageComponent.prototype.onSubmit = function () {
-        this.loginForm.reset();
+        if (this.loginform.dirty && this.loginform.valid) {
+            // tslint:disable-next-line:no-shadowed-variable
+            var p = Object.assign({}, this.logincredentials, this.loginform.value);
+            console.log(this.loginform.value);
+            console.log(this.logincredentials);
+            console.log(p);
+            this.auth.login(p);
+        }
+        else if (!this.loginform.dirty) {
+            return;
+        }
+        // this.loginForm.reset();
     };
     // On Forgot password link click
     LoginPageComponent.prototype.onForgotPassword = function () {
@@ -18163,17 +18183,16 @@ var LoginPageComponent = /** @class */ (function () {
     LoginPageComponent.prototype.onRegister = function () {
         this.router.navigate(['register'], { relativeTo: this.route.parent });
     };
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('f'),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgForm"])
-    ], LoginPageComponent.prototype, "loginForm", void 0);
+    LoginPageComponent.prototype.isLogInValid = function (control) {
+        return this.loginform.controls[control].invalid && this.loginform.controls[control].touched;
+    };
     LoginPageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-login-page',
             template: __webpack_require__(/*! ./login-page.component.html */ "./src/app/pages/content-pages/login/login-page.component.html"),
             styles: [__webpack_require__(/*! ./login-page.component.scss */ "./src/app/pages/content-pages/login/login-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
     ], LoginPageComponent);
     return LoginPageComponent;

@@ -76,7 +76,7 @@ namespace PTApi.Helpers
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Id, id),
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Comp, companyId),
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, appUserRole),
-                new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Rol, roleGroup),
+                new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.RolGroup, roleGroup),
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Firstname, firstname),
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Avatar, avatar),
                 new Claim(Helpers.Constants.Strings.JwtClaimIdentifiers.Lastname, lastname),

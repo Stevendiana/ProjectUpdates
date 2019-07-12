@@ -13,6 +13,7 @@ export const ROUTES: RouteInfo[] = [
 
     { path: '', title: 'Resource Pool', icon: 'ft-droplet', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
     submenu: [
+      { path: '/resources/dashboard', title: 'Dashboard', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
       { path: '/resources/resources', title: 'Resources', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
       { path: '/resources/demand', title: 'Demand', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },
       { path: '/resources/availability', title: 'Availability', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [] },

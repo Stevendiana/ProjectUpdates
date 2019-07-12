@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
@@ -37,63 +38,63 @@ export class AuthService {
 
 
   get firstname() {
-    return sessionStorage.getItem(this.FIRSTNAME_KEY);
+    return localStorage.getItem(this.FIRSTNAME_KEY);
   }
   get reportingday() {
-    return sessionStorage.getItem(this.REPORTINGDAY_KEY);
+    return localStorage.getItem(this.REPORTINGDAY_KEY);
   }
   get complogo() {
-    return sessionStorage.getItem(this.COMPLOGO_KEY);
+    return localStorage.getItem(this.COMPLOGO_KEY);
   }
   get lastname() {
-    return sessionStorage.getItem(this.LASTNAME_KEY);
+    return localStorage.getItem(this.LASTNAME_KEY);
   }
   get name() {
     return this.firstname + ' ' + this.lastname;
   }
   get avatar() {
-    return sessionStorage.getItem(this.AVATAR_KEY);
+    return localStorage.getItem(this.AVATAR_KEY);
   }
 
   get role() {
-    return sessionStorage.getItem(this.ROL_KEY);
+    return localStorage.getItem(this.ROL_KEY);
   }
   get email() {
-    return sessionStorage.getItem(this.EMAIL_KEY);
+    return localStorage.getItem(this.EMAIL_KEY);
   }
 
   get reportingPeriod() {
-    return sessionStorage.getItem(this.FREPPERIOD_KEY);
+    return localStorage.getItem(this.FREPPERIOD_KEY);
   }
 
   get reportingYear() {
-    return sessionStorage.getItem(this.FREPYEAR_KEY);
+    return localStorage.getItem(this.FREPYEAR_KEY);
   }
 
   get resourceId() {
-    return sessionStorage.getItem(this.RESO_KEY);
+    return localStorage.getItem(this.RESO_KEY);
   }
 
   get reportingCurrencySys() {
-    return sessionStorage.getItem(this.CURRENCYSY_KEY);
+    return localStorage.getItem(this.CURRENCYSY_KEY);
   }
 
   get CurrencyShortName() {
-    return sessionStorage.getItem(this.CURRENCYSM_KEY);
+    return localStorage.getItem(this.CURRENCYSM_KEY);
   }
 
 
   get companyId() {
-    return sessionStorage.getItem(this.COM_KEY);
+    return localStorage.getItem(this.COM_KEY);
   }
 
   get companyName() {
-    return sessionStorage.getItem(this.COM_NAME);
+    return localStorage.getItem(this.COM_NAME);
   }
 
 
-  getToken() {
-    return !!sessionStorage.getItem(this.TOKEN_KEY);
+  isTokenAvailable() {
+    return !!localStorage.getItem(this.TOKEN_KEY);
   }
 
   // getToken() {
@@ -102,16 +103,22 @@ export class AuthService {
 
   get isAuthenticated() {
 
-    if (this.getToken()) {
+    if (this.isTokenAvailable()) {
       return true;
     }
     // here you can check if user is authenticated or not through his token
     return false;
   }
 
+  // get tokenHeader() {
+
+  //   const header = new Headers({'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY),
+  //   'Content-Type': 'application/json'});
+  //   return new RequestOptions({ headers: header});
+  // }
   get tokenHeader() {
 
-    const header = new Headers({'Authorization': 'Bearer ' + sessionStorage.getItem(this.TOKEN_KEY)});
+    const header = new Headers({'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY)});
     return new RequestOptions({ headers: header});
   }
 
@@ -120,7 +127,7 @@ export class AuthService {
     // tslint:disable-next-line:prefer-const
     let options = new RequestOptions();
     options.headers = new Headers();
-    options.headers.append('Authorization', 'Bearer ' + sessionStorage.getItem(this.TOKEN_KEY));
+    options.headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.TOKEN_KEY));
     options.headers.append('Content-Type', 'application/json; charset=utf-8');
 
     return options;
@@ -157,28 +164,28 @@ export class AuthService {
           if (!authResponse.token)
             return;
 
-          sessionStorage.setItem(this.FIRSTNAME_KEY, authResponse.firstname);
-          sessionStorage.setItem(this.REPORTINGDAY_KEY, authResponse.reportingday);
-          sessionStorage.setItem(this.COMPLOGO_KEY, authResponse.complogo);
-          sessionStorage.setItem(this.AVATAR_KEY, authResponse.avatar);
-          sessionStorage.setItem(this.LASTNAME_KEY, authResponse.lastname);
-          sessionStorage.setItem(this.TOKEN_KEY, authResponse.token);
-          sessionStorage.setItem(this.COM_KEY, authResponse.comp);
-          sessionStorage.setItem(this.ROL_KEY, authResponse.role);
-          sessionStorage.setItem(this.EMAIL_KEY, authResponse.email);
-          sessionStorage.setItem(this.RESO_KEY, authResponse.resource);
-          sessionStorage.setItem(this. ROL_Group, authResponse.roleGroup);
+          localStorage.setItem(this.FIRSTNAME_KEY, authResponse.firstname);
+          localStorage.setItem(this.REPORTINGDAY_KEY, authResponse.reportingday);
+          localStorage.setItem(this.COMPLOGO_KEY, authResponse.complogo);
+          localStorage.setItem(this.AVATAR_KEY, authResponse.avatar);
+          localStorage.setItem(this.LASTNAME_KEY, authResponse.lastname);
+          localStorage.setItem(this.TOKEN_KEY, authResponse.token);
+          localStorage.setItem(this.COM_KEY, authResponse.comp);
+          localStorage.setItem(this.ROL_KEY, authResponse.role);
+          localStorage.setItem(this.EMAIL_KEY, authResponse.email);
+          localStorage.setItem(this.RESO_KEY, authResponse.resource);
+          localStorage.setItem(this. ROL_Group, authResponse.roleGroup);
 
-          sessionStorage.setItem(this.ALLOWREC_KEY, authResponse.allowRec);
-          sessionStorage.setItem(this.FREPPERIOD_KEY, authResponse.financeRepPeriod);
-          sessionStorage.setItem(this.COM_NAME, authResponse.companyName);
-          sessionStorage.setItem(this.FREPYEAR_KEY, authResponse.financeRepYear);
-          sessionStorage.setItem(this.CURRENCYLN_KEY, authResponse.currencyLongName);
-          sessionStorage.setItem(this.CURRENCYSM_KEY, authResponse.currencyShortName);
-          sessionStorage.setItem(this.CURRENCYSY_KEY, authResponse.currencySymbol);
-          sessionStorage.setItem(this.FREEZEFORE_KEY, authResponse.freezeForecast);
-          sessionStorage.setItem(this.STANDARDHRS_KEY, authResponse.standardDailyHrs);
-          sessionStorage.setItem(this.WORKWEEKEND_KEY, authResponse.doEmployeesWorkWeekends);
+          localStorage.setItem(this.ALLOWREC_KEY, authResponse.allowRec);
+          localStorage.setItem(this.FREPPERIOD_KEY, authResponse.financeRepPeriod);
+          localStorage.setItem(this.COM_NAME, authResponse.companyName);
+          localStorage.setItem(this.FREPYEAR_KEY, authResponse.financeRepYear);
+          localStorage.setItem(this.CURRENCYLN_KEY, authResponse.currencyLongName);
+          localStorage.setItem(this.CURRENCYSM_KEY, authResponse.currencyShortName);
+          localStorage.setItem(this.CURRENCYSY_KEY, authResponse.currencySymbol);
+          localStorage.setItem(this.FREEZEFORE_KEY, authResponse.freezeForecast);
+          localStorage.setItem(this.STANDARDHRS_KEY, authResponse.standardDailyHrs);
+          localStorage.setItem(this.WORKWEEKEND_KEY, authResponse.doEmployeesWorkWeekends);
 
 
 
@@ -188,36 +195,36 @@ export class AuthService {
 
   logout() {
 
-    this.clearsessionStorage();
+    this.clearlocalStorage();
     this.router.navigateByUrl('/pages/login');
   }
 
-  clearsessionStorage() {
+  clearlocalStorage() {
 
 
 
-    sessionStorage.removeItem(this.FIRSTNAME_KEY);
-    sessionStorage.removeItem(this.REPORTINGDAY_KEY);
-    sessionStorage.removeItem(this.COMPLOGO_KEY);
-    sessionStorage.removeItem(this.AVATAR_KEY);
-    sessionStorage.removeItem(this.LASTNAME_KEY);
-    sessionStorage.removeItem(this.TOKEN_KEY);
-    sessionStorage.removeItem(this.COM_KEY);
-    sessionStorage.removeItem(this.ROL_KEY);
-    sessionStorage.removeItem(this.EMAIL_KEY);
-    sessionStorage.removeItem(this.RESO_KEY);
-    sessionStorage.removeItem(this.ROL_Group);
+    localStorage.removeItem(this.FIRSTNAME_KEY);
+    localStorage.removeItem(this.REPORTINGDAY_KEY);
+    localStorage.removeItem(this.COMPLOGO_KEY);
+    localStorage.removeItem(this.AVATAR_KEY);
+    localStorage.removeItem(this.LASTNAME_KEY);
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.COM_KEY);
+    localStorage.removeItem(this.ROL_KEY);
+    localStorage.removeItem(this.EMAIL_KEY);
+    localStorage.removeItem(this.RESO_KEY);
+    localStorage.removeItem(this.ROL_Group);
 
-    sessionStorage.removeItem(this.ALLOWREC_KEY);
-    sessionStorage.removeItem(this.FREPPERIOD_KEY);
-    sessionStorage.removeItem(this.COM_NAME);
-    sessionStorage.removeItem(this.FREPYEAR_KEY);
-    sessionStorage.removeItem(this.CURRENCYLN_KEY);
-    sessionStorage.removeItem(this.CURRENCYSM_KEY);
-    sessionStorage.removeItem(this.CURRENCYSY_KEY);
-    sessionStorage.removeItem(this.FREEZEFORE_KEY);
-    sessionStorage.removeItem(this.STANDARDHRS_KEY);
-    sessionStorage.removeItem(this.WORKWEEKEND_KEY);
+    localStorage.removeItem(this.ALLOWREC_KEY);
+    localStorage.removeItem(this.FREPPERIOD_KEY);
+    localStorage.removeItem(this.COM_NAME);
+    localStorage.removeItem(this.FREPYEAR_KEY);
+    localStorage.removeItem(this.CURRENCYLN_KEY);
+    localStorage.removeItem(this.CURRENCYSM_KEY);
+    localStorage.removeItem(this.CURRENCYSY_KEY);
+    localStorage.removeItem(this.FREEZEFORE_KEY);
+    localStorage.removeItem(this.STANDARDHRS_KEY);
+    localStorage.removeItem(this.WORKWEEKEND_KEY);
 
   }
 
@@ -230,28 +237,28 @@ export class AuthService {
       return;
 
 
-    sessionStorage.setItem(this.FIRSTNAME_KEY, authResponseSerialised.firstname);
-    sessionStorage.setItem(this.REPORTINGDAY_KEY, authResponseSerialised.reportingday);
-    sessionStorage.setItem(this.COMPLOGO_KEY, authResponseSerialised.complogo);
-    sessionStorage.setItem(this.AVATAR_KEY, authResponseSerialised.avatar);
-    sessionStorage.setItem(this.LASTNAME_KEY, authResponseSerialised.lastname);
-    sessionStorage.setItem(this.TOKEN_KEY, authResponseSerialised.token);
-    sessionStorage.setItem(this.COM_KEY, authResponseSerialised.comp);
-    sessionStorage.setItem(this.ROL_KEY, authResponseSerialised.role);
-    sessionStorage.setItem(this.EMAIL_KEY, authResponseSerialised.email);
-    sessionStorage.setItem(this.RESO_KEY, authResponseSerialised.resource);
-    sessionStorage.setItem(this. ROL_Group, authResponseSerialised.roleGroup);
+    localStorage.setItem(this.FIRSTNAME_KEY, authResponseSerialised.firstname);
+    localStorage.setItem(this.REPORTINGDAY_KEY, authResponseSerialised.reportingday);
+    localStorage.setItem(this.COMPLOGO_KEY, authResponseSerialised.complogo);
+    localStorage.setItem(this.AVATAR_KEY, authResponseSerialised.avatar);
+    localStorage.setItem(this.LASTNAME_KEY, authResponseSerialised.lastname);
+    localStorage.setItem(this.TOKEN_KEY, authResponseSerialised.token);
+    localStorage.setItem(this.COM_KEY, authResponseSerialised.comp);
+    localStorage.setItem(this.ROL_KEY, authResponseSerialised.role);
+    localStorage.setItem(this.EMAIL_KEY, authResponseSerialised.email);
+    localStorage.setItem(this.RESO_KEY, authResponseSerialised.resource);
+    localStorage.setItem(this. ROL_Group, authResponseSerialised.roleGroup);
 
-    sessionStorage.setItem(this.ALLOWREC_KEY, authResponseSerialised.allowRec);
-    sessionStorage.setItem(this.FREPPERIOD_KEY, authResponseSerialised.financeRepPeriod);
-    sessionStorage.setItem(this.COM_NAME, authResponseSerialised.companyName);
-    sessionStorage.setItem(this.FREPYEAR_KEY, authResponseSerialised.financeRepYear);
-    sessionStorage.setItem(this.CURRENCYLN_KEY, authResponseSerialised.currencyLongName);
-    sessionStorage.setItem(this.CURRENCYSM_KEY, authResponseSerialised.currencyShortName);
-    sessionStorage.setItem(this.CURRENCYSY_KEY, authResponseSerialised.currencySymbol);
-    sessionStorage.setItem(this.FREEZEFORE_KEY, authResponseSerialised.freezeForecast);
-    sessionStorage.setItem(this.STANDARDHRS_KEY, authResponseSerialised.standardDailyHrs);
-    sessionStorage.setItem(this.WORKWEEKEND_KEY, authResponseSerialised.doEmployeesWorkWeekends);
+    localStorage.setItem(this.ALLOWREC_KEY, authResponseSerialised.allowRec);
+    localStorage.setItem(this.FREPPERIOD_KEY, authResponseSerialised.financeRepPeriod);
+    localStorage.setItem(this.COM_NAME, authResponseSerialised.companyName);
+    localStorage.setItem(this.FREPYEAR_KEY, authResponseSerialised.financeRepYear);
+    localStorage.setItem(this.CURRENCYLN_KEY, authResponseSerialised.currencyLongName);
+    localStorage.setItem(this.CURRENCYSM_KEY, authResponseSerialised.currencyShortName);
+    localStorage.setItem(this.CURRENCYSY_KEY, authResponseSerialised.currencySymbol);
+    localStorage.setItem(this.FREEZEFORE_KEY, authResponseSerialised.freezeForecast);
+    localStorage.setItem(this.STANDARDHRS_KEY, authResponseSerialised.standardDailyHrs);
+    localStorage.setItem(this.WORKWEEKEND_KEY, authResponseSerialised.doEmployeesWorkWeekends);
 
   }
 
@@ -260,7 +267,7 @@ export class AuthService {
 
   isAO() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.AccountOwner) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.AccountOwner) {
       return true;
     } else {
       return false;
@@ -269,7 +276,7 @@ export class AuthService {
 
   isSA() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.SeniorProjectManager) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.SeniorProjectManager) {
       return true;
     } else {
       return false;
@@ -278,7 +285,7 @@ export class AuthService {
 
   isA() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.Admin) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.Admin) {
       return true;
     } else {
       return false;
@@ -287,7 +294,7 @@ export class AuthService {
 
   isPM() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.ProjectManager) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.ProjectManager) {
       return true;
     } else {
       return false;
@@ -296,7 +303,7 @@ export class AuthService {
 
   isSPM() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.SeniorProjectManager) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.SeniorProjectManager) {
       return true;
     } else {
       return false;
@@ -305,7 +312,7 @@ export class AuthService {
 
   isPA() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.PortfolioAdmin) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.PortfolioAdmin) {
       return true;
     } else {
       return false;
@@ -314,7 +321,7 @@ export class AuthService {
 
   isFA() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.FinanceAdmin) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.FinanceAdmin) {
       return true;
     } else {
       return false;
@@ -323,7 +330,7 @@ export class AuthService {
 
   isFM() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.FinanceManager) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.FinanceManager) {
       return true;
     } else {
       return false;
@@ -332,14 +339,14 @@ export class AuthService {
 
   isRO() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.ReadOnly) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.ReadOnly) {
       return true;
     } else {
       return false;
     }
   }
   isPort() {
-    const role = sessionStorage.getItem(this.ROL_KEY);
+    const role = localStorage.getItem(this.ROL_KEY);
 
     if (role === environment.ProjectManager ||
       role === environment.SeniorProjectManager ||
@@ -352,7 +359,7 @@ export class AuthService {
 
   isTSO() {
 
-    if (sessionStorage.getItem(this.ROL_KEY) === environment.ReadWriteTimesheetOnly) {
+    if (localStorage.getItem(this.ROL_KEY) === environment.ReadWriteTimesheetOnly) {
       return true;
     } else {
       return false;
@@ -361,7 +368,7 @@ export class AuthService {
 
   isSAdmin() {
 
-    const role = sessionStorage.getItem(this.ROL_KEY);
+    const role = localStorage.getItem(this.ROL_KEY);
 
     if (role === environment.AccountOwner ||
       role === environment.SuperAdmin) {
@@ -374,7 +381,7 @@ export class AuthService {
 
   isGeneralFinanceAdmin() {
 
-    const role = sessionStorage.getItem(this.ROL_KEY);
+    const role = localStorage.getItem(this.ROL_KEY);
 
     if (role === environment.AccountOwner ||
         role === environment.SuperAdmin ||
@@ -389,7 +396,7 @@ export class AuthService {
 
   isFin() {
 
-    const role = sessionStorage.getItem(this.ROL_KEY);
+    const role = localStorage.getItem(this.ROL_KEY);
 
     if (role === environment.FinanceAdmin ||
       role === environment.FinanceManager) {

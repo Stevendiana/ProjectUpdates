@@ -49,7 +49,6 @@ var map = {
 		"default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~8010b75d",
 		"default~inbox-inbox-module~project-project-module~timesheets-timesheets-module",
 		"default~dashboard-dashboard-module~project-project-module",
-		"default~project-project-module~timesheets-timesheets-module",
 		"project-project-module"
 	],
 	"./resources/resources.module": [
@@ -66,7 +65,6 @@ var map = {
 	"./timesheets/timesheets.module": [
 		"./src/app/timesheets/timesheets.module.ts",
 		"default~inbox-inbox-module~project-project-module~timesheets-timesheets-module",
-		"default~project-project-module~timesheets-timesheets-module",
 		"timesheets-timesheets-module"
 	]
 };
@@ -121,9 +119,14 @@ __webpack_require__.r(__webpack_exports__);
 var appRoutes = [
     {
         path: '',
-        redirectTo: '/myprojects/myprojects',
+        redirectTo: '/pages/login',
         pathMatch: 'full',
     },
+    // {
+    //   path: '',
+    //   redirectTo: '/myprojects/myprojects',
+    //   pathMatch: 'full',
+    // },
     // {
     //   path: '',
     //   redirectTo: 'myprojects',
@@ -135,7 +138,7 @@ var appRoutes = [
     //   pathMatch: 'full',
     // },
     { path: '', component: _layouts_full_full_layout_component__WEBPACK_IMPORTED_MODULE_3__["FullLayoutComponent"], data: { title: 'full Views' }, children: _shared_routes_full_layout_routes__WEBPACK_IMPORTED_MODULE_5__["Full_ROUTES"], canActivate: [_shared_auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
-    { path: '', component: _layouts_content_content_layout_component__WEBPACK_IMPORTED_MODULE_4__["ContentLayoutComponent"], data: { title: 'content Views' }, children: _shared_routes_content_layout_routes__WEBPACK_IMPORTED_MODULE_6__["CONTENT_ROUTES"], canActivate: [_shared_auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_7__["AuthGuard"]] },
+    { path: '', component: _layouts_content_content_layout_component__WEBPACK_IMPORTED_MODULE_4__["ContentLayoutComponent"], data: { title: 'content Views' }, children: _shared_routes_content_layout_routes__WEBPACK_IMPORTED_MODULE_6__["CONTENT_ROUTES"] },
     {
         path: '**',
         redirectTo: 'pages/error'
@@ -164,7 +167,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>"
+module.exports = "\r\n<!-- <div *ngIf=\"!isAuthentic\">\r\n  <app-login-page></app-login-page>\r\n</div>\r\n\r\n<div *ngIf=\"isAuthentic\">\r\n\r\n</div> -->\r\n<router-outlet></router-outlet>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -182,13 +185,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
+
 
 
 
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router) {
+    function AppComponent(router, auth) {
         this.router = router;
+        this.auth = auth;
+        this.isAuthentic = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         this.subscription = this.router.events
@@ -205,7 +212,7 @@ var AppComponent = /** @class */ (function () {
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html")
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -244,6 +251,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ng2_dragula__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ng2-dragula */ "./node_modules/ng2-dragula/dist/fesm5/ng2-dragula.js");
 /* harmony import */ var _shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
 /* harmony import */ var _shared_auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./shared/auth/auth-guard.service */ "./src/app/shared/auth/auth-guard.service.ts");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+
 
 
 
@@ -281,6 +290,7 @@ var AppModule = /** @class */ (function () {
                 _ngrx_store__WEBPACK_IMPORTED_MODULE_11__["StoreModule"].forRoot({}),
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
                 _shared_shared_module__WEBPACK_IMPORTED_MODULE_5__["SharedModule"],
+                _angular_http__WEBPACK_IMPORTED_MODULE_19__["HttpModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_8__["HttpClientModule"],
                 ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrModule"].forRoot(),
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"].forRoot(),
@@ -690,21 +700,27 @@ var customAnimations = [
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth.service */ "./src/app/shared/auth/auth.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth.service */ "./src/app/shared/auth/auth.service.ts");
+
 
 
 
 var AuthGuard = /** @class */ (function () {
-    function AuthGuard(authService) {
-        this.authService = authService;
+    function AuthGuard(auth, router) {
+        this.auth = auth;
+        this.router = router;
     }
     AuthGuard.prototype.canActivate = function (route, state) {
-        return this.authService.isAuthenticated();
+        if (!this.auth.isAuthenticated) {
+            this.router.navigate(['/pages/login']);
+        }
+        return this.auth.isAuthenticated;
     };
     AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], AuthGuard);
     return AuthGuard;
 }());
@@ -724,31 +740,412 @@ var AuthGuard = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+
+
+
 
 
 var AuthService = /** @class */ (function () {
-    function AuthService() {
+    function AuthService(http, router) {
+        this.http = http;
+        this.router = router;
+        this.BASE_URL = 'http://localhost:53956/api'; // 61646
+        // BASE_URL = 'https://myprojectapplicationbackend.azurewebsites.net/api';
+        this.TOKEN_KEY = 'token';
+        this.FIRSTNAME_KEY = 'firstname';
+        this.AVATAR_KEY = 'avatar';
+        this.LASTNAME_KEY = 'lastname';
+        this.COM_KEY = 'comp';
+        this.COM_NAME = 'companyName';
+        this.ROL_KEY = 'role';
+        this.EMAIL_KEY = 'email';
+        this.ROL_Group = 'roleGroup';
+        this.REPORTINGDAY_KEY = 'reportingday';
+        this.COMPLOGO_KEY = 'complogo';
+        this.RESO_KEY = 'resource';
+        this.ALLOWREC_KEY = 'allowRec';
+        this.FREPPERIOD_KEY = 'financeRepPeriod';
+        this.FREPYEAR_KEY = 'financeRepYear';
+        this.CURRENCYLN_KEY = 'currencyLongName';
+        this.CURRENCYSM_KEY = 'currencyShortName';
+        this.CURRENCYSY_KEY = 'currencySymbol';
+        this.FREEZEFORE_KEY = 'freezeForecast';
+        this.STANDARDHRS_KEY = 'standardDailyHrs';
+        this.WORKWEEKEND_KEY = 'doEmployeesWorkWeekends';
     }
-    AuthService.prototype.signupUser = function (email, password) {
-        //your code for signing up the new user
+    Object.defineProperty(AuthService.prototype, "firstname", {
+        get: function () {
+            return sessionStorage.getItem(this.FIRSTNAME_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "reportingday", {
+        get: function () {
+            return sessionStorage.getItem(this.REPORTINGDAY_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "complogo", {
+        get: function () {
+            return sessionStorage.getItem(this.COMPLOGO_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "lastname", {
+        get: function () {
+            return sessionStorage.getItem(this.LASTNAME_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "name", {
+        get: function () {
+            return this.firstname + ' ' + this.lastname;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "avatar", {
+        get: function () {
+            return sessionStorage.getItem(this.AVATAR_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "role", {
+        get: function () {
+            return sessionStorage.getItem(this.ROL_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "email", {
+        get: function () {
+            return sessionStorage.getItem(this.EMAIL_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "reportingPeriod", {
+        get: function () {
+            return sessionStorage.getItem(this.FREPPERIOD_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "reportingYear", {
+        get: function () {
+            return sessionStorage.getItem(this.FREPYEAR_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "resourceId", {
+        get: function () {
+            return sessionStorage.getItem(this.RESO_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "reportingCurrencySys", {
+        get: function () {
+            return sessionStorage.getItem(this.CURRENCYSY_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "CurrencyShortName", {
+        get: function () {
+            return sessionStorage.getItem(this.CURRENCYSM_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "companyId", {
+        get: function () {
+            return sessionStorage.getItem(this.COM_KEY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "companyName", {
+        get: function () {
+            return sessionStorage.getItem(this.COM_NAME);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AuthService.prototype.getToken = function () {
+        return !!sessionStorage.getItem(this.TOKEN_KEY);
     };
-    AuthService.prototype.signinUser = function (email, password) {
-        //your code for checking credentials and getting tokens for for signing in user
+    Object.defineProperty(AuthService.prototype, "isAuthenticated", {
+        // getToken() {
+        //   return this.token;
+        // }
+        get: function () {
+            if (this.getToken()) {
+                return true;
+            }
+            // here you can check if user is authenticated or not through his token
+            return false;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "tokenHeader", {
+        get: function () {
+            var header = new _angular_http__WEBPACK_IMPORTED_MODULE_4__["Headers"]({ 'Authorization': 'Bearer ' + sessionStorage.getItem(this.TOKEN_KEY) });
+            return new _angular_http__WEBPACK_IMPORTED_MODULE_4__["RequestOptions"]({ headers: header });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "tokenHeaderWithType", {
+        get: function () {
+            // tslint:disable-next-line:prefer-const
+            var options = new _angular_http__WEBPACK_IMPORTED_MODULE_4__["RequestOptions"]();
+            options.headers = new _angular_http__WEBPACK_IMPORTED_MODULE_4__["Headers"]();
+            options.headers.append('Authorization', 'Bearer ' + sessionStorage.getItem(this.TOKEN_KEY));
+            options.headers.append('Content-Type', 'application/json; charset=utf-8');
+            return options;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AuthService.prototype.login = function (loginData) {
+        var _this = this;
+        this.http.post(this.BASE_URL + '/auth/login', loginData).subscribe(function (res) {
+            console.log(res.json());
+            _this.authenticate(res.json());
+            _this.router.navigate(['/myprojects/myprojects']);
+            // window.location.reload();
+        });
+    };
+    AuthService.prototype.addResource = function (newresource) {
+        delete newresource.confirmPassword;
+        this.http.post(this.BASE_URL + '/addresource', newresource).subscribe();
+    };
+    AuthService.prototype.register = function (user) {
+        var _this = this;
+        delete user.confirmPassword;
+        this.http.post(this.BASE_URL + '/auth/register', user).subscribe(function (res) {
+            // tslint:disable-next-line:prefer-const
+            var authResponse = res.json();
+            // tslint:disable-next-line:curly
+            if (!authResponse.token)
+                return;
+            sessionStorage.setItem(_this.FIRSTNAME_KEY, authResponse.firstname);
+            sessionStorage.setItem(_this.REPORTINGDAY_KEY, authResponse.reportingday);
+            sessionStorage.setItem(_this.COMPLOGO_KEY, authResponse.complogo);
+            sessionStorage.setItem(_this.AVATAR_KEY, authResponse.avatar);
+            sessionStorage.setItem(_this.LASTNAME_KEY, authResponse.lastname);
+            sessionStorage.setItem(_this.TOKEN_KEY, authResponse.token);
+            sessionStorage.setItem(_this.COM_KEY, authResponse.comp);
+            sessionStorage.setItem(_this.ROL_KEY, authResponse.role);
+            sessionStorage.setItem(_this.EMAIL_KEY, authResponse.email);
+            sessionStorage.setItem(_this.RESO_KEY, authResponse.resource);
+            sessionStorage.setItem(_this.ROL_Group, authResponse.roleGroup);
+            sessionStorage.setItem(_this.ALLOWREC_KEY, authResponse.allowRec);
+            sessionStorage.setItem(_this.FREPPERIOD_KEY, authResponse.financeRepPeriod);
+            sessionStorage.setItem(_this.COM_NAME, authResponse.companyName);
+            sessionStorage.setItem(_this.FREPYEAR_KEY, authResponse.financeRepYear);
+            sessionStorage.setItem(_this.CURRENCYLN_KEY, authResponse.currencyLongName);
+            sessionStorage.setItem(_this.CURRENCYSM_KEY, authResponse.currencyShortName);
+            sessionStorage.setItem(_this.CURRENCYSY_KEY, authResponse.currencySymbol);
+            sessionStorage.setItem(_this.FREEZEFORE_KEY, authResponse.freezeForecast);
+            sessionStorage.setItem(_this.STANDARDHRS_KEY, authResponse.standardDailyHrs);
+            sessionStorage.setItem(_this.WORKWEEKEND_KEY, authResponse.doEmployeesWorkWeekends);
+            _this.router.navigate(['/myprojects/myprojects']);
+        });
     };
     AuthService.prototype.logout = function () {
-        this.token = null;
+        this.clearsessionStorage();
+        this.router.navigateByUrl('/pages/login');
     };
-    AuthService.prototype.getToken = function () {
-        return this.token;
+    AuthService.prototype.clearsessionStorage = function () {
+        sessionStorage.removeItem(this.FIRSTNAME_KEY);
+        sessionStorage.removeItem(this.REPORTINGDAY_KEY);
+        sessionStorage.removeItem(this.COMPLOGO_KEY);
+        sessionStorage.removeItem(this.AVATAR_KEY);
+        sessionStorage.removeItem(this.LASTNAME_KEY);
+        sessionStorage.removeItem(this.TOKEN_KEY);
+        sessionStorage.removeItem(this.COM_KEY);
+        sessionStorage.removeItem(this.ROL_KEY);
+        sessionStorage.removeItem(this.EMAIL_KEY);
+        sessionStorage.removeItem(this.RESO_KEY);
+        sessionStorage.removeItem(this.ROL_Group);
+        sessionStorage.removeItem(this.ALLOWREC_KEY);
+        sessionStorage.removeItem(this.FREPPERIOD_KEY);
+        sessionStorage.removeItem(this.COM_NAME);
+        sessionStorage.removeItem(this.FREPYEAR_KEY);
+        sessionStorage.removeItem(this.CURRENCYLN_KEY);
+        sessionStorage.removeItem(this.CURRENCYSM_KEY);
+        sessionStorage.removeItem(this.CURRENCYSY_KEY);
+        sessionStorage.removeItem(this.FREEZEFORE_KEY);
+        sessionStorage.removeItem(this.STANDARDHRS_KEY);
+        sessionStorage.removeItem(this.WORKWEEKEND_KEY);
     };
-    AuthService.prototype.isAuthenticated = function () {
-        // here you can check if user is authenticated or not through his token 
-        return true;
+    AuthService.prototype.authenticate = function (res) {
+        var authResponseSerialised = res;
+        // const authResponseSerialised = res.json().result;
+        // tslint:disable-next-line:curly
+        if (!authResponseSerialised.token)
+            return;
+        sessionStorage.setItem(this.FIRSTNAME_KEY, authResponseSerialised.firstname);
+        sessionStorage.setItem(this.REPORTINGDAY_KEY, authResponseSerialised.reportingday);
+        sessionStorage.setItem(this.COMPLOGO_KEY, authResponseSerialised.complogo);
+        sessionStorage.setItem(this.AVATAR_KEY, authResponseSerialised.avatar);
+        sessionStorage.setItem(this.LASTNAME_KEY, authResponseSerialised.lastname);
+        sessionStorage.setItem(this.TOKEN_KEY, authResponseSerialised.token);
+        sessionStorage.setItem(this.COM_KEY, authResponseSerialised.comp);
+        sessionStorage.setItem(this.ROL_KEY, authResponseSerialised.role);
+        sessionStorage.setItem(this.EMAIL_KEY, authResponseSerialised.email);
+        sessionStorage.setItem(this.RESO_KEY, authResponseSerialised.resource);
+        sessionStorage.setItem(this.ROL_Group, authResponseSerialised.roleGroup);
+        sessionStorage.setItem(this.ALLOWREC_KEY, authResponseSerialised.allowRec);
+        sessionStorage.setItem(this.FREPPERIOD_KEY, authResponseSerialised.financeRepPeriod);
+        sessionStorage.setItem(this.COM_NAME, authResponseSerialised.companyName);
+        sessionStorage.setItem(this.FREPYEAR_KEY, authResponseSerialised.financeRepYear);
+        sessionStorage.setItem(this.CURRENCYLN_KEY, authResponseSerialised.currencyLongName);
+        sessionStorage.setItem(this.CURRENCYSM_KEY, authResponseSerialised.currencyShortName);
+        sessionStorage.setItem(this.CURRENCYSY_KEY, authResponseSerialised.currencySymbol);
+        sessionStorage.setItem(this.FREEZEFORE_KEY, authResponseSerialised.freezeForecast);
+        sessionStorage.setItem(this.STANDARDHRS_KEY, authResponseSerialised.standardDailyHrs);
+        sessionStorage.setItem(this.WORKWEEKEND_KEY, authResponseSerialised.doEmployeesWorkWeekends);
+    };
+    AuthService.prototype.isAO = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].AccountOwner) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isSA = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SeniorProjectManager) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isA = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].Admin) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isPM = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ProjectManager) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isSPM = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SeniorProjectManager) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isPA = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].PortfolioAdmin) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isFA = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceAdmin) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isFM = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceManager) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isRO = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ReadOnly) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isPort = function () {
+        var role = sessionStorage.getItem(this.ROL_KEY);
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ProjectManager ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SeniorProjectManager ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].PortfolioAdmin) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isTSO = function () {
+        if (sessionStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ReadWriteTimesheetOnly) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isSAdmin = function () {
+        var role = sessionStorage.getItem(this.ROL_KEY);
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].AccountOwner ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SuperAdmin) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isGeneralFinanceAdmin = function () {
+        var role = sessionStorage.getItem(this.ROL_KEY);
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].AccountOwner ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SuperAdmin ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceAdmin ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceManager) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.isFin = function () {
+        var role = sessionStorage.getItem(this.ROL_KEY);
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceAdmin ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceManager) {
+            return true;
+        }
+        else {
+            return false;
+        }
     };
     AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_4__["Http"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], AuthService);
     return AuthService;
 }());
@@ -1859,7 +2256,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Navbar (Header) Starts -->\r\n<nav class=\"header-navbar navbar navbar-expand-lg navbar-light bg-faded\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"navbar-toggle d-lg-none float-left\" data-toggle=\"collapse\" (click)=\"toggleSidebar()\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <span class=\"d-lg-none navbar-right navbar-collapse-toggle\">\r\n                <a class=\"open-navbar-container\" (click)=\"isCollapsed = !isCollapsed\" [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"navbarSupportedContent\">\r\n                    <i class=\"ft-more-vertical\"></i>\r\n                </a>\r\n              </span>\r\n        </div>\r\n        <div class=\"navbar-container\">\r\n            <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\" [ngbCollapse]=\"isCollapsed\">\r\n                <ul class=\"navbar-nav\">\r\n                    <li class=\"nav-item mr-2  d-none d-lg-block\">\r\n                        <a href=\"javascript:;\" class=\"nav-link\" id=\"navbar-fullscreen\" appToggleFullscreen (click)=\"ToggleClass()\">\r\n                            <i class=\"{{toggleClass}} font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">fullscreen</p>\r\n                        </a>\r\n                    </li>\r\n                    <li class=\"nav-item\" ngbDropdown [placement]=\"placement\">\r\n                        <a class=\"nav-link position-relative\" id=\"dropdownLang\" ngbDropdownToggle>\r\n                            <i class=\"ft-flag font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">Language</p>\r\n                        </a>\r\n                        <div ngbDropdownMenu aria-labelledby=\"dropdownLang\" class=\"dropdownLang text-left\">\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('en')\">\r\n                                <img src=\"./assets/img/flags/us.png\" alt=\"English\" class=\"langimg\">\r\n                                <span>English</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('es')\">\r\n                                <img src=\"./assets/img/flags/es.png\" alt=\"Spanish\" class=\"langimg\">\r\n                                <span>Spanish</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('pt')\">\r\n                                <img src=\"./assets/img/flags/br.png\" alt=\"Portuguese\" class=\"langimg\">\r\n                                <span>Portuguese</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('de')\">\r\n                                <img src=\"./assets/img/flags/de.png\" alt=\"German\" class=\"langimg\">\r\n                                <span>German</span>\r\n                            </a>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"nav-item\" ngbDropdown [placement]=\"placement\">\r\n                        <a class=\"nav-link position-relative\" id=\"dropdownBasic2\" ngbDropdownToggle>\r\n                            <i class=\"ft-bell font-medium-3 blue-grey darken-4\"></i>\r\n                            <span class=\"notification badge badge-pill badge-danger\">4</span>\r\n                            <p class=\"d-none\">Notifications</p>\r\n                        </a>\r\n                        <div ngbDropdownMenu aria-labelledby=\"dropdownBasic2\" class=\"notification-dropdown\">\r\n                            <div class=\"noti-list\" [perfectScrollbar]>\r\n                                <a class=\"dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4\">\r\n                                    <i class=\"ft-bell info float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 info\">New Order Received</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametitaque in, et!</span>\r\n                                    </span>\r\n                                </a>\r\n                                <a class=\"dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4\">\r\n                                    <i class=\"ft-bell warning float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 warning\">New User Registered</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametitaque in </span>\r\n                                    </span>\r\n                                </a>\r\n                                <a class=\"dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4\">\r\n                                    <i class=\"ft-bell danger float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 danger\">New Order Received</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametest?</span>\r\n                                    </span>\r\n                                </a>\r\n                                <a class=\"dropdown-item noti-container py-3\">\r\n                                    <i class=\"ft-bell success float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 success\">New User Registered</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametnatus aut.</span>\r\n                                    </span>\r\n                                </a>\r\n                            </div>\r\n                            <a class=\"noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1\">Read All Notifications</a>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"nav-item\" ngbDropdown [placement]=\"placement\">\r\n                        <a class=\"nav-link position-relative\" id=\"dropdownBasic3\" ngbDropdownToggle>\r\n                            <i class=\"ft-user font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">User Settings</p>\r\n                        </a>\r\n                        <div ngbDropdownMenu aria-labelledby=\"dropdownBasic3\" class=\"text-left\">\r\n                            <a class=\"dropdown-item py-1\" routerLink=\"/pages/profile\">\r\n                                <i class=\"ft-edit mr-2\"></i>\r\n                                <span>My Profile</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1\" routerLink=\"/inbox\">\r\n                                <i class=\"ft-mail mr-2\"></i>\r\n                                <span>My Inbox</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1\" href=\"javascript:;\">\r\n                                <i class=\"ft-settings mr-2\"></i>\r\n                                <span>Settings</span>\r\n                            </a>\r\n                            <div class=\"dropdown-divider\"></div>\r\n                            <a class=\"dropdown-item\" href=\"javascript:;\">\r\n                                <i class=\"ft-power mr-2\"></i>\r\n                                <span>Logout</span>\r\n                            </a>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"nav-item d-none d-lg-block\">\r\n                        <a class=\"nav-link position-relative notification-sidebar-toggle\" (click)=\"toggleNotificationSidebar();\">\r\n                            <i class=\"ft-align-left font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">Notifications Sidebar</p>\r\n                        </a>\r\n                    </li>\r\n\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</nav>\r\n<!-- Navbar (Header) Ends -->\r\n"
+module.exports = "<!-- Navbar (Header) Starts -->\r\n<nav class=\"header-navbar navbar navbar-expand-lg navbar-light bg-faded\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <button type=\"button\" class=\"navbar-toggle d-lg-none float-left\" data-toggle=\"collapse\" (click)=\"toggleSidebar()\">\r\n                <span class=\"sr-only\">Toggle navigation</span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n                <span class=\"icon-bar\"></span>\r\n            </button>\r\n            <span class=\"d-lg-none navbar-right navbar-collapse-toggle\">\r\n                <a class=\"open-navbar-container\" (click)=\"isCollapsed = !isCollapsed\" [attr.aria-expanded]=\"!isCollapsed\" aria-controls=\"navbarSupportedContent\">\r\n                    <i class=\"ft-more-vertical\"></i>\r\n                </a>\r\n              </span>\r\n        </div>\r\n        <div class=\"navbar-container\">\r\n            <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\" [ngbCollapse]=\"isCollapsed\">\r\n                <ul class=\"navbar-nav\">\r\n                    <li class=\"nav-item mr-2  d-none d-lg-block\">\r\n                        <a href=\"javascript:;\" class=\"nav-link\" id=\"navbar-fullscreen\" appToggleFullscreen (click)=\"ToggleClass()\">\r\n                            <i class=\"{{toggleClass}} font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">fullscreen</p>\r\n                        </a>\r\n                    </li>\r\n                    <li class=\"nav-item\" ngbDropdown [placement]=\"placement\">\r\n                        <a class=\"nav-link position-relative\" id=\"dropdownLang\" ngbDropdownToggle>\r\n                            <i class=\"ft-flag font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">Language</p>\r\n                        </a>\r\n                        <div ngbDropdownMenu aria-labelledby=\"dropdownLang\" class=\"dropdownLang text-left\">\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('en')\">\r\n                                <img src=\"./assets/img/flags/us.png\" alt=\"English\" class=\"langimg\">\r\n                                <span>English</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('es')\">\r\n                                <img src=\"./assets/img/flags/es.png\" alt=\"Spanish\" class=\"langimg\">\r\n                                <span>Spanish</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('pt')\">\r\n                                <img src=\"./assets/img/flags/br.png\" alt=\"Portuguese\" class=\"langimg\">\r\n                                <span>Portuguese</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1 lang\" href=\"javascript:;\" (click)=\"ChangeLanguage('de')\">\r\n                                <img src=\"./assets/img/flags/de.png\" alt=\"German\" class=\"langimg\">\r\n                                <span>German</span>\r\n                            </a>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"nav-item\" ngbDropdown [placement]=\"placement\">\r\n                        <a class=\"nav-link position-relative\" id=\"dropdownBasic2\" ngbDropdownToggle>\r\n                            <i class=\"ft-bell font-medium-3 blue-grey darken-4\"></i>\r\n                            <span class=\"notification badge badge-pill badge-danger\">4</span>\r\n                            <p class=\"d-none\">Notifications</p>\r\n                        </a>\r\n                        <div ngbDropdownMenu aria-labelledby=\"dropdownBasic2\" class=\"notification-dropdown\">\r\n                            <div class=\"noti-list\" [perfectScrollbar]>\r\n                                <a class=\"dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4\">\r\n                                    <i class=\"ft-bell info float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 info\">New Order Received</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametitaque in, et!</span>\r\n                                    </span>\r\n                                </a>\r\n                                <a class=\"dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4\">\r\n                                    <i class=\"ft-bell warning float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 warning\">New User Registered</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametitaque in </span>\r\n                                    </span>\r\n                                </a>\r\n                                <a class=\"dropdown-item noti-container py-3 border-bottom border-bottom-blue-grey border-bottom-lighten-4\">\r\n                                    <i class=\"ft-bell danger float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 danger\">New Order Received</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametest?</span>\r\n                                    </span>\r\n                                </a>\r\n                                <a class=\"dropdown-item noti-container py-3\">\r\n                                    <i class=\"ft-bell success float-left d-block font-large-1 mt-1 mr-2\"></i>\r\n                                    <span class=\"noti-wrapper\">\r\n                                        <span class=\"noti-title line-height-1 d-block text-bold-400 success\">New User Registered</span>\r\n                                        <span class=\"noti-text\">Lorem ipsum dolor sit ametnatus aut.</span>\r\n                                    </span>\r\n                                </a>\r\n                            </div>\r\n                            <a class=\"noti-footer primary text-center d-block border-top border-top-blue-grey border-top-lighten-4 text-bold-400 py-1\">Read All Notifications</a>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"nav-item\" ngbDropdown [placement]=\"placement\">\r\n                        <a class=\"nav-link position-relative\" id=\"dropdownBasic3\" ngbDropdownToggle>\r\n                            <i class=\"ft-user font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">User Settings</p>\r\n                        </a>\r\n                        <div ngbDropdownMenu aria-labelledby=\"dropdownBasic3\" class=\"text-left\">\r\n                            <a class=\"dropdown-item py-1\" routerLink=\"/pages/profile\">\r\n                                <i class=\"ft-edit mr-2\"></i>\r\n                                <span>My Profile</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1\" routerLink=\"/inbox\">\r\n                                <i class=\"ft-mail mr-2\"></i>\r\n                                <span>My Inbox</span>\r\n                            </a>\r\n                            <a class=\"dropdown-item py-1\" href=\"javascript:;\">\r\n                                <i class=\"ft-settings mr-2\"></i>\r\n                                <span>Settings</span>\r\n                            </a>\r\n                            <div class=\"dropdown-divider\"></div>\r\n                            <a class=\"dropdown-item\" href=\"javascript:;\" (click)=\"logout()\">\r\n                                <i class=\"ft-power mr-2\"></i>\r\n                                <span>Logout</span>\r\n                            </a>\r\n                        </div>\r\n                    </li>\r\n                    <li class=\"nav-item d-none d-lg-block\">\r\n                        <a class=\"nav-link position-relative notification-sidebar-toggle\" (click)=\"toggleNotificationSidebar();\">\r\n                            <i class=\"ft-align-left font-medium-3 blue-grey darken-4\"></i>\r\n                            <p class=\"d-none\">Notifications Sidebar</p>\r\n                        </a>\r\n                    </li>\r\n\r\n                </ul>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</nav>\r\n<!-- Navbar (Header) Ends -->\r\n"
 
 /***/ }),
 
@@ -1885,36 +2282,39 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarComponent", function() { return NavbarComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _services_layout_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/layout.service */ "./src/app/shared/services/layout.service.ts");
-/* harmony import */ var _services_config_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/config.service */ "./src/app/shared/services/config.service.ts");
+/* harmony import */ var app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! app/shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _services_layout_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/layout.service */ "./src/app/shared/services/layout.service.ts");
+/* harmony import */ var _services_config_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../services/config.service */ "./src/app/shared/services/config.service.ts");
+
 
 
 
 
 
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent(translate, layoutService, configService) {
+    function NavbarComponent(translate, layoutService, auth, configService) {
         var _this = this;
         this.translate = translate;
         this.layoutService = layoutService;
+        this.auth = auth;
         this.configService = configService;
-        this.currentLang = "en";
-        this.toggleClass = "ft-maximize";
-        this.placement = "bottom-right";
+        this.currentLang = 'en';
+        this.toggleClass = 'ft-maximize';
+        this.placement = 'bottom-right';
         this.isCollapsed = true;
-        this.toggleHideSidebar = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.toggleHideSidebar = new _angular_core__WEBPACK_IMPORTED_MODULE_2__["EventEmitter"]();
         this.config = {};
         var browserLang = translate.getBrowserLang();
-        translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : "en");
+        translate.use(browserLang.match(/en|es|pt|de/) ? browserLang : 'en');
         this.layoutSub = layoutService.changeEmitted$.subscribe(function (direction) {
             var dir = direction.direction;
-            if (dir === "rtl") {
-                _this.placement = "bottom-left";
+            if (dir === 'rtl') {
+                _this.placement = 'bottom-left';
             }
-            else if (dir === "ltr") {
-                _this.placement = "bottom-right";
+            else if (dir === 'ltr') {
+                _this.placement = 'bottom-right';
             }
         });
     }
@@ -1926,14 +2326,17 @@ var NavbarComponent = /** @class */ (function () {
         if (this.config.layout.dir) {
             setTimeout(function () {
                 var dir = _this.config.layout.dir;
-                if (dir === "rtl") {
-                    _this.placement = "bottom-left";
+                if (dir === 'rtl') {
+                    _this.placement = 'bottom-left';
                 }
-                else if (dir === "ltr") {
-                    _this.placement = "bottom-right";
+                else if (dir === 'ltr') {
+                    _this.placement = 'bottom-right';
                 }
             }, 0);
         }
+    };
+    NavbarComponent.prototype.logout = function () {
+        this.auth.logout();
     };
     NavbarComponent.prototype.ngOnDestroy = function () {
         if (this.layoutSub) {
@@ -1944,19 +2347,19 @@ var NavbarComponent = /** @class */ (function () {
         this.translate.use(language);
     };
     NavbarComponent.prototype.ToggleClass = function () {
-        if (this.toggleClass === "ft-maximize") {
-            this.toggleClass = "ft-minimize";
+        if (this.toggleClass === 'ft-maximize') {
+            this.toggleClass = 'ft-minimize';
         }
         else {
-            this.toggleClass = "ft-maximize";
+            this.toggleClass = 'ft-maximize';
         }
     };
     NavbarComponent.prototype.toggleNotificationSidebar = function () {
         this.layoutService.emitNotiSidebarChange(true);
     };
     NavbarComponent.prototype.toggleSidebar = function () {
-        var appSidebar = document.getElementsByClassName("app-sidebar")[0];
-        if (appSidebar.classList.contains("hide-sidebar")) {
+        var appSidebar = document.getElementsByClassName('app-sidebar')[0];
+        if (appSidebar.classList.contains('hide-sidebar')) {
             this.toggleHideSidebar.emit(false);
         }
         else {
@@ -1964,16 +2367,17 @@ var NavbarComponent = /** @class */ (function () {
         }
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])(),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Output"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
     ], NavbarComponent.prototype, "toggleHideSidebar", void 0);
     NavbarComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: "app-navbar",
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
+            selector: 'app-navbar',
             template: __webpack_require__(/*! ./navbar.component.html */ "./src/app/shared/navbar/navbar.component.html"),
             styles: [__webpack_require__(/*! ./navbar.component.scss */ "./src/app/shared/navbar/navbar.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_2__["TranslateService"], _services_layout_service__WEBPACK_IMPORTED_MODULE_3__["LayoutService"], _services_config_service__WEBPACK_IMPORTED_MODULE_4__["ConfigService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"], _services_layout_service__WEBPACK_IMPORTED_MODULE_4__["LayoutService"],
+            app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"], _services_config_service__WEBPACK_IMPORTED_MODULE_5__["ConfigService"]])
     ], NavbarComponent);
     return NavbarComponent;
 }());

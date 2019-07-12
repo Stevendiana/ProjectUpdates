@@ -22,10 +22,19 @@ import { ResourceAvailabilityTableComponent } from './resource/resource-availabi
 import { ResourceAvailabilityComponent } from './resource/resource-availability/resource-availability.component';
 import { ResourceUtilizationComponent } from './resource/resource-utilization/resource-utilization.component';
 import { ResourceUtilizationTableComponent } from './resource/resource-utilization-table/resource-utilization-table.component';
+import { ResourceService } from './resources.service';
+import { NewResourceComponent } from './resource/new-resource.component';
+import { EditResourceComponent } from './resource/edit-resource.component';
+import { DeleteResourceComponent } from './resource/delete-resource.component';
+import { ResourcesDashboardComponent } from './resources-dashboard/resources-dashboard.component';
 
 @NgModule({
   declarations: [ResourcesComponent,
-    ResourcesAvailabilityComponent, ResourcesUtilizationComponent, ResourcesDemandComponent, ResourcesAvailabilityTableComponent, ResourcesDemandTableComponent, ResourcesUtilizationTableComponent, ResourcesAbsencesComponent, ResourcesAbsencesTableComponent, ResourceAbsencesTableComponent, ResourceAbsencesComponent, ResourceDemandComponent, ResourceDemandTableComponent, ResourceAvailabilityTableComponent, ResourceAvailabilityComponent, ResourceUtilizationComponent, ResourceUtilizationTableComponent],
+    ResourcesAvailabilityComponent, ResourcesUtilizationComponent, ResourcesDemandComponent,
+    ResourcesAvailabilityTableComponent, ResourcesDemandTableComponent, ResourcesUtilizationTableComponent,
+    ResourcesAbsencesTableComponent, ResourceAbsencesTableComponent, ResourceAbsencesComponent, ResourceDemandComponent,
+    ResourceAvailabilityTableComponent, ResourceAvailabilityComponent, ResourceUtilizationComponent, ResourceUtilizationTableComponent,
+    NewResourceComponent, EditResourceComponent, DeleteResourceComponent, ResourcesDashboardComponent],
   imports: [
     CommonModule,
     ResourcesRoutingModule,
@@ -34,6 +43,8 @@ import { ResourceUtilizationTableComponent } from './resource/resource-utilizati
     ChartistModule,
     NgbModule,
     MatchHeightModule
-  ]
+  ],
+  entryComponents: [NewResourceComponent, EditResourceComponent ],
+  providers: [ResourceService]
 })
 export class ResourcesModule { }

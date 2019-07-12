@@ -61,36 +61,36 @@ namespace PTApi.Models
         public string ImageId { get; set; }
         public byte[] AvatarImage { get; set; }
         [NotMapped]
-        public string DisplayName { get; set; }
+        public string DisplayName { get { return LastName + ", " + FirstName ; } }
        
-        public string Gender { get; set; }
-        [NotMapped]
-        public decimal? TotalForecastHours { get; }
-        [NotMapped]
-        public decimal? TotalForecastReconciledHours { get; }
+        //public string Gender { get; set; }
+        //[NotMapped]
+        //public decimal? TotalForecastHours { get; }
+        //[NotMapped]
+        //public decimal? TotalForecastReconciledHours { get; }
 
-        [NotMapped]
-        public int? TotalProjectsForecastCount { get; }
-        [NotMapped]
-        public int? TotalCountProjects { get; }
-        [NotMapped]
-        public int? TotalCountProjectsPermitted { get; }
-        [NotMapped]
-        public int? TotalCountProgrammes { get; }
-        [NotMapped]
-        public int? TotalCountProgrammesPermitted { get; }
-        [NotMapped]
-        public int? TotalCountDomains { get; }
-        [NotMapped]
-        public int? TotalCountDomainsPermitted { get; }
-        [NotMapped]
-        public int? TotalCountPortfolios { get; }
-        [NotMapped]
-        public int? TotalCountPortfoliosPermitted { get; }
-        [NotMapped]
-        public int? TotalCountBusinessUnits { get; }
-        [NotMapped]
-        public int? TotalCountBusinessUnitsPermitted { get; }
+        //[NotMapped]
+        //public int? TotalProjectsForecastCount { get; }
+        //[NotMapped]
+        //public int? TotalCountProjects { get; }
+        //[NotMapped]
+        //public int? TotalCountProjectsPermitted { get; }
+        //[NotMapped]
+        //public int? TotalCountProgrammes { get; }
+        //[NotMapped]
+        //public int? TotalCountProgrammesPermitted { get; }
+        //[NotMapped]
+        //public int? TotalCountDomains { get; }
+        //[NotMapped]
+        //public int? TotalCountDomainsPermitted { get; }
+        //[NotMapped]
+        //public int? TotalCountPortfolios { get; }
+        //[NotMapped]
+        //public int? TotalCountPortfoliosPermitted { get; }
+        //[NotMapped]
+        //public int? TotalCountBusinessUnits { get; }
+        //[NotMapped]
+        //public int? TotalCountBusinessUnitsPermitted { get; }
 
 
         //public decimal? JanResourceUtilizationInDays { get; set; }

@@ -4,11 +4,19 @@ import { ResourcesComponent } from './resources/resources.component';
 import { ResourcesAvailabilityComponent } from './resources-availability/resources-availability.component';
 import { ResourcesUtilizationComponent } from './resources-utilization/resources-utilization.component';
 import { ResourcesDemandComponent } from './resources-demand/resources-demand.component';
+import { ResourcesDashboardComponent } from './resources-dashboard/resources-dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: 'dashbaord',
+        component: ResourcesDashboardComponent,
+        data: {
+          title: 'Dashboard'
+        }
+      },
       {
         path: 'resources',
         component: ResourcesComponent,

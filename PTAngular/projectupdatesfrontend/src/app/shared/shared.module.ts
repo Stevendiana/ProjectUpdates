@@ -1,7 +1,10 @@
+import { FormsModule } from '@angular/forms';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
+import { DataTableModule } from 'angular-6-datatable';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,30 +24,37 @@ import { SidebarLinkDirective } from './directives/sidebarlink.directive';
 import { SidebarListDirective } from './directives/sidebarlist.directive';
 import { SidebarAnchorToggleDirective } from './directives/sidebaranchortoggle.directive';
 import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
+import { FlPipe } from 'app/app.fl';
 
 @NgModule({
     exports: [
         CommonModule,
+        FormsModule,
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
         CustomizerComponent,
         DataTablesModule,
+        DataTableModule,
         NotificationSidebarComponent,
         ToggleFullscreenDirective,
         SidebarDirective,
         NgbModule,
+        FlPipe,
         TranslateModule
     ],
     imports: [
         RouterModule,
         CommonModule,
+        FormsModule,
         NgbModule,
         DataTablesModule,
+        DataTableModule,
         TranslateModule,
         PerfectScrollbarModule
     ],
     declarations: [
+        FlPipe,
         FooterComponent,
         NavbarComponent,
         SidebarComponent,

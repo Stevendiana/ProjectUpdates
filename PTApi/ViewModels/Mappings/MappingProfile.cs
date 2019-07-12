@@ -45,6 +45,11 @@ namespace PTApi.ViewModels.Mappings
             .ForMember(dto => dto.Company, opt => opt.MapFrom(src => src.Company))
             .ForMember(dto => dto.CompanyRateCard, opt => opt.MapFrom(src => src.CompanyRateCard));
 
+            CreateMap<Resource, ResourceAdminViewModel>()
+            .ForMember(dto => dto.ResourceId, map => map.MapFrom(src => src.ResourceId))
+            .ForMember(dto => dto.Company, opt => opt.MapFrom(src => src.Company))
+            .ForMember(dto => dto.CompanyRateCard, opt => opt.MapFrom(src => src.CompanyRateCard));
+
             CreateMap<ProjectBudget, ProjectBudgetViewModel>()
             .ForMember(dto => dto.ProjectBudgetId, map => map.MapFrom(src => src.ProjectBudgetId))
             .ForMember(vr => vr.Resource, opt => opt.MapFrom(v => v.Resource))
