@@ -1,5 +1,158 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["resources-resources-module"],{
 
+/***/ "./src/app/resources/resource/delete-resource.component.html":
+/*!*******************************************************************!*\
+  !*** ./src/app/resources/resource/delete-resource.component.html ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/resources/resource/delete-resource.component.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/resources/resource/delete-resource.component.ts ***!
+  \*****************************************************************/
+/*! exports provided: DeleteResourceComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DeleteResourceComponent", function() { return DeleteResourceComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var DeleteResourceComponent = /** @class */ (function () {
+    function DeleteResourceComponent() {
+    }
+    DeleteResourceComponent.prototype.ngOnInit = function () {
+    };
+    DeleteResourceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-delete-resource',
+            template: __webpack_require__(/*! ./delete-resource.component.html */ "./src/app/resources/resource/delete-resource.component.html"),
+            styles: [__webpack_require__(/*! ./new-resource.component.scss */ "./src/app/resources/resource/new-resource.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], DeleteResourceComponent);
+    return DeleteResourceComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/resources/resource/edit-resource.component.html":
+/*!*****************************************************************!*\
+  !*** ./src/app/resources/resource/edit-resource.component.html ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/resources/resource/edit-resource.component.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/resources/resource/edit-resource.component.ts ***!
+  \***************************************************************/
+/*! exports provided: EditResourceComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditResourceComponent", function() { return EditResourceComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var EditResourceComponent = /** @class */ (function () {
+    function EditResourceComponent() {
+    }
+    EditResourceComponent.prototype.ngOnInit = function () {
+    };
+    EditResourceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-edit-resource',
+            template: __webpack_require__(/*! ./edit-resource.component.html */ "./src/app/resources/resource/edit-resource.component.html"),
+            styles: [__webpack_require__(/*! ./new-resource.component.scss */ "./src/app/resources/resource/new-resource.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], EditResourceComponent);
+    return EditResourceComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/resources/resource/new-resource.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/resources/resource/new-resource.component.html ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- The Modal -->\r\n\r\n<div class=\"container\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\">Edit {{name}} Resource</h4>\r\n    <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <!-- <section> -->\r\n      <div class=\"row text-left\">\r\n              <div class=\"col-md-12\">\r\n                <div class=\"card\">\r\n                  <div class=\"card-header pb-2\">\r\n                    <h4 class=\"card-title\" id=\"horz-layout-colored-controls\">User Profile</h4>\r\n                    <p class=\"mb-0\">This is 2-columns horizontal form with labels on left and form controls on right in one line.\r\n                      Add <code>.form-horizontal</code> class to the form tag to have horizontal form styling. User can also\r\n                      change the border color and background color of the form control. Add <code>border-*</code> class to change\r\n                      border color and <code>bg-*</code> class to change background color of the form control.</p>\r\n                  </div>\r\n                  <div class=\"card-content\">\r\n                    <div class=\"px-3\">\r\n                      <form class=\"form form-horizontal\">\r\n                        <div class=\"form-body\">\r\n                          <h4 class=\"form-section\"><i class=\"ft-info\"></i> About User</h4>\r\n                          <div class=\"row\">\r\n                            <div class=\"col-md-6\">\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\" for=\"userinput1\">First Name: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <input type=\"text\" id=\"userinput1\" class=\"form-control border-primary\" name=\"firstname\">\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"col-md-6\">\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\" for=\"userinput2\">Last Name: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <input type=\"text\" id=\"userinput2\" class=\"form-control border-primary\" name=\"lastname\">\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                          <div class=\"row\">\r\n                            <div class=\"col-md-6\">\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\" for=\"userinput3\">Username: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <input type=\"text\" id=\"userinput3\" class=\"form-control border-primary\" name=\"username\">\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"col-md-6\">\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\" for=\"userinput4\">Nick Name: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <input type=\"text\" id=\"userinput4\" class=\"form-control border-primary\" name=\"nickname\">\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n\r\n                          <h4 class=\"form-section\"><i class=\"ft-mail\"></i> Contact Info & Bio</h4>\r\n\r\n                          <div class=\"row\">\r\n                            <div class=\"col-md-6\">\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\" for=\"userinput5\">Email: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <input class=\"form-control border-primary\" type=\"email\" id=\"userinput5\">\r\n                                </div>\r\n                              </div>\r\n\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\" for=\"userinput6\">Website: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <input class=\"form-control border-primary\" type=\"url\" id=\"userinput6\">\r\n                                </div>\r\n                              </div>\r\n\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\">Contact Number: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <input class=\"form-control border-primary\" type=\"number\" id=\"userinput7\">\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"col-md-6\">\r\n                              <div class=\"form-group row\">\r\n                                <label class=\"col-md-3 label-control\" for=\"userinput8\">Bio: </label>\r\n                                <div class=\"col-md-9\">\r\n                                  <textarea id=\"userinput8\" rows=\"6\" class=\"form-control col-md-9 border-primary\" name=\"bio\"></textarea>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                        </div>\r\n\r\n                        <div class=\"form-actions right\">\r\n                          <button type=\"button\" class=\"btn btn-raised btn-warning mr-1\">\r\n                            <i class=\"ft-x\"></i> Cancel\r\n                          </button>\r\n                          <button type=\"button\" class=\"btn btn-raised btn-primary\">\r\n                            <i class=\"fa fa-check-square-o\"></i> Save\r\n                          </button>\r\n                        </div>\r\n                      </form>\r\n\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n      <!-- </section> -->\r\n  </div>\r\n  <div class=\"modal-footer\">\r\n    <button type=\"button\" class=\"btn btn-secondary btn-raised\" (click)=\"activeModal.close('Close click')\">Close</button>\r\n  </div>\r\n  </div>\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/resources/resource/new-resource.component.scss":
+/*!****************************************************************!*\
+  !*** ./src/app/resources/resource/new-resource.component.scss ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Jlc291cmNlcy9yZXNvdXJjZS9uZXctcmVzb3VyY2UuY29tcG9uZW50LnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/resources/resource/new-resource.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/resources/resource/new-resource.component.ts ***!
+  \**************************************************************/
+/*! exports provided: NewResourceComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NewResourceComponent", function() { return NewResourceComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+
+
+
+var NewResourceComponent = /** @class */ (function () {
+    function NewResourceComponent(activeModal) {
+        this.activeModal = activeModal;
+    }
+    NewResourceComponent.prototype.ngOnInit = function () {
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], NewResourceComponent.prototype, "name", void 0);
+    NewResourceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-new-resource',
+            template: __webpack_require__(/*! ./new-resource.component.html */ "./src/app/resources/resource/new-resource.component.html"),
+            styles: [__webpack_require__(/*! ./new-resource.component.scss */ "./src/app/resources/resource/new-resource.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbActiveModal"]])
+    ], NewResourceComponent);
+    return NewResourceComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/resources/resource/resource-absences-table/resource-absences-table.component.html":
 /*!***************************************************************************************************!*\
   !*** ./src/app/resources/resource/resource-absences-table/resource-absences-table.component.html ***!
@@ -224,62 +377,6 @@ var ResourceAvailabilityComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/resources/resource/resource-demand-table/resource-demand-table.component.html":
-/*!***********************************************************************************************!*\
-  !*** ./src/app/resources/resource/resource-demand-table/resource-demand-table.component.html ***!
-  \***********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\r\n  resource-demand-table works!\r\n</p>\r\n"
-
-/***/ }),
-
-/***/ "./src/app/resources/resource/resource-demand-table/resource-demand-table.component.scss":
-/*!***********************************************************************************************!*\
-  !*** ./src/app/resources/resource/resource-demand-table/resource-demand-table.component.scss ***!
-  \***********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Jlc291cmNlcy9yZXNvdXJjZS9yZXNvdXJjZS1kZW1hbmQtdGFibGUvcmVzb3VyY2UtZGVtYW5kLXRhYmxlLmNvbXBvbmVudC5zY3NzIn0= */"
-
-/***/ }),
-
-/***/ "./src/app/resources/resource/resource-demand-table/resource-demand-table.component.ts":
-/*!*********************************************************************************************!*\
-  !*** ./src/app/resources/resource/resource-demand-table/resource-demand-table.component.ts ***!
-  \*********************************************************************************************/
-/*! exports provided: ResourceDemandTableComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceDemandTableComponent", function() { return ResourceDemandTableComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-
-
-var ResourceDemandTableComponent = /** @class */ (function () {
-    function ResourceDemandTableComponent() {
-    }
-    ResourceDemandTableComponent.prototype.ngOnInit = function () {
-    };
-    ResourceDemandTableComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-resource-demand-table',
-            template: __webpack_require__(/*! ./resource-demand-table.component.html */ "./src/app/resources/resource/resource-demand-table/resource-demand-table.component.html"),
-            styles: [__webpack_require__(/*! ./resource-demand-table.component.scss */ "./src/app/resources/resource/resource-demand-table/resource-demand-table.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
-    ], ResourceDemandTableComponent);
-    return ResourceDemandTableComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/resources/resource/resource-demand/resource-demand.component.html":
 /*!***********************************************************************************!*\
   !*** ./src/app/resources/resource/resource-demand/resource-demand.component.html ***!
@@ -498,62 +595,6 @@ var ResourcesAbsencesTableComponent = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
     ], ResourcesAbsencesTableComponent);
     return ResourcesAbsencesTableComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/resources/resources-absences/resources-absences.component.html":
-/*!********************************************************************************!*\
-  !*** ./src/app/resources/resources-absences/resources-absences.component.html ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\r\n  resources-absences works!\r\n</p>\r\n"
-
-/***/ }),
-
-/***/ "./src/app/resources/resources-absences/resources-absences.component.scss":
-/*!********************************************************************************!*\
-  !*** ./src/app/resources/resources-absences/resources-absences.component.scss ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Jlc291cmNlcy9yZXNvdXJjZXMtYWJzZW5jZXMvcmVzb3VyY2VzLWFic2VuY2VzLmNvbXBvbmVudC5zY3NzIn0= */"
-
-/***/ }),
-
-/***/ "./src/app/resources/resources-absences/resources-absences.component.ts":
-/*!******************************************************************************!*\
-  !*** ./src/app/resources/resources-absences/resources-absences.component.ts ***!
-  \******************************************************************************/
-/*! exports provided: ResourcesAbsencesComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourcesAbsencesComponent", function() { return ResourcesAbsencesComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-
-
-var ResourcesAbsencesComponent = /** @class */ (function () {
-    function ResourcesAbsencesComponent() {
-    }
-    ResourcesAbsencesComponent.prototype.ngOnInit = function () {
-    };
-    ResourcesAbsencesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-resources-absences',
-            template: __webpack_require__(/*! ./resources-absences.component.html */ "./src/app/resources/resources-absences/resources-absences.component.html"),
-            styles: [__webpack_require__(/*! ./resources-absences.component.scss */ "./src/app/resources/resources-absences/resources-absences.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
-    ], ResourcesAbsencesComponent);
-    return ResourcesAbsencesComponent;
 }());
 
 
@@ -1420,6 +1461,873 @@ var ResourcesAvailabilityComponent = /** @class */ (function () {
     return ResourcesAvailabilityComponent;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/resources/resources-dashboard/resources-dashboard.component.html":
+/*!**********************************************************************************!*\
+  !*** ./src/app/resources/resources-dashboard/resources-dashboard.component.html ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\r\n    <h1 class=\"card-title m-1 pl-2 pull-left text-muted text-primary\">Resource Pool</h1>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-primary\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">{{resourceCount}}</h3>\r\n                <span>Total Resources</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-bulb font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-warning\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">$2156</h3>\r\n                <span>Total Tax</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-pie-chart font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart2\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-success\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">$45,668</h3>\r\n                <span>Total Sales</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-graph font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart2\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-danger\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">$32,454</h3>\r\n                <span>Total Earning</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-wallet font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart2\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n<div class=\"row\" matchHeight =\"card\">\r\n    <div class=\"col-xl-8 col-lg-12 col-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          <h4 class=\"card-title mb-0\">Visit & Sales Statistics</h4>\r\n        </div>\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body\">\r\n            <div class=\"chart-info mb-2\">\r\n              <span class=\"text-uppercase mr-3\"><i class=\"fa fa-circle primary font-small-2 mr-1\"></i> Sales</span>\r\n              <span class=\"text-uppercase\"><i class=\"fa fa-circle deep-purple font-small-2 mr-1\"></i> Visits</span>\r\n            </div>\r\n            <div id=\"line-area2\" class=\"height-400 lineArea2\">\r\n              <x-chartist class=\"\" [data]=\"lineArea2.data\" [type]=\"lineArea2.type\" [options]=\"lineArea2.options\"\r\n               [responsiveOptions]=\"lineArea2.responsiveOptions\" [events]=\"lineArea2.events\">\r\n\r\n              </x-chartist>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-4 col-lg-12 col-12\">\r\n      <div class=\"card gradient-blackberry\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body\">\r\n            <h4 class=\"card-title white\">Statistics</h4>\r\n            <div class=\"p-2 text-center\">\r\n              <a class=\"white font-medium-1\">Month</a>\r\n              <a class=\"btn btn-raised btn-round bg-white mx-3 px-3\">Week</a>\r\n              <a class=\"white font-medium-1\">Day</a>\r\n            </div>\r\n            <div class=\"my-3 text-center white\">\r\n              <a class=\"font-large-2 d-block mb-1\">$ 78.89 <span class=\"ft-arrow-up font-large-2\"></span></a>\r\n              <span class=\"font-medium-1\">Week2   +15.44</span>\r\n            </div>\r\n          </div>\r\n          <div id=\"lineChart\" class=\"height-250 lineChart lineChartShadow\">\r\n            <x-chartist class=\"\" [data]=\"lineChart.data\" [type]=\"lineChart.type\" [options]=\"lineChart.options\"\r\n             [responsiveOptions]=\"lineChart.responsiveOptions\" [events]=\"lineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>"
+
+/***/ }),
+
+/***/ "./src/app/resources/resources-dashboard/resources-dashboard.component.scss":
+/*!**********************************************************************************!*\
+  !*** ./src/app/resources/resources-dashboard/resources-dashboard.component.scss ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Jlc291cmNlcy9yZXNvdXJjZXMtZGFzaGJvYXJkL3Jlc291cmNlcy1kYXNoYm9hcmQuY29tcG9uZW50LnNjc3MifQ== */"
+
+/***/ }),
+
+/***/ "./src/app/resources/resources-dashboard/resources-dashboard.component.ts":
+/*!********************************************************************************!*\
+  !*** ./src/app/resources/resources-dashboard/resources-dashboard.component.ts ***!
+  \********************************************************************************/
+/*! exports provided: ResourcesDashboardComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourcesDashboardComponent", function() { return ResourcesDashboardComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chartist__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var _resources_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../resources.service */ "./src/app/resources/resources.service.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _resource_new_resource_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../resource/new-resource.component */ "./src/app/resources/resource/new-resource.component.ts");
+
+
+
+
+
+
+
+
+var data = __webpack_require__(/*! ../../shared/data/chartist.json */ "./src/app/shared/data/chartist.json");
+var ResourcesDashboardComponent = /** @class */ (function () {
+    // Bar chart configuration Ends
+    function ResourcesDashboardComponent(resourcesService, modalService) {
+        this.resourcesService = resourcesService;
+        this.modalService = modalService;
+        this.resources$ = [];
+        this.dtOptions = {};
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+        // Line chart configuration Starts
+        this.WidgetlineChart = {
+            type: 'Line', data: data['WidgetlineChart2'],
+            options: {
+                axisX: {
+                    showGrid: false,
+                    showLabel: false,
+                    offset: 0,
+                },
+                axisY: {
+                    showGrid: false,
+                    low: 50,
+                    showLabel: false,
+                    offset: 0,
+                },
+                fullWidth: true
+            },
+        };
+        // Line chart configuration Ends
+        // Line chart configuration Starts
+        this.WidgetlineChart1 = {
+            type: 'Line', data: data['WidgetlineChart3'],
+            options: {
+                axisX: {
+                    showGrid: false,
+                    showLabel: false,
+                    offset: 0,
+                },
+                axisY: {
+                    showGrid: false,
+                    low: 50,
+                    showLabel: false,
+                    offset: 0,
+                },
+                fullWidth: true,
+                chartPadding: { top: 0, right: 0, bottom: 10, left: 0 }
+            },
+            events: {
+                created: function (data) {
+                    var defs = data.svg.elem('defs');
+                    defs.elem('linearGradient', {
+                        id: 'widgradient',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(132, 60, 247, 1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(56, 184, 242, 1)'
+                    });
+                },
+            },
+        };
+        // Line chart configuration Ends
+        // Line chart configuration Starts
+        this.WidgetlineChart2 = {
+            type: 'Line', data: data['WidgetlineChart'],
+            options: {
+                axisX: {
+                    showGrid: true,
+                    showLabel: false,
+                    offset: 0,
+                },
+                axisY: {
+                    showGrid: false,
+                    low: 40,
+                    showLabel: false,
+                    offset: 0,
+                },
+                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_2__["Interpolation"].cardinal({
+                    tension: 0
+                }),
+                fullWidth: true
+            },
+            events: {
+                created: function (data) {
+                    var defs = data.svg.elem('defs');
+                    defs.elem('linearGradient', {
+                        id: 'widgradient1',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(0, 201, 255,1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(17,228,183, 1)'
+                    });
+                },
+            },
+        };
+        // Line chart configuration Ends
+        // Donut chart configuration Starts
+        this.DonutChart1 = {
+            type: 'Pie',
+            data: data['DashboardDonut'],
+            options: {
+                donut: true,
+                donutWidth: 3,
+                startAngle: 0,
+                chartPadding: 25,
+                labelInterpolationFnc: function (value) {
+                    return '\ue9c9';
+                }
+            },
+            events: {
+                draw: function (data) {
+                    if (data.type === 'label') {
+                        if (data.index === 0) {
+                            data.element.attr({
+                                dx: data.element.root().width() / 2,
+                                dy: (data.element.root().height() + (data.element.height() / 4)) / 2,
+                                class: 'ct-label',
+                                'font-family': 'feather'
+                            });
+                        }
+                        else {
+                            data.element.remove();
+                        }
+                    }
+                }
+            }
+        };
+        // Donut chart configuration Ends
+        // Donut chart configuration Starts
+        this.DonutChart2 = {
+            type: 'Pie',
+            data: data['DashboardDonut'],
+            options: {
+                donut: true,
+                donutWidth: 3,
+                startAngle: 90,
+                chartPadding: 25,
+                labelInterpolationFnc: function (value) {
+                    return '\ue9e7';
+                }
+            },
+            events: {
+                draw: function (data) {
+                    if (data.type === 'label') {
+                        if (data.index === 0) {
+                            data.element.attr({
+                                dx: data.element.root().width() / 2,
+                                dy: (data.element.root().height() + (data.element.height() / 4)) / 2,
+                                class: 'ct-label',
+                                'font-family': 'feather'
+                            });
+                        }
+                        else {
+                            data.element.remove();
+                        }
+                    }
+                }
+            }
+        };
+        // Donut chart configuration Ends
+        // Donut chart configuration Starts
+        this.DonutChart3 = {
+            type: 'Pie',
+            data: data['DashboardDonut'],
+            options: {
+                donut: true,
+                donutWidth: 3,
+                startAngle: 270,
+                chartPadding: 25,
+                labelInterpolationFnc: function (value) {
+                    return '\ue964';
+                }
+            },
+            events: {
+                draw: function (data) {
+                    if (data.type === 'label') {
+                        if (data.index === 0) {
+                            data.element.attr({
+                                dx: data.element.root().width() / 2,
+                                dy: (data.element.root().height() + (data.element.height() / 4)) / 2,
+                                class: 'ct-label',
+                                'font-family': 'feather'
+                            });
+                        }
+                        else {
+                            data.element.remove();
+                        }
+                    }
+                }
+            }
+        };
+        // Donut chart configuration Ends
+        // Line area chart configuration Starts
+        this.lineAreaChart = {
+            type: 'Line',
+            data: data['lineArea3'],
+            options: {
+                low: 0,
+                showArea: true,
+                fullWidth: true,
+                onlyInteger: true,
+                axisY: {
+                    low: 0,
+                    scaleMinSpace: 50,
+                },
+                axisX: {
+                    showGrid: false
+                }
+            },
+            events: {
+                created: function (data) {
+                    var defs = data.svg.elem('defs');
+                    defs.elem('linearGradient', {
+                        id: 'gradient',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-opacity': '0.2',
+                        'stop-color': 'rgba(255, 255, 255, 1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-opacity': '0.2',
+                        'stop-color': 'rgba(38, 198, 218, 1)'
+                    });
+                },
+                draw: function (data) {
+                    var circleRadius = 6;
+                    if (data.type === 'point') {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                            cx: data.x,
+                            cy: data.y,
+                            r: circleRadius,
+                            class: 'ct-point-circle'
+                        });
+                        data.element.replace(circle);
+                    }
+                }
+            },
+        };
+        // Line area chart configuration Ends
+        // Line chart configuration Starts
+        this.lineChart2 = {
+            type: 'Line', data: data['line2'],
+            options: {
+                axisX: {
+                    showGrid: false,
+                },
+                axisY: {
+                    low: 0,
+                    scaleMinSpace: 50,
+                },
+                fullWidth: true,
+            },
+            responsiveOptions: [
+                ['screen and (max-width: 640px) and (min-width: 381px)', {
+                        axisX: {
+                            labelInterpolationFnc: function (value, index) {
+                                return index % 2 === 0 ? value : null;
+                            }
+                        }
+                    }],
+                ['screen and (max-width: 380px)', {
+                        axisX: {
+                            labelInterpolationFnc: function (value, index) {
+                                return index % 3 === 0 ? value : null;
+                            }
+                        }
+                    }]
+            ],
+            events: {
+                draw: function (data) {
+                    var circleRadius = 6;
+                    if (data.type === 'point') {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                            cx: data.x,
+                            cy: data.y,
+                            r: circleRadius,
+                            class: 'ct-point-circle'
+                        });
+                        data.element.replace(circle);
+                    }
+                    else if (data.type === 'label') {
+                        // adjust label position for rotation
+                        var dX = data.width / 2 + (30 - data.width);
+                        data.element.attr({ x: data.element.attr('x') - dX });
+                    }
+                }
+            },
+        };
+        // Line chart configuration Ends
+        // Line chart configuration Starts
+        this.lineChart1 = {
+            type: 'Line', data: data['line1'],
+            options: {
+                axisX: {
+                    showGrid: false,
+                },
+                axisY: {
+                    low: 0,
+                    scaleMinSpace: 50,
+                },
+                fullWidth: true
+            },
+            events: {
+                draw: function (data) {
+                    if (data.type === 'label') {
+                        // adjust label position for rotation
+                        var dX = data.width / 2 + (30 - data.width);
+                        data.element.attr({ x: data.element.attr('x') - dX });
+                    }
+                }
+            },
+        };
+        // Line chart configuration Ends
+        // Line area chart configuration Starts
+        this.lineArea = {
+            type: 'Line',
+            data: data['lineAreaDashboard'],
+            options: {
+                low: 0,
+                showArea: true,
+                fullWidth: true,
+                onlyInteger: true,
+                axisY: {
+                    low: 0,
+                    scaleMinSpace: 50,
+                },
+                axisX: {
+                    showGrid: false
+                }
+            },
+            events: {
+                created: function (data) {
+                    var defs = data.svg.elem('defs');
+                    defs.elem('linearGradient', {
+                        id: 'gradient',
+                        x1: 0,
+                        y1: 1,
+                        x2: 1,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(0, 201, 255, 1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(146, 254, 157, 1)'
+                    });
+                    defs.elem('linearGradient', {
+                        id: 'gradient1',
+                        x1: 0,
+                        y1: 1,
+                        x2: 1,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(132, 60, 247, 1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(56, 184, 242, 1)'
+                    });
+                },
+            },
+        };
+        // Line area chart configuration Ends
+        // Stacked Bar chart configuration Starts
+        this.Stackbarchart = {
+            type: 'Bar',
+            data: data['Stackbarchart'],
+            options: {
+                stackBars: true,
+                fullWidth: true,
+                axisX: {
+                    showGrid: false,
+                },
+                axisY: {
+                    showGrid: false,
+                    showLabel: false,
+                    offset: 0
+                },
+                chartPadding: 30
+            },
+            events: {
+                created: function (data) {
+                    var defs = data.svg.elem('defs');
+                    defs.elem('linearGradient', {
+                        id: 'linear',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(0, 201, 255,1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(17,228,183, 1)'
+                    });
+                },
+                draw: function (data) {
+                    if (data.type === 'bar') {
+                        data.element.attr({
+                            style: 'stroke-width: 5px',
+                            x1: data.x1 + 0.001
+                        });
+                    }
+                    else if (data.type === 'label') {
+                        data.element.attr({
+                            y: 270
+                        });
+                    }
+                }
+            },
+        };
+        // Stacked Bar chart configuration Ends
+        // Line area chart 2 configuration Starts
+        this.lineArea2 = {
+            type: 'Line',
+            data: data['lineArea2'],
+            options: {
+                showArea: true,
+                fullWidth: true,
+                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_2__["Interpolation"].none(),
+                axisX: {
+                    showGrid: false,
+                },
+                axisY: {
+                    low: 0,
+                    scaleMinSpace: 50,
+                }
+            },
+            responsiveOptions: [
+                ['screen and (max-width: 640px) and (min-width: 381px)', {
+                        axisX: {
+                            labelInterpolationFnc: function (value, index) {
+                                return index % 2 === 0 ? value : null;
+                            }
+                        }
+                    }],
+                ['screen and (max-width: 380px)', {
+                        axisX: {
+                            labelInterpolationFnc: function (value, index) {
+                                return index % 3 === 0 ? value : null;
+                            }
+                        }
+                    }]
+            ],
+            events: {
+                created: function (data) {
+                    var defs = data.svg.elem('defs');
+                    defs.elem('linearGradient', {
+                        id: 'gradient2',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-opacity': '0.2',
+                        'stop-color': 'rgba(255, 255, 255, 1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-opacity': '0.2',
+                        'stop-color': 'rgba(0, 201, 255, 1)'
+                    });
+                    defs.elem('linearGradient', {
+                        id: 'gradient3',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0.3,
+                        'stop-opacity': '0.2',
+                        'stop-color': 'rgba(255, 255, 255, 1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-opacity': '0.2',
+                        'stop-color': 'rgba(132, 60, 247, 1)'
+                    });
+                },
+                draw: function (data) {
+                    var circleRadius = 4;
+                    if (data.type === 'point') {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                            cx: data.x,
+                            cy: data.y,
+                            r: circleRadius,
+                            class: 'ct-point-circle'
+                        });
+                        data.element.replace(circle);
+                    }
+                    else if (data.type === 'label') {
+                        // adjust label position for rotation
+                        var dX = data.width / 2 + (30 - data.width);
+                        data.element.attr({ x: data.element.attr('x') - dX });
+                    }
+                }
+            },
+        };
+        // Line area chart 2 configuration Ends
+        // Line chart configuration Starts
+        this.lineChart = {
+            type: 'Line', data: data['LineDashboard'],
+            options: {
+                axisX: {
+                    showGrid: false
+                },
+                axisY: {
+                    showGrid: false,
+                    showLabel: false,
+                    low: 0,
+                    high: 100,
+                    offset: 0,
+                },
+                fullWidth: true,
+                offset: 0,
+            },
+            events: {
+                draw: function (data) {
+                    var circleRadius = 4;
+                    if (data.type === 'point') {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                            cx: data.x,
+                            cy: data.y,
+                            r: circleRadius,
+                            class: 'ct-point-circle'
+                        });
+                        data.element.replace(circle);
+                    }
+                    else if (data.type === 'label') {
+                        // adjust label position for rotation
+                        var dX = data.width / 2 + (30 - data.width);
+                        data.element.attr({ x: data.element.attr('x') - dX });
+                    }
+                }
+            },
+        };
+        // Line chart configuration Ends
+        // Donut chart configuration Starts
+        this.DonutChart = {
+            type: 'Pie',
+            data: data['donutDashboard'],
+            options: {
+                donut: true,
+                startAngle: 0,
+                labelInterpolationFnc: function (value) {
+                    var total = data['donutDashboard'].series.reduce(function (prev, series) {
+                        return prev + series.value;
+                    }, 0);
+                    return total + '%';
+                }
+            },
+            events: {
+                draw: function (data) {
+                    if (data.type === 'label') {
+                        if (data.index === 0) {
+                            data.element.attr({
+                                dx: data.element.root().width() / 2,
+                                dy: data.element.root().height() / 2
+                            });
+                        }
+                        else {
+                            data.element.remove();
+                        }
+                    }
+                }
+            }
+        };
+        // Donut chart configuration Ends
+        //  Bar chart configuration Starts
+        this.BarChart = {
+            type: 'Bar', data: data['DashboardBar'], options: {
+                axisX: {
+                    showGrid: false,
+                },
+                axisY: {
+                    showGrid: false,
+                    showLabel: false,
+                    offset: 0
+                },
+                low: 0,
+                high: 60,
+            },
+            responsiveOptions: [
+                ['screen and (max-width: 640px)', {
+                        seriesBarDistance: 5,
+                        axisX: {
+                            labelInterpolationFnc: function (value) {
+                                return value[0];
+                            }
+                        }
+                    }]
+            ],
+            events: {
+                created: function (data) {
+                    var defs = data.svg.elem('defs');
+                    defs.elem('linearGradient', {
+                        id: 'gradient4',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(238, 9, 121,1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(255, 106, 0, 1)'
+                    });
+                    defs.elem('linearGradient', {
+                        id: 'gradient5',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(0, 75, 145,1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(120, 204, 55, 1)'
+                    });
+                    defs.elem('linearGradient', {
+                        id: 'gradient6',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(132, 60, 247,1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(56, 184, 242, 1)'
+                    });
+                    defs.elem('linearGradient', {
+                        id: 'gradient7',
+                        x1: 0,
+                        y1: 1,
+                        x2: 0,
+                        y2: 0
+                    }).elem('stop', {
+                        offset: 0,
+                        'stop-color': 'rgba(155, 60, 183,1)'
+                    }).parent().elem('stop', {
+                        offset: 1,
+                        'stop-color': 'rgba(255, 57, 111, 1)'
+                    });
+                },
+                draw: function (data) {
+                    var barHorizontalCenter, barVerticalCenter, label, value;
+                    if (data.type === 'bar') {
+                        data.element.attr({
+                            y1: 195,
+                            x1: data.x1 + 0.001
+                        });
+                    }
+                }
+            },
+        };
+    }
+    ResourcesDashboardComponent.prototype.ngOnInit = function () {
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 100,
+            processing: true,
+            // data: this.resources$,
+            // 'bDestroy': true,
+            'paging': true,
+            'ordering': true,
+            'info': true,
+            'columnDefs': [{
+                    'targets': [3],
+                    'visible': true,
+                    'searchable': true
+                },
+                {
+                    'targets': [4],
+                    'visible': true
+                }
+                // ,{ 'bSortable': true, 'bSort': false, 'aTargets': [ '_all' ] }
+            ],
+            // responsive: true,
+            searching: true,
+            select: true,
+            order: [0, 'desc'],
+            dom: "<\n             <\"row\"\n               <\"col-lg-3 col-md-12\"l>\n               <\"col-lg-6 col-md-12 button-wrapper btn-sm danger\"B>\n               <\"col-lg-3 col-md-12\"f>><hr>\n             <\"row\" <\"col\"t>>\n             <\"row\"\n               <\"col\"i>\n               <\"col btn-sm\"p>>\n             >",
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print',
+                {
+                    text: 'GroupBy',
+                    key: '1',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+                {
+                    text: 'Some button',
+                    key: '1',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+                {
+                    text: 'Some button',
+                    key: '1',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+            ],
+            'bLengthChange': true,
+            'Filter': true,
+            // retrieve: true,
+            language: {
+                search: '_INPUT_',
+                searchPlaceholder: 'Search records',
+            },
+            'Info': true,
+        };
+        this.resourcesService.getResourcesAndRates();
+        this.getResources();
+        this.rerender();
+        this.example = $(this.table.nativeElement);
+        this.example.DataTable(this.dtOptions);
+        setTimeout(function () {
+        }, 250);
+    };
+    ResourcesDashboardComponent.prototype.getResources = function () {
+        var _this = this;
+        this.resourcesService.resourcesandrates.subscribe(function (resources) {
+            setTimeout(function () {
+                _this.resources$ = resources;
+                // this.dtTrigger.next();
+                console.log(_this.resources$);
+                _this.resourceCount = formatNumber(_this.resources$.length);
+            }, 250);
+        });
+    };
+    // tslint:disable-next-line:use-life-cycle-interface
+    ResourcesDashboardComponent.prototype.ngOnDestroy = function () {
+        this.dtTrigger.unsubscribe();
+    };
+    // tslint:disable-next-line:use-life-cycle-interface
+    ResourcesDashboardComponent.prototype.ngAfterViewInit = function () { this.dtTrigger.next(); };
+    ResourcesDashboardComponent.prototype.rerender = function () {
+        var _this = this;
+        this.example.dtInstance.then(function (dtInstance) {
+            // Destroy the table first
+            dtInstance.destroy();
+            // Call the dtTrigger to rerender again
+            _this.dtTrigger.next();
+        });
+    };
+    ResourcesDashboardComponent.prototype.openContent = function () {
+        var modalRef = this.modalService.open(_resource_new_resource_component__WEBPACK_IMPORTED_MODULE_7__["NewResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
+        modalRef.componentInstance.name = 'World';
+    };
+    // Open default modal
+    ResourcesDashboardComponent.prototype.open = function (content) {
+        var _this = this;
+        this.modalService.open(content).result.then(function (result) {
+            _this.closeResult = "Closed with: " + result;
+        }, function (reason) {
+            _this.closeResult = "Dismissed " + _this.getDismissReason(reason);
+        });
+    };
+    // This function is used in open
+    ResourcesDashboardComponent.prototype.getDismissReason = function (reason) {
+        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["ModalDismissReasons"].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["ModalDismissReasons"].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return "with: " + reason;
+        }
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"]),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_4__["DataTableDirective"])
+    ], ResourcesDashboardComponent.prototype, "dtElement", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('exampleTableTools'),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], ResourcesDashboardComponent.prototype, "table", void 0);
+    ResourcesDashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-resources-dashboard',
+            template: __webpack_require__(/*! ./resources-dashboard.component.html */ "./src/app/resources/resources-dashboard/resources-dashboard.component.html"),
+            styles: [__webpack_require__(/*! ./resources-dashboard.component.scss */ "./src/app/resources/resources-dashboard/resources-dashboard.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_resources_service__WEBPACK_IMPORTED_MODULE_5__["ResourceService"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["NgbModal"]])
+    ], ResourcesDashboardComponent);
+    return ResourcesDashboardComponent;
+}());
+
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
 
 
 /***/ }),
@@ -2305,6 +3213,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resources_availability_resources_availability_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./resources-availability/resources-availability.component */ "./src/app/resources/resources-availability/resources-availability.component.ts");
 /* harmony import */ var _resources_utilization_resources_utilization_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./resources-utilization/resources-utilization.component */ "./src/app/resources/resources-utilization/resources-utilization.component.ts");
 /* harmony import */ var _resources_demand_resources_demand_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./resources-demand/resources-demand.component */ "./src/app/resources/resources-demand/resources-demand.component.ts");
+/* harmony import */ var _resources_dashboard_resources_dashboard_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./resources-dashboard/resources-dashboard.component */ "./src/app/resources/resources-dashboard/resources-dashboard.component.ts");
+
 
 
 
@@ -2316,6 +3226,13 @@ var routes = [
     {
         path: '',
         children: [
+            {
+                path: 'dashbaord',
+                component: _resources_dashboard_resources_dashboard_component__WEBPACK_IMPORTED_MODULE_7__["ResourcesDashboardComponent"],
+                data: {
+                    title: 'Dashboard'
+                }
+            },
             {
                 path: 'resources',
                 component: _resources_resources_component__WEBPACK_IMPORTED_MODULE_3__["ResourcesComponent"],
@@ -3254,16 +4171,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resources_availability_table_resources_availability_table_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./resources-availability-table/resources-availability-table.component */ "./src/app/resources/resources-availability-table/resources-availability-table.component.ts");
 /* harmony import */ var _resources_demand_table_resources_demand_table_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./resources-demand-table/resources-demand-table.component */ "./src/app/resources/resources-demand-table/resources-demand-table.component.ts");
 /* harmony import */ var _resources_utilization_table_resources_utilization_table_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./resources-utilization-table/resources-utilization-table.component */ "./src/app/resources/resources-utilization-table/resources-utilization-table.component.ts");
-/* harmony import */ var _resources_absences_resources_absences_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./resources-absences/resources-absences.component */ "./src/app/resources/resources-absences/resources-absences.component.ts");
-/* harmony import */ var _resources_absences_table_resources_absences_table_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./resources-absences-table/resources-absences-table.component */ "./src/app/resources/resources-absences-table/resources-absences-table.component.ts");
-/* harmony import */ var _resource_resource_absences_table_resource_absences_table_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./resource/resource-absences-table/resource-absences-table.component */ "./src/app/resources/resource/resource-absences-table/resource-absences-table.component.ts");
-/* harmony import */ var _resource_resource_absences_resource_absences_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./resource/resource-absences/resource-absences.component */ "./src/app/resources/resource/resource-absences/resource-absences.component.ts");
-/* harmony import */ var _resource_resource_demand_resource_demand_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./resource/resource-demand/resource-demand.component */ "./src/app/resources/resource/resource-demand/resource-demand.component.ts");
-/* harmony import */ var _resource_resource_demand_table_resource_demand_table_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./resource/resource-demand-table/resource-demand-table.component */ "./src/app/resources/resource/resource-demand-table/resource-demand-table.component.ts");
-/* harmony import */ var _resource_resource_availability_table_resource_availability_table_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./resource/resource-availability-table/resource-availability-table.component */ "./src/app/resources/resource/resource-availability-table/resource-availability-table.component.ts");
-/* harmony import */ var _resource_resource_availability_resource_availability_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./resource/resource-availability/resource-availability.component */ "./src/app/resources/resource/resource-availability/resource-availability.component.ts");
-/* harmony import */ var _resource_resource_utilization_resource_utilization_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./resource/resource-utilization/resource-utilization.component */ "./src/app/resources/resource/resource-utilization/resource-utilization.component.ts");
-/* harmony import */ var _resource_resource_utilization_table_resource_utilization_table_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./resource/resource-utilization-table/resource-utilization-table.component */ "./src/app/resources/resource/resource-utilization-table/resource-utilization-table.component.ts");
+/* harmony import */ var _resources_absences_table_resources_absences_table_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./resources-absences-table/resources-absences-table.component */ "./src/app/resources/resources-absences-table/resources-absences-table.component.ts");
+/* harmony import */ var _resource_resource_absences_table_resource_absences_table_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./resource/resource-absences-table/resource-absences-table.component */ "./src/app/resources/resource/resource-absences-table/resource-absences-table.component.ts");
+/* harmony import */ var _resource_resource_absences_resource_absences_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./resource/resource-absences/resource-absences.component */ "./src/app/resources/resource/resource-absences/resource-absences.component.ts");
+/* harmony import */ var _resource_resource_demand_resource_demand_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./resource/resource-demand/resource-demand.component */ "./src/app/resources/resource/resource-demand/resource-demand.component.ts");
+/* harmony import */ var _resource_resource_availability_table_resource_availability_table_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./resource/resource-availability-table/resource-availability-table.component */ "./src/app/resources/resource/resource-availability-table/resource-availability-table.component.ts");
+/* harmony import */ var _resource_resource_availability_resource_availability_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./resource/resource-availability/resource-availability.component */ "./src/app/resources/resource/resource-availability/resource-availability.component.ts");
+/* harmony import */ var _resource_resource_utilization_resource_utilization_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./resource/resource-utilization/resource-utilization.component */ "./src/app/resources/resource/resource-utilization/resource-utilization.component.ts");
+/* harmony import */ var _resource_resource_utilization_table_resource_utilization_table_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./resource/resource-utilization-table/resource-utilization-table.component */ "./src/app/resources/resource/resource-utilization-table/resource-utilization-table.component.ts");
+/* harmony import */ var _resources_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./resources.service */ "./src/app/resources/resources.service.ts");
+/* harmony import */ var _resource_new_resource_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./resource/new-resource.component */ "./src/app/resources/resource/new-resource.component.ts");
+/* harmony import */ var _resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./resource/edit-resource.component */ "./src/app/resources/resource/edit-resource.component.ts");
+/* harmony import */ var _resource_delete_resource_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./resource/delete-resource.component */ "./src/app/resources/resource/delete-resource.component.ts");
+/* harmony import */ var _resources_dashboard_resources_dashboard_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./resources-dashboard/resources-dashboard.component */ "./src/app/resources/resources-dashboard/resources-dashboard.component.ts");
+
+
+
 
 
 
@@ -3295,7 +4218,11 @@ var ResourcesModule = /** @class */ (function () {
     ResourcesModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [_resources_resources_component__WEBPACK_IMPORTED_MODULE_3__["ResourcesComponent"],
-                _resources_availability_resources_availability_component__WEBPACK_IMPORTED_MODULE_9__["ResourcesAvailabilityComponent"], _resources_utilization_resources_utilization_component__WEBPACK_IMPORTED_MODULE_10__["ResourcesUtilizationComponent"], _resources_demand_resources_demand_component__WEBPACK_IMPORTED_MODULE_11__["ResourcesDemandComponent"], _resources_availability_table_resources_availability_table_component__WEBPACK_IMPORTED_MODULE_12__["ResourcesAvailabilityTableComponent"], _resources_demand_table_resources_demand_table_component__WEBPACK_IMPORTED_MODULE_13__["ResourcesDemandTableComponent"], _resources_utilization_table_resources_utilization_table_component__WEBPACK_IMPORTED_MODULE_14__["ResourcesUtilizationTableComponent"], _resources_absences_resources_absences_component__WEBPACK_IMPORTED_MODULE_15__["ResourcesAbsencesComponent"], _resources_absences_table_resources_absences_table_component__WEBPACK_IMPORTED_MODULE_16__["ResourcesAbsencesTableComponent"], _resource_resource_absences_table_resource_absences_table_component__WEBPACK_IMPORTED_MODULE_17__["ResourceAbsencesTableComponent"], _resource_resource_absences_resource_absences_component__WEBPACK_IMPORTED_MODULE_18__["ResourceAbsencesComponent"], _resource_resource_demand_resource_demand_component__WEBPACK_IMPORTED_MODULE_19__["ResourceDemandComponent"], _resource_resource_demand_table_resource_demand_table_component__WEBPACK_IMPORTED_MODULE_20__["ResourceDemandTableComponent"], _resource_resource_availability_table_resource_availability_table_component__WEBPACK_IMPORTED_MODULE_21__["ResourceAvailabilityTableComponent"], _resource_resource_availability_resource_availability_component__WEBPACK_IMPORTED_MODULE_22__["ResourceAvailabilityComponent"], _resource_resource_utilization_resource_utilization_component__WEBPACK_IMPORTED_MODULE_23__["ResourceUtilizationComponent"], _resource_resource_utilization_table_resource_utilization_table_component__WEBPACK_IMPORTED_MODULE_24__["ResourceUtilizationTableComponent"]],
+                _resources_availability_resources_availability_component__WEBPACK_IMPORTED_MODULE_9__["ResourcesAvailabilityComponent"], _resources_utilization_resources_utilization_component__WEBPACK_IMPORTED_MODULE_10__["ResourcesUtilizationComponent"], _resources_demand_resources_demand_component__WEBPACK_IMPORTED_MODULE_11__["ResourcesDemandComponent"],
+                _resources_availability_table_resources_availability_table_component__WEBPACK_IMPORTED_MODULE_12__["ResourcesAvailabilityTableComponent"], _resources_demand_table_resources_demand_table_component__WEBPACK_IMPORTED_MODULE_13__["ResourcesDemandTableComponent"], _resources_utilization_table_resources_utilization_table_component__WEBPACK_IMPORTED_MODULE_14__["ResourcesUtilizationTableComponent"],
+                _resources_absences_table_resources_absences_table_component__WEBPACK_IMPORTED_MODULE_15__["ResourcesAbsencesTableComponent"], _resource_resource_absences_table_resource_absences_table_component__WEBPACK_IMPORTED_MODULE_16__["ResourceAbsencesTableComponent"], _resource_resource_absences_resource_absences_component__WEBPACK_IMPORTED_MODULE_17__["ResourceAbsencesComponent"], _resource_resource_demand_resource_demand_component__WEBPACK_IMPORTED_MODULE_18__["ResourceDemandComponent"],
+                _resource_resource_availability_table_resource_availability_table_component__WEBPACK_IMPORTED_MODULE_19__["ResourceAvailabilityTableComponent"], _resource_resource_availability_resource_availability_component__WEBPACK_IMPORTED_MODULE_20__["ResourceAvailabilityComponent"], _resource_resource_utilization_resource_utilization_component__WEBPACK_IMPORTED_MODULE_21__["ResourceUtilizationComponent"], _resource_resource_utilization_table_resource_utilization_table_component__WEBPACK_IMPORTED_MODULE_22__["ResourceUtilizationTableComponent"],
+                _resource_new_resource_component__WEBPACK_IMPORTED_MODULE_24__["NewResourceComponent"], _resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_25__["EditResourceComponent"], _resource_delete_resource_component__WEBPACK_IMPORTED_MODULE_26__["DeleteResourceComponent"], _resources_dashboard_resources_dashboard_component__WEBPACK_IMPORTED_MODULE_27__["ResourcesDashboardComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _resources_routing_module__WEBPACK_IMPORTED_MODULE_4__["ResourcesRoutingModule"],
@@ -3304,10 +4231,260 @@ var ResourcesModule = /** @class */ (function () {
                 ng_chartist__WEBPACK_IMPORTED_MODULE_6__["ChartistModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModule"],
                 app_shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_8__["MatchHeightModule"]
-            ]
+            ],
+            entryComponents: [_resource_new_resource_component__WEBPACK_IMPORTED_MODULE_24__["NewResourceComponent"], _resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_25__["EditResourceComponent"]],
+            providers: [_resources_service__WEBPACK_IMPORTED_MODULE_23__["ResourceService"]]
         })
     ], ResourcesModule);
     return ResourcesModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/resources/resources.service.ts":
+/*!************************************************!*\
+  !*** ./src/app/resources/resources.service.ts ***!
+  \************************************************/
+/*! exports provided: ResourceService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceService", function() { return ResourceService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! app/shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
+
+
+
+
+
+
+var ResourceService = /** @class */ (function () {
+    function ResourceService(http, auth) {
+        this.http = http;
+        this.auth = auth;
+        this.baseUrl = 'http://localhost:53956/api';
+        this.resourceStore = { resources: [] };
+        this._resources = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+        this.resourceListStore = { resourcesandrates: [] };
+        this._resourcesandrates = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+    }
+    Object.defineProperty(ResourceService.prototype, "resources", {
+        get: function () {
+            return this._resources.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ResourceService.prototype, "resourcesandrates", {
+        get: function () {
+            return this._resourcesandrates.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ResourceService.prototype, "resourcesData", {
+        get: function () { return this.resourceStore.resources; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ResourceService.prototype, "returnedresources", {
+        get: function () {
+            return this.resourceStore.resources;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ResourceService.prototype.error = function (error) {
+        return error;
+    };
+    ResourceService.prototype.resourceById = function (id) {
+        return this.resourceStore.resources.find(function (x) { return x.resourceId === id; });
+    };
+    ResourceService.prototype.resourceandrateById = function (id) {
+        return this.resourceListStore.resourcesandrates.find(function (x) { return x.resourceId === id; });
+    };
+    ResourceService.prototype.getResources = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var companyId;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                companyId = this.auth.companyId;
+                this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHeader.body).subscribe(function (response) {
+                    _this.resourceStore.resources = response.json();
+                    _this._resources.next(Object.assign({}, _this.resourceStore).resources);
+                }, function (error) {
+                    console.log('Failed to fetch resources');
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    ResourceService.prototype.getResourcepool = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var companyId, options;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                companyId = this.auth.companyId;
+                options = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["RequestOptions"]();
+                options.headers = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["Headers"]();
+                options.headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.auth.TOKEN_KEY));
+                options.headers.append('Content-Type', 'application/json; charset=utf-8');
+                options.headers.append('responseType', 'ResponseContentType.Blob');
+                this.http.get(this.baseUrl + '/resources/' + companyId, options).subscribe(function (response) {
+                    _this.resourceStore.resources = response.json();
+                    _this._resources.next(Object.assign({}, _this.resourceStore).resources);
+                }, function (error) {
+                    console.log('Failed to fetch resources');
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    ResourceService.prototype.downloadFile = function () {
+        var options = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["RequestOptions"]({ responseType: _angular_http__WEBPACK_IMPORTED_MODULE_3__["ResponseContentType"].Blob });
+        return this.http.get(this.baseUrl + '/uploadactuals/export', options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.blob(); }));
+        // .catch(this.handleError);
+    };
+    ResourceService.prototype.createImageFromBlob = function (image) {
+        var _this = this;
+        var reader = new FileReader();
+        reader.addEventListener('load', function () {
+            _this.imageToShow = reader.result;
+        }, false);
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    };
+    ResourceService.prototype.getResourcesAndRates = function () {
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
+            var headers, companyId;
+            var _this = this;
+            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
+                headers = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["Headers"]();
+                headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.auth.TOKEN_KEY));
+                headers.append('Content-Type', 'application/json');
+                companyId = this.auth.companyId;
+                console.log(this.auth.tokenHeader);
+                console.log(companyId);
+                this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHeader).subscribe(function (response) {
+                    console.log(response);
+                    _this.resourceListStore.resourcesandrates = response.json();
+                    _this._resourcesandrates.next(Object.assign({}, _this.resourceListStore).resourcesandrates);
+                }, function (error) {
+                    console.log('Failed to fetch resources');
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    ResourceService.prototype.postResource = function (resource) {
+        var _this = this;
+        // tslint:disable-next-line:max-line-length
+        return this.http.post(this.baseUrl + '/resources', resource, this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) {
+            res.json(),
+                _this.resourceStore.resources.push(res.json());
+            _this._resources.next(Object.assign({}, _this.resourceStore).resources);
+            console.log(resource),
+                console.log(res.json());
+        }));
+    };
+    ResourceService.prototype.getResource = function (id) {
+        // tslint:disable-next-line:prefer-const
+        var companyId = this.auth.companyId;
+        if (id === '') {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(this.initializeBusiness());
+        }
+        return this.http.get(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }));
+    };
+    ResourceService.prototype.saveResource = function (ResourceData) {
+        console.log(ResourceData);
+        // tslint:disable-next-line:max-line-length
+        return this.http.post(this.baseUrl + '/resources/resource', ResourceData, this.auth.tokenHeaderWithType).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }));
+    };
+    // saveResource(ResourceData) {
+    //   console.log(ResourceData);
+    // // tslint:disable-next-line:max-line-length
+    // return this.http.post(this.baseUrl + '/resources/resource',  ResourceData, this.auth.tokenHeader).map(res => res.json());
+    // }
+    ResourceService.prototype.deleteItem = function (id) {
+        var _this = this;
+        var companyId = this.auth.companyId;
+        return this.http.delete(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHeader).toPromise()
+            .then(function () {
+            _this.getResources(),
+                _this._resources.next(_this.resourceStore.resources),
+                console.log(id);
+        }, function (error) { return console.log('Failed to fetch resources'); });
+        // .do(data => console.log('deleteProduct: ' + JSON.stringify(data))).catch(this.handleError);
+    };
+    ResourceService.prototype.GetGiveAccess = function () {
+        return this.http.get(this.baseUrl + '/dropdown/giveaccess', this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(this.handleError));
+    };
+    ResourceService.prototype.GetEmployeeTypes = function () {
+        return this.http.get(this.baseUrl + '/dropdown/employeeTypes', this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(this.handleError));
+    };
+    ResourceService.prototype.GetResourceTypes = function () {
+        return this.http.get(this.baseUrl + '/dropdown/resourcetypes', this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(this.handleError));
+    };
+    ResourceService.prototype.handleError = function (error) {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Something went wrong!');
+    };
+    ResourceService.prototype.initializeBusiness = function () {
+        // Return an initialized object
+        return {
+            resourceId: '',
+            resourceNumber: '',
+            resourceEmailAddress: '',
+            employeeRef: '',
+            resourceStartDate: '',
+            resourceEndDate: '',
+            platformId: '',
+            agency: '',
+            vendor: '',
+            locationName: '',
+            location: '',
+            billable: false,
+            isDisabled: false,
+            employeeJobTitle: '',
+            resourceRateCardId: '',
+            companyRateCard: '',
+            contractedHours: 0,
+            resourceContractEffortInPercentage: 100,
+            resourceType: '',
+            employeeType: '',
+            appUserRole: '',
+            company: '',
+            resourceManagerId: '',
+            identityId: '',
+            identity: '',
+            firstName: '',
+            lastName: '',
+            employeeGradeBand: '',
+            managerName: '',
+            resourceRate: '',
+            displayName: '',
+            addedBy: '',
+            companyId: this.auth.companyId,
+        };
+    };
+    ResourceService.prototype.onSelect = function (event) {
+        console.log(event);
+    };
+    ResourceService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_3__["Http"],
+            app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
+    ], ResourceService);
+    return ResourceService;
 }());
 
 
@@ -3321,7 +4498,7 @@ var ResourcesModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <h1 class=\"card-title m-1 pl-2 pull-left text-muted text-primary\">Resource Pool</h1>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-primary\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">$15,678</h3>\r\n                <span>Total Cost</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-bulb font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-warning\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">$2156</h3>\r\n                <span>Total Tax</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-pie-chart font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart2\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-success\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">$45,668</h3>\r\n                <span>Total Sales</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-graph font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart2\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-md-6 col-12\">\r\n      <div class=\"card bg-danger\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body pt-2 pb-0\">\r\n            <div class=\"media\">\r\n              <div class=\"media-body white text-left\">\r\n                <h3 class=\"font-large-1 mb-0\">$32,454</h3>\r\n                <span>Total Earning</span>\r\n              </div>\r\n              <div class=\"media-right white text-right\">\r\n                <i class=\"icon-wallet font-large-1\"></i>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          <div id=\"Widget-line-chart2\" class=\"height-75 WidgetlineChart WidgetlineChartShadow mb-3\">\r\n            <x-chartist class=\"\" [data]=\"WidgetlineChart.data\" [type]=\"WidgetlineChart.type\" [options]=\"WidgetlineChart.options\"\r\n              [responsiveOptions]=\"WidgetlineChart.responsiveOptions\" [events]=\"WidgetlineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n<div class=\"row\" matchHeight =\"card\">\r\n    <div class=\"col-xl-8 col-lg-12 col-12\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header\">\r\n          <h4 class=\"card-title mb-0\">Visit & Sales Statistics</h4>\r\n        </div>\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body\">\r\n            <div class=\"chart-info mb-2\">\r\n              <span class=\"text-uppercase mr-3\"><i class=\"fa fa-circle primary font-small-2 mr-1\"></i> Sales</span>\r\n              <span class=\"text-uppercase\"><i class=\"fa fa-circle deep-purple font-small-2 mr-1\"></i> Visits</span>\r\n            </div>\r\n            <div id=\"line-area2\" class=\"height-400 lineArea2\">\r\n              <x-chartist class=\"\" [data]=\"lineArea2.data\" [type]=\"lineArea2.type\" [options]=\"lineArea2.options\"\r\n               [responsiveOptions]=\"lineArea2.responsiveOptions\" [events]=\"lineArea2.events\">\r\n\r\n              </x-chartist>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-4 col-lg-12 col-12\">\r\n      <div class=\"card gradient-blackberry\">\r\n        <div class=\"card-content\">\r\n          <div class=\"card-body\">\r\n            <h4 class=\"card-title white\">Statistics</h4>\r\n            <div class=\"p-2 text-center\">\r\n              <a class=\"white font-medium-1\">Month</a>\r\n              <a class=\"btn btn-raised btn-round bg-white mx-3 px-3\">Week</a>\r\n              <a class=\"white font-medium-1\">Day</a>\r\n            </div>\r\n            <div class=\"my-3 text-center white\">\r\n              <a class=\"font-large-2 d-block mb-1\">$ 78.89 <span class=\"ft-arrow-up font-large-2\"></span></a>\r\n              <span class=\"font-medium-1\">Week2   +15.44</span>\r\n            </div>\r\n          </div>\r\n          <div id=\"lineChart\" class=\"height-250 lineChart lineChartShadow\">\r\n            <x-chartist class=\"\" [data]=\"lineChart.data\" [type]=\"lineChart.type\" [options]=\"lineChart.options\"\r\n             [responsiveOptions]=\"lineChart.responsiveOptions\" [events]=\"lineChart.events\">\r\n            </x-chartist>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n<!--Shopping cart starts-->\r\n<section id=\"shopping-cart\">\r\n    <div class=\"row text-left\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n            <h4 class=\"card-title\">Shopping Cart</h4>\r\n          </div>\r\n          <div class=\"card-content\">\r\n            <div class=\"card-body\">\r\n              <table class=\"table table-responsive-md text-center\">\r\n                <thead>\r\n                  <tr>\r\n                    <th>Image</th>\r\n                    <th>Product</th>\r\n                    <th>Weight</th>\r\n                    <th>Price</th>\r\n                    <th>Quantity</th>\r\n                    <th>Amount</th>\r\n                    <th>Delete</th>\r\n                  </tr>\r\n                </thead>\r\n                <tbody>\r\n                  <tr>\r\n                    <td><img class=\"media-object round-media\" src=\"assets/img/elements/01.png\" alt=\"Generic placeholder image\"\r\n                        style=\"height: 75px;\" /></td>\r\n                    <td>Product 1</td>\r\n                    <td>38.9 Ounce</td>\r\n                    <td>$9.97</td>\r\n                    <td>\r\n                      2\r\n                      <div class=\"btn-group ml-1\">\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">-</a>\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">+</a>\r\n                      </div>\r\n                    </td>\r\n                    <td>$19.94</td>\r\n                    <td>\r\n                      <a class=\"danger\" data-original-title=\"\" title=\"\">\r\n                        <i class=\"ft-trash font-medium-3\"></i>\r\n                      </a>\r\n                    </td>\r\n                  </tr>\r\n                  <tr>\r\n                    <td><img class=\"media-object round-media\" src=\"assets/img/elements/07.png\" alt=\"Generic placeholder image\"\r\n                        style=\"height: 75px;\" /></td>\r\n                    <td>Product 2</td>\r\n                    <td>15.9 Ounce</td>\r\n                    <td>$6.00</td>\r\n                    <td>\r\n                      2\r\n                      <div class=\"btn-group ml-1\">\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">-</a>\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">+</a>\r\n                      </div>\r\n                    </td>\r\n                    <td>$12.00</td>\r\n                    <td>\r\n                      <a class=\"danger\" data-original-title=\"\" title=\"\">\r\n                        <i class=\"ft-trash font-medium-3\"></i>\r\n                      </a>\r\n                    </td>\r\n                  </tr>\r\n                  <tr>\r\n                    <td><img class=\"media-object round-media\" src=\"assets/img/elements/11.png\" alt=\"Generic placeholder image\"\r\n                        style=\"height: 75px;\" /></td>\r\n                    <td>Product 3</td>\r\n                    <td>20.9 Ounce</td>\r\n                    <td>$15.78</td>\r\n                    <td>\r\n                      1\r\n                      <div class=\"btn-group ml-1\">\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">-</a>\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">+</a>\r\n                      </div>\r\n                    </td>\r\n                    <td>$15.78</td>\r\n                    <td>\r\n                      <a class=\"danger\" data-original-title=\"\" title=\"\">\r\n                        <i class=\"ft-trash font-medium-3\"></i>\r\n                      </a>\r\n                    </td>\r\n                  </tr>\r\n                  <tr>\r\n                    <td><img class=\"media-object round-media\" src=\"assets/img/elements/14.png\" alt=\"Generic placeholder image\"\r\n                        style=\"height: 75px;\" /></td>\r\n                    <td>Product 4</td>\r\n                    <td>90 Ounce</td>\r\n                    <td>$24.51</td>\r\n                    <td>\r\n                      3\r\n                      <div class=\"btn-group ml-1\">\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">-</a>\r\n                        <a class=\"bg-info px-1 py-1 white font-medium-5\" href=\"javascript:void(0)\">+</a>\r\n                      </div>\r\n                    </td>\r\n                    <td>$73.53</td>\r\n                    <td>\r\n                      <a class=\"danger\" data-original-title=\"\" title=\"\">\r\n                        <i class=\"ft-trash font-medium-3\"></i>\r\n                      </a>\r\n                    </td>\r\n                  </tr>\r\n                  <tr>\r\n                    <td></td>\r\n                    <td></td>\r\n                    <td></td>\r\n                    <td></td>\r\n\r\n                    <td><b>Total</b></td>\r\n                    <td><b>$101.31</b></td>\r\n                    <td></td>\r\n                  </tr>\r\n                  <tr>\r\n                    <td></td>\r\n                    <td></td>\r\n                    <td></td>\r\n                    <td></td>\r\n                    <td></td>\r\n                    <td></td>\r\n                    <td><button class=\"btn btn-success btn-raised\">Continue</button> </td>\r\n                  </tr>\r\n                </tbody>\r\n              </table>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </section>\r\n  <!--Shopping cart ends-->\r\n"
+module.exports = "<div class=\"row\">\r\n    <h1 class=\"card-title m-1 pl-2 pull-left text-muted text-primary\">Resource Demand</h1>\r\n</div>\r\n<!-- Minimal statistics with bg color section start -->\r\n<section id=\"minimal-statistics-bg\">\r\n  <div class=\"row text-left\" matchHeight=\"card\">\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-primary\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-pencil white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>278</h3>\r\n                <span>New Posts</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-danger\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-speech white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>156</h3>\r\n                <span>New Comments</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-success\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-graph white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>64.89 %</h3>\r\n                <span>Bounce Rate</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-warning\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-pointer white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>423</h3>\r\n                <span>Total Visits</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n<!-- Minimal statistics with bg color section end -->\r\n\r\n<section id=\"extended\">\r\n    <div class=\"row text-left\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n              <h2 class=\"card-title text-capitalize text-monospace\">Resource Pool</h2>\r\n          </div>\r\n          <div class=\"card-content p-2 m-2\">\r\n            <div class=\"card-body\">\r\n              <div class=\"row\">\r\n                  <input type=\"text\" [(ngModel)]=\"search\" (ngModelChange)=\"filter($event)\" class=\"form-control round\" placeholder=\"search this page\">\r\n              </div>\r\n                <div classs =\"m-2 p-2\">\r\n                    <div classs =\"row\">\r\n                        <div class=\"col-12\">\r\n                            <table [mfData]=\"resources$ | async\" #mf=\"mfDataTable\" [mfRowsOnPage]=\"5\" class=\"table table-hover table-responsive-md text-center dataTable \">\r\n                  <thead>\r\n                    <tr>\r\n                        <th style=\"width: 20%\">\r\n                            <mfDefaultSorter by=\"displayName\">Name</mfDefaultSorter>\r\n                        </th>\r\n                        <th style=\"width: 50%\">\r\n                            <mfDefaultSorter by=\"firstName\">Email</mfDefaultSorter>\r\n                        </th>\r\n                        <th style=\"width: 10%\">\r\n                            <mfDefaultSorter by=\"firstName\">Age</mfDefaultSorter>\r\n                        </th>\r\n                        <th style=\"width: 20%\">\r\n                            <mfDefaultSorter by=\"firstName\">City</mfDefaultSorter>\r\n                        </th>\r\n                      <th>Name</th>\r\n                      <th>First Name</th>\r\n                      <th>Actions</th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                    <tr *ngFor=\"let res of mf.data\">\r\n                      <td>\r\n                          <!-- <img class=\"media-object round-media\" src=\"{{res.imageUrl}}\" alt=\"Generic placeholder image\"\r\n                            style=\"height: 75px;\" /> -->\r\n                            <span  class=\"avatar avatar-md mr-2 ml-0\">\r\n                              <span *ngIf=\"!res.imageUrl\" style=\"height: 50px;\" class=\"media-object rounded-circle roundprofile + ' ' + bg-info \">\r\n                              <p class=\"d-flex innerTEXT\">{{ res.firstName | fl }}</p></span>\r\n                              <img *ngIf=\"res.imageUrl\" style=\"height: 50px;\" class=\"media-object rounded-circle\" [src]=\"res.imageUrl\" alt=\"Generic placeholder image\">\r\n                              {{res.displayName}}\r\n                            </span>\r\n                        </td>\r\n                        <td>{{res.firstName}}</td>\r\n                      <!-- <td>\r\n                        <div class=\"custom-control custom-checkbox m-0\">\r\n                          <input type=\"checkbox\" class=\"custom-control-input\" id=\"item1\">\r\n                          <label class=\"custom-control-label col-form-label\" for=\"item1\"></label>\r\n                        </div>\r\n                      </td> -->\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>\r\n                        <a class=\"info p-0\" data-original-title=\"\" title=\"\">\r\n                          <i class=\"ft-user font-medium-3 mr-2\"></i>\r\n                        </a>\r\n                        <a class=\"success p-0\" data-original-title=\"\" title=\"\">\r\n                          <i class=\"ft-edit-2 font-medium-3 mr-2\"></i>\r\n                        </a>\r\n                        <a class=\"danger p-0\" data-original-title=\"\" title=\"\">\r\n                          <i class=\"ft-x font-medium-3 mr-2\"></i>\r\n                        </a>\r\n                      </td>\r\n                    </tr>\r\n                  </tbody>\r\n                  <tfoot>\r\n                      <tr>\r\n                          <td colspan=\"4\">\r\n                              <mfBootstrapPaginator [rowsOnPageSet]=\"[5,10,25]\"></mfBootstrapPaginator>\r\n                          </td>\r\n                      </tr>\r\n                      </tfoot>\r\n                </table>\r\n                        </div>\r\n                    </div>\r\n                    </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -3347,16 +4524,32 @@ module.exports = ":host /deep/ .ct-grid {\n  stroke-dasharray: 0px;\n  stroke: r
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourcesComponent", function() { return ResourcesComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
-/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chartist__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(chartist__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _resources_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../resources.service */ "./src/app/resources/resources.service.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _resource_new_resource_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../resource/new-resource.component */ "./src/app/resources/resource/new-resource.component.ts");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+
+
+
+
+
 
 
 
 var data = __webpack_require__(/*! ../../shared/data/chartist.json */ "./src/app/shared/data/chartist.json");
 var ResourcesComponent = /** @class */ (function () {
-    function ResourcesComponent() {
-        // constructor() { }
+    // Bar chart configuration Ends
+    function ResourcesComponent(resourcesService, modalService) {
+        this.resourcesService = resourcesService;
+        this.modalService = modalService;
+        this.resources$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        this.resources = [];
+        this.dtOptions = {};
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         // Line chart configuration Starts
         this.WidgetlineChart = {
             type: 'Line', data: data['WidgetlineChart2'],
@@ -3429,7 +4622,7 @@ var ResourcesComponent = /** @class */ (function () {
                     showLabel: false,
                     offset: 0,
                 },
-                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_2__["Interpolation"].cardinal({
+                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_3__["Interpolation"].cardinal({
                     tension: 0
                 }),
                 fullWidth: true
@@ -3589,7 +4782,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 6;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_3__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -3634,7 +4827,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 6;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_3__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -3782,7 +4975,7 @@ var ResourcesComponent = /** @class */ (function () {
             options: {
                 showArea: true,
                 fullWidth: true,
-                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_2__["Interpolation"].none(),
+                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_3__["Interpolation"].none(),
                 axisX: {
                     showGrid: false,
                 },
@@ -3844,7 +5037,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 4;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_3__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -3882,7 +5075,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 4;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_2__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_3__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -4022,19 +5215,130 @@ var ResourcesComponent = /** @class */ (function () {
             },
         };
     }
-    // Bar chart configuration Ends
     ResourcesComponent.prototype.ngOnInit = function () {
+        this.dtOptions = {
+            pagingType: 'full_numbers',
+            pageLength: 100,
+            processing: true,
+            // data: this.resources$,
+            // 'bDestroy': true,
+            'paging': true,
+            'ordering': true,
+            'info': true,
+            'columnDefs': [{
+                    'targets': [3],
+                    'visible': true,
+                    'searchable': true
+                },
+                {
+                    'targets': [4],
+                    'visible': true
+                }
+                // ,{ 'bSortable': true, 'bSort': false, 'aTargets': [ '_all' ] }
+            ],
+            // responsive: true,
+            searching: true,
+            select: true,
+            order: [0, 'desc'],
+            dom: "<\n             <\"row\"\n               <\"col-lg-3 col-md-12\"l>\n               <\"col-lg-6 col-md-12 button-wrapper btn-sm danger\"B>\n               <\"col-lg-3 col-md-12\"f>><hr>\n             <\"row\" <\"col\"t>>\n             <\"row\"\n               <\"col\"i>\n               <\"col btn-sm\"p>>\n             >",
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print',
+                {
+                    text: 'GroupBy',
+                    key: '1',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+                {
+                    text: 'Some button',
+                    key: '1',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+                {
+                    text: 'Some button',
+                    key: '1',
+                    action: function (e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                },
+            ],
+            'bLengthChange': true,
+            'Filter': true,
+            // retrieve: true,
+            language: {
+                search: '_INPUT_',
+                searchPlaceholder: 'Search records',
+            },
+            'Info': true,
+        };
+        // this.dtTrigger.unsubscribe();
+        this.resourcesService.getResourcesAndRates();
+        this.getResources();
+        // this.rerender();
+        setTimeout(function () {
+        }, 200);
     };
+    ResourcesComponent.prototype.getResources = function () {
+        var _this = this;
+        this.resourcesService.resourcesandrates.subscribe(function (resources) {
+            _this.resources = resources;
+            _this.resources$.next(resources);
+            // this.dtTrigger.next();
+            console.log(_this.resources$);
+            _this.resourceCount = formatNumber(_this.resources.length);
+            setTimeout(function () {
+            }, 250);
+        });
+    };
+    ResourcesComponent.prototype.filter = function (search) {
+        this.resources$.next(this.resources.filter(function (_) { return _.displayName.toLowerCase().includes(search.toLowerCase()); }));
+    };
+    ResourcesComponent.prototype.openContent = function () {
+        var modalRef = this.modalService.open(_resource_new_resource_component__WEBPACK_IMPORTED_MODULE_6__["NewResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
+        modalRef.componentInstance.name = 'World';
+    };
+    // Open default modal
+    ResourcesComponent.prototype.open = function (content) {
+        var _this = this;
+        this.modalService.open(content).result.then(function (result) {
+            _this.closeResult = "Closed with: " + result;
+        }, function (reason) {
+            _this.closeResult = "Dismissed " + _this.getDismissReason(reason);
+        });
+    };
+    // This function is used in open
+    ResourcesComponent.prototype.getDismissReason = function (reason) {
+        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["ModalDismissReasons"].ESC) {
+            return 'by pressing ESC';
+        }
+        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["ModalDismissReasons"].BACKDROP_CLICK) {
+            return 'by clicking on a backdrop';
+        }
+        else {
+            return "with: " + reason;
+        }
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_7__["DataTableDirective"]),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_7__["DataTableDirective"])
+    ], ResourcesComponent.prototype, "dtElement", void 0);
     ResourcesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Component"])({
             selector: 'app-resources',
             template: __webpack_require__(/*! ./resources.component.html */ "./src/app/resources/resources/resources.component.html"),
             styles: [__webpack_require__(/*! ./resources.component.scss */ "./src/app/resources/resources/resources.component.scss")]
-        })
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_resources_service__WEBPACK_IMPORTED_MODULE_4__["ResourceService"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"]])
     ], ResourcesComponent);
     return ResourcesComponent;
 }());
 
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
 
 
 /***/ }),
