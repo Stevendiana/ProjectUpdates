@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  baseurl: 'http://localhost:53956/api',
-  // baseurl: 'https://ptapi20190613040346.azurewebsites.net',
+  // baseurl: 'http://localhost:53956/api',
+  baseurl: 'https://ptapi20190613040346.azurewebsites.net/api',
   defaultimageUrl: '/assets/images/users/defaultprofileimage.png',
 
   AccountOwner: 'AccountOwner',

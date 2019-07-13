@@ -3021,8 +3021,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 var environment = {
     production: false,
-    baseurl: 'http://localhost:53956/api',
-    // baseurl: 'https://ptapi20190613040346.azurewebsites.net',
+    // baseurl: 'http://localhost:53956/api',
+    baseurl: 'https://ptapi20190613040346.azurewebsites.net/api',
     defaultimageUrl: '/assets/images/users/defaultprofileimage.png',
     AccountOwner: 'AccountOwner',
     ResourceOnly: 'ResourceOnly',
