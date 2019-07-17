@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,28 +25,35 @@ import { SidebarListDirective } from './directives/sidebarlist.directive';
 import { SidebarAnchorToggleDirective } from './directives/sidebaranchortoggle.directive';
 import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
 import { FlPipe } from 'app/app.fl';
+import { CountoModule } from 'angular2-counto';
+import { NGXToastrService } from './toastr.service';
 
 @NgModule({
     exports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         FooterComponent,
         NavbarComponent,
         SidebarComponent,
         CustomizerComponent,
         DataTablesModule,
         DataTableModule,
+        CountoModule,
         NotificationSidebarComponent,
         ToggleFullscreenDirective,
         SidebarDirective,
         NgbModule,
         FlPipe,
+        PerfectScrollbarModule,
         TranslateModule
     ],
     imports: [
         RouterModule,
         CommonModule,
+        CountoModule,
         FormsModule,
+        ReactiveFormsModule,
         NgbModule,
         DataTablesModule,
         DataTableModule,
@@ -66,6 +73,7 @@ import { FlPipe } from 'app/app.fl';
         SidebarListDirective,
         SidebarAnchorToggleDirective,
         SidebarToggleDirective
-    ]
+    ],
+    providers: [NGXToastrService]
 })
 export class SharedModule { }

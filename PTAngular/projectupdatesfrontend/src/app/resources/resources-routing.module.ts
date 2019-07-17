@@ -5,6 +5,7 @@ import { ResourcesAvailabilityComponent } from './resources-availability/resourc
 import { ResourcesUtilizationComponent } from './resources-utilization/resources-utilization.component';
 import { ResourcesDemandComponent } from './resources-demand/resources-demand.component';
 import { ResourcesDashboardComponent } from './resources-dashboard/resources-dashboard.component';
+import { ResourceComponent } from './resource/resource.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
         data: {
           title: 'Utilization'
         }
+      },
+      {
+        path: 'resource/:id',
+        component: ResourceComponent
       },
     ]
   }

@@ -197,8 +197,8 @@ namespace PTApi.Controllers
         }
 
 
-        [Authorize]
         [HttpGet("{companyId}/{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public ActionResult Get(string companyId, string id)
         {
 
@@ -251,7 +251,8 @@ namespace PTApi.Controllers
         }
 
         [HttpPost("resource")]
-        [Authorize(Policy = "Admin_Group")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(Policy = "Admin_Group")]
         public ActionResult EditResource([FromBody] EditResourceData resourceData)
         {
             var roleGroup = _userService.UserRoleGroup();
@@ -337,7 +338,8 @@ namespace PTApi.Controllers
 
 
         [HttpPost]
-        [Authorize(Policy="Admin_Group")]
+        //[Authorize(Policy="Admin_Group")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult CreateResource([FromBody] EditResourceData resourceData)
         {
             var roleGroup = _userService.UserRoleGroup();

@@ -1,0 +1,272 @@
+<!-- The Modal -->
+
+<div class="container ">
+    <div class="modal-header">
+      <h3 class="modal-title m-1 pl-2 pull-left text-muted text-primary">{{header}}</h3>
+      <div class="media ml-5 justify-content-end mt-0">
+        <div class="media-body d-inline-flex  align-items-center justify-content-center text-left">
+          <img *ngIf="res?.imageUrl && (firstname$ || lastname$)" [src]="res?.imageUrl" width="50" class="rounded-circle mr-1" alt="avatar" />
+          <span *ngIf="!res?.imageUrl && (firstname$)" style="height: 50px;" class="d-flex rounded-circle mr-1 roundprofile + ' ' + bg-info ">
+              {{ firstname$ | fl }}</span>
+          <h4 class="text-capitalize text-monospace">{{ displayname }}</h4>
+          <!-- <p class="text-muted font-small-3 ml-0">{{res.resourceEmailAddress}}</p> -->
+          <!-- <i class="ft-more-vertical float-right mt-1"></i> -->
+        </div>
+      </div>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- <section> -->
+        <div class="row text-left">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <!-- <h4 class="card-title" id="horz-layout-colored-controls">User Profile</h4> -->
+
+                      <p class="mt-1 mb-0">  All mandatory fields are marked with asterisk <code>*</code>.</p>
+                    </div>
+                    <div class="card-content">
+                      <div class="px-3">
+                        <form class="form form-horizontal"
+                        novalidate
+                        (ngSubmit)="saveResource()"
+                        [formGroup]="resourceForm" >
+                          <div class="form-body">
+                            <h4 class="form-section"><i class="ft-info"></i> About Resource</h4>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="firstName">Firstname: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="firstName" class="form-control border-primary" formControlName="firstName" name="firstName" autofocus required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('firstName').valid && (resourceForm.get('firstName').dirty || resourceForm.get('firstName').touched)">Please
+                                      enter your first name!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="lastName">Surname: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="lastName" class="form-control border-primary" formControlName="lastName" name="lastName" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('lastName').valid && (resourceForm.get('lastName').dirty || resourceForm.get('lastName').touched)">Please
+                                      enter your surname name!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="resourceEmailAddress">Email Address: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="resourceEmailAddress" class="form-control border-primary" formControlName="resourceEmailAddress" name="resourceEmailAddress" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceEmailAddress').valid && (resourceForm.get('resourceEmailAddress').dirty || resourceForm.get('resourceEmailAddress').touched)">Please
+                                      enter a valid email!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="employeeJobTitle">Job Title: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="employeeJobTitle" class="form-control border-primary" formControlName="employeeJobTitle" name="employeeJobTitle" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('employeeJobTitle').valid && (resourceForm.get('employeeJobTitle').dirty || resourceForm.get('employeeJobTitle').touched)">Please
+                                      enter job type!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="employeeType">Employment Type: </label>
+                                  <div class="col-md-9">
+                                    <select class="form-control border-primary" formControlName="employeeType" required>
+                                      <option>please select..</option>
+                                      <option *ngFor="let e of employeeTypes" [ngValue]="e.value">{{e.name}}</option>
+                                    </select>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('employeeType').valid && (resourceForm.get('employeeType').dirty || resourceForm.get('employeeType').touched)">Please
+                                      select employee type!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="resourceType">Term: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="resourceType" class="form-control border-primary" formControlName="resourceType" name="resourceType" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceType').valid && (resourceForm.get('resourceType').dirty || resourceForm.get('resourceType').touched)">Please
+                                      select resource type!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="resourceStartDate">Start Date: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="resourceStartDate" class="form-control border-primary" formControlName="resourceStartDate" name="resourceStartDate" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceStartDate').valid && (resourceForm.get('resourceStartDate').dirty || resourceForm.get('resourceStartDate').touched)">Please
+                                      enter an employment start date!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="resourceEndDate">End Date: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="resourceEndDate" class="form-control border-primary" formControlName="resourceEndDate" name="resourceEndDate" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceEndDate').valid && (resourceForm.get('resourceEndDate').dirty || resourceForm.get('resourceEndDate').touched)">Please
+                                      enter an employment end date!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="resourceManagerId">Line Manager: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="resourceManagerId" class="form-control border-primary" [ngbTypeahead]="resources" [resultTemplate]="rt" [inputFormatter]="formatter1"
+                                    placeholder="Search for alabama" formControlName="resourceManagerId" name="resourceManagerId" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceManagerId').valid && (resourceForm.get('resourceManagerId').dirty || resourceForm.get('resourceManagerId').touched)">Please
+                                      select a line manager for this resource!
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="resourceRateCardId">Rate Card: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="resourceRateCardId" class="form-control border-primary" formControlName="resourceRateCardId" name="resourceRateCardId" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceRateCardId').valid && (resourceForm.get('resourceRateCardId').dirty || resourceForm.get('resourceRateCardId').touched)">Please
+                                      select a rate card for this resource.
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="platformId">Business Platform: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="platformId" class="form-control border-primary" formControlName="platformId" name="platformId">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="resourceContractEffortInPercentage">% Effort: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="resourceContractEffortInPercentage" class="form-control border-primary" formControlName="resourceContractEffortInPercentage" name="resourceContractEffortInPercentage" required>
+                                    <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceContractEffortInPercentage').valid && (resourceForm.get('resourceContractEffortInPercentage').dirty || resourceForm.get('resourceContractEffortInPercentage').touched)">Please
+                                      enter a valid number between 0 and 100% !
+                                    </small>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <h4 class="form-section"><i class="ft-mail"></i> Contact Info & Bio</h4>
+
+                            <div class="row">
+                              <div class="form-group col-md-6">
+                                <!-- <label class="d-block">Billable?: </label> -->
+                                <div class="custom-control custom-radio d-block float-left">
+                                  <input type="radio" id="billable" name="billable" class="custom-control-input">
+                                  <label class="custom-control-label" for="billable">Is this resource billable? <small>ie will you be paying for this resource?</small></label>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <!-- <label class="d-block">Disable?: </label> -->
+                                <div class="custom-control custom-radio d-block float-left ml-1">
+                                  <input type="radio" id="isDisabled" checked name="isDisabled" class="custom-control-input">
+                                  <label class="custom-control-label" for="isDisabled">Disable ?</label>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="agency">Agency: </label>
+                                  <div class="col-md-9">
+                                    <input class="form-control border-primary" formControlName="agency" type="text" id="agency">
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="location">Location: </label>
+                                  <div class="col-md-9">
+                                    <input class="form-control border-primary" formControlName="location" type="url" id="location">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="employeeGradeBand">Band: </label>
+                                  <div class="col-md-9">
+                                    <input class="form-control border-primary" formControlName="employeeGradeBand" type="url" id="employeeGradeBand">
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control">Contact Number: </label>
+                                  <div class="col-md-9">
+                                    <input class="form-control border-primary" formControlName="billable" type="number" id="billable">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="managerName">Notes: </label>
+                                  <div class="col-md-9">
+                                    <textarea id="managerName" rows="6" class="form-control col-md-9 border-primary" formControlName="managerName" name="managerName"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        <!-- </section> -->
+    </div>
+    <div class="modal-footer">
+      <!-- <button type="button" class="btn btn-secondary btn-raised" (click)="activeModal.close('Close click')">Close</button> -->
+      <div class="form-actions right">
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="activeModal.close('Close click')">
+            <i class="ft-x"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-raised btn-primary" (click)="activeModal.close('Close click')" [disabled]='!resourceForm.valid' (click)="saveResource()">
+            <i class="fa fa-check-square-o"></i> Save
+          </button>
+        </div>
+    </div>
+    </div>
+
+    <ng-template #rt let-r="result" let-t="term">
+      <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r.flag" width="16"> {{ r.name}} -->
+      <div class="media ml-5 justify-content-end mt-0">
+        <div class="media-body d-inline-flex  align-items-center justify-content-center text-left">
+          <img *ngIf="r?.imageUrl" [src]="r?.imageUrl" width="50" class="rounded-circle mr-1" alt="avatar" />
+          <span *ngIf="!r?.imageUrl" style="height: 50px;" class="d-flex rounded-circle mr-1 roundprofile + ' ' + bg-info ">
+              {{ r.firstName | fl }}</span>
+          <h4 class="text-capitalize text-monospace">{{ r.displayName }}</h4>
+          <!-- <p class="text-muted font-small-3 ml-0">{{res.resourceEmailAddress}}</p> -->
+          <!-- <i class="ft-more-vertical float-right mt-1"></i> -->
+        </div>
+      </div>
+    </ng-template>

@@ -13,7 +13,9 @@
                 <i class="icon-pencil white font-large-2 float-left"></i>
               </div>
               <div class="media-body white text-right">
-                <h3>278</h3>
+                <h3>
+                  <div counto [step]="1" [countTo]="10000" [countFrom]="0" [duration]="1" (countoChange)="counto = $event">{{resourceCount}}</div>
+                </h3>
                 <span>New Posts</span>
               </div>
             </div>
@@ -86,42 +88,91 @@
           <div class="card-content p-2 m-2">
             <div class="card-body">
               <div class="row">
+                  <button class="btn btn-md btn-outline-danger m-2 " (click)="newResource()">+ Add new</button>
+                  <hr class="bg-dark">
+              </div>
+              <!-- <div class="row m-2">
                   <input type="text" [(ngModel)]="search" (ngModelChange)="filter($event)" class="form-control round" placeholder="search this page">
+              </div> -->
+              <div class="row m-2 bg-light">
+                <div class="col-4 d-inline-flex align-items-center">
+                  <div class="form-group float-left">
+                    <label class="align-items-center" style="top: 50%">
+                      <span>Show </span>
+
+                      <select class="form-control-sm m-2" [(ngModel)]="pagelenght">
+                        <option value="{{resources?.length}}">All</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                      <span> entries</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-4 float-right">
+                  <button class="btn btn-sm btn-outline-secondary m-2 ">Groupby</button>
+                  <button class="btn btn-sm btn-outline-secondary m-2 ">Whatever</button>
+                  <button class="btn btn-sm btn-outline-secondary m-2 ">CSV</button>
+                  <button class="btn btn-sm btn-outline-secondary m-2 ">Print</button>
+                </div>
+                <div class="col-4 float-right">
+                    <input type="text" [(ngModel)]="search" (ngModelChange)="filter($event)" class="form-control m-2 round" placeholder="search this page">
+                </div>
               </div>
                 <div classs ="m-2 p-2">
                     <div classs ="row">
                         <div class="col-12">
-                            <table [mfData]="resources$ | async" #mf="mfDataTable" [mfRowsOnPage]="5" class="table table-hover table-responsive-md text-center dataTable ">
+                            <table [mfData]="resources$ | async" #mf="mfDataTable" [mfRowsOnPage]="pagelenght" class="table table-hover table-responsive-md  align-middle text-center dataTable ">
                   <thead>
                     <tr>
-                        <th style="width: 20%">
+                        <th style="width: 20%;">
                             <mfDefaultSorter by="displayName">Name</mfDefaultSorter>
                         </th>
-                        <th style="width: 50%">
+                        <th>
                             <mfDefaultSorter by="firstName">Email</mfDefaultSorter>
                         </th>
-                        <th style="width: 10%">
+                        <th>
                             <mfDefaultSorter by="firstName">Age</mfDefaultSorter>
                         </th>
-                        <th style="width: 20%">
+                        <th>
                             <mfDefaultSorter by="firstName">City</mfDefaultSorter>
                         </th>
-                      <th>Name</th>
-                      <th>First Name</th>
-                      <th>Actions</th>
+                        <th>
+                            <mfDefaultSorter by="firstName">City</mfDefaultSorter>
+                        </th>
+                        <th>
+                            <mfDefaultSorter by="firstName">Name</mfDefaultSorter>
+                        </th>
+                        <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let res of mf.data">
                       <td>
+                          <div class="media">
+                            <a class="mr-0">
+                              <img *ngIf="res.imageUrl" alt="96x96" class="media-object d-flex  bg-primary height-50 rounded-circle" [src]="res.imageUrl">
+                              <span *ngIf="!res.imageUrl" style="height: 50px;" class="media-object d-flex  rounded-circle roundprofile + ' ' + bg-info ">
+                                {{ res.firstName | fl }}</span>
+                            </a>
+                            <div class="media-body ml-0">
+                              <a (click)="gotoResource(res)">
+                              <h4 class="font-medium-1 text-primary mt-1 mb-0">{{res.displayName}}</h4>
+                              <p class="text-muted font-small-3">{{res.resourceEmailAddress}}</p>
+                              </a>
+                            </div>
+                          </div>
                           <!-- <img class="media-object round-media" src="{{res.imageUrl}}" alt="Generic placeholder image"
                             style="height: 75px;" /> -->
-                            <span  class="avatar avatar-md mr-2 ml-0">
+                            <!-- <span  class="avatar avatar-md mr-2 ml-0">
                               <span *ngIf="!res.imageUrl" style="height: 50px;" class="media-object rounded-circle roundprofile + ' ' + bg-info ">
                               <p class="d-flex innerTEXT">{{ res.firstName | fl }}</p></span>
                               <img *ngIf="res.imageUrl" style="height: 50px;" class="media-object rounded-circle" [src]="res.imageUrl" alt="Generic placeholder image">
                               {{res.displayName}}
-                            </span>
+                            </span> -->
                         </td>
                         <td>{{res.firstName}}</td>
                       <!-- <td>
@@ -135,13 +186,10 @@
                       <td>{{res.firstName}}</td>
                       <td>{{res.firstName}}</td>
                       <td>
-                        <a class="info p-0" data-original-title="" title="">
-                          <i class="ft-user font-medium-3 mr-2"></i>
-                        </a>
-                        <a class="success p-0" data-original-title="" title="">
+                        <a class="success p-0" data-original-title="" title="" (click)="editResource(res)">
                           <i class="ft-edit-2 font-medium-3 mr-2"></i>
                         </a>
-                        <a class="danger p-0" data-original-title="" title="">
+                        <a class="danger p-0" data-original-title="" title="" (click)="deleteResource(res)">
                           <i class="ft-x font-medium-3 mr-2"></i>
                         </a>
                       </td>
@@ -149,8 +197,8 @@
                   </tbody>
                   <tfoot>
                       <tr>
-                          <td colspan="4">
-                              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                          <td colspan="7">
+                              <mfBootstrapPaginator></mfBootstrapPaginator>
                           </td>
                       </tr>
                       </tfoot>

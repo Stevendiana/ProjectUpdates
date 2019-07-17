@@ -7,7 +7,6 @@ import { BusinessunitComponent } from './businessunit/businessunit.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { ProgrammeComponent } from './programme/programme.component';
 import { ProjectComponent } from './project/project.component';
-import { ResourceComponent } from './resource/resource.component';
 import { ResourceResourceComponent } from './resource-resource/resource-resource.component';
 import { ResourcePlatformComponent } from './resource-platform/resource-platform.component';
 import { ResourceUserComponent } from './resource-user/resource-user.component';
@@ -21,7 +20,7 @@ import { MatchHeightModule } from 'app/shared/directives/match-height.directive'
 @NgModule({
   declarations: [
     HierarchyComponent, DomainComponent, BusinessunitComponent,
-    PortfolioComponent, ProgrammeComponent, ProjectComponent, ResourceComponent,
+    PortfolioComponent, ProgrammeComponent, ProjectComponent,
     ResourceResourceComponent, ResourcePlatformComponent, ResourceUserComponent,
     UploadCentreComponent, UploadCentreActualComponent, CompanSettingsComponent],
   imports: [

@@ -23,18 +23,18 @@ import { ResourceAvailabilityComponent } from './resource/resource-availability/
 import { ResourceUtilizationComponent } from './resource/resource-utilization/resource-utilization.component';
 import { ResourceUtilizationTableComponent } from './resource/resource-utilization-table/resource-utilization-table.component';
 import { ResourceService } from './resources.service';
-import { NewResourceComponent } from './resource/new-resource.component';
 import { EditResourceComponent } from './resource/edit-resource.component';
 import { DeleteResourceComponent } from './resource/delete-resource.component';
 import { ResourcesDashboardComponent } from './resources-dashboard/resources-dashboard.component';
+import { ResourceComponent } from './resource/resource.component';
 
 @NgModule({
-  declarations: [ResourcesComponent,
+  declarations: [ResourcesComponent, ResourceComponent,
     ResourcesAvailabilityComponent, ResourcesUtilizationComponent, ResourcesDemandComponent,
     ResourcesAvailabilityTableComponent, ResourcesDemandTableComponent, ResourcesUtilizationTableComponent,
     ResourcesAbsencesTableComponent, ResourceAbsencesTableComponent, ResourceAbsencesComponent, ResourceDemandComponent,
     ResourceAvailabilityTableComponent, ResourceAvailabilityComponent, ResourceUtilizationComponent, ResourceUtilizationTableComponent,
-    NewResourceComponent, EditResourceComponent, DeleteResourceComponent, ResourcesDashboardComponent],
+    EditResourceComponent, DeleteResourceComponent, ResourcesDashboardComponent],
   imports: [
     CommonModule,
     ResourcesRoutingModule,
@@ -44,7 +44,9 @@ import { ResourcesDashboardComponent } from './resources-dashboard/resources-das
     NgbModule,
     MatchHeightModule
   ],
-  entryComponents: [NewResourceComponent, EditResourceComponent ],
+  entryComponents: [
+                    EditResourceComponent,
+                    DeleteResourceComponent ],
   providers: [ResourceService]
 })
 export class ResourcesModule { }

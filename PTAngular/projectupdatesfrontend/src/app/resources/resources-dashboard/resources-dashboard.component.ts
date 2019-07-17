@@ -6,7 +6,7 @@ import { IResourceList } from '../resource';
 import { DataTableDirective } from 'angular-datatables';
 import { ResourceService } from '../resources.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NewResourceComponent } from '../resource/new-resource.component';
+import { EditResourceComponent } from '../resource/edit-resource.component';
 
 declare var require: any;
 
@@ -866,7 +866,7 @@ export class ResourcesDashboardComponent implements OnInit {
   }
 
   openContent() {
-    const modalRef = this.modalService.open(NewResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
+    const modalRef = this.modalService.open(EditResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
     modalRef.componentInstance.name = 'World';
   }
 

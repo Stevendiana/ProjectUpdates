@@ -1,7 +1,7 @@
 import { HierarchyComponent } from './hierarchy/hierarchy.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ResourceComponent } from './resource/resource.component';
+import { ResourceComponent } from '../resources/resource/resource.component';
 import { UploadCentreComponent } from './upload-centre/upload-centre.component';
 
 

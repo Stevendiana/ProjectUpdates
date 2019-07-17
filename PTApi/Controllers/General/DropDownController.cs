@@ -16,7 +16,7 @@ namespace PTApi.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class DropDownController: Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

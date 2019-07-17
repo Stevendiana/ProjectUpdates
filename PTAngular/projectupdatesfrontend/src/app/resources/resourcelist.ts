@@ -147,6 +147,7 @@ export interface IResource {
   resourceEndDate: string;
 
   platformId: string;
+  imageUrl: string;
 
   agency: string;
   vendor: string;

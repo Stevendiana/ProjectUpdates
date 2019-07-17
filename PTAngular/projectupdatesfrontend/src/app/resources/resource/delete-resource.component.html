@@ -1,0 +1,121 @@
+<!-- The Modal -->
+
+<div class="container">
+    <div class="modal-header">
+      <h4 class="modal-title">Delete {{id}} Resource</h4>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- <section> -->
+        <div class="row text-left">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header pb-2">
+                      <h4 class="card-title" id="horz-layout-colored-controls">User Profile</h4>
+                      <p class="mb-0">This is 2-columns horizontal form with labels on left and form controls on right in one line.
+                        Add <code>.form-horizontal</code> class to the form tag to have horizontal form styling. User can also
+                        change the border color and background color of the form control. Add <code>border-*</code> class to change
+                        border color and <code>bg-*</code> class to change background color of the form control.</p>
+                    </div>
+                    <div class="card-content">
+                      <div class="px-3">
+                        <form class="form form-horizontal">
+                          <div class="form-body">
+                            <h4 class="form-section"><i class="ft-info"></i> About User</h4>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="userinput1">First Name: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="userinput1" class="form-control border-primary" name="firstname">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="userinput2">Last Name: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="userinput2" class="form-control border-primary" name="lastname">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="userinput3">Username: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="userinput3" class="form-control border-primary" name="username">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="userinput4">Nick Name: </label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="userinput4" class="form-control border-primary" name="nickname">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <h4 class="form-section"><i class="ft-mail"></i> Contact Info & Bio</h4>
+
+                            <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="userinput5">Email: </label>
+                                  <div class="col-md-9">
+                                    <input class="form-control border-primary" type="email" id="userinput5">
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="userinput6">Website: </label>
+                                  <div class="col-md-9">
+                                    <input class="form-control border-primary" type="url" id="userinput6">
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control">Contact Number: </label>
+                                  <div class="col-md-9">
+                                    <input class="form-control border-primary" type="number" id="userinput7">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group row">
+                                  <label class="col-md-3 label-control" for="userinput8">Bio: </label>
+                                  <div class="col-md-9">
+                                    <textarea id="userinput8" rows="6" class="form-control col-md-9 border-primary" name="bio"></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-actions right">
+                            <button type="button" class="btn btn-raised btn-warning mr-1">
+                              <i class="ft-x"></i> Cancel
+                            </button>
+                            <button type="button" class="btn btn-raised btn-primary">
+                              <i class="fa fa-check-square-o"></i> Save
+                            </button>
+                          </div>
+                        </form>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        <!-- </section> -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-raised" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+    </div>
+

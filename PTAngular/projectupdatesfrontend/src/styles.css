@@ -59,3 +59,14 @@
 .modal-xl .modal-lg {
   max-width: 90%;
 }
+
+/* Important part */
+.modal-dialog{
+  overflow-y: initial !important
+}
+
+.modal-body {
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+
+}

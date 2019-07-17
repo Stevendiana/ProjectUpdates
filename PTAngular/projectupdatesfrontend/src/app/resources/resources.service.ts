@@ -163,7 +163,12 @@ export class ResourceService {
     console.log(ResourceData);
 
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.baseUrl + '/resources/resource', ResourceData, this.auth.tokenHeaderWithType).pipe(map(res => res.json()));
+    return this.http.post(this.baseUrl + '/resources/resource', ResourceData, this.auth.tokenHeaderWithType).pipe(
+      map(res => { res.json(),
+        this.resourceListStore.resourcesandrates.push(res.json());
+        this._resourcesandrates.next(Object.assign({}, this.resourceListStore).resourcesandrates);
+      }
+      ));
   }
 
   // saveResource(ResourceData) {
@@ -225,7 +230,7 @@ export class ResourceService {
       employeeRef: '',
       resourceStartDate: '',
       resourceEndDate: '',
-
+      imageUrl: '',
       platformId: '',
       agency: '',
       vendor: '',

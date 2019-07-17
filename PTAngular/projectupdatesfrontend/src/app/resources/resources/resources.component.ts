@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { element } from 'protractor';
 import { Subject } from 'rxjs';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
@@ -6,8 +7,10 @@ import * as Chartist from 'chartist';
 import { ResourceService } from '../resources.service';
 import { Resource, IResource, IResourceList } from '../resource';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { NewResourceComponent } from '../resource/new-resource.component';
 import { DataTableDirective } from 'angular-datatables';
+import { DeleteResourceComponent } from '../resource/delete-resource.component';
+import { EditResourceComponent } from '../resource/edit-resource.component';
+import { ResourceComponent } from 'app/resources/resource/resource.component';
 
 declare var require: any;
 
@@ -31,16 +34,14 @@ export class ResourcesComponent implements OnInit {
 
   resources$ = new Subject<any>();
   resources: IResourceList[] = [];
+  res: IResourceList;
   resourceCount: number;
   search: string;
+  pagelenght = 5;
   closeResult: string;
 
-  @ViewChild(DataTableDirective) dtElement: DataTableDirective;
 
-  dtOptions: any = {};
-  // dtOptions: DataTables.Settings = {};
   example: any;
-  dtTrigger: Subject<any> = new Subject();
 
   // Line chart configuration Starts
   WidgetlineChart: Chart = {
@@ -733,97 +734,10 @@ export class ResourcesComponent implements OnInit {
   };
   // Bar chart configuration Ends
 
-  constructor(private resourcesService: ResourceService, private modalService: NgbModal ) {
+  constructor(private resourcesService: ResourceService,  private router: Router, private modalService: NgbModal ) {
   }
 
   ngOnInit() {
-
-    this.dtOptions = {
-
-      pagingType: 'full_numbers',
-      pageLength: 100,
-      processing: true,
-      // data: this.resources$,
-      // 'bDestroy': true,
-      'paging':   true,
-      'ordering': true,
-      'info':     true,
-      'columnDefs':
-      [ {
-          'targets': [3],
-          'visible': true,
-          'searchable': true
-        },
-
-        {
-        'targets': [4],
-        'visible': true
-        }
-          // ,{ 'bSortable': true, 'bSort': false, 'aTargets': [ '_all' ] }
-      ],
-
-      // responsive: true,
-      searching: true,
-      select: true,
-      order: [0, 'desc'],
-      dom: `<
-             <"row"
-               <"col-lg-3 col-md-12"l>
-               <"col-lg-6 col-md-12 button-wrapper btn-sm danger"B>
-               <"col-lg-3 col-md-12"f>><hr>
-             <"row" <"col"t>>
-             <"row"
-               <"col"i>
-               <"col btn-sm"p>>
-             >`,
-
-      buttons: [
-      'copy', 'csv', 'excel', 'pdf', 'print',
-        {
-          text: 'GroupBy',
-          key: '1',
-          action: function (e, dt, node, config) {
-            alert('Button activated');
-          }
-        },
-        {
-          text: 'Some button',
-          key: '1',
-          action: function (e, dt, node, config) {
-            alert('Button activated');
-          }
-        },
-        {
-          text: 'Some button',
-          key: '1',
-          action: function (e, dt, node, config) {
-            alert('Button activated');
-          }
-        },
-
-      ],
-      'bLengthChange': true,
-      'Filter': true,
-      // retrieve: true,
-      language: {
-        search: '_INPUT_',
-       searchPlaceholder: 'Search records',
-      },
-      'Info': true,
-      // fixedHeader: {
-      //   header: true,
-      //   bottom: true,
-      //   // footer: false,
-      //   zTop: 1000
-      //   // headerOffset: 400
-
-      // },
-
-    };
-
-
-    // this.dtTrigger.unsubscribe();
-
 
     this.resourcesService.getResourcesAndRates();
     this.getResources();
@@ -857,9 +771,26 @@ export class ResourcesComponent implements OnInit {
   }
 
 
-  openContent() {
-    const modalRef = this.modalService.open(NewResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
-    modalRef.componentInstance.name = 'World';
+  newResource() {
+    const modalRef = this.modalService.open(EditResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
+    modalRef.componentInstance.id = '';
+    modalRef.componentInstance.header = 'Create new resource';
+    modalRef.componentInstance.resources = this.resources;
+  }
+  gotoResource(res: IResourceList) {
+
+    // this.router.navigate(['/resources/resource']);
+    this.router.navigate(['/resources/resource', res.resourceId]);
+  }
+  editResource(res: IResourceList) {
+    const modalRef = this.modalService.open(EditResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
+    modalRef.componentInstance.id = res.resourceId;
+    modalRef.componentInstance.header = `Edit resource:`;
+    modalRef.componentInstance.resources = this.resources;
+  }
+  deleteResource(res: IResourceList) {
+    const modalRef = this.modalService.open(DeleteResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
+    modalRef.componentInstance.id = res.resourceId;
   }
 
   // Open default modal

@@ -30,6 +30,7 @@ export interface IResource {
   identity: string;
   firstName: string;
   lastName: string;
+  imageUrl: string;
   employeeGradeBand: string;
   managerName: string;
   resourceRate: string;
@@ -85,7 +86,7 @@ export interface IResourceList {
   companyRateCard: {
     dailyRate: number;
   };
-  imageUrl: number;
+  imageUrl: string;
   contractedHours: number;
   resourceContractEffortInPercentage: number;
   resourceType: string;
