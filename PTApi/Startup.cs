@@ -339,7 +339,7 @@ namespace PTApi
 
 
             app.Use(async (context, next) =>
-            {
+           {
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                 await next();

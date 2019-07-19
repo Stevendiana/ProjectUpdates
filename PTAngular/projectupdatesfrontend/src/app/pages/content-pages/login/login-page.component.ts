@@ -57,3 +57,12 @@ export class LoginPageComponent {
       return this.loginform.controls[control].invalid && this.loginform.controls[control].touched;
     }
 }
+
+function emailValid() {
+  return control => {
+    // tslint:disable-next-line:max-line-length
+    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test (control.value) ? null : { invalidEmail: true};
+  };
+}
+

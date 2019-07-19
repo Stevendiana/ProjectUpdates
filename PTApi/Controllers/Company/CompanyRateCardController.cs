@@ -62,7 +62,7 @@ namespace PTApi.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("{companyId}/{id}")]
         public ActionResult Get(string companyId, string id) {
 
@@ -85,8 +85,9 @@ namespace PTApi.Controllers
 
 
         [HttpGet("{companyId}")]
-        [Authorize(Policy="Admin_Group")]
-        public async Task<IEnumerable<CompanyRateCardViewModel>> GetCompanyRateCards(string companyId)
+        //[Authorize(Policy="Admin_Group")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public IActionResult GetCompanyRateCards(string companyId)
         {
             var roleGroup =_userService.UserRoleGroup();
             var comp = _userService.GetSecureUserCompany();
@@ -96,13 +97,15 @@ namespace PTApi.Controllers
                 if ( companyId == comp)
                 {
                     var allCompanyRateCards =  _unitOfWork.CompanyRateCards.GetAllCompanyRateCardsOnly(comp);
+                    var result = _mapper.Map<IEnumerable<CompanyRateCard>, IEnumerable<CompanyRateCardViewModel>>(allCompanyRateCards);
+                    return Ok(result);
 
-                    return allCompanyRateCards.Select(Mapper.Map<CompanyRateCard, CompanyRateCardViewModel>);
                 }
-                return await Task.FromResult<IEnumerable<CompanyRateCardViewModel>>(null);
+                return BadRequest();
             }
-            return  await Task.FromResult<IEnumerable<CompanyRateCardViewModel>>(null);
+            return BadRequest();
         }
+
 
 
 

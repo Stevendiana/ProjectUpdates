@@ -8,7 +8,7 @@ import { ResourcesComponent } from '../resources/resources.component';
 // import 'rxjs/add/observable/fromEvent';
 // import 'rxjs/add/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
-import { IResource } from '../resourcelist';
+import { IResource } from '../resource';
 import { ResourceService } from '../resources.service';
 import { FormGroup, FormBuilder, Validators, FormControlName } from '@angular/forms';
 
@@ -16,8 +16,21 @@ import { Router } from '@angular/router';
 import { GenericValidator } from 'app/shared/validator/generic-validator';
 import { NGXToastrService } from 'app/shared/toastr.service';
 import { KeyValuePair } from '../keyvaluepair';
+import { IRateCard } from '../rate-card';
+import { AuthService } from 'app/shared/auth/auth.service';
+import { Resource } from '../resource';
 // import { Observable } from 'rxjs';
+export class RateCard {
 
+  companyId: string;
+  companyRateCardId: string;
+  companyRateCardCode: string;
+  employeeJobTitleOrGradeOrBand: string;
+  locationForGradeOnshoreOffShore: string;
+  isContractor: boolean;
+  dailyRate: number;
+
+}
 
 @Component({
   selector: 'app-edit-resource',
@@ -30,9 +43,17 @@ export class EditResourceComponent implements OnInit {
 
   @Input() id;
   res: IResource;
+  resman: IResource;
+  resource: Resource;
+  ratecard: RateCard;
+  selected = [];
   @Input() header;
-  @Input() resources;
+  @Input() resources: IResource[] = [];
+  @Input() ratecards: IRateCard[] = [];
+
   errorMessage: string;
+  resourceManager$ = '';
+  resourceRateCard$ = '';
   employeeTypes: KeyValuePair[];
   resourceTypes: KeyValuePair[];
   lastname$ = '';
@@ -47,28 +68,13 @@ export class EditResourceComponent implements OnInit {
   private genericValidator: GenericValidator;
 
 
+  // convenience getter for easy access to form fields
+  get f() { return this.resourceForm.controls; }
 
 
 
-  constructor(public activeModal: NgbActiveModal, private router: Router,
+  constructor(public activeModal: NgbActiveModal, private router: Router, private auth: AuthService,
     private fb: FormBuilder, private resourceService: ResourceService, private toastr: NGXToastrService) {
-
-    this.validationMessages = {
-      productName: {
-          required: 'Product name is required.',
-          minlength: 'Product name must be at least three characters.',
-          maxlength: 'Product name cannot exceed 50 characters.'
-      },
-      productCode: {
-          required: 'Product code is required.'
-      },
-      starRating: {
-          range: 'Rate the product between 1 (lowest) and 5 (highest).'
-      }
-    };
-    // Define an instance of the validator for use with this form,
-    // passing in this form's set of validation messages.
-    this.genericValidator = new GenericValidator(this.validationMessages);
   }
 
   ngOnInit() {
@@ -79,7 +85,7 @@ export class EditResourceComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       resourceId: [this.id, Validators.required],
       resourceNumber: ['', Validators.required],
-      resourceEmailAddress: ['', Validators.required],
+      resourceEmailAddress: ['', [Validators.required, Validators.email]],
       resourceStartDate: ['', Validators.required],
       resourceEndDate: ['', Validators.required],
       platformId: [''],
@@ -117,28 +123,38 @@ export class EditResourceComponent implements OnInit {
 
     this.resourceService.GetEmployeeTypes().subscribe(types => this.employeeTypes = types);
     this.resourceService.GetResourceTypes().subscribe(types => this.resourceTypes = types);
+
+
+    console.log(this.ratecards);
+    console.log(this.resources);
+    console.log(this.res);
   }
 
-  // tslint:disable-next-line: use-life-cycle-interface
-  // ngAfterViewInit(): void {
-
-  //   // Watch for the blur event from any input element on the form.
-  //   const controlBlurs: Observable<any>[] = this.formInputElements
-  //       .map((formControl: ElementRef) => Observable.fromEvent(formControl.nativeElement, 'blur'));
-
-  //   // Merge the blur event observable with the valueChanges observable
-  //   Observable.merge(this.resourceForm.valueChanges, ...controlBlurs).debounceTime(800).subscribe(value => {
-  //       this.displayMessage = this.genericValidator.processMessages(this.resourceForm);
-  //   });
-  // }
 
   getResource(id: string): void {
     this.resourceService.getResource(id)
     .subscribe(
-        (res: IResource) => {this.onResourceRetrieved(res); console.log(res); },
+        (res: IResource) => {
+          this.onResourceRetrieved(res);
+          console.log(res);
+          this.getManager(res);
+        },
         (error: any) => this.errorMessage = <any>error
     );
   }
+
+  getManager(res) {
+    this.resourceService.resourcesandrates.subscribe(() => {
+      setTimeout(() => {
+        this.resman = this.resourceService.resourceById(res.resourceManagerId);
+        this.resourceManager$ = this.resman.displayName;
+
+        }, 250);
+
+    });
+
+  }
+
 
   onResourceRetrieved(res: IResource): void {
     if (this.resourceForm) {
@@ -170,14 +186,12 @@ export class EditResourceComponent implements OnInit {
       resourceType: this.res.resourceType,
       employeeType: this.res.employeeType,
       companyId: this.res.companyId,
-      appUserRole: this.res.appUserRole,
       resourceManagerId: this.res.resourceManagerId,
 
       firstName: this.res.firstName,
       lastName: this.res.lastName,
 
       employeeGradeBand: this.res.employeeGradeBand,
-      managerName: this.res.managerName,
       resourceRate: this.res.resourceRate,
       displayName: this.res.displayName,
       addedBy: this.res.addedBy,
@@ -216,6 +230,7 @@ export class EditResourceComponent implements OnInit {
   }
 
   onChanges(): void {
+
     this.resourceForm.get('lastName').valueChanges.subscribe(val => {
       this.lastname$ = val;
       this.displayname = this.firstname$ + ' ' + this.lastname$;
@@ -224,8 +239,101 @@ export class EditResourceComponent implements OnInit {
       this.firstname$ = val;
       this.displayname = this.firstname$ + ' ' + this.lastname$;
     });
+
+    // this.resourceForm.get('resourceManagerId').valueChanges.subscribe(val => {
+    //   console.log(this.resourceManager$);
+    //   setTimeout(() => {
+    //    this.getOneResource(val);
+    //   this.resourceManager$ = this.resman.displayName;
+
+    //   }, 250);
+
+    //   // console.log(this.resources.filter(r => r.resourceId === val)[0]);
+    //   // this.resourceManager = this.resources.filter(r => r.resourceId === val)[0].displayName;
+    //   // this.resource = new Resource();
+    //   // this.resman  = this.resources.find(r => r.resourceId === val)[0];
+    //   // this.resource  = this.resourceService.resourceById(val);
+    //   console.log(this.resourceManager$);
+
+    //   // this.resourceForm.controls['resourceManagerId'].setValue(this.resources.find(r => r.resourceId === val).resourceId);
+    // });
+
+    this.resourceForm.get('resourceRateCardId').valueChanges.subscribe(val => {
+      this.ratecard = new RateCard();
+      // this.ratecard = this.ratecards.filter(r => r.companyRateCardId === val)[0];
+      this.ratecard = this.resourceService.rateCardById(val);
+      console.log(this.ratecard);
+      this.resourceRateCard$ = `${this.ratecard.employeeJobTitleOrGradeOrBand} - ${this.auth.reportingCurrencySys} ${this.ratecard.dailyRate}
+      (${this.ratecard.locationForGradeOnshoreOffShore})`;
+    });
+    // this.resourceForm.get('resourceType').valueChanges.subscribe(val => {
+    //   // this.res.resourceType = val;
+    //   this.resourceForm.controls['resourceType']
+    //  .setValue(val);
+    // });
+    // this.resourceForm.get('employeeType').valueChanges.subscribe(val => {
+    //   // this.res.employeeType = val;
+    //   this.resourceForm.controls['employeeType']
+    //  .setValue(val);
+    // });
+
   }
 
-  formatter1 = (x: { name: string }) => x.name;
+  getOneResource(id) {
+   this.resourceService.getResource(id).subscribe(r => this.resman = r);
+   console.log(this.resman);
+  }
+
+  onSelectResource(val: IResource) {
+
+    this.resourceManager$ = val.displayName;
+    this.resourceForm.controls['resourceManagerId'].setValue(val.resourceId);
+    console.log(this.res.displayName);
+    console.log(this.res.resourceId);
+    console.log(val.displayName);
+    console.log(val.resourceId);
+  }
+
+
+
+
+  resourcesearch = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      map(term => term === '' ? []
+        : this.resources.filter(v => v.displayName.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+  )
+
+  ratecardsearch = (rctext$: Observable<string>) =>
+    rctext$.pipe(
+      debounceTime(200),
+      map(rcterm => rcterm === '' ? []
+        : this.ratecards.filter(v => v.employeeJobTitleOrGradeOrBand.toLowerCase().indexOf(rcterm.toLowerCase()) > -1).slice(0, 10))
+  )
+
+  onSelect($event, input) {
+    $event.preventDefault();
+    input.value = $event.item;
+    const sample = [{Name: 'a', Age: 1}, {Name: 'b', Age: 2}, {Name: 'c', Age: 3}];
+    const Names = sample.map(function(item) {return item.Name; });
+
+    const resources = this.resources;
+    const displaynames = resources.map(function(item) {return item.displayName; });
+    const ids = resources.map(function(item) {return item.resourceId; });
+    const id = this.resourceForm.controls['resourceManagerId'];
+
+    this.selected.push($event.item);
+    if (displaynames.includes(input.value)[0] || ids.includes(id.value)) {
+      this.resourceForm.controls['resourceManagerId'].setValue(input.value);
+
+    } else {
+
+    }
+    // this.resourceForm.controls['resourceManagerId'].setValue(this.resources.find(r => r.resourceId ===  input.value).resourceId);
+  }
+
+  formatter1 = (x: { displayName: string }) => x.displayName;
+  formatter2 = (x: { employeeJobTitleOrGradeOrBand: string }) => x.employeeJobTitleOrGradeOrBand;
 
 }
+

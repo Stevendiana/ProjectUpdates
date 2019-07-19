@@ -1,4 +1,6 @@
-﻿namespace PTApi.Helpers
+﻿using System.ComponentModel;
+
+namespace PTApi.Helpers
 {
     public static class Constants
     {
@@ -136,10 +138,14 @@
 
             public enum EmployeeTypes
             {
-                PermanentStaff,
-                ManagedService,
+                [Description("Permanent Staff")]
+                Permanent_Staff,
+                [Description("Managed Service")]
+                Managed_Service,
+                [Description("Contractor")]
                 Contractor,
-                TemporaryStaff
+                [Description("Temporary Staff")]
+                Temporary_Staff
 
             }
             public enum StatusWorkFlows
@@ -153,18 +159,27 @@
 
             public enum ResourceTypes
             {
+                [Description("Full-Time")]
                 FullTime,
+                [Description("Fixed-Term")]
                 FixedTerm,
+                [Description("Part-Time")]
                 PartTime,
+                [Description("Temporary")]
                 Temporary
 
             }
             public enum ProjectStatus
             {
+                [Description("Not Started")]
                 Not_Started,
+                [Description("Active")]
                 Active,
+                [Description("On Hold")]
                 On_Hold,
+                [Description("Completed and Closed")]
                 Completed_and_Closed,
+                [Description("Cancelled")]
                 Cancelled
             }
 

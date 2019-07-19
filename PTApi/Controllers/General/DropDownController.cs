@@ -128,6 +128,7 @@ namespace PTApi.Controllers
 
         [HttpGet]
         [Route("employeetypes")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetEmployeeTypes()
         {
             return Ok(EnumExtensions.GetValues<EmployeeTypes>());
@@ -135,6 +136,7 @@ namespace PTApi.Controllers
 
         [HttpGet]
         [Route("resourcetypes")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public IActionResult GetResourceTypes()
         {
             return Ok(EnumExtensions.GetValues<ResourceTypes>());

@@ -10,8 +10,8 @@ using PTApi.Data;
 namespace PTApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190708080818_PopulateRole")]
-    partial class PopulateRole
+    [Migration("20190719120247_ManagerForeignKey")]
+    partial class ManagerForeignKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -3193,6 +3193,10 @@ namespace PTApi.Migrations
 
                     b.Property<string>("LocationName");
 
+                    b.Property<string>("Note");
+
+                    b.Property<string>("PhoneNumber");
+
                     b.Property<string>("PlatformId");
 
                     b.Property<string>("PortfoliosFollowingCompanyId");
@@ -3260,6 +3264,8 @@ namespace PTApi.Migrations
 
                     b.Property<string>("ResourceType");
 
+                    b.Property<string>("SupplierId");
+
                     b.Property<string>("UserCreatedAvatar");
 
                     b.Property<string>("UserCreatedEmail");
@@ -3284,8 +3290,6 @@ namespace PTApi.Migrations
 
                     b.Property<string>("UserModifiedResourceId");
 
-                    b.Property<string>("Vendor");
-
                     b.HasKey("CompanyId", "ResourceId");
 
                     b.HasAlternateKey("ResourceId");
@@ -3295,6 +3299,10 @@ namespace PTApi.Migrations
                     b.HasIndex("PlatformId");
 
                     b.HasIndex("ResourceRateCardId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("CompanyId", "ResourceManagerId");
 
                     b.HasIndex("BusinessUnitsPermittedUserId", "BusinessUnitsPermittedResourceId", "BusinessUnitsPermittedCompanyId", "BusinessUnitsPermittedBusinessUnitId");
 
@@ -3690,6 +3698,8 @@ namespace PTApi.Migrations
                     b.Property<string>("Services");
 
                     b.Property<string>("SupplierName");
+
+                    b.Property<string>("SupplierNumber");
 
                     b.Property<string>("WorkOrderNumber");
 
@@ -4445,6 +4455,16 @@ namespace PTApi.Migrations
                     b.HasOne("PTApi.Models.CompanyRateCard", "CompanyRateCard")
                         .WithMany()
                         .HasForeignKey("ResourceRateCardId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("PTApi.Models.Supplier", "Supplier")
+                        .WithMany("Resources")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("PTApi.Models.Resource", "Manager")
+                        .WithMany()
+                        .HasForeignKey("CompanyId", "ResourceManagerId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("PTApi.Models.BusinessUnitsPermitted")

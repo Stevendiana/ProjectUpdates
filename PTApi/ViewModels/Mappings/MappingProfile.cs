@@ -43,7 +43,9 @@ namespace PTApi.ViewModels.Mappings
             CreateMap<Resource, ResourceViewModel>()
             .ForMember(dto => dto.ResourceId, map => map.MapFrom(src => src.ResourceId))
             .ForMember(dto => dto.Company, opt => opt.MapFrom(src => src.Company))
-            .ForMember(dto => dto.CompanyRateCard, opt => opt.MapFrom(src => src.CompanyRateCard));
+            .ForMember(vm => vm.ResourceManagerId, map => map.MapFrom(b => b.ResourceManagerId))
+            .ForMember(dto => dto.CompanyRateCard, opt => opt.MapFrom(src => src.CompanyRateCard))
+            .ForMember(dto => dto.ResourceManager, opt => opt.MapFrom(src => src.ResourceManager));
 
             CreateMap<Resource, ResourceAdminViewModel>()
             .ForMember(dto => dto.ResourceId, map => map.MapFrom(src => src.ResourceId))
@@ -230,7 +232,8 @@ namespace PTApi.ViewModels.Mappings
             CreateMap<CompanyRateCard, CompanyRateCardViewModel>()
             .ForMember(vm => vm.CompanyRateCardId, map => map.MapFrom(b => b.CompanyRateCardId));
 
-            CreateMap<Resource, ResourceViewModel>().ForMember(vm => vm.ResourceId, map => map.MapFrom(b => b.ResourceId));
+            CreateMap<Resource, ResourceViewModel>()
+             .ForMember(vm => vm.ResourceId, map => map.MapFrom(b => b.ResourceId));
             //.ForAllMembers(opt=>opt.Condition((src, dest, srcMember )=>srcMember!=null))
 
 

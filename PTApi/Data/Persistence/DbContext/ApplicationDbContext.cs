@@ -139,6 +139,10 @@ namespace PTApi.Data
             modelBuilder.Entity<ProjectsPermitted>().HasKey(pjp => new { pjp.ResourceId, pjp.ProjectId, pjp.CompanyId, pjp.UserId });
 
             modelBuilder.Entity<Resource>().HasKey(res => new { res.CompanyId, res.ResourceId });
+            modelBuilder.Entity<Resource>().HasOne(r => r.ResourceManager).WithMany().HasForeignKey(m => new { m.CompanyId, m.ResourceManagerId });
+            //modelBuilder.Entity<Resource>().HasOne(r => r.Manager).WithMany().HasForeignKey(m => new { m.CompanyId, m.ResourceManagerId });
+            //modelBuilder.Entity<Resource>().HasOne(r => r.Supplier).WithMany().HasForeignKey(s=>s.SupplierId);
+
 
             modelBuilder.Entity<ProjectManagementRank>().HasOne(pm => pm.Project);
             modelBuilder.Entity<Platform>().HasOne(pm => pm.HeadOfPlatform);

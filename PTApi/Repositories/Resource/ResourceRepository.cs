@@ -17,7 +17,10 @@ namespace PTApi.Repositories
 
         public Resource GetOneResouce(string id, string companyId)
         {
-            return ApplicationDbContext.Resources.Include(d => d.CompanyRateCard).SingleOrDefault(d => d.ResourceId == id && d.CompanyId == companyId);
+            return ApplicationDbContext.Resources
+                .Include(d => d.CompanyRateCard)
+                .Include(d => d.ResourceManager)
+                .SingleOrDefault(d => d.ResourceId == id && d.CompanyId == companyId);
         }
 
         public decimal? GetResourceContractedEffortHours(string id, string companyId)

@@ -9,6 +9,7 @@ import {throwError as observableThrowError, of as observableOf} from 'rxjs';
 import { Headers, Response } from '@angular/http';
 import { KeyValuePair } from './keyvaluepair';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { IRateCard } from './rate-card';
 
 @Injectable()
 export class ResourceService {
@@ -21,13 +22,24 @@ export class ResourceService {
 
   public _resources: BehaviorSubject<IResource[]>;
   public _resourcesandrates: BehaviorSubject<IResourceList[]>;
+  public _rateCards: BehaviorSubject<IRateCard[]>;
+
 
   public resourceStore: {
-    resources: Resource[]
+    resources: IResource[]
   };
   public resourceListStore: {
     resourcesandrates: any[]
   };
+
+  public rateCardStore: {
+    rateCards: any[]
+  };
+
+
+  get rateCards(): Observable<IRateCard[]> {
+    return this._rateCards.asObservable();
+  }
 
   constructor(private http: Http,
               private auth: AuthService)  // tslint:disable-next-line:one-line
@@ -36,6 +48,9 @@ export class ResourceService {
     this._resources = new BehaviorSubject<IResource[]>([]);
     this.resourceListStore = { resourcesandrates: [] };
     this._resourcesandrates = new BehaviorSubject<IResourceList[]>([]);
+    this.rateCardStore = { rateCards: [] };
+    this._rateCards = new BehaviorSubject<IRateCard[]>([]);
+
   }
 
   get resources(): Observable<IResource[]> {
@@ -45,11 +60,16 @@ export class ResourceService {
     return this._resourcesandrates.asObservable();
   }
 
-
   get resourcesData(): IResource[] {return this.resourceStore.resources; }
+
+  get rateCardsData(): IRateCard[] {return this.rateCardStore.rateCards; }
+
 
   get returnedresources() {
     return this.resourceStore.resources;
+  }
+  rateCardById(id: string) {
+    return this.rateCardStore.rateCards.find(x => x.companyRateCardId === id);
   }
 
   error(error: string) {
@@ -131,6 +151,18 @@ export class ResourceService {
         this._resourcesandrates.next(Object.assign({}, this.resourceListStore).resourcesandrates);
     }, error => {
       console.log('Failed to fetch resources');
+    });
+  }
+
+  async getRateCards() {
+
+    const companyId = this.auth.companyId;
+
+    this.http.get(this.baseUrl + '/companyratecards' + '/' + companyId, this.auth.tokenHeader).subscribe(response => {
+        this.rateCardStore.rateCards = response.json();
+        this._rateCards.next(Object.assign({}, this.rateCardStore).rateCards);
+    }, error => {
+      console.log('Failed to fetch rate cards');
     });
   }
 
@@ -236,7 +268,7 @@ export class ResourceService {
       vendor: '',
       locationName: '',
       location: '',
-      billable: false,
+      billable: true,
       isDisabled: false,
       employeeJobTitle: '',
       resourceRateCardId: '',
@@ -245,7 +277,6 @@ export class ResourceService {
       resourceContractEffortInPercentage: 100,
       resourceType: '',
       employeeType: '',
-      appUserRole: '',
       company: '',
       resourceManagerId: '',
       identityId: '',
@@ -253,7 +284,6 @@ export class ResourceService {
       firstName: '',
       lastName: '',
       employeeGradeBand: '',
-      managerName: '',
       resourceRate: '',
       displayName: '',
       addedBy: '',

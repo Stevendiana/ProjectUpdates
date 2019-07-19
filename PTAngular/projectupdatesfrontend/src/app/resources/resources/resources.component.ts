@@ -11,6 +11,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { DeleteResourceComponent } from '../resource/delete-resource.component';
 import { EditResourceComponent } from '../resource/edit-resource.component';
 import { ResourceComponent } from 'app/resources/resource/resource.component';
+import { IRateCard } from '../rate-card';
 
 declare var require: any;
 
@@ -34,9 +35,11 @@ export class ResourcesComponent implements OnInit {
 
   resources$ = new Subject<any>();
   resources: IResourceList[] = [];
+  ratecards: IRateCard[] = [];
   res: IResourceList;
   resourceCount: number;
   search: string;
+  errorMessage: string;
   pagelenght = 5;
   closeResult: string;
 
@@ -740,7 +743,9 @@ export class ResourcesComponent implements OnInit {
   ngOnInit() {
 
     this.resourcesService.getResourcesAndRates();
+    this.resourcesService.getRateCards();
     this.getResources();
+    this.getRatecards();
 
     // this.rerender();
 
@@ -765,6 +770,14 @@ export class ResourcesComponent implements OnInit {
     });
   }
 
+  getRatecards(): void {
+    this.resourcesService.rateCards
+    .subscribe(
+        rates => {this.ratecards = rates; console.log(this.ratecards); },
+        (error: any) => this.errorMessage = <any>error
+    );
+  }
+
 
   filter(search) {
     this.resources$.next(this.resources.filter(_ => _.displayName.toLowerCase().includes(search.toLowerCase())))
@@ -776,6 +789,7 @@ export class ResourcesComponent implements OnInit {
     modalRef.componentInstance.id = '';
     modalRef.componentInstance.header = 'Create new resource';
     modalRef.componentInstance.resources = this.resources;
+    modalRef.componentInstance.ratecards = this.ratecards;
   }
   gotoResource(res: IResourceList) {
 
@@ -787,6 +801,7 @@ export class ResourcesComponent implements OnInit {
     modalRef.componentInstance.id = res.resourceId;
     modalRef.componentInstance.header = `Edit resource:`;
     modalRef.componentInstance.resources = this.resources;
+    modalRef.componentInstance.ratecards = this.ratecards;
   }
   deleteResource(res: IResourceList) {
     const modalRef = this.modalService.open(DeleteResourceComponent, {size: 'lg', windowClass: 'modal-xl'});
