@@ -36,7 +36,7 @@ export class ResourcesComponent implements OnInit {
   resources$ = new Subject<any>();
   resources: IResourceList[] = [];
   ratecards: IRateCard[] = [];
-  res: IResourceList;
+  // res: IResourceList;
   resourceCount: number;
   search: string;
   errorMessage: string;

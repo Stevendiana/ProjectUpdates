@@ -35,6 +35,7 @@ namespace PTApi.Repositories
         {
             return ApplicationDbContext.Resources
                 .Include(d => d.CompanyRateCard)
+                .Include(d => d.ResourceManager)
                 .Where(r => r.CompanyId == companyId)
                 .OrderByDescending(d => d.ResourceStartDate).ThenBy(r => r.LastName).ToList();
         }

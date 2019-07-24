@@ -1,36 +1,25 @@
-import { Component, OnInit, Input, ElementRef, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Injectable} from '@angular/core';
+import {NgbDateAdapter, NgbDateStruct, NgbDateNativeAdapter} from '@ng-bootstrap/ng-bootstrap';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-
 import { map, debounceTime, merge } from 'rxjs/operators';
 import { ResourcesComponent } from '../resources/resources.component';
-// import 'rxjs/add/operator/debounceTime';
-// import 'rxjs/add/observable/fromEvent';
-// import 'rxjs/add/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
-import { IResource } from '../resource';
+import { IResource, IResourceList } from '../resource';
 import { ResourceService } from '../resources.service';
-import { FormGroup, FormBuilder, Validators, FormControlName } from '@angular/forms';
-
+import { FormGroup, FormBuilder, Validators, FormControlName, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GenericValidator } from 'app/shared/validator/generic-validator';
 import { NGXToastrService } from 'app/shared/toastr.service';
 import { KeyValuePair } from '../keyvaluepair';
-import { IRateCard } from '../rate-card';
+import { IRateCard, RateCard, IRateCardUI } from '../rate-card';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { Resource } from '../resource';
-// import { Observable } from 'rxjs';
-export class RateCard {
+import { DatePickerComponent } from 'app/shared/date-picker/date-picker.component';
 
-  companyId: string;
-  companyRateCardId: string;
-  companyRateCardCode: string;
-  employeeJobTitleOrGradeOrBand: string;
-  locationForGradeOnshoreOffShore: string;
-  isContractor: boolean;
-  dailyRate: number;
+const now = new Date();
 
-}
 
 @Component({
   selector: 'app-edit-resource',
@@ -39,95 +28,126 @@ export class RateCard {
 })
 export class EditResourceComponent implements OnInit {
 
-  @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
+  @ViewChild(DatePickerComponent) datepicker;
 
+  date: any;
+  today: NgbDateStruct;
+  // selectedDate: any;
+  disabled = false;
   @Input() id;
   res: IResource;
-  resman: IResource;
-  resource: Resource;
-  ratecard: RateCard;
+  resandman: IResourceList;
+  resman: IResourceList;
+  ratecard: IRateCardUI;
   selected = [];
   @Input() header;
-  @Input() resources: IResource[] = [];
+  @Input() resources: IResourceList[] = [];
   @Input() ratecards: IRateCard[] = [];
+  uiratecards: IRateCardUI[] = [];
 
+  resourceEndDate$: Date;
+  resourceStartDate$: Date;
+
+  resourceManagerId = '';
+  resourceRateCardId = '';
+  resourceManagerDisplayname = '';
+  resourceRatecardDisplayname = '';
+
+  displayisvalid = true;
   errorMessage: string;
-  resourceManager$ = '';
-  resourceRateCard$ = '';
+  sd: any;
+  ed: any;
+
+  employeeType$: string;
   employeeTypes: KeyValuePair[];
+  resourceType$: string;
   resourceTypes: KeyValuePair[];
+
   lastname$ = '';
   firstname$ = '';
   displayname = '';
   resourceForm: FormGroup;
   private sub: Subscription;
 
-  // Use with the generic validation message class
-  displayMessage: { [key: string]: string } = {};
-  private validationMessages: { [key: string]: { [key: string]: string } };
-  private genericValidator: GenericValidator;
-
-
   // convenience getter for easy access to form fields
   get f() { return this.resourceForm.controls; }
 
 
-
   constructor(public activeModal: NgbActiveModal, private router: Router, private auth: AuthService,
     private fb: FormBuilder, private resourceService: ResourceService, private toastr: NGXToastrService) {
+
   }
 
   ngOnInit() {
 
     this.resourceForm = this.fb.group({
 
-      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      resourceId: [this.id, Validators.required],
-      resourceNumber: ['', Validators.required],
-      resourceEmailAddress: ['', [Validators.required, Validators.email]],
-      resourceStartDate: ['', Validators.required],
-      resourceEndDate: ['', Validators.required],
-      platformId: [''],
-      agency: [''],
-      vendor: [''],
-      imageUrl: '',
-      locationName: '',
-      location: '',
-      billable: '',
-      isDisabled: '',
-      employeeJobTitle: '',
-      resourceRateCardId: '',
-      companyRateCard: '',
-      contractedHours: '',
-      resourceContractEffortInPercentage: '',
-      resourceType: '',
-      employeeType: '',
-      companyId: '',
-      appUserRole: '',
-      company: '',
-      resourceManagerId: '',
-      identityId: '',
-      identity: '',
+    firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+    resourceId: [this.id, Validators.required],
+    resourceNumber: ['', Validators.required],
+    resourceEmailAddress: [{value: '' , disabled: this.id ? true : false}, [Validators.required,
+      Validators.pattern('[^ @]*@[^ @]*'), emailExistValidator, emailDomainValidator ]],
+    resourceStartDate: ['', Validators.required],
+    resourceEndDate: ['', Validators.required],
+    platformId: [''],
+    agency: [''],
+    vendor: [''],
+    imageUrl: '',
+    locationName: '',
+    location: '',
+    billable: '',
+    isDisabled: '',
+    employeeJobTitle: ['', Validators.required],
+    resourceRateCardId: ['', Validators.required],
+    contractedHours: '',
+    resourceContractEffortInPercentage: ['', [Validators.required, Validators.min(0), Validators.max(100)]],
+    resourceType: [{value: this.resourceType$ ? this.resourceType$ : 'default'}, Validators.required],
+    employeeType: [{value: this.employeeType$ ? this.employeeType$ : 'default'}, Validators.required],
+    companyId: [this.auth.companyId, Validators.required],
+    resourceManagerId: ['', Validators.required],
 
-      employeeGradeBand: '',
-      managerName: '',
-      resourceRate: '',
-      displayName: '',
-      addedBy: '',
+    employeeGradeBand: '',
+    managerName: '',
+    resourceRate: '',
+    displayName: '',
+    addedBy: '',
+
+    resourceManager$: new FormControl('', {
+      validators: [Validators.required, checttypedstringmanager],
+   }),
+    resourceRateCard$: new FormControl('', {
+      validators: [Validators.required, checttypedstringratecards],
+      // updateOn: 'blur'
+   }),
 
   });
 
-    this.getResource(this.id);
-    this.onChanges();
-
-    this.resourceService.GetEmployeeTypes().subscribe(types => this.employeeTypes = types);
-    this.resourceService.GetResourceTypes().subscribe(types => this.resourceTypes = types);
 
 
-    console.log(this.ratecards);
-    console.log(this.resources);
-    console.log(this.res);
+    setTimeout(() => {
+
+      this.getResource(this.id);
+      this.resourceService.GetEmployeeTypes().subscribe((et) => {
+        this.employeeTypes = et;
+      });
+
+      this.resourceService.GetResourceTypes().subscribe((rt) => {
+        this.resourceTypes = rt;
+      });
+
+      // emailExistValidator(this.resources);
+
+    }, 250);
+
+    // checttypedstring;
+
+  }
+
+  // tslint:disable-next-line:use-life-cycle-interface
+  ngAfterViewInit() {
+
+    this.date = this.datepicker.selectedDate
   }
 
 
@@ -137,30 +157,26 @@ export class EditResourceComponent implements OnInit {
         (res: IResource) => {
           this.onResourceRetrieved(res);
           console.log(res);
-          this.getManager(res);
         },
         (error: any) => this.errorMessage = <any>error
     );
   }
 
-  getManager(res) {
-    this.resourceService.resourcesandrates.subscribe(() => {
-      setTimeout(() => {
-        this.resman = this.resourceService.resourceById(res.resourceManagerId);
-        this.resourceManager$ = this.resman.displayName;
+  // Selects today's date
+  selectToday() {
 
-        }, 250);
-
-    });
-
+    this.today = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
+    return this.today;
   }
-
 
   onResourceRetrieved(res: IResource): void {
     if (this.resourceForm) {
         this.resourceForm.reset();
     }
+
     this.res = res;
+
+    this.updateDropdowns();
 
     // Update the data on the form
     this.resourceForm.patchValue({
@@ -169,8 +185,8 @@ export class EditResourceComponent implements OnInit {
       resourceNumber: this.res.resourceNumber,
       resourceEmailAddress: this.res.resourceEmailAddress,
       employeeRef: this.res.employeeRef,
-      resourceStartDate: this.res.resourceStartDate,
-      resourceEndDate: this.res.resourceEndDate,
+      resourceStartDate: new Date(this.res.resourceStartDate),
+      resourceEndDate: new Date(this.res.resourceEndDate),
       platformId: this.res.platformId,
       imageUrl: this.res.imageUrl,
       agency: this.res.agency,
@@ -224,12 +240,12 @@ export class EditResourceComponent implements OnInit {
 }
 
   onSaveComplete(): void {
-      // Reset the form to clear the flags
-      this.resourceForm.reset();
-      this.router.navigate(['/resources/resources']);
+    // Reset the form to clear the flags
+    this.resourceForm.reset();
+    this.router.navigate(['/resources/resources']);
   }
 
-  onChanges(): void {
+  updateDropdowns() {
 
     this.resourceForm.get('lastName').valueChanges.subscribe(val => {
       this.lastname$ = val;
@@ -240,60 +256,156 @@ export class EditResourceComponent implements OnInit {
       this.displayname = this.firstname$ + ' ' + this.lastname$;
     });
 
-    // this.resourceForm.get('resourceManagerId').valueChanges.subscribe(val => {
-    //   console.log(this.resourceManager$);
-    //   setTimeout(() => {
-    //    this.getOneResource(val);
-    //   this.resourceManager$ = this.resman.displayName;
 
-    //   }, 250);
+    if (this.id === '' || this.id === null) {
+      this.resandman = null;
+      this.resman = null;
 
-    //   // console.log(this.resources.filter(r => r.resourceId === val)[0]);
-    //   // this.resourceManager = this.resources.filter(r => r.resourceId === val)[0].displayName;
-    //   // this.resource = new Resource();
-    //   // this.resman  = this.resources.find(r => r.resourceId === val)[0];
-    //   // this.resource  = this.resourceService.resourceById(val);
-    //   console.log(this.resourceManager$);
+    } else {
 
-    //   // this.resourceForm.controls['resourceManagerId'].setValue(this.resources.find(r => r.resourceId === val).resourceId);
-    // });
+      this.resandman = this.resources.find(x => x.resourceId === this.id);
+      this.resman = this.resources.find(x => x.resourceId === this.resandman.resourceManagerId);
+    }
 
-    this.resourceForm.get('resourceRateCardId').valueChanges.subscribe(val => {
-      this.ratecard = new RateCard();
-      // this.ratecard = this.ratecards.filter(r => r.companyRateCardId === val)[0];
-      this.ratecard = this.resourceService.rateCardById(val);
-      console.log(this.ratecard);
-      this.resourceRateCard$ = `${this.ratecard.employeeJobTitleOrGradeOrBand} - ${this.auth.reportingCurrencySys} ${this.ratecard.dailyRate}
-      (${this.ratecard.locationForGradeOnshoreOffShore})`;
+    const currency = this.auth.reportingCurrencySys;
+    console.log(currency);
+
+    this.uiratecards = this.ratecards.map(function(e) {
+      return {
+        companyId: e.companyId,
+        companyRateCardId: e.companyRateCardId,
+        companyRateCardCode: e.companyRateCardCode,
+        employeeJobTitleOrGradeOrBand: e.employeeJobTitleOrGradeOrBand,
+        locationForGradeOnshoreOffShore: e.locationForGradeOnshoreOffShore,
+        isContractor: e.isContractor,
+        dailyRate: e.dailyRate,
+        resourceRatecardDisplayname: `${e.employeeJobTitleOrGradeOrBand} - ${currency}${e.dailyRate} (${e.locationForGradeOnshoreOffShore})`
+
+      }
+    })
+
+    this.ratecard = this.uiratecards.find(x => x.companyRateCardId === this.resandman.resourceRateCardId);
+
+    this.resourceManagerDisplayname = this.resman.displayName;
+    this.resourceForm.patchValue({resourceManager$: `${this.resman.displayName}`});
+    this.resourceManagerId = this.resman.resourceId;
+
+    this.resourceRatecardDisplayname = this.ratecard.resourceRatecardDisplayname;
+    this.resourceForm.patchValue({resourceRateCard$: `${this.resourceRatecardDisplayname}`});
+    this.resourceRateCardId = this.res.resourceRateCardId;
+
+    this.resourceEndDate$ = new Date(this.res.resourceEndDate ? this.res.resourceEndDate : new Date().toISOString());
+    this.resourceStartDate$ = new Date(this.res.resourceStartDate ? this.res.resourceStartDate : new Date().toISOString());
+
+    this.employeeType$ = this.res.employeeType;
+    this.resourceType$ = this.res.resourceType;
+
+    this.resourceForm.patchValue({employeeType: `${this.res.employeeType}`});
+    this.resourceForm.patchValue({resourceType: `${this.res.resourceType}`});
+
+    this.resourceForm.patchValue({resourceManagerId: `${this.resman.resourceId}`});
+    this.resourceForm.patchValue({resourceRateCardId: `${this.res.resourceRateCardId}`});
+
+    console.log(this.employeeTypes);
+    console.log(this.resourceTypes);
+    console.log(this.employeeType$);
+    console.log(this.resourceType$);
+
+    console.log(this.resourceEndDate$);
+
+    // checttypedstring(this.resources);
+    this.refreshManager(this.resources);
+    this.refreshRatecards(this.uiratecards);
+
+
+  }
+
+  // updateDate() {
+  //   this.resourceForm.get('resourceEndDate').valueChanges.subscribe(val => {
+  //     console.log(val);
+
+  //     // this.selectedDate = new Date(val);
+  //     this.resourceForm.patchValue({resourceEndDate: val});
+  //     // console.log(this.selectedDate);
+  //     console.log(this.f['resourceEndDate'].value);
+  //     console.log(this.res);
+  //   });
+  // }
+
+
+
+  refreshRatecards(rates) {
+
+    this.resourceForm.get('resourceRateCard$').valueChanges.subscribe(val => {
+
+      if (typeof val === 'string') {
+        val = val;
+      } else {
+        val = val.resourceRatecardDisplayname;
+      }
+
+      const displaynames = rates.map(function(item) {return item.resourceRatecardDisplayname; });
+
+      // console.log(displaynames.indexOf(val) !== -1);
+
+      if (!displaynames.includes(val) || val === '' || val === undefined || val === null) {
+
+        return this.f['resourceRateCard$'].setErrors({ ratecarddisplayisvalid: true });
+      } else {
+        return this.f['resourceRateCard$'].setErrors(null);
+      }
     });
-    // this.resourceForm.get('resourceType').valueChanges.subscribe(val => {
-    //   // this.res.resourceType = val;
-    //   this.resourceForm.controls['resourceType']
-    //  .setValue(val);
-    // });
-    // this.resourceForm.get('employeeType').valueChanges.subscribe(val => {
-    //   // this.res.employeeType = val;
-    //   this.resourceForm.controls['employeeType']
-    //  .setValue(val);
-    // });
-
   }
 
-  getOneResource(id) {
-   this.resourceService.getResource(id).subscribe(r => this.resman = r);
-   console.log(this.resman);
+  refreshManager(resources) {
+
+    this.resourceForm.get('resourceManager$').valueChanges.subscribe(val => {
+
+      if (typeof val === 'string') {
+        val = val;
+      } else {
+        val = val.displayName;
+      }
+
+      const displaynames = resources.map(function(item) {return item.displayName; });
+
+      // console.log(displaynames.indexOf(val) !== -1);
+
+      if (!displaynames.some(function(item) {return val === item; }) || val === '' || val === undefined || val === null) {
+
+        return this.f['resourceManager$'].setErrors({ managerdisplayisvalid: true });
+      } else {
+        return this.f['resourceManager$'].setErrors(null);
+      }
+    });
   }
+
+
+
+  // getOneResource(id) {
+  //  this.resourceService.getResource(id).subscribe(r => this.resman = r);
+  //  console.log(this.resman);
+  // }
 
   onSelectResource(val: IResource) {
 
-    this.resourceManager$ = val.displayName;
-    this.resourceForm.controls['resourceManagerId'].setValue(val.resourceId);
-    console.log(this.res.displayName);
-    console.log(this.res.resourceId);
     console.log(val.displayName);
-    console.log(val.resourceId);
+    this.resourceForm.patchValue({resourceManager$: `${val.displayName}`});
+    this.resourceForm.patchValue({resourceManagerId: `${val.resourceId}`});
+    return this.f['resourceManager$'].setErrors(null);
   }
 
+  onSelectRateCard(rate: IRateCardUI) {
+
+    // this.resourceRatecardDisplayname = `${rate.employeeJobTitleOrGradeOrBand} - ${this.auth.reportingCurrencySys}
+    //   ${rate.dailyRate} (${rate.locationForGradeOnshoreOffShore})`;
+
+    console.log(this.resourceRatecardDisplayname);
+
+    this.resourceForm.patchValue({resourceRateCard$: `${rate.resourceRatecardDisplayname}`});
+    this.resourceForm.patchValue({resourceRateCardId: `${rate.companyRateCardId}`});
+    return this.f['resourceManager$'].setErrors(null);
+  }
 
 
 
@@ -308,32 +420,88 @@ export class EditResourceComponent implements OnInit {
     rctext$.pipe(
       debounceTime(200),
       map(rcterm => rcterm === '' ? []
-        : this.ratecards.filter(v => v.employeeJobTitleOrGradeOrBand.toLowerCase().indexOf(rcterm.toLowerCase()) > -1).slice(0, 10))
+        : this.uiratecards.filter(v => v.resourceRatecardDisplayname.toLowerCase().indexOf(rcterm.toLowerCase()) > -1).slice(0, 10))
   )
 
-  onSelect($event, input) {
-    $event.preventDefault();
-    input.value = $event.item;
-    const sample = [{Name: 'a', Age: 1}, {Name: 'b', Age: 2}, {Name: 'c', Age: 3}];
-    const Names = sample.map(function(item) {return item.Name; });
 
-    const resources = this.resources;
-    const displaynames = resources.map(function(item) {return item.displayName; });
-    const ids = resources.map(function(item) {return item.resourceId; });
-    const id = this.resourceForm.controls['resourceManagerId'];
+  // onDateFromChange($event) {
 
-    this.selected.push($event.item);
-    if (displaynames.includes(input.value)[0] || ids.includes(id.value)) {
-      this.resourceForm.controls['resourceManagerId'].setValue(input.value);
 
-    } else {
+  //   this.resourceForm.get('resourceStartDate').valueChanges.subscribe(($event) => {
+  //     const val = $event.target.value;
 
-    }
-    // this.resourceForm.controls['resourceManagerId'].setValue(this.resources.find(r => r.resourceId ===  input.value).resourceId);
-  }
+  //     this.resourceStartDate$ = val;
+  //     this.resourceForm.patchValue({resourceStartDate: `${val.toString()}`});
+
+  //   });
+  // }
+
+  // onDateToChange(val: Date) {
+  //   this.resourceEndDate$ = val;
+  //   this.resourceForm.controls['resourceEndDate'].setValue(val.toString());
+  // }
 
   formatter1 = (x: { displayName: string }) => x.displayName;
-  formatter2 = (x: { employeeJobTitleOrGradeOrBand: string }) => x.employeeJobTitleOrGradeOrBand;
+  formatter2 = (x: { resourceRatecardDisplayname: string }) => x.resourceRatecardDisplayname;
+
+}
+
+function checttypedstringmanager(control: FormControl) {
+
+  const manager = control.value;
+  console.log(manager);
+
+  // if (manager === '' || !istextfound || manager === undefined) {
+  if (manager === '' || manager === undefined || manager === null) {
+
+    const text = 'Please select from the dropdown list.';
+    return { managerdisplayisvalid: { parseDisplay: manager }};
+  }
+  return null;
+
+}
+
+function checttypedstringratecards(control: FormControl) {
+
+  const ratecard = control.value;
+  console.log(ratecard);
+
+  // if (manager === '' || !istextfound || manager === undefined) {
+  if (ratecard === '' || ratecard === undefined || ratecard === null) {
+
+    const text = 'Please select from the dropdown list.';
+    return { ratecarddisplayisvalid: { parseDisplay: ratecard }};
+  }
+  return null;
+
+}
+
+function emailDomainValidator(control: FormControl) {
+  const email = control.value;
+  if (email && email.indexOf('@') !== -1) {
+    const [_, domain] = email.split('@');
+    if (domain !== 'yahoo.com') {
+      return {
+        emailDomain: {
+          parsedDomain: domain
+        }
+      }
+    }
+  }
+  return null;
+}
+function emailExistValidator(resources: IResourceList[]) {
+
+  return control => {
+    const email = control.value;
+    const emails = resources.map(function(item) {return item.resourceEmailAddress; });
+
+    if (!emails.some(function(item) {return item === control.value; })) {
+      return { emailDontexist: true};
+    }
+    return { emailDontexist: false};
+
+  }
 
 }
 

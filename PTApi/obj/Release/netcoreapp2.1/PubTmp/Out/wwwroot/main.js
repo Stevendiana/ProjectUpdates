@@ -11,6 +11,7 @@ var map = {
 	"./admin/admin.module": [
 		"./src/app/admin/admin.module.ts",
 		"default~admin-admin-module~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-~b413bfe0",
+		"default~admin-admin-module~resources-resources-module",
 		"admin-admin-module"
 	],
 	"./chat/chat.module": [
@@ -55,6 +56,7 @@ var map = {
 		"./src/app/resources/resources.module.ts",
 		"default~admin-admin-module~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-~b413bfe0",
 		"default~dashboard-dashboard-module~myprojects-myprojects-module~pages-full-pages-full-pages-module~p~8010b75d",
+		"default~admin-admin-module~resources-resources-module",
 		"resources-resources-module"
 	],
 	"./support/support.module": [
@@ -1495,6 +1497,120 @@ var CustomizerComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/shared/date-picker/date-picker.component.html":
+/*!***************************************************************!*\
+  !*** ./src/app/shared/date-picker/date-picker.component.html ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"input-group mb-0\">\n  <input\n  class=\"form-control\"\n  placeholder=\"{{placeholder}}\"\n  id=\"{{id}}\"\n  name=\"{{name}}\"\n  [value]=\"selectedDate\"\n\n  (change)=\"onDateChange($event.target.value)\"\n  (dateSelect)=\"onDateSelect($event)\"\n  ngbDatepicker #ed=\"ngbDatepicker\">\n\n  <div class=\"input-group-append\">\n    <div class=\"input-group-text\" (click)=\"ed.toggle()\">\n      <i class=\"fa fa-calendar\" style=\"cursor: pointer;\"></i>\n    </div>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/shared/date-picker/date-picker.component.scss":
+/*!***************************************************************!*\
+  !*** ./src/app/shared/date-picker/date-picker.component.scss ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9kYXRlLXBpY2tlci9kYXRlLXBpY2tlci5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/shared/date-picker/date-picker.component.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/shared/date-picker/date-picker.component.ts ***!
+  \*************************************************************/
+/*! exports provided: DATEPICKER_VALUE_ACCESSOR, DatePickerComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DATEPICKER_VALUE_ACCESSOR", function() { return DATEPICKER_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DatePickerComponent", function() { return DatePickerComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+
+
+
+var DATEPICKER_VALUE_ACCESSOR = {
+    provide: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NG_VALUE_ACCESSOR"],
+    // tslint:disable-next-line: no-use-before-declare
+    useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(function () { return DatePickerComponent; }),
+    multi: true
+};
+var DatePickerComponent = /** @class */ (function () {
+    function DatePickerComponent() {
+        this.disabled = false;
+        // Function to call when the date changes.
+        this.onChange = function (date) { };
+        // Function to call when the date picker is touched
+        this.onTouched = function () { };
+    }
+    DatePickerComponent.prototype.writeValue = function (value) {
+        if (!value) {
+            return;
+        }
+        this.selectedDate = {
+            year: value.getFullYear(),
+            month: value.getMonth(),
+            day: value.getDate()
+        };
+    };
+    DatePickerComponent.prototype.registerOnChange = function (fn) {
+        this.onChange = fn;
+    };
+    // Allows Angular to register a function to call when the input has been touched.
+    // Save the function as a property to call later here.
+    DatePickerComponent.prototype.registerOnTouched = function (fn) {
+        this.onTouched = fn;
+    };
+    // Allows Angular to disable the input.
+    DatePickerComponent.prototype.setDisabledState = function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    // Write change back to parent
+    DatePickerComponent.prototype.onDateChange = function (value) {
+        this.onChange(value);
+    };
+    // Write change back to parent
+    DatePickerComponent.prototype.onDateSelect = function (value) {
+        this.onChange(new Date(value.year, value.month - 1, value.day));
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], DatePickerComponent.prototype, "selectedDate", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], DatePickerComponent.prototype, "placeholder", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], DatePickerComponent.prototype, "id", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Object)
+    ], DatePickerComponent.prototype, "name", void 0);
+    DatePickerComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-date-picker',
+            template: __webpack_require__(/*! ./date-picker.component.html */ "./src/app/shared/date-picker/date-picker.component.html"),
+            providers: [DATEPICKER_VALUE_ACCESSOR],
+            styles: [__webpack_require__(/*! ./date-picker.component.scss */ "./src/app/shared/date-picker/date-picker.component.scss")]
+        })
+    ], DatePickerComponent);
+    return DatePickerComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/directives/sidebar.directive.ts":
 /*!********************************************************!*\
   !*** ./src/app/shared/directives/sidebar.directive.ts ***!
@@ -2731,6 +2847,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./directives/sidebaranchortoggle.directive */ "./src/app/shared/directives/sidebaranchortoggle.directive.ts");
 /* harmony import */ var _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./directives/sidebartoggle.directive */ "./src/app/shared/directives/sidebartoggle.directive.ts");
 /* harmony import */ var app_app_fl__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! app/app.fl */ "./src/app/app.fl.ts");
+/* harmony import */ var angular2_counto__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! angular2-counto */ "./node_modules/angular2-counto/index.js");
+/* harmony import */ var angular2_counto__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(angular2_counto__WEBPACK_IMPORTED_MODULE_22__);
+/* harmony import */ var _toastr_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./toastr.service */ "./src/app/shared/toastr.service.ts");
+/* harmony import */ var _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./date-picker/date-picker.component */ "./src/app/shared/date-picker/date-picker.component.ts");
 
 
 
@@ -2755,6 +2875,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
@@ -2763,23 +2886,29 @@ var SharedModule = /** @class */ (function () {
             exports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"],
                 _footer_footer_component__WEBPACK_IMPORTED_MODULE_10__["FooterComponent"],
                 _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_11__["NavbarComponent"],
                 _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_12__["SidebarComponent"],
                 _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_13__["CustomizerComponent"],
                 angular_datatables__WEBPACK_IMPORTED_MODULE_5__["DataTablesModule"],
                 angular_6_datatable__WEBPACK_IMPORTED_MODULE_6__["DataTableModule"],
+                angular2_counto__WEBPACK_IMPORTED_MODULE_22__["CountoModule"],
                 _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_14__["NotificationSidebarComponent"],
                 _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_15__["ToggleFullscreenDirective"],
                 _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_16__["SidebarDirective"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModule"],
                 app_app_fl__WEBPACK_IMPORTED_MODULE_21__["FlPipe"],
+                _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_24__["DatePickerComponent"],
+                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_9__["PerfectScrollbarModule"],
                 _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"]
             ],
             imports: [
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"],
+                angular2_counto__WEBPACK_IMPORTED_MODULE_22__["CountoModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModule"],
                 angular_datatables__WEBPACK_IMPORTED_MODULE_5__["DataTablesModule"],
                 angular_6_datatable__WEBPACK_IMPORTED_MODULE_6__["DataTableModule"],
@@ -2798,8 +2927,10 @@ var SharedModule = /** @class */ (function () {
                 _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_17__["SidebarLinkDirective"],
                 _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_18__["SidebarListDirective"],
                 _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_19__["SidebarAnchorToggleDirective"],
-                _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_20__["SidebarToggleDirective"]
-            ]
+                _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_20__["SidebarToggleDirective"],
+                _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_24__["DatePickerComponent"]
+            ],
+            providers: [_toastr_service__WEBPACK_IMPORTED_MODULE_23__["NGXToastrService"], { provide: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbDateAdapter"], useClass: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbDateNativeAdapter"] }]
         })
     ], SharedModule);
     return SharedModule;
@@ -2999,6 +3130,95 @@ var SidebarComponent = /** @class */ (function () {
             _services_layout_service__WEBPACK_IMPORTED_MODULE_7__["LayoutService"]])
     ], SidebarComponent);
     return SidebarComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/toastr.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/shared/toastr.service.ts ***!
+  \******************************************/
+/*! exports provided: NGXToastrService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NGXToastrService", function() { return NGXToastrService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+
+var NGXToastrService = /** @class */ (function () {
+    function NGXToastrService(toastr) {
+        this.toastr = toastr;
+    }
+    // Success Type
+    NGXToastrService.prototype.typeSuccess = function () {
+        this.toastr.success('You are awesome!', 'Success!');
+    };
+    // Success Type
+    NGXToastrService.prototype.typeInfo = function () {
+        this.toastr.info('We do have the Kapua suite available.', 'Turtle Bay Resort');
+    };
+    // Success Type
+    NGXToastrService.prototype.typeWarning = function () {
+        this.toastr.warning('My name is Inigo Montoya. You killed my father, prepare to die!');
+    };
+    // Success Type
+    NGXToastrService.prototype.typeError = function () {
+        this.toastr.error('I do not think that word means what you think it means.', 'Inconceivable!');
+    };
+    // Custom Type
+    NGXToastrService.prototype.typeCustom = function () {
+        this.toastr.success('<span class="text-danger">Message in red.</span>', null, { enableHtml: true });
+    };
+    //Progress bar
+    NGXToastrService.prototype.progressBar = function () {
+        this.toastr.info('We do have the Kapua suite available.', 'Turtle Bay Resort', { "progressBar": true });
+    };
+    // Timeout
+    NGXToastrService.prototype.timeout = function () {
+        this.toastr.error('I do not think that word means what you think it means.', 'Timeout!', { "timeOut": 2000 });
+    };
+    //Dismiss toastr on Click
+    NGXToastrService.prototype.dismissToastOnClick = function () {
+        this.toastr.info('We do have the Kapua suite available.', 'Turtle Bay Resort', { "tapToDismiss": true });
+    };
+    // Remove current toasts using animation
+    NGXToastrService.prototype.clearToast = function () {
+        this.toastr.clear();
+    };
+    // Show close button
+    NGXToastrService.prototype.showCloseButton = function () {
+        this.toastr.info('Have fun storming the castle!', 'Miracle Max Says', { closeButton: true });
+    };
+    // Enable  HTML
+    NGXToastrService.prototype.enableHtml = function () {
+        this.toastr.info('<i>Have fun <b>storming</b> the castle!</i>', 'Miracle Max Says', { enableHtml: true });
+    };
+    // Title Class
+    NGXToastrService.prototype.titleClass = function () {
+        this.toastr.info('Have fun storming the castle!', 'Miracle Max Says', { titleClass: 'h3' });
+    };
+    // Message Class
+    NGXToastrService.prototype.messageClass = function () {
+        this.toastr.info('Have fun storming the castle!', 'Miracle Max Says', { messageClass: 'text-uppercase' });
+    };
+    NGXToastrService.prototype.onSuccessToastr = function (entity) {
+        this.toastr.success(entity + " was succesfully saved to the database.", 'Successfully saved', { titleClass: 'h5', 'progressBar': true });
+    };
+    NGXToastrService.prototype.onErrorToastr = function () {
+        this.toastr.error("'Please check your internet connection.'", 'Something went wrong', { titleClass: 'h4' });
+    };
+    NGXToastrService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_toastr__WEBPACK_IMPORTED_MODULE_1__["ToastrService"]])
+    ], NGXToastrService);
+    return NGXToastrService;
 }());
 
 

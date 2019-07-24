@@ -74,6 +74,49 @@ export interface IResourceList {
   companyId: string;
   company: string;
   resourceManagerId: string;
+  resourceManager: {
+    resourceId: string;
+    resourceNumber: string;
+    resourceEmailAddress: string;
+    employeeRef: string;
+    resourceStartDate: string;
+    resourceEndDate: string;
+    platformId: string;
+    agency: string;
+    vendor: string;
+    locationName: string;
+    location: string;
+    billable: boolean
+    isDisabled: boolean
+    employeeJobTitle: string;
+    resourceRateCardId: string;
+    companyRateCard: {
+      companyRateCardId: string;
+      companyRateCardCode: string;
+      companyId: string;
+      employeeJobTitleOrGradeOrBand: string;
+      locationForGradeOnshoreOffShore: string;
+      isContractor: boolean;
+      dailyRate: number;
+    }
+    contractedHours: number
+    resourceContractEffortInPercentage: number
+    resourceType: string;
+    employeeType: string;
+    companyId: string;
+    company: string;
+    resourceManagerId: string;
+    firstName: string;
+    lastName: string;
+    imageCaption: string;
+    imageName: string;
+    imageUrl: string;
+    imageId: string;
+    avatarImage: any;
+    displayName: string;
+    gender: string;
+    isAppUser: boolean;
+  }
   firstName: string;
   lastName: string;
   imageCaption: string;
@@ -130,6 +173,49 @@ export class Resource {
   companyId: string;
   company: string;
   resourceManagerId: string;
+  resourceManager: {
+    resourceId: string;
+    resourceNumber: string;
+    resourceEmailAddress: string;
+    employeeRef: string;
+    resourceStartDate: string;
+    resourceEndDate: string;
+    platformId: string;
+    agency: string;
+    vendor: string;
+    locationName: string;
+    location: string;
+    billable: boolean
+    isDisabled: boolean
+    employeeJobTitle: string;
+    resourceRateCardId: string;
+    companyRateCard: {
+      companyRateCardId: string;
+      companyRateCardCode: string;
+      companyId: string;
+      employeeJobTitleOrGradeOrBand: string;
+      locationForGradeOnshoreOffShore: string;
+      isContractor: boolean;
+      dailyRate: number;
+    }
+    contractedHours: number
+    resourceContractEffortInPercentage: number
+    resourceType: string;
+    employeeType: string;
+    companyId: string;
+    company: string;
+    resourceManagerId: string;
+    firstName: string;
+    lastName: string;
+    imageCaption: string;
+    imageName: string;
+    imageUrl: string;
+    imageId: string;
+    avatarImage: any;
+    displayName: string;
+    gender: string;
+    isAppUser: boolean;
+  }
   firstName: string;
   lastName: string;
   imageCaption: string;

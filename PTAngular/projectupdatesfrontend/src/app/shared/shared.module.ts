@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
 import { DataTableModule } from 'angular-6-datatable';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDateAdapter, NgbDateNativeAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
@@ -27,6 +27,7 @@ import { SidebarToggleDirective } from './directives/sidebartoggle.directive';
 import { FlPipe } from 'app/app.fl';
 import { CountoModule } from 'angular2-counto';
 import { NGXToastrService } from './toastr.service';
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @NgModule({
     exports: [
@@ -45,6 +46,7 @@ import { NGXToastrService } from './toastr.service';
         SidebarDirective,
         NgbModule,
         FlPipe,
+        DatePickerComponent,
         PerfectScrollbarModule,
         TranslateModule
     ],
@@ -72,8 +74,9 @@ import { NGXToastrService } from './toastr.service';
         SidebarLinkDirective,
         SidebarListDirective,
         SidebarAnchorToggleDirective,
-        SidebarToggleDirective
+        SidebarToggleDirective,
+        DatePickerComponent
     ],
-    providers: [NGXToastrService]
+    providers: [NGXToastrService, {provide: NgbDateAdapter, useClass: NgbDateNativeAdapter}]
 })
 export class SharedModule { }

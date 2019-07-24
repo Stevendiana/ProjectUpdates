@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IResource, IResourceList, Resource } from './resource';
+import { IResource, IResourceList } from './resource';
 import { Http, RequestOptions, ResponseContentType } from '@angular/http';
 import { AuthService } from 'app/shared/auth/auth.service';
 import { catchError, map } from 'rxjs/operators';
@@ -29,11 +29,11 @@ export class ResourceService {
     resources: IResource[]
   };
   public resourceListStore: {
-    resourcesandrates: any[]
+    resourcesandrates: IResourceList[]
   };
 
   public rateCardStore: {
-    rateCards: any[]
+    rateCards: IRateCard[]
   };
 
 
@@ -260,8 +260,8 @@ export class ResourceService {
       resourceNumber: '',
       resourceEmailAddress: '',
       employeeRef: '',
-      resourceStartDate: '',
-      resourceEndDate: '',
+      resourceStartDate: new Date().toISOString(),
+      resourceEndDate: new Date().toISOString(),
       imageUrl: '',
       platformId: '',
       agency: '',

@@ -241,7 +241,7 @@ namespace PTApi.Controllers
                     var allResources =  _unitOfWork.Resources.GetAllResources(comp);
 
                    
-                    var result = _mapper.Map<IEnumerable<Resource>, IEnumerable<ResourceAdminViewModel>>(allResources);
+                    var result = _mapper.Map<IEnumerable<Resource>, IEnumerable<ResourceViewModel>>(allResources);
                     return Ok(result);
                     //return allResources.Select(Mapper.Map<Resource, ResourceAdminViewModel>);
                 }

@@ -1,0 +1,18 @@
+<div class="input-group mb-0">
+  <input
+  class="form-control"
+  placeholder="{{placeholder}}"
+  id="{{id}}"
+  name="{{name}}"
+  [value]="selectedDate"
+
+  (change)="onDateChange($event.target.value)"
+  (dateSelect)="onDateSelect($event)"
+  ngbDatepicker #ed="ngbDatepicker">
+
+  <div class="input-group-append">
+    <div class="input-group-text" (click)="ed.toggle()">
+      <i class="fa fa-calendar" style="cursor: pointer;"></i>
+    </div>
+  </div>
+</div>

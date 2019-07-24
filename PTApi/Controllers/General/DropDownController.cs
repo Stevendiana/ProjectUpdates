@@ -51,9 +51,12 @@ namespace PTApi.Controllers
                 List<EnumValue> values = new List<EnumValue>();
                 foreach (var itemType in Enum.GetValues(typeof(T)))
                 {
+                   
                     //For each value of this enumeration, add a new EnumValue instance
                     values.Add(new EnumValue()
                     {
+                         //if (Enum.GetValues(typeof(T)).HasFlag(itemType.);
+
                         Name = Enum.GetName(typeof(T), itemType),
                         Value = (int)itemType
                     });

@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hierarchy_hierarchy_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./hierarchy/hierarchy.component */ "./src/app/admin/hierarchy/hierarchy.component.ts");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _resource_resource_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./resource/resource.component */ "./src/app/admin/resource/resource.component.ts");
+/* harmony import */ var _resources_resource_resource_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../resources/resource/resource.component */ "./src/app/resources/resource/resource.component.ts");
 /* harmony import */ var _upload_centre_upload_centre_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./upload-centre/upload-centre.component */ "./src/app/admin/upload-centre/upload-centre.component.ts");
 
 
@@ -35,7 +35,7 @@ var routes = [
             },
             {
                 path: 'resource',
-                component: _resource_resource_component__WEBPACK_IMPORTED_MODULE_4__["ResourceComponent"],
+                component: _resources_resource_resource_component__WEBPACK_IMPORTED_MODULE_4__["ResourceComponent"],
                 data: {
                     title: 'Resource'
                 }
@@ -92,18 +92,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _portfolio_portfolio_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./portfolio/portfolio.component */ "./src/app/admin/portfolio/portfolio.component.ts");
 /* harmony import */ var _programme_programme_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./programme/programme.component */ "./src/app/admin/programme/programme.component.ts");
 /* harmony import */ var _project_project_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./project/project.component */ "./src/app/admin/project/project.component.ts");
-/* harmony import */ var _resource_resource_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./resource/resource.component */ "./src/app/admin/resource/resource.component.ts");
-/* harmony import */ var _resource_resource_resource_resource_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./resource-resource/resource-resource.component */ "./src/app/admin/resource-resource/resource-resource.component.ts");
-/* harmony import */ var _resource_platform_resource_platform_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./resource-platform/resource-platform.component */ "./src/app/admin/resource-platform/resource-platform.component.ts");
-/* harmony import */ var _resource_user_resource_user_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./resource-user/resource-user.component */ "./src/app/admin/resource-user/resource-user.component.ts");
-/* harmony import */ var _upload_centre_upload_centre_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./upload-centre/upload-centre.component */ "./src/app/admin/upload-centre/upload-centre.component.ts");
-/* harmony import */ var _upload_centre_actual_upload_centre_actual_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./upload-centre-actual/upload-centre-actual.component */ "./src/app/admin/upload-centre-actual/upload-centre-actual.component.ts");
-/* harmony import */ var _compan_settings_compan_settings_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./compan-settings/compan-settings.component */ "./src/app/admin/compan-settings/compan-settings.component.ts");
-/* harmony import */ var ng_chartist__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ng-chartist */ "./node_modules/ng-chartist/dist/ng-chartist.js");
-/* harmony import */ var ng_chartist__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(ng_chartist__WEBPACK_IMPORTED_MODULE_17__);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var app_shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! app/shared/directives/match-height.directive */ "./src/app/shared/directives/match-height.directive.ts");
-
+/* harmony import */ var _resource_resource_resource_resource_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./resource-resource/resource-resource.component */ "./src/app/admin/resource-resource/resource-resource.component.ts");
+/* harmony import */ var _resource_platform_resource_platform_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./resource-platform/resource-platform.component */ "./src/app/admin/resource-platform/resource-platform.component.ts");
+/* harmony import */ var _resource_user_resource_user_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./resource-user/resource-user.component */ "./src/app/admin/resource-user/resource-user.component.ts");
+/* harmony import */ var _upload_centre_upload_centre_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./upload-centre/upload-centre.component */ "./src/app/admin/upload-centre/upload-centre.component.ts");
+/* harmony import */ var _upload_centre_actual_upload_centre_actual_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./upload-centre-actual/upload-centre-actual.component */ "./src/app/admin/upload-centre-actual/upload-centre-actual.component.ts");
+/* harmony import */ var _compan_settings_compan_settings_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./compan-settings/compan-settings.component */ "./src/app/admin/compan-settings/compan-settings.component.ts");
+/* harmony import */ var ng_chartist__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ng-chartist */ "./node_modules/ng-chartist/dist/ng-chartist.js");
+/* harmony import */ var ng_chartist__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(ng_chartist__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var app_shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! app/shared/directives/match-height.directive */ "./src/app/shared/directives/match-height.directive.ts");
 
 
 
@@ -130,16 +128,16 @@ var AdminModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
             declarations: [
                 _hierarchy_hierarchy_component__WEBPACK_IMPORTED_MODULE_4__["HierarchyComponent"], _domain_domain_component__WEBPACK_IMPORTED_MODULE_5__["DomainComponent"], _businessunit_businessunit_component__WEBPACK_IMPORTED_MODULE_6__["BusinessunitComponent"],
-                _portfolio_portfolio_component__WEBPACK_IMPORTED_MODULE_7__["PortfolioComponent"], _programme_programme_component__WEBPACK_IMPORTED_MODULE_8__["ProgrammeComponent"], _project_project_component__WEBPACK_IMPORTED_MODULE_9__["ProjectComponent"], _resource_resource_component__WEBPACK_IMPORTED_MODULE_10__["ResourceComponent"],
-                _resource_resource_resource_resource_component__WEBPACK_IMPORTED_MODULE_11__["ResourceResourceComponent"], _resource_platform_resource_platform_component__WEBPACK_IMPORTED_MODULE_12__["ResourcePlatformComponent"], _resource_user_resource_user_component__WEBPACK_IMPORTED_MODULE_13__["ResourceUserComponent"],
-                _upload_centre_upload_centre_component__WEBPACK_IMPORTED_MODULE_14__["UploadCentreComponent"], _upload_centre_actual_upload_centre_actual_component__WEBPACK_IMPORTED_MODULE_15__["UploadCentreActualComponent"], _compan_settings_compan_settings_component__WEBPACK_IMPORTED_MODULE_16__["CompanSettingsComponent"]
+                _portfolio_portfolio_component__WEBPACK_IMPORTED_MODULE_7__["PortfolioComponent"], _programme_programme_component__WEBPACK_IMPORTED_MODULE_8__["ProgrammeComponent"], _project_project_component__WEBPACK_IMPORTED_MODULE_9__["ProjectComponent"],
+                _resource_resource_resource_resource_component__WEBPACK_IMPORTED_MODULE_10__["ResourceResourceComponent"], _resource_platform_resource_platform_component__WEBPACK_IMPORTED_MODULE_11__["ResourcePlatformComponent"], _resource_user_resource_user_component__WEBPACK_IMPORTED_MODULE_12__["ResourceUserComponent"],
+                _upload_centre_upload_centre_component__WEBPACK_IMPORTED_MODULE_13__["UploadCentreComponent"], _upload_centre_actual_upload_centre_actual_component__WEBPACK_IMPORTED_MODULE_14__["UploadCentreActualComponent"], _compan_settings_compan_settings_component__WEBPACK_IMPORTED_MODULE_15__["CompanSettingsComponent"]
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"],
                 _admin_routing_module__WEBPACK_IMPORTED_MODULE_1__["AdminRoutingModule"],
-                ng_chartist__WEBPACK_IMPORTED_MODULE_17__["ChartistModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_18__["NgbModule"],
-                app_shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_19__["MatchHeightModule"]
+                ng_chartist__WEBPACK_IMPORTED_MODULE_16__["ChartistModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_17__["NgbModule"],
+                app_shared_directives_match_height_directive__WEBPACK_IMPORTED_MODULE_18__["MatchHeightModule"]
             ]
         })
     ], AdminModule);
@@ -710,62 +708,6 @@ var ResourceUserComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/admin/resource/resource.component.html":
-/*!********************************************************!*\
-  !*** ./src/app/admin/resource/resource.component.html ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\r\n  resource works!\r\n</p>\r\n"
-
-/***/ }),
-
-/***/ "./src/app/admin/resource/resource.component.scss":
-/*!********************************************************!*\
-  !*** ./src/app/admin/resource/resource.component.scss ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FkbWluL3Jlc291cmNlL3Jlc291cmNlLmNvbXBvbmVudC5zY3NzIn0= */"
-
-/***/ }),
-
-/***/ "./src/app/admin/resource/resource.component.ts":
-/*!******************************************************!*\
-  !*** ./src/app/admin/resource/resource.component.ts ***!
-  \******************************************************/
-/*! exports provided: ResourceComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceComponent", function() { return ResourceComponent; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-
-
-var ResourceComponent = /** @class */ (function () {
-    function ResourceComponent() {
-    }
-    ResourceComponent.prototype.ngOnInit = function () {
-    };
-    ResourceComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-resource',
-            template: __webpack_require__(/*! ./resource.component.html */ "./src/app/admin/resource/resource.component.html"),
-            styles: [__webpack_require__(/*! ./resource.component.scss */ "./src/app/admin/resource/resource.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
-    ], ResourceComponent);
-    return ResourceComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/admin/upload-centre-actual/upload-centre-actual.component.html":
 /*!********************************************************************************!*\
   !*** ./src/app/admin/upload-centre-actual/upload-centre-actual.component.html ***!
@@ -872,92 +814,6 @@ var UploadCentreComponent = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
     ], UploadCentreComponent);
     return UploadCentreComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/shared/directives/match-height.directive.ts":
-/*!*************************************************************!*\
-  !*** ./src/app/shared/directives/match-height.directive.ts ***!
-  \*************************************************************/
-/*! exports provided: MatchHeightDirective, MatchHeightModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatchHeightDirective", function() { return MatchHeightDirective; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatchHeightModule", function() { return MatchHeightModule; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-
-
-var MatchHeightDirective = /** @class */ (function () {
-    function MatchHeightDirective(el) {
-        this.el = el;
-    }
-    MatchHeightDirective.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        // call our matchHeight function here
-        setTimeout(function () { _this.matchHeights(_this.el.nativeElement, _this.matchHeight); }, 300);
-    };
-    MatchHeightDirective.prototype.matchHeights = function (parent, className) {
-        // match height logic here
-        if (!parent)
-            return;
-        // step 1: find all the child elements with the selected class name
-        var children = parent.getElementsByClassName(className);
-        if (!children)
-            return;
-        //Pixinvent - Match hight - fix --- comment below code
-        Array.from(children).forEach(function (x) {
-            x.style.height = 'initial';
-        });
-        // step 2a: get all the child elements heights
-        var itemHeights = Array.from(children)
-            .map(function (x) { return x.getBoundingClientRect().height; });
-        // step 2b: find out the tallest
-        var maxHeight = itemHeights.reduce(function (prev, curr) {
-            return curr > prev ? curr : prev;
-        }, 0);
-        // step 3: update all the child elements to the tallest height
-        Array.from(children)
-            .forEach(function (x) { return x.style.height = maxHeight + "px"; });
-    };
-    MatchHeightDirective.prototype.onResize = function () {
-        // call our matchHeight function here
-        this.matchHeights(this.el.nativeElement, this.matchHeight);
-    };
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", String)
-    ], MatchHeightDirective.prototype, "matchHeight", void 0);
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('window:resize'),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", []),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:returntype", void 0)
-    ], MatchHeightDirective.prototype, "onResize", null);
-    MatchHeightDirective = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
-            selector: '[matchHeight]'
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]])
-    ], MatchHeightDirective);
-    return MatchHeightDirective;
-}());
-
-var MatchHeightModule = /** @class */ (function () {
-    function MatchHeightModule() {
-    }
-    MatchHeightModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [MatchHeightDirective],
-            exports: [MatchHeightDirective]
-        })
-    ], MatchHeightModule);
-    return MatchHeightModule;
 }());
 
 
