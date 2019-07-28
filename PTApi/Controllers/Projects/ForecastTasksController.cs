@@ -623,7 +623,7 @@ namespace PTApi.Controllers
             _unitOfWork.LifetimeForecast.Update(forecasttask);
 
             var resourceStandardHrs = (resource.ResourceContractEffortInPercentage ?? 100) / 100 * CompanyStandardHrs;
-            var resourceUtil = _unitOfWork.ResourceUtilizations.GetOneResourceUtilization(resource.ResourceId, oldforecasttask.Year);
+            var resourceUtil = _unitOfWork.ResourceUtilizations.GetOneResourceUtilizationOneyear(resource.ResourceId, oldforecasttask.Year);
             var Util = _resourceService.CalculateResourceUtilAvail(resourceUtil, resource.ResourceId, comp, oldforecasttask.Year, resourceStandardHrs, CompanyStandardHrs);
 
             _unitOfWork.ResourceUtilizations.Update(Util);
@@ -711,7 +711,7 @@ namespace PTApi.Controllers
             _unitOfWork.LifetimeForecast.Add(newforecast);
 
             var resourceStandardHrs = (resource.ResourceContractEffortInPercentage ?? 100) / 100 * CompanyStandardHrs;
-            var resourceUtil = _unitOfWork.ResourceUtilizations.GetOneResourceUtilization(resource.ResourceId, newforecast.Year);
+            var resourceUtil = _unitOfWork.ResourceUtilizations.GetOneResourceUtilizationOneyear(resource.ResourceId, newforecast.Year);
             var Util = _resourceService.CalculateResourceUtilAvail(resourceUtil, resource.ResourceId, comp, newforecast.Year, resourceStandardHrs, CompanyStandardHrs);
 
             _unitOfWork.ResourceUtilizations.Update(Util);

@@ -361,6 +361,50 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/app.showin.ts":
+/*!*******************************!*\
+  !*** ./src/app/app.showin.ts ***!
+  \*******************************/
+/*! exports provided: ShowinPipe */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ShowinPipe", function() { return ShowinPipe; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var ShowinPipe = /** @class */ (function () {
+    function ShowinPipe() {
+    }
+    ShowinPipe.prototype.transform = function (val, si) {
+        if (si === 'days') {
+            var res = val;
+            return res;
+        }
+        if (si === 'hours') {
+            var res = val * 8;
+            return res;
+        }
+        if (si === 'FTE') {
+            var res = val / 21.6667;
+            return res;
+        }
+        return;
+    };
+    ShowinPipe = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Pipe"])({
+            name: 'showin'
+        })
+    ], ShowinPipe);
+    return ShowinPipe;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/layouts/content/content-layout.component.html":
 /*!***************************************************************!*\
   !*** ./src/app/layouts/content/content-layout.component.html ***!
@@ -775,10 +819,12 @@ var AuthGuard = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+
 
 
 
@@ -788,7 +834,8 @@ var AuthService = /** @class */ (function () {
     function AuthService(http, router) {
         this.http = http;
         this.router = router;
-        this.BASE_URL = 'http://localhost:53956/api'; // 61646
+        this.BASE_URL = environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].baseurl;
+        // BASE_URL = 'http://localhost:53956/api'; // 61646
         // BASE_URL = 'https://myprojectapplicationbackend.azurewebsites.net/api';
         this.TOKEN_KEY = 'token';
         this.FIRSTNAME_KEY = 'firstname';
@@ -934,15 +981,19 @@ var AuthService = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(AuthService.prototype, "tokenHeader", {
-        // get tokenHeader() {
-        //   const header = new Headers({'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY),
-        //   'Content-Type': 'application/json'});
-        //   return new RequestOptions({ headers: header});
-        // }
+    Object.defineProperty(AuthService.prototype, "tokenHttpClientHeader", {
         get: function () {
-            var header = new _angular_http__WEBPACK_IMPORTED_MODULE_4__["Headers"]({ 'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY) });
-            return new _angular_http__WEBPACK_IMPORTED_MODULE_4__["RequestOptions"]({ headers: header });
+            var header = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({ 'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY),
+                'Content-Type': 'application/json' });
+            return ({ headers: header });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AuthService.prototype, "tokenHeader", {
+        get: function () {
+            var header = new _angular_http__WEBPACK_IMPORTED_MODULE_5__["Headers"]({ 'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY) });
+            return new _angular_http__WEBPACK_IMPORTED_MODULE_5__["RequestOptions"]({ headers: header });
         },
         enumerable: true,
         configurable: true
@@ -950,8 +1001,8 @@ var AuthService = /** @class */ (function () {
     Object.defineProperty(AuthService.prototype, "tokenHeaderWithType", {
         get: function () {
             // tslint:disable-next-line:prefer-const
-            var options = new _angular_http__WEBPACK_IMPORTED_MODULE_4__["RequestOptions"]();
-            options.headers = new _angular_http__WEBPACK_IMPORTED_MODULE_4__["Headers"]();
+            var options = new _angular_http__WEBPACK_IMPORTED_MODULE_5__["RequestOptions"]();
+            options.headers = new _angular_http__WEBPACK_IMPORTED_MODULE_5__["Headers"]();
             options.headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.TOKEN_KEY));
             options.headers.append('Content-Type', 'application/json; charset=utf-8');
             return options;
@@ -1061,7 +1112,7 @@ var AuthService = /** @class */ (function () {
         localStorage.setItem(this.WORKWEEKEND_KEY, authResponseSerialised.doEmployeesWorkWeekends);
     };
     AuthService.prototype.isAO = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].AccountOwner) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].AccountOwner) {
             return true;
         }
         else {
@@ -1069,7 +1120,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isSA = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SeniorProjectManager) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].SeniorProjectManager) {
             return true;
         }
         else {
@@ -1077,7 +1128,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isA = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].Admin) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].Admin) {
             return true;
         }
         else {
@@ -1085,7 +1136,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isPM = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ProjectManager) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ProjectManager) {
             return true;
         }
         else {
@@ -1093,7 +1144,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isSPM = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SeniorProjectManager) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].SeniorProjectManager) {
             return true;
         }
         else {
@@ -1101,7 +1152,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isPA = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].PortfolioAdmin) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].PortfolioAdmin) {
             return true;
         }
         else {
@@ -1109,7 +1160,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isFA = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceAdmin) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].FinanceAdmin) {
             return true;
         }
         else {
@@ -1117,7 +1168,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isFM = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceManager) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].FinanceManager) {
             return true;
         }
         else {
@@ -1125,7 +1176,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isRO = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ReadOnly) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ReadOnly) {
             return true;
         }
         else {
@@ -1134,9 +1185,9 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.isPort = function () {
         var role = localStorage.getItem(this.ROL_KEY);
-        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ProjectManager ||
-            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SeniorProjectManager ||
-            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].PortfolioAdmin) {
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ProjectManager ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].SeniorProjectManager ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].PortfolioAdmin) {
             return true;
         }
         else {
@@ -1144,7 +1195,7 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService.prototype.isTSO = function () {
-        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].ReadWriteTimesheetOnly) {
+        if (localStorage.getItem(this.ROL_KEY) === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].ReadWriteTimesheetOnly) {
             return true;
         }
         else {
@@ -1153,8 +1204,8 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.isSAdmin = function () {
         var role = localStorage.getItem(this.ROL_KEY);
-        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].AccountOwner ||
-            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SuperAdmin) {
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].AccountOwner ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].SuperAdmin) {
             return true;
         }
         else {
@@ -1163,10 +1214,10 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.isGeneralFinanceAdmin = function () {
         var role = localStorage.getItem(this.ROL_KEY);
-        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].AccountOwner ||
-            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].SuperAdmin ||
-            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceAdmin ||
-            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceManager) {
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].AccountOwner ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].SuperAdmin ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].FinanceAdmin ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].FinanceManager) {
             return true;
         }
         else {
@@ -1175,8 +1226,8 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.isFin = function () {
         var role = localStorage.getItem(this.ROL_KEY);
-        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceAdmin ||
-            role === environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].FinanceManager) {
+        if (role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].FinanceAdmin ||
+            role === environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].FinanceManager) {
             return true;
         }
         else {
@@ -1184,8 +1235,8 @@ var AuthService = /** @class */ (function () {
         }
     };
     AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_4__["Http"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_5__["Http"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], AuthService);
     return AuthService;
 }());
@@ -2825,32 +2876,34 @@ var LayoutService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SharedModule", function() { return SharedModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
-/* harmony import */ var angular_6_datatable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-6-datatable */ "./node_modules/angular-6-datatable/index.js");
-/* harmony import */ var angular_6_datatable__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(angular_6_datatable__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
-/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
-/* harmony import */ var _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/shared/navbar/navbar.component.ts");
-/* harmony import */ var _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./sidebar/sidebar.component */ "./src/app/shared/sidebar/sidebar.component.ts");
-/* harmony import */ var _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./customizer/customizer.component */ "./src/app/shared/customizer/customizer.component.ts");
-/* harmony import */ var _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./notification-sidebar/notification-sidebar.component */ "./src/app/shared/notification-sidebar/notification-sidebar.component.ts");
-/* harmony import */ var _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./directives/toggle-fullscreen.directive */ "./src/app/shared/directives/toggle-fullscreen.directive.ts");
-/* harmony import */ var _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./directives/sidebar.directive */ "./src/app/shared/directives/sidebar.directive.ts");
-/* harmony import */ var _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./directives/sidebarlink.directive */ "./src/app/shared/directives/sidebarlink.directive.ts");
-/* harmony import */ var _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./directives/sidebarlist.directive */ "./src/app/shared/directives/sidebarlist.directive.ts");
-/* harmony import */ var _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./directives/sidebaranchortoggle.directive */ "./src/app/shared/directives/sidebaranchortoggle.directive.ts");
-/* harmony import */ var _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./directives/sidebartoggle.directive */ "./src/app/shared/directives/sidebartoggle.directive.ts");
-/* harmony import */ var app_app_fl__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! app/app.fl */ "./src/app/app.fl.ts");
-/* harmony import */ var angular2_counto__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! angular2-counto */ "./node_modules/angular2-counto/index.js");
-/* harmony import */ var angular2_counto__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(angular2_counto__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _toastr_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./toastr.service */ "./src/app/shared/toastr.service.ts");
-/* harmony import */ var _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./date-picker/date-picker.component */ "./src/app/shared/date-picker/date-picker.component.ts");
+/* harmony import */ var _app_showin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../app.showin */ "./src/app/app.showin.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var angular_6_datatable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! angular-6-datatable */ "./node_modules/angular-6-datatable/index.js");
+/* harmony import */ var angular_6_datatable__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(angular_6_datatable__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-perfect-scrollbar */ "./node_modules/ngx-perfect-scrollbar/dist/ngx-perfect-scrollbar.es5.js");
+/* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
+/* harmony import */ var _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./navbar/navbar.component */ "./src/app/shared/navbar/navbar.component.ts");
+/* harmony import */ var _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./sidebar/sidebar.component */ "./src/app/shared/sidebar/sidebar.component.ts");
+/* harmony import */ var _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./customizer/customizer.component */ "./src/app/shared/customizer/customizer.component.ts");
+/* harmony import */ var _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./notification-sidebar/notification-sidebar.component */ "./src/app/shared/notification-sidebar/notification-sidebar.component.ts");
+/* harmony import */ var _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./directives/toggle-fullscreen.directive */ "./src/app/shared/directives/toggle-fullscreen.directive.ts");
+/* harmony import */ var _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./directives/sidebar.directive */ "./src/app/shared/directives/sidebar.directive.ts");
+/* harmony import */ var _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./directives/sidebarlink.directive */ "./src/app/shared/directives/sidebarlink.directive.ts");
+/* harmony import */ var _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./directives/sidebarlist.directive */ "./src/app/shared/directives/sidebarlist.directive.ts");
+/* harmony import */ var _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./directives/sidebaranchortoggle.directive */ "./src/app/shared/directives/sidebaranchortoggle.directive.ts");
+/* harmony import */ var _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./directives/sidebartoggle.directive */ "./src/app/shared/directives/sidebartoggle.directive.ts");
+/* harmony import */ var app_app_fl__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! app/app.fl */ "./src/app/app.fl.ts");
+/* harmony import */ var angular2_counto__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! angular2-counto */ "./node_modules/angular2-counto/index.js");
+/* harmony import */ var angular2_counto__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(angular2_counto__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _toastr_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./toastr.service */ "./src/app/shared/toastr.service.ts");
+/* harmony import */ var _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./date-picker/date-picker.component */ "./src/app/shared/date-picker/date-picker.component.ts");
+
 
 
 
@@ -2882,55 +2935,57 @@ var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
     SharedModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"])({
             exports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"],
-                _footer_footer_component__WEBPACK_IMPORTED_MODULE_10__["FooterComponent"],
-                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_11__["NavbarComponent"],
-                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_12__["SidebarComponent"],
-                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_13__["CustomizerComponent"],
-                angular_datatables__WEBPACK_IMPORTED_MODULE_5__["DataTablesModule"],
-                angular_6_datatable__WEBPACK_IMPORTED_MODULE_6__["DataTableModule"],
-                angular2_counto__WEBPACK_IMPORTED_MODULE_22__["CountoModule"],
-                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_14__["NotificationSidebarComponent"],
-                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_15__["ToggleFullscreenDirective"],
-                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_16__["SidebarDirective"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModule"],
-                app_app_fl__WEBPACK_IMPORTED_MODULE_21__["FlPipe"],
-                _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_24__["DatePickerComponent"],
-                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_9__["PerfectScrollbarModule"],
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"]
+                _angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
+                _footer_footer_component__WEBPACK_IMPORTED_MODULE_11__["FooterComponent"],
+                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_12__["NavbarComponent"],
+                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_13__["SidebarComponent"],
+                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_14__["CustomizerComponent"],
+                angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTablesModule"],
+                angular_6_datatable__WEBPACK_IMPORTED_MODULE_7__["DataTableModule"],
+                angular2_counto__WEBPACK_IMPORTED_MODULE_23__["CountoModule"],
+                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_15__["NotificationSidebarComponent"],
+                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_16__["ToggleFullscreenDirective"],
+                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_17__["SidebarDirective"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__["NgbModule"],
+                app_app_fl__WEBPACK_IMPORTED_MODULE_22__["FlPipe"],
+                _app_showin__WEBPACK_IMPORTED_MODULE_1__["ShowinPipe"],
+                _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_25__["DatePickerComponent"],
+                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_10__["PerfectScrollbarModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__["TranslateModule"]
             ],
             imports: [
-                _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"],
-                _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"],
-                angular2_counto__WEBPACK_IMPORTED_MODULE_22__["CountoModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormsModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModule"],
-                angular_datatables__WEBPACK_IMPORTED_MODULE_5__["DataTablesModule"],
-                angular_6_datatable__WEBPACK_IMPORTED_MODULE_6__["DataTableModule"],
-                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"],
-                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_9__["PerfectScrollbarModule"]
+                _angular_router__WEBPACK_IMPORTED_MODULE_5__["RouterModule"],
+                _angular_common__WEBPACK_IMPORTED_MODULE_4__["CommonModule"],
+                angular2_counto__WEBPACK_IMPORTED_MODULE_23__["CountoModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__["NgbModule"],
+                angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTablesModule"],
+                angular_6_datatable__WEBPACK_IMPORTED_MODULE_7__["DataTableModule"],
+                _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__["TranslateModule"],
+                ngx_perfect_scrollbar__WEBPACK_IMPORTED_MODULE_10__["PerfectScrollbarModule"]
             ],
             declarations: [
-                app_app_fl__WEBPACK_IMPORTED_MODULE_21__["FlPipe"],
-                _footer_footer_component__WEBPACK_IMPORTED_MODULE_10__["FooterComponent"],
-                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_11__["NavbarComponent"],
-                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_12__["SidebarComponent"],
-                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_13__["CustomizerComponent"],
-                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_14__["NotificationSidebarComponent"],
-                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_15__["ToggleFullscreenDirective"],
-                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_16__["SidebarDirective"],
-                _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_17__["SidebarLinkDirective"],
-                _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_18__["SidebarListDirective"],
-                _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_19__["SidebarAnchorToggleDirective"],
-                _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_20__["SidebarToggleDirective"],
-                _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_24__["DatePickerComponent"]
+                app_app_fl__WEBPACK_IMPORTED_MODULE_22__["FlPipe"],
+                _app_showin__WEBPACK_IMPORTED_MODULE_1__["ShowinPipe"],
+                _footer_footer_component__WEBPACK_IMPORTED_MODULE_11__["FooterComponent"],
+                _navbar_navbar_component__WEBPACK_IMPORTED_MODULE_12__["NavbarComponent"],
+                _sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_13__["SidebarComponent"],
+                _customizer_customizer_component__WEBPACK_IMPORTED_MODULE_14__["CustomizerComponent"],
+                _notification_sidebar_notification_sidebar_component__WEBPACK_IMPORTED_MODULE_15__["NotificationSidebarComponent"],
+                _directives_toggle_fullscreen_directive__WEBPACK_IMPORTED_MODULE_16__["ToggleFullscreenDirective"],
+                _directives_sidebar_directive__WEBPACK_IMPORTED_MODULE_17__["SidebarDirective"],
+                _directives_sidebarlink_directive__WEBPACK_IMPORTED_MODULE_18__["SidebarLinkDirective"],
+                _directives_sidebarlist_directive__WEBPACK_IMPORTED_MODULE_19__["SidebarListDirective"],
+                _directives_sidebaranchortoggle_directive__WEBPACK_IMPORTED_MODULE_20__["SidebarAnchorToggleDirective"],
+                _directives_sidebartoggle_directive__WEBPACK_IMPORTED_MODULE_21__["SidebarToggleDirective"],
+                _date_picker_date_picker_component__WEBPACK_IMPORTED_MODULE_25__["DatePickerComponent"]
             ],
-            providers: [_toastr_service__WEBPACK_IMPORTED_MODULE_23__["NGXToastrService"], { provide: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbDateAdapter"], useClass: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbDateNativeAdapter"] }]
+            providers: [_toastr_service__WEBPACK_IMPORTED_MODULE_24__["NGXToastrService"], { provide: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__["NgbDateAdapter"], useClass: _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_8__["NgbDateNativeAdapter"] }]
         })
     ], SharedModule);
     return SharedModule;

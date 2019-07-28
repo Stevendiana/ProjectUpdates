@@ -20,6 +20,7 @@ namespace PTApi.Repositories
             return ApplicationDbContext.Resources
                 .Include(d => d.CompanyRateCard)
                 .Include(d => d.ResourceManager)
+                .Include(d => d.ResourceUtilizationSummaries)
                 .SingleOrDefault(d => d.ResourceId == id && d.CompanyId == companyId);
         }
 
@@ -31,11 +32,12 @@ namespace PTApi.Repositories
 
        
 
-        public IEnumerable<Resource> GetAllResources(string companyId)
+        public IEnumerable<Resource> GetAllResources(string companyId, int currentyear)
         {
             return ApplicationDbContext.Resources
                 .Include(d => d.CompanyRateCard)
                 .Include(d => d.ResourceManager)
+                .Include(d => d.ResourceUtilizationSummaries)
                 .Where(r => r.CompanyId == companyId)
                 .OrderByDescending(d => d.ResourceStartDate).ThenBy(r => r.LastName).ToList();
         }

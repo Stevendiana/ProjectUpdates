@@ -1,6 +1,9 @@
+import { value } from './../../shared/data/dropdowns';
+import { AuthService } from 'app/shared/auth/auth.service';
 import { Router } from '@angular/router';
 import { element } from 'protractor';
 import { Subject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ChartEvent, ChartType } from 'ng-chartist';
 import * as Chartist from 'chartist';
@@ -12,6 +15,7 @@ import { DeleteResourceComponent } from '../resource/delete-resource.component';
 import { EditResourceComponent } from '../resource/edit-resource.component';
 import { ResourceComponent } from 'app/resources/resource/resource.component';
 import { IRateCard } from '../rate-card';
+import { IResourceUtilization, ResourceUtilization } from '../resource-utility';
 
 declare var require: any;
 
@@ -34,14 +38,19 @@ export interface Chart {
 export class ResourcesComponent implements OnInit {
 
   resources$ = new Subject<any>();
-  resources: IResourceList[] = [];
+  resources: IResourceList[]  = [];
   ratecards: IRateCard[] = [];
+  util: IResourceUtilization;
+  ut: IResourceUtilization[] = [];
   // res: IResourceList;
   resourceCount: number;
   search: string;
   errorMessage: string;
-  pagelenght = 5;
+  pagelenght = 25;
   closeResult: string;
+  data: any;
+  currentmonthdays = 23;
+  showin = 'days';
 
 
   example: any;
@@ -737,36 +746,75 @@ export class ResourcesComponent implements OnInit {
   };
   // Bar chart configuration Ends
 
-  constructor(private resourcesService: ResourceService,  private router: Router, private modalService: NgbModal ) {
+  constructor(private resourcesService: ResourceService, private auth: AuthService,
+    private router: Router, private modalService: NgbModal ) {
   }
 
   ngOnInit() {
 
-    this.resourcesService.getResourcesAndRates();
-    this.resourcesService.getRateCards();
-    this.getResources();
-    this.getRatecards();
-
     // this.rerender();
+    this.resourcesService.getResourcesUtilization();
 
     setTimeout(() => {
+      this.resourcesService.getResourcesAndRates();
+      this.resourcesService.getRateCards();
 
-    }, 200);
+    }, 250);
 
+    this.getResources();
+    this.getRatecards();
+  }
+
+  percentageUtilization(u, a) {
+
+    let per$ = (u / a) * 100;
+    if (per$ === undefined || Number.isNaN(per$)) {
+     per$ = 0;
+    }
+    return per$;
+  }
+
+  percentageAvailable(c , a) {
+
+    // calculation based on monthly reporting (8 hour days, 5 day week and 52 weeks year)
+
+    if (this.showin === 'days') {
+      c = c;
+    }
+    if (this.showin === 'hours') {
+      c = c * 8;
+    }
+    if (this.showin === 'FTE') {
+      c = c / 21.6667;
+    }
+    let per = (a / c) * 100;
+    if (per === undefined || Number.isNaN(per)) {
+      per = 0;
+    }
+    return per;
   }
 
   getResources(): void {
     this.resourcesService.resourcesandrates.subscribe(resources => {
-      this.resources = resources;
-      this.resources$.next(resources);
-        // this.dtTrigger.next();
+
+      if (resources.length > 0) {
+
+        this.resources = resources;
+        this.resources$.next(resources);
         console.log(this.resources$);
+        console.log(this.resources);
         this.resourceCount = formatNumber(this.resources.length);
+      }
+      return;
+    });
+    this.resourcesService.utils.subscribe(ut => {
 
-      setTimeout(() => {
+      if (ut.length > 0) {
 
-        }, 250);
-
+        this.ut = ut;
+        console.log(this.ut);
+      }
+      return;
     });
   }
 
@@ -778,10 +826,313 @@ export class ResourcesComponent implements OnInit {
     );
   }
 
+  calculateCurrentPeriodUtilization(r: Resource) {
+    const id = r.resourceId;
+    const currentYear = this.auth.reportingYear;
+    const currentperiod = this.auth.reportingPeriod;
+
+    if (this.ut.some(function(x) {return (Number(currentYear) === x.year && x.resourceId === id); })) {
+      // const yu = this.resourcesService.utilitiesByResourceIdOneyear(id, Number(currentYear));
+      const yu = this.ut.filter(x => x.year === Number(currentYear) && x.resourceId === id)[0];
+
+
+      // console.log(yu);
+
+      if (currentperiod === 'January') {
+        return (-yu.janAvailabilityAfterHolidaysInDays + yu.janResourceUtilizationInDays);
+      }
+      if (currentperiod === 'February') {
+        return (-yu.febAvailabilityAfterHolidaysInDays + yu.febResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'March') {
+        return (-yu.marAvailabilityAfterHolidaysInDays + yu.marResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'April') {
+        return (-yu.aprAvailabilityAfterHolidaysInDays + yu.aprResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'May') {
+        return (-yu.mayAvailabilityAfterHolidaysInDays + yu.mayResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'June') {
+        return (-yu.junAvailabilityAfterHolidaysInDays + yu.junResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'July') {
+        return (-yu.julAvailabilityAfterHolidaysInDays + yu.julResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'August') {
+        return (-yu.augAvailabilityAfterHolidaysInDays + yu.augResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'Septemebr') {
+        return (-yu.sepAvailabilityAfterHolidaysInDays + yu.sepResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'October') {
+        return (-yu.octAvailabilityAfterHolidaysInDays + yu.octResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'November') {
+        return (-yu.novAvailabilityAfterHolidaysInDays + yu.novResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'December') {
+        return (-yu.decAvailabilityAfterHolidaysInDays + yu.decResourceUtilizationInDays);
+
+      }
+      return 0;
+    }
+    return 0;
+
+  }
+
+  overUnderUtilization(num) {
+    if (num === 0) {
+      return 'text-success';
+    } else {
+      return 'text-danger';
+    }
+  }
+
+  overUnderUtilizationPercent(num) {
+    if (num === 0 || num === 1) {
+      return 'badge-success';
+    } else {
+      return 'badge-danger';
+    }
+  }
+
+  returnUtils (r: Resource) {
+
+    const currentYear = this.auth.reportingYear;
+    const currentperiod = this.auth.reportingPeriod;
+
+    let ut: ResourceUtilization = new ResourceUtilization();
+    ut = r.resourceutilizationSummaries.find(x => x.year === Number(currentYear))[0];
+
+    return ut;
+
+  }
+  calculateCurrentPeriodDemand(r: Resource) {
+
+    const id = r.resourceId;
+    const currentYear = this.auth.reportingYear;
+    const currentperiod = this.auth.reportingPeriod;
+
+    if (this.ut.some(function(x) {return (Number(currentYear) === x.year && x.resourceId === id); })) {
+      const yu = this.ut.filter(x => x.year === Number(currentYear) && x.resourceId === id)[0];
+
+
+      if (currentperiod === 'January') {
+        return (yu.janResourceUtilizationInDays);
+      }
+      if (currentperiod === 'February') {
+        return (yu.febResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'March') {
+        return (yu.marResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'April') {
+        return (yu.aprResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'May') {
+        return (yu.mayResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'June') {
+        return (yu.junResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'July') {
+        return (yu.julResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'August') {
+        return (yu.augResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'Septemebr') {
+        return (yu.sepResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'October') {
+        return (yu.octResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'November') {
+        return (yu.novResourceUtilizationInDays);
+
+      }
+      if (currentperiod === 'December') {
+        return (yu.decResourceUtilizationInDays);
+
+      }
+        return 0;
+    }
+      return 0;
+
+  }
+  calculateCurrentPeriodFTE(r: Resource) {
+    const id = r.resourceId;
+    const currentYear = this.auth.reportingYear;
+    const currentperiod = this.auth.reportingPeriod;
+
+    if (this.ut.some(function(x) {return (Number(currentYear) === x.year && x.resourceId === id); })) {
+      const yu = this.ut.filter(x => x.year === Number(currentYear) && x.resourceId === id)[0];
+
+      // console.log(yu);
+
+      if (currentperiod === 'January') {
+        return (yu.janAvailabilityBeforeHolidaysInDays);
+      }
+      if (currentperiod === 'February') {
+        return (yu.febAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'March') {
+        return (yu.marAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'April') {
+        return (yu.aprAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'May') {
+        return (yu.mayAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'June') {
+        return (yu.junAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'July') {
+        return (yu.julAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'August') {
+        return (yu.augAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'Septemebr') {
+        return (yu.sepAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'October') {
+        return (yu.octAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'November') {
+        return (yu.novAvailabilityBeforeHolidaysInDays);
+
+      }
+      if (currentperiod === 'December') {
+        return (yu.decAvailabilityBeforeHolidaysInDays);
+
+      }
+      return 0;
+    }
+    return 0;
+  }
+  calculateCurrentPeriodAbsence(r: Resource) {
+    const id = r.resourceId;
+    const currentYear = this.auth.reportingYear;
+    const currentperiod = this.auth.reportingPeriod;
+
+    if (this.ut.some(function(x) {return (Number(currentYear) === x.year && x.resourceId === id); })) {
+      const yu = this.ut.filter(x => x.year === Number(currentYear) && x.resourceId === id)[0];
+
+      console.log(yu);
+      if (currentperiod === 'January') {
+        return (yu.janTotalHolidays);
+      }
+      if (currentperiod === 'February') {
+        return (yu.febTotalHolidays);
+
+      }
+      if (currentperiod === 'March') {
+        return (yu.marTotalHolidays);
+
+      }
+      if (currentperiod === 'April') {
+        return (yu.aprTotalHolidays);
+
+      }
+      if (currentperiod === 'May') {
+        return (yu.mayTotalHolidays);
+
+      }
+      if (currentperiod === 'June') {
+        return (yu.junTotalHolidays);
+
+      }
+      if (currentperiod === 'July') {
+        return (yu.julTotalHolidays);
+
+      }
+      if (currentperiod === 'August') {
+        return (yu.augTotalHolidays);
+
+      }
+      if (currentperiod === 'Septemebr') {
+        return (yu.sepTotalHolidays);
+
+      }
+      if (currentperiod === 'October') {
+        return (yu.octTotalHolidays);
+
+      }
+      if (currentperiod === 'November') {
+        return (yu.novTotalHolidays);
+
+      }
+      if (currentperiod === 'December') {
+        return (yu.decTotalHolidays);
+
+      }
+        return 0;
+      }
+
+      return 0;
+  }
+
+
+  // filter(search) {
+  //   this.resources$.next(this.resources.filter(_ => Object.keys(_).some(k => _[k].toLowerCase().includes(search.toLowerCase()))));
+  // }
+  empBadge(emp) {
+
+    if (emp === 'Permanent_Staff') {
+      return 'badge-primary'
+    }
+    if (emp === 'Temporary_Staff') {
+      return 'badge-warning'
+    }
+    if (emp === 'Contractor') {
+      return 'badge-danger'
+    }
+    if (emp === 'Managed_Service') {
+      return 'badge-info'
+    }
+    return;
+  }
+
+  changeShowin(show) {
+    this.showin = show;
+  }
+  // filter(search) {
+  //   this.resources$.next(this.resources.filter(_ => JSON.stringify(_).toLowerCase().indexOf(search.toLowerCase()) !== -1));
+  // }
 
   filter(search) {
-    this.resources$.next(this.resources.filter(_ => _.displayName.toLowerCase().includes(search.toLowerCase())))
-  }
+    this.resources$.next(this.resources.filter(_ => _.displayName.toLowerCase().includes(search.toLowerCase()) ))}
 
 
   newResource() {

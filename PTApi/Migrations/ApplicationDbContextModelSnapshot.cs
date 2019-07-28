@@ -3250,7 +3250,8 @@ namespace PTApi.Migrations
                     b.Property<string>("ResourceEmailAddress")
                         .IsRequired();
 
-                    b.Property<DateTime?>("ResourceEndDate");
+                    b.Property<DateTime?>("ResourceEndDate")
+                        .IsRequired();
 
                     b.Property<string>("ResourceManagerId");
 
@@ -3258,7 +3259,8 @@ namespace PTApi.Migrations
 
                     b.Property<string>("ResourceRateCardId");
 
-                    b.Property<DateTime?>("ResourceStartDate");
+                    b.Property<DateTime?>("ResourceStartDate")
+                        .IsRequired();
 
                     b.Property<string>("ResourceType");
 
@@ -4521,12 +4523,12 @@ namespace PTApi.Migrations
                     b.HasOne("PTApi.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PTApi.Models.Resource", "Resource")
-                        .WithMany("ResourceEffortSummaries")
+                        .WithMany()
                         .HasForeignKey("ResourceCompanyId", "ResourceId1")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PTApi.Models.ResourceHolidayBooked", b =>
@@ -4555,7 +4557,7 @@ namespace PTApi.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("PTApi.Models.Resource", "Resource")
-                        .WithMany()
+                        .WithMany("ResourceUtilizationSummaries")
                         .HasForeignKey("CompanyId", "ResourceId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });

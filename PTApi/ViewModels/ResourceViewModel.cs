@@ -71,7 +71,7 @@ namespace PTApi.ViewModels
 
 
         public ICollection<ResourceWorkTimesheet> ResourceWorkTimesheets { get; set; }
-        public ICollection<ResourceEffortSummary> ResourceEffortSummaries { get; set; }
+        public ICollection<ResourceUtilizationSummary> ResourceUtilizationSummaries { get; set; }
         public ICollection<ResourceHolidayBooked> ResourceHolidaysBooked { get; set; }
         public ICollection<ForecastTask> ForecastTasks { get; set; }
 
@@ -80,7 +80,7 @@ namespace PTApi.ViewModels
         {
 
             ResourceWorkTimesheets = new Collection<ResourceWorkTimesheet>();
-            ResourceEffortSummaries = new Collection<ResourceEffortSummary>();
+            ResourceUtilizationSummaries = new Collection<ResourceUtilizationSummary>();
             ResourceHolidaysBooked = new Collection<ResourceHolidayBooked>();
             ForecastTasks = new Collection<ForecastTask>();
         }

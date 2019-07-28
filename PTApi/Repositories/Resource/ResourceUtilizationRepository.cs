@@ -14,18 +14,23 @@ namespace PTApi.Repositories
         {
         }
 
-        public ResourceUtilizationSummary GetOneResourceUtilization(string id, int year)
+        public ResourceUtilizationSummary GetOneResourceUtilizationOneyear(string id, int year)
         {
             return ApplicationDbContext.ResourceUtilizationSummaries.SingleOrDefault(d => d.ResourceUtilizationSummaryId == id && d.Year == year);
         }
 
-        public ResourceUtilizationSummary GetAllResourceUtilization(string id, string companyId)
+        public IEnumerable<ResourceUtilizationSummary> GetAllResourcesUtilization( string companyId)
+        {
+            return ApplicationDbContext.ResourceUtilizationSummaries.Where(d => d.CompanyId == companyId);
+        }
+
+        public ResourceUtilizationSummary GetOneAllResourceUtilization(string id, string companyId)
         {
             return ApplicationDbContext.ResourceUtilizationSummaries.SingleOrDefault(d => d.ResourceUtilizationSummaryId == id && d.CompanyId == companyId);
         }
 
 
-        public IEnumerable<ResourceUtilizationSummary> GetAllResourcesUtilization(string id, string companyId)
+        public IEnumerable<ResourceUtilizationSummary> GetAllResourceUtilization(string id, string companyId)
         {
             return ApplicationDbContext.ResourceUtilizationSummaries
                 .Where(r => r.CompanyId == companyId && r.ResourceId == id)

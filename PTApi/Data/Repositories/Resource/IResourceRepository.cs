@@ -7,7 +7,7 @@ namespace PTApi.Data.Repositories
     {
         Resource GetOneResouce(string id, string companyId);
         decimal? GetResourceContractedEffortHours(string id, string companyId);
-        IEnumerable<Resource> GetAllResources(string companyId);
+        IEnumerable<Resource> GetAllResources(string companyId, int currentyear);
 
     }
 }

@@ -102,13 +102,11 @@
                                   <label class="col-md-3 label-control" for="resourceStartDate"><code>*</code>Start Date: </label>
                                   <div class="col-md-9">
                                       <app-date-picker
-                                      #sd (blur)="date = sd.value"
                                       [id]="resourceStartDate"
                                       [ngClass]="{'border-primary': f['resourceStartDate'].valid}"
                                       [selectedDate]="resourceStartDate$ | date:'dd.MM.yyyy'"
                                       formControlName="resourceStartDate"
                                       [name]="resourceStartDate"
-                                      (change)="onDateFromChange($event.target.value)"
                                       [placeholder]="dd-mm-yyyy" required></app-date-picker>
                                     <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceStartDate').valid && (resourceForm.get('resourceStartDate').dirty || resourceForm.get('resourceStartDate').touched)">Please
                                       enter an employment start date!
@@ -126,7 +124,6 @@
                                       [selectedDate]="resourceEndDate$ | date:'dd.MM.yyyy'"
                                       formControlName="resourceEndDate"
                                       [name]="resourceEndDate"
-                                      (change)="onDateToChange($event.target.value)"
                                       [placeholder]="dd-mm-yyyy"
 
                                        required></app-date-picker>
@@ -151,7 +148,9 @@
                                 <div class="form-group row">
                                   <label class="col-md-3 label-control" for="resourceContractEffortInPercentage"><code>*</code>% Effort: </label>
                                   <div class="col-md-9">
-                                    <input type="text" id="resourceContractEffortInPercentage" class="form-control " [ngClass]="{'border-primary': f['resourceContractEffortInPercentage'].valid}" formControlName="resourceContractEffortInPercentage" name="resourceContractEffortInPercentage" required>
+                                    <div>
+                                        <input class="col-md-6" type="number" id="resourceContractEffortInPercentage" class="form-control " [ngClass]="{'border-primary': f['resourceContractEffortInPercentage'].valid}" formControlName="resourceContractEffortInPercentage" name="resourceContractEffortInPercentage" required><span class="col-md-6 float-left">%</span>
+                                    </div>
                                     <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceContractEffortInPercentage').valid && (resourceForm.get('resourceContractEffortInPercentage').dirty || resourceForm.get('resourceContractEffortInPercentage').touched)">
                                       <small class="form-text text-muted danger" *ngIf="f['resourceContractEffortInPercentage'].errors?.required">Please enter a valid number between 0 and 100% !</small>
                                       <small class="form-text text-muted danger" *ngIf="f['resourceContractEffortInPercentage'].errors?.min">Effort can not be less than 0% !</small>
@@ -166,7 +165,7 @@
                                     <div class="form-group row">
                                       <label class="col-md-3 label-control" for="employeeType"><code>*</code>Employment Type: </label>
                                       <div class="col-md-9">
-                                        <select class="form-control " [ngClass]="{'border-primary': f['employeeType'].valid}" [value]="employeeType$" formControlName="employeeType" required>
+                                        <select class="form-control " [ngClass]="{'border-primary': f['employeeType'].valid}"  formControlName="employeeType" required>
                                           <option value="default">..please select..</option>
                                           <option *ngFor="let e of employeeTypes" [value]="e.name">{{e.name}}</option>
                                         </select>
@@ -178,9 +177,9 @@
                                   </div>
                                   <div class="col-md-6">
                                     <div class="form-group row">
-                                      <label class="col-md-3 label-control" for="resourceType"><code>*</code>Term: </label>
+                                      <label class="col-md-3 label-control" for="resourceType"><code>*</code>Employment Term: </label>
                                       <div class="col-md-9">
-                                        <select class="form-control " [ngClass]="{'border-primary': f['resourceType'].valid}" [value]="resourceType$" formControlName="resourceType" required>
+                                        <select class="form-control " [ngClass]="{'border-primary': f['resourceType'].valid}"  formControlName="resourceType" required>
                                           <option value="default">..please select..</option>
                                           <option *ngFor="let type of resourceTypes" [value]="type.name">{{type.name}}</option>
                                         </select>
@@ -198,8 +197,8 @@
                                   <label class="col-md-3 label-control" for="resourceManager$"><code>*</code>Line Manager: </label>
                                   <div class="col-md-9">
                                       <small class="form-text text-muted danger" *ngIf="(!resourceForm.get('resourceManager$').valid && (resourceForm.get('resourceManager$').dirty || resourceForm.get('resourceManager$').touched)) && f['resourceManager$'].errors?.managerdisplayisvalid">Please search and select from the dropdown.</small>
-                                    <input type="text" id="resourceManager$" [value]="resourceManagerDisplayname" class="form-control " [ngClass]="{'border-primary': f['resourceManager$'].valid}" [ngbTypeahead]="resourcesearch" [resultTemplate]="rt" [inputFormatter]="formatter1"
-                                    placeholder="Type in a name to search your resource records" formControlName="resourceManager$" name="resourceManager$" required>
+                                    <input type="text" id="resourceManager$" [value]="resourceManagerDisplayname" (change)="refreshManager()" class="form-control " [ngClass]="{'border-primary': f['resourceManager$'].valid}" [ngbTypeahead]="resourcesearch" [resultTemplate]="rt" [inputFormatter]="formatter1"
+                                    placeholder="..type a name to search your resource records" formControlName="resourceManager$" name="resourceManager$" required>
                                     <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceManager$').valid && (resourceForm.get('resourceManager$').dirty || resourceForm.get('resourceManager$').touched)">
                                       <small *ngIf="f['resourceManager$'].errors?.required">Line Manager is required!</small><br>
                                     </small>
@@ -211,8 +210,8 @@
                                   <label class="col-md-3 label-control" for="resourceRateCard$"><code>*</code>Rate Card: </label>
                                   <div class="col-md-9">
                                       <small class="form-text text-muted danger" *ngIf="(!resourceForm.get('resourceRateCard$').valid && (resourceForm.get('resourceRateCard$').dirty || resourceForm.get('resourceRateCard$').touched)) && f['resourceRateCard$'].errors?.ratecarddisplayisvalid">Please search and select from the dropdown.</small>
-                                    <input type="text" id="resourceRateCard$" [value]="resourceRatecardDisplayname" class="form-control " [ngClass]="{'border-primary': f['resourceRateCard$'].valid}" [ngbTypeahead]="ratecardsearch" [resultTemplate]="rct" [inputFormatter]="formatter2"
-                                      placeholder="Type in a name to search your resource records" formControlName="resourceRateCard$" name="resourceRateCard$" required>
+                                    <input type="text" id="resourceRateCard$" [value]="resourceRatecardDisplayname" (change)="refreshRatecards()" class="form-control " [ngClass]="{'border-primary': f['resourceRateCard$'].valid}" [ngbTypeahead]="ratecardsearch" [resultTemplate]="rct" [inputFormatter]="formatter2"
+                                      placeholder="..start typing a role or rate to search your rate cards" formControlName="resourceRateCard$" name="resourceRateCard$" required>
                                     <small class="form-text text-muted danger" *ngIf="!resourceForm.get('resourceRateCard$').valid && (resourceForm.get('resourceRateCard$').dirty || resourceForm.get('resourceRateCard$').touched)">
                                         <small *ngIf="f['resourceRateCard$'].errors?.required">A rate card for this resource is required!</small><br>
                                     </small>

@@ -1,5 +1,25 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["resources-resources-module"],{
 
+/***/ "./src/app/resources/resource-utility.ts":
+/*!***********************************************!*\
+  !*** ./src/app/resources/resource-utility.ts ***!
+  \***********************************************/
+/*! exports provided: ResourceUtilization */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceUtilization", function() { return ResourceUtilization; });
+var ResourceUtilization = /** @class */ (function () {
+    function ResourceUtilization() {
+    }
+    return ResourceUtilization;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/resources/resource/delete-resource.component.html":
 /*!*******************************************************************!*\
   !*** ./src/app/resources/resource/delete-resource.component.html ***!
@@ -59,7 +79,7 @@ var DeleteResourceComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- The Modal -->\r\n\r\n<div class=\"container \">\r\n    <div class=\"modal-header\">\r\n      <h3 class=\"modal-title m-1 pl-2 pull-left text-muted text-primary\">{{header}}</h3>\r\n      <div class=\"media ml-5 justify-content-end mt-0\">\r\n        <div class=\"media-body d-inline-flex  align-items-center justify-content-center text-left\">\r\n          <img *ngIf=\"res?.imageUrl && (firstname$ || lastname$)\" [src]=\"res?.imageUrl\" width=\"50\" class=\"rounded-circle mr-1\" alt=\"avatar\" />\r\n          <span *ngIf=\"!res?.imageUrl && (firstname$)\" style=\"height: 50px;\" class=\"d-flex rounded-circle mr-1 roundprofile + ' ' + bg-info \">\r\n              {{ firstname$ | fl }}</span>\r\n          <h4 class=\"text-capitalize text-monospace\">{{ displayname }}</h4>\r\n          <!-- <p class=\"text-muted font-small-3 ml-0\">{{res.resourceEmailAddress}}</p> -->\r\n          <!-- <i class=\"ft-more-vertical float-right mt-1\"></i> -->\r\n        </div>\r\n      </div>\r\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click')\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <!-- <section> -->\r\n        <div class=\"row text-left\">\r\n                <div class=\"col-md-12\">\r\n                  <div class=\"card\">\r\n                    <div class=\"card-header\">\r\n                      <div class=\"row\">\r\n                          <div class=\"col-md-6\">\r\n                            <p class=\"mt-1 mb-0\">  All mandatory fields are marked with asterisk <code>*</code>.</p>\r\n                          </div>\r\n                          <div class=\"col-md-6\"> <small class=\"form-text text-muted danger\">\r\n                              {{resourceRatecardDisplayname}}\r\n                            </small>\r\n                          </div>\r\n                      </div>\r\n                      <!-- <h4 class=\"card-title\" id=\"horz-layout-colored-controls\">User Profile</h4> -->\r\n                    </div>\r\n                    <div class=\"card-content\">\r\n                      <div class=\"px-3\">\r\n                        <form class=\"form form-horizontal\"\r\n                        novalidate\r\n                        (ngSubmit)=\"saveResource()\"\r\n                        [formGroup]=\"resourceForm\" >\r\n                          <div class=\"form-body\">\r\n                            <h4 class=\"form-section\"><i class=\"ft-info\"></i> About Resource</h4>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"firstName\"><code>*</code>Firstname: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"firstName\" class=\"form-control \" [ngClass]=\"{'border-primary': f['firstName'].valid}\" formControlName=\"firstName\" name=\"firstName\" autofocus required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('firstName').valid && (resourceForm.get('firstName').dirty || resourceForm.get('firstName').touched)\">\r\n                                     <small>Please enter your first name; a minimum of 3 charachers is required!</small>\r\n                                     </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"lastName\"><code>*</code>Surname: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"lastName\" class=\"form-control \" [ngClass]=\"{'border-primary': f['lastName'].valid}\" formControlName=\"lastName\" name=\"lastName\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('lastName').valid && (resourceForm.get('lastName').dirty || resourceForm.get('lastName').touched)\">Please\r\n                                      enter your surname name; a minimum of 3 charachers is required!\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceEmailAddress\"><code>*</code>Email Address: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"email\" id=\"resourceEmailAddress\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceEmailAddress'].valid}\" formControlName=\"resourceEmailAddress\" name=\"resourceEmailAddress\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceEmailAddress').valid && (resourceForm.get('resourceEmailAddress').dirty || resourceForm.get('resourceEmailAddress').touched)\">\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.required\">Email is required!</small>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.pattern\">The email address must contain at least the @ character</small>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.emailDontexist\">Oops!, seems like an account for that email already exist!</small>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.emailDomain\">Email must be on the yahoo.com domain!</small>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"employeeJobTitle\"><code>*</code>Job Title: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"employeeJobTitle\" class=\"form-control \" [ngClass]=\"{'border-primary': f['employeeJobTitle'].valid}\" formControlName=\"employeeJobTitle\" name=\"employeeJobTitle\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('employeeJobTitle').valid && (resourceForm.get('employeeJobTitle').dirty || resourceForm.get('employeeJobTitle').touched)\">Please\r\n                                      enter job type!\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n\r\n                            <h4 class=\"form-section\"><i class=\"ft-info\"></i> Engagement</h4>\r\n\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceStartDate\"><code>*</code>Start Date: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <app-date-picker\r\n                                      #sd (blur)=\"date = sd.value\"\r\n                                      [id]=\"resourceStartDate\"\r\n                                      [ngClass]=\"{'border-primary': f['resourceStartDate'].valid}\"\r\n                                      [selectedDate]=\"resourceStartDate$ | date:'dd.MM.yyyy'\"\r\n                                      formControlName=\"resourceStartDate\"\r\n                                      [name]=\"resourceStartDate\"\r\n                                      (change)=\"onDateFromChange($event.target.value)\"\r\n                                      [placeholder]=\"dd-mm-yyyy\" required></app-date-picker>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceStartDate').valid && (resourceForm.get('resourceStartDate').dirty || resourceForm.get('resourceStartDate').touched)\">Please\r\n                                      enter an employment start date!\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceEndDate\"><code>*</code>End Date: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <app-date-picker\r\n                                      [id]=\"resourceEndDate\"\r\n                                      [ngClass]=\"{'border-primary': f['resourceEndDate'].valid}\"\r\n                                      [selectedDate]=\"resourceEndDate$ | date:'dd.MM.yyyy'\"\r\n                                      formControlName=\"resourceEndDate\"\r\n                                      [name]=\"resourceEndDate\"\r\n                                      (change)=\"onDateToChange($event.target.value)\"\r\n                                      [placeholder]=\"dd-mm-yyyy\"\r\n\r\n                                       required></app-date-picker>\r\n\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceEndDate').valid && (resourceForm.get('resourceEndDate').dirty || resourceForm.get('resourceEndDate').touched)\">Please\r\n                                          enter an employment end date!\r\n                                        </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"platformId\">Business Platform: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"platformId\" class=\"form-control border-primary\" formControlName=\"platformId\" name=\"platformId\">\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceContractEffortInPercentage\"><code>*</code>% Effort: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"resourceContractEffortInPercentage\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceContractEffortInPercentage'].valid}\" formControlName=\"resourceContractEffortInPercentage\" name=\"resourceContractEffortInPercentage\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceContractEffortInPercentage').valid && (resourceForm.get('resourceContractEffortInPercentage').dirty || resourceForm.get('resourceContractEffortInPercentage').touched)\">\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceContractEffortInPercentage'].errors?.required\">Please enter a valid number between 0 and 100% !</small>\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceContractEffortInPercentage'].errors?.min\">Effort can not be less than 0% !</small>\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceContractEffortInPercentage'].errors?.max\">Effort can not be more than 100% !</small>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-6\">\r\n                                    <div class=\"form-group row\">\r\n                                      <label class=\"col-md-3 label-control\" for=\"employeeType\"><code>*</code>Employment Type: </label>\r\n                                      <div class=\"col-md-9\">\r\n                                        <select class=\"form-control \" [ngClass]=\"{'border-primary': f['employeeType'].valid}\" [value]=\"employeeType$\" formControlName=\"employeeType\" required>\r\n                                          <option value=\"default\">..please select..</option>\r\n                                          <option *ngFor=\"let e of employeeTypes\" [value]=\"e.name\">{{e.name}}</option>\r\n                                        </select>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('employeeType').valid && (resourceForm.get('employeeType').dirty || resourceForm.get('employeeType').touched)\">Please\r\n                                          select employee type!\r\n                                        </small>\r\n                                      </div>\r\n                                    </div>\r\n                                  </div>\r\n                                  <div class=\"col-md-6\">\r\n                                    <div class=\"form-group row\">\r\n                                      <label class=\"col-md-3 label-control\" for=\"resourceType\"><code>*</code>Term: </label>\r\n                                      <div class=\"col-md-9\">\r\n                                        <select class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceType'].valid}\" [value]=\"resourceType$\" formControlName=\"resourceType\" required>\r\n                                          <option value=\"default\">..please select..</option>\r\n                                          <option *ngFor=\"let type of resourceTypes\" [value]=\"type.name\">{{type.name}}</option>\r\n                                        </select>\r\n                                        <!-- <input type=\"text\" id=\"resourceType\" class=\"form-control border-primary\" formControlName=\"resourceType\" name=\"resourceType\" required> -->\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceType').valid && (resourceForm.get('resourceType').dirty || resourceForm.get('resourceType').touched)\">Please\r\n                                          select resource type!\r\n                                        </small>\r\n                                      </div>\r\n                                    </div>\r\n                                  </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceManager$\"><code>*</code>Line Manager: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"(!resourceForm.get('resourceManager$').valid && (resourceForm.get('resourceManager$').dirty || resourceForm.get('resourceManager$').touched)) && f['resourceManager$'].errors?.managerdisplayisvalid\">Please search and select from the dropdown.</small>\r\n                                    <input type=\"text\" id=\"resourceManager$\" [value]=\"resourceManagerDisplayname\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceManager$'].valid}\" [ngbTypeahead]=\"resourcesearch\" [resultTemplate]=\"rt\" [inputFormatter]=\"formatter1\"\r\n                                    placeholder=\"Type in a name to search your resource records\" formControlName=\"resourceManager$\" name=\"resourceManager$\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceManager$').valid && (resourceForm.get('resourceManager$').dirty || resourceForm.get('resourceManager$').touched)\">\r\n                                      <small *ngIf=\"f['resourceManager$'].errors?.required\">Line Manager is required!</small><br>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceRateCard$\"><code>*</code>Rate Card: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"(!resourceForm.get('resourceRateCard$').valid && (resourceForm.get('resourceRateCard$').dirty || resourceForm.get('resourceRateCard$').touched)) && f['resourceRateCard$'].errors?.ratecarddisplayisvalid\">Please search and select from the dropdown.</small>\r\n                                    <input type=\"text\" id=\"resourceRateCard$\" [value]=\"resourceRatecardDisplayname\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceRateCard$'].valid}\" [ngbTypeahead]=\"ratecardsearch\" [resultTemplate]=\"rct\" [inputFormatter]=\"formatter2\"\r\n                                      placeholder=\"Type in a name to search your resource records\" formControlName=\"resourceRateCard$\" name=\"resourceRateCard$\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceRateCard$').valid && (resourceForm.get('resourceRateCard$').dirty || resourceForm.get('resourceRateCard$').touched)\">\r\n                                        <small *ngIf=\"f['resourceRateCard$'].errors?.required\">A rate card for this resource is required!</small><br>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                          </div>\r\n                          <div class=\"row\">\r\n                            <div class=\"form-group\">\r\n                              <div class=\"ml-5 mt-1\">\r\n                                <div class=\"custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0\">\r\n                                  <input type=\"checkbox\" class=\"custom-control-input\" formControlName=\"billable\" checked id=\"billable\">\r\n                                  <label class=\"custom-control-label\" for=\"billable\">Is this resource billable? </label>\r\n                                </div>\r\n                                <small class=\"text-monospace\"> ( Hint : <small class=\"text-danger\">leave checked if you will be paying for this resource.</small>)</small>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                            <h4 class=\"form-section\"><i class=\"ft-mail\"></i> Contact Info & Notes</h4>\r\n\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"agency\">Agency: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"agency\" type=\"text\" id=\"agency\">\r\n                                  </div>\r\n                                </div>\r\n\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"location\">Location: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"location\" type=\"url\" id=\"location\">\r\n                                  </div>\r\n                                </div>\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"employeeGradeBand\">Band: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"employeeGradeBand\" type=\"url\" id=\"employeeGradeBand\">\r\n                                  </div>\r\n                                </div>\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\">Contact Number: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"billable\" type=\"number\" id=\"billable\">\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"managerName\">Notes: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <textarea id=\"managerName\" rows=\"10\" class=\"form-control border-primary\" formControlName=\"managerName\" name=\"managerName\"></textarea>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                        </form>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n        <!-- </section> -->\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <!-- <button type=\"button\" class=\"btn btn-secondary btn-raised\" (click)=\"activeModal.close('Close click')\">Close</button> -->\r\n      <div class=\"form-actions right\">\r\n          <button type=\"button\" class=\"btn btn-raised btn-warning mr-1\" (click)=\"activeModal.close('Close click')\">\r\n            <i class=\"ft-x\"></i> Cancel\r\n          </button>\r\n          <button type=\"submit\" class=\"btn btn-raised btn-primary\" (click)=\"activeModal.close('Close click')\" [disabled]='!resourceForm.valid' (click)=\"saveResource()\">\r\n            <i class=\"fa fa-check-square-o\"></i> Save\r\n          </button>\r\n        </div>\r\n    </div>\r\n    </div>\r\n\r\n    <!-- <ng-template #rt let-r=\"result\" let-t=\"term\">\r\n      <div class=\"media ml-5 justify-content-end mt-0\">\r\n        <div class=\"media-body d-inline-flex  align-items-center justify-content-center text-left\">\r\n          <img *ngIf=\"r?.imageUrl\" [src]=\"r?.imageUrl\" width=\"50\" class=\"rounded-circle mr-1\" alt=\"avatar\" />\r\n          <span *ngIf=\"!r?.imageUrl\" style=\"height: 50px;\" class=\"d-flex rounded-circle mr-1 roundprofile + ' ' + bg-info \">\r\n              {{ r.firstName | fl }}</span>\r\n          <h4 class=\"text-capitalize text-monospace\">{{ r.displayName }}</h4>\r\n        </div>\r\n      </div>\r\n    </ng-template> -->\r\n\r\n    <ng-template #rt let-r=\"result\" let-t=\"term\">\r\n      <div class=\"media mb-1\" (click)=\"onSelectResource(r)\">\r\n        <a>\r\n          <img *ngIf=\"r?.imageUrl\" alt=\"96x96\" class=\"media-object d-flex mr-3 bg-primary height-50 rounded-circle\" [src]=\"r?.imageUrl\">\r\n          <span *ngIf=\"!r?.imageUrl\" style=\"height: 50px;\" class=\"d-flex rounded-circle mr-3 roundprofile + ' ' + bg-info \">\r\n              {{ r.firstName | fl }}</span>\r\n        </a>\r\n        <div class=\"media-body\">\r\n          <h4 class=\"font-medium-1 mt-1 mb-0\">{{ r.displayName }}</h4>\r\n          <p class=\"text-muted font-small-4\">{{r.resourceEmailAddress}}</p>\r\n        </div>\r\n      </div>\r\n    </ng-template>\r\n\r\n    <ng-template #rct let-rc=\"result\" let-t=\"rcterm\">\r\n      <div class=\"media mb-1\">\r\n        <a>\r\n          <!-- <img *ngIf=\"r?.imageUrl\" alt=\"96x96\" class=\"media-object d-flex mr-3 bg-primary height-50 rounded-circle\" [src]=\"r?.imageUrl\"> -->\r\n        </a>\r\n        <div class=\"media-body\" (click)=\"onSelectRateCard(rc)\">\r\n          <h4 class=\"font-medium-1 mt-1 mb-0\">{{rc.resourceRatecardDisplayname}}</h4>\r\n        </div>\r\n      </div>\r\n    </ng-template>\r\n"
+module.exports = "<!-- The Modal -->\r\n\r\n<div class=\"container \">\r\n    <div class=\"modal-header\">\r\n      <h3 class=\"modal-title m-1 pl-2 pull-left text-muted text-primary\">{{header}}</h3>\r\n      <div class=\"media ml-5 justify-content-end mt-0\">\r\n        <div class=\"media-body d-inline-flex  align-items-center justify-content-center text-left\">\r\n          <img *ngIf=\"res?.imageUrl && (firstname$ || lastname$)\" [src]=\"res?.imageUrl\" width=\"50\" class=\"rounded-circle mr-1\" alt=\"avatar\" />\r\n          <span *ngIf=\"!res?.imageUrl && (firstname$)\" style=\"height: 50px;\" class=\"d-flex rounded-circle mr-1 roundprofile + ' ' + bg-info \">\r\n              {{ firstname$ | fl }}</span>\r\n          <h4 class=\"text-capitalize text-monospace\">{{ displayname }}</h4>\r\n          <!-- <p class=\"text-muted font-small-3 ml-0\">{{res.resourceEmailAddress}}</p> -->\r\n          <!-- <i class=\"ft-more-vertical float-right mt-1\"></i> -->\r\n        </div>\r\n      </div>\r\n      <button type=\"button\" class=\"close\" aria-label=\"Close\" (click)=\"activeModal.dismiss('Cross click')\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n      </button>\r\n    </div>\r\n    <div class=\"modal-body\">\r\n      <!-- <section> -->\r\n        <div class=\"row text-left\">\r\n                <div class=\"col-md-12\">\r\n                  <div class=\"card\">\r\n                    <div class=\"card-header\">\r\n                      <div class=\"row\">\r\n                          <div class=\"col-md-6\">\r\n                            <p class=\"mt-1 mb-0\">  All mandatory fields are marked with asterisk <code>*</code>.</p>\r\n                          </div>\r\n                          <div class=\"col-md-6\"> <small class=\"form-text text-muted danger\">\r\n                              {{resourceRatecardDisplayname}}\r\n                            </small>\r\n                          </div>\r\n                      </div>\r\n                      <!-- <h4 class=\"card-title\" id=\"horz-layout-colored-controls\">User Profile</h4> -->\r\n                    </div>\r\n                    <div class=\"card-content\">\r\n                      <div class=\"px-3\">\r\n                        <form class=\"form form-horizontal\"\r\n                        novalidate\r\n                        (ngSubmit)=\"saveResource()\"\r\n                        [formGroup]=\"resourceForm\" >\r\n                          <div class=\"form-body\">\r\n                            <h4 class=\"form-section\"><i class=\"ft-info\"></i> About Resource</h4>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"firstName\"><code>*</code>Firstname: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"firstName\" class=\"form-control \" [ngClass]=\"{'border-primary': f['firstName'].valid}\" formControlName=\"firstName\" name=\"firstName\" autofocus required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('firstName').valid && (resourceForm.get('firstName').dirty || resourceForm.get('firstName').touched)\">\r\n                                     <small>Please enter your first name; a minimum of 3 charachers is required!</small>\r\n                                     </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"lastName\"><code>*</code>Surname: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"lastName\" class=\"form-control \" [ngClass]=\"{'border-primary': f['lastName'].valid}\" formControlName=\"lastName\" name=\"lastName\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('lastName').valid && (resourceForm.get('lastName').dirty || resourceForm.get('lastName').touched)\">Please\r\n                                      enter your surname name; a minimum of 3 charachers is required!\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceEmailAddress\"><code>*</code>Email Address: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"email\" id=\"resourceEmailAddress\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceEmailAddress'].valid}\" formControlName=\"resourceEmailAddress\" name=\"resourceEmailAddress\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceEmailAddress').valid && (resourceForm.get('resourceEmailAddress').dirty || resourceForm.get('resourceEmailAddress').touched)\">\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.required\">Email is required!</small>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.pattern\">The email address must contain at least the @ character</small>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.emailDontexist\">Oops!, seems like an account for that email already exist!</small>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceEmailAddress'].errors?.emailDomain\">Email must be on the yahoo.com domain!</small>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"employeeJobTitle\"><code>*</code>Job Title: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"employeeJobTitle\" class=\"form-control \" [ngClass]=\"{'border-primary': f['employeeJobTitle'].valid}\" formControlName=\"employeeJobTitle\" name=\"employeeJobTitle\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('employeeJobTitle').valid && (resourceForm.get('employeeJobTitle').dirty || resourceForm.get('employeeJobTitle').touched)\">Please\r\n                                      enter job type!\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n\r\n                            <h4 class=\"form-section\"><i class=\"ft-info\"></i> Engagement</h4>\r\n\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceStartDate\"><code>*</code>Start Date: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <app-date-picker\r\n                                      [id]=\"resourceStartDate\"\r\n                                      [ngClass]=\"{'border-primary': f['resourceStartDate'].valid}\"\r\n                                      [selectedDate]=\"resourceStartDate$ | date:'dd.MM.yyyy'\"\r\n                                      formControlName=\"resourceStartDate\"\r\n                                      [name]=\"resourceStartDate\"\r\n                                      [placeholder]=\"dd-mm-yyyy\" required></app-date-picker>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceStartDate').valid && (resourceForm.get('resourceStartDate').dirty || resourceForm.get('resourceStartDate').touched)\">Please\r\n                                      enter an employment start date!\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceEndDate\"><code>*</code>End Date: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <app-date-picker\r\n                                      [id]=\"resourceEndDate\"\r\n                                      [ngClass]=\"{'border-primary': f['resourceEndDate'].valid}\"\r\n                                      [selectedDate]=\"resourceEndDate$ | date:'dd.MM.yyyy'\"\r\n                                      formControlName=\"resourceEndDate\"\r\n                                      [name]=\"resourceEndDate\"\r\n                                      [placeholder]=\"dd-mm-yyyy\"\r\n\r\n                                       required></app-date-picker>\r\n\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceEndDate').valid && (resourceForm.get('resourceEndDate').dirty || resourceForm.get('resourceEndDate').touched)\">Please\r\n                                          enter an employment end date!\r\n                                        </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"platformId\">Business Platform: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input type=\"text\" id=\"platformId\" class=\"form-control border-primary\" formControlName=\"platformId\" name=\"platformId\">\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceContractEffortInPercentage\"><code>*</code>% Effort: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <div>\r\n                                        <input class=\"col-md-6\" type=\"number\" id=\"resourceContractEffortInPercentage\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceContractEffortInPercentage'].valid}\" formControlName=\"resourceContractEffortInPercentage\" name=\"resourceContractEffortInPercentage\" required><span class=\"col-md-6 float-left\">%</span>\r\n                                    </div>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceContractEffortInPercentage').valid && (resourceForm.get('resourceContractEffortInPercentage').dirty || resourceForm.get('resourceContractEffortInPercentage').touched)\">\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceContractEffortInPercentage'].errors?.required\">Please enter a valid number between 0 and 100% !</small>\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceContractEffortInPercentage'].errors?.min\">Effort can not be less than 0% !</small>\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"f['resourceContractEffortInPercentage'].errors?.max\">Effort can not be more than 100% !</small>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                                <div class=\"col-md-6\">\r\n                                    <div class=\"form-group row\">\r\n                                      <label class=\"col-md-3 label-control\" for=\"employeeType\"><code>*</code>Employment Type: </label>\r\n                                      <div class=\"col-md-9\">\r\n                                        <select class=\"form-control \" [ngClass]=\"{'border-primary': f['employeeType'].valid}\"  formControlName=\"employeeType\" required>\r\n                                          <option value=\"default\">..please select..</option>\r\n                                          <option *ngFor=\"let e of employeeTypes\" [value]=\"e.name\">{{e.name}}</option>\r\n                                        </select>\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('employeeType').valid && (resourceForm.get('employeeType').dirty || resourceForm.get('employeeType').touched)\">Please\r\n                                          select employee type!\r\n                                        </small>\r\n                                      </div>\r\n                                    </div>\r\n                                  </div>\r\n                                  <div class=\"col-md-6\">\r\n                                    <div class=\"form-group row\">\r\n                                      <label class=\"col-md-3 label-control\" for=\"resourceType\"><code>*</code>Employment Term: </label>\r\n                                      <div class=\"col-md-9\">\r\n                                        <select class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceType'].valid}\"  formControlName=\"resourceType\" required>\r\n                                          <option value=\"default\">..please select..</option>\r\n                                          <option *ngFor=\"let type of resourceTypes\" [value]=\"type.name\">{{type.name}}</option>\r\n                                        </select>\r\n                                        <!-- <input type=\"text\" id=\"resourceType\" class=\"form-control border-primary\" formControlName=\"resourceType\" name=\"resourceType\" required> -->\r\n                                        <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceType').valid && (resourceForm.get('resourceType').dirty || resourceForm.get('resourceType').touched)\">Please\r\n                                          select resource type!\r\n                                        </small>\r\n                                      </div>\r\n                                    </div>\r\n                                  </div>\r\n                            </div>\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceManager$\"><code>*</code>Line Manager: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"(!resourceForm.get('resourceManager$').valid && (resourceForm.get('resourceManager$').dirty || resourceForm.get('resourceManager$').touched)) && f['resourceManager$'].errors?.managerdisplayisvalid\">Please search and select from the dropdown.</small>\r\n                                    <input type=\"text\" id=\"resourceManager$\" [value]=\"resourceManagerDisplayname\" (change)=\"refreshManager()\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceManager$'].valid}\" [ngbTypeahead]=\"resourcesearch\" [resultTemplate]=\"rt\" [inputFormatter]=\"formatter1\"\r\n                                    placeholder=\"..type a name to search your resource records\" formControlName=\"resourceManager$\" name=\"resourceManager$\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceManager$').valid && (resourceForm.get('resourceManager$').dirty || resourceForm.get('resourceManager$').touched)\">\r\n                                      <small *ngIf=\"f['resourceManager$'].errors?.required\">Line Manager is required!</small><br>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"resourceRateCard$\"><code>*</code>Rate Card: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                      <small class=\"form-text text-muted danger\" *ngIf=\"(!resourceForm.get('resourceRateCard$').valid && (resourceForm.get('resourceRateCard$').dirty || resourceForm.get('resourceRateCard$').touched)) && f['resourceRateCard$'].errors?.ratecarddisplayisvalid\">Please search and select from the dropdown.</small>\r\n                                    <input type=\"text\" id=\"resourceRateCard$\" [value]=\"resourceRatecardDisplayname\" (change)=\"refreshRatecards()\" class=\"form-control \" [ngClass]=\"{'border-primary': f['resourceRateCard$'].valid}\" [ngbTypeahead]=\"ratecardsearch\" [resultTemplate]=\"rct\" [inputFormatter]=\"formatter2\"\r\n                                      placeholder=\"..start typing a role or rate to search your rate cards\" formControlName=\"resourceRateCard$\" name=\"resourceRateCard$\" required>\r\n                                    <small class=\"form-text text-muted danger\" *ngIf=\"!resourceForm.get('resourceRateCard$').valid && (resourceForm.get('resourceRateCard$').dirty || resourceForm.get('resourceRateCard$').touched)\">\r\n                                        <small *ngIf=\"f['resourceRateCard$'].errors?.required\">A rate card for this resource is required!</small><br>\r\n                                    </small>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                          </div>\r\n                          <div class=\"row\">\r\n                            <div class=\"form-group\">\r\n                              <div class=\"ml-5 mt-1\">\r\n                                <div class=\"custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0\">\r\n                                  <input type=\"checkbox\" class=\"custom-control-input\" formControlName=\"billable\" checked id=\"billable\">\r\n                                  <label class=\"custom-control-label\" for=\"billable\">Is this resource billable? </label>\r\n                                </div>\r\n                                <small class=\"text-monospace\"> ( Hint : <small class=\"text-danger\">leave checked if you will be paying for this resource.</small>)</small>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                            <h4 class=\"form-section\"><i class=\"ft-mail\"></i> Contact Info & Notes</h4>\r\n\r\n                            <div class=\"row\">\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"agency\">Agency: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"agency\" type=\"text\" id=\"agency\">\r\n                                  </div>\r\n                                </div>\r\n\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"location\">Location: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"location\" type=\"url\" id=\"location\">\r\n                                  </div>\r\n                                </div>\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"employeeGradeBand\">Band: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"employeeGradeBand\" type=\"url\" id=\"employeeGradeBand\">\r\n                                  </div>\r\n                                </div>\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\">Contact Number: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <input class=\"form-control border-primary\" formControlName=\"billable\" type=\"number\" id=\"billable\">\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                              <div class=\"col-md-6\">\r\n                                <div class=\"form-group row\">\r\n                                  <label class=\"col-md-3 label-control\" for=\"managerName\">Notes: </label>\r\n                                  <div class=\"col-md-9\">\r\n                                    <textarea id=\"managerName\" rows=\"10\" class=\"form-control border-primary\" formControlName=\"managerName\" name=\"managerName\"></textarea>\r\n                                  </div>\r\n                                </div>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                        </form>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n        <!-- </section> -->\r\n    </div>\r\n    <div class=\"modal-footer\">\r\n      <!-- <button type=\"button\" class=\"btn btn-secondary btn-raised\" (click)=\"activeModal.close('Close click')\">Close</button> -->\r\n      <div class=\"form-actions right\">\r\n          <button type=\"button\" class=\"btn btn-raised btn-warning mr-1\" (click)=\"activeModal.close('Close click')\">\r\n            <i class=\"ft-x\"></i> Cancel\r\n          </button>\r\n          <button type=\"submit\" class=\"btn btn-raised btn-primary\" (click)=\"activeModal.close('Close click')\" [disabled]='!resourceForm.valid' (click)=\"saveResource()\">\r\n            <i class=\"fa fa-check-square-o\"></i> Save\r\n          </button>\r\n        </div>\r\n    </div>\r\n    </div>\r\n\r\n    <!-- <ng-template #rt let-r=\"result\" let-t=\"term\">\r\n      <div class=\"media ml-5 justify-content-end mt-0\">\r\n        <div class=\"media-body d-inline-flex  align-items-center justify-content-center text-left\">\r\n          <img *ngIf=\"r?.imageUrl\" [src]=\"r?.imageUrl\" width=\"50\" class=\"rounded-circle mr-1\" alt=\"avatar\" />\r\n          <span *ngIf=\"!r?.imageUrl\" style=\"height: 50px;\" class=\"d-flex rounded-circle mr-1 roundprofile + ' ' + bg-info \">\r\n              {{ r.firstName | fl }}</span>\r\n          <h4 class=\"text-capitalize text-monospace\">{{ r.displayName }}</h4>\r\n        </div>\r\n      </div>\r\n    </ng-template> -->\r\n\r\n    <ng-template #rt let-r=\"result\" let-t=\"term\">\r\n      <div class=\"media mb-1\" (click)=\"onSelectResource(r)\">\r\n        <a>\r\n          <img *ngIf=\"r?.imageUrl\" alt=\"96x96\" class=\"media-object d-flex mr-3 bg-primary height-50 rounded-circle\" [src]=\"r?.imageUrl\">\r\n          <span *ngIf=\"!r?.imageUrl\" style=\"height: 50px;\" class=\"d-flex rounded-circle mr-3 roundprofile + ' ' + bg-info \">\r\n              {{ r.firstName | fl }}</span>\r\n        </a>\r\n        <div class=\"media-body\">\r\n          <h4 class=\"font-medium-1 mt-1 mb-0\">{{ r.displayName }}</h4>\r\n          <p class=\"text-muted font-small-4\">{{r.resourceEmailAddress}}</p>\r\n        </div>\r\n      </div>\r\n    </ng-template>\r\n\r\n    <ng-template #rct let-rc=\"result\" let-t=\"rcterm\">\r\n      <div class=\"media mb-1\">\r\n        <a>\r\n          <!-- <img *ngIf=\"r?.imageUrl\" alt=\"96x96\" class=\"media-object d-flex mr-3 bg-primary height-50 rounded-circle\" [src]=\"r?.imageUrl\"> -->\r\n        </a>\r\n        <div class=\"media-body\" (click)=\"onSelectRateCard(rc)\">\r\n          <h4 class=\"font-medium-1 mt-1 mb-0\">{{rc.resourceRatecardDisplayname}}</h4>\r\n        </div>\r\n      </div>\r\n    </ng-template>\r\n"
 
 /***/ }),
 
@@ -103,7 +123,6 @@ var EditResourceComponent = /** @class */ (function () {
         this.fb = fb;
         this.resourceService = resourceService;
         this.toastr = toastr;
-        // selectedDate: any;
         this.disabled = false;
         this.selected = [];
         this.resources = [];
@@ -111,9 +130,13 @@ var EditResourceComponent = /** @class */ (function () {
         this.uiratecards = [];
         this.resourceManagerId = '';
         this.resourceRateCardId = '';
+        this.resourceStartDate = '';
+        this.resourceEndDate = '';
         this.resourceManagerDisplayname = '';
         this.resourceRatecardDisplayname = '';
         this.displayisvalid = true;
+        this.employeeTypes = [];
+        this.resourceTypes = [];
         this.lastname$ = '';
         this.firstname$ = '';
         this.displayname = '';
@@ -125,17 +148,6 @@ var EditResourceComponent = /** @class */ (function () {
             return rctext$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(200), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (rcterm) { return rcterm === '' ? []
                 : _this.uiratecards.filter(function (v) { return v.resourceRatecardDisplayname.toLowerCase().indexOf(rcterm.toLowerCase()) > -1; }).slice(0, 10); }));
         };
-        // onDateFromChange($event) {
-        //   this.resourceForm.get('resourceStartDate').valueChanges.subscribe(($event) => {
-        //     const val = $event.target.value;
-        //     this.resourceStartDate$ = val;
-        //     this.resourceForm.patchValue({resourceStartDate: `${val.toString()}`});
-        //   });
-        // }
-        // onDateToChange(val: Date) {
-        //   this.resourceEndDate$ = val;
-        //   this.resourceForm.controls['resourceEndDate'].setValue(val.toString());
-        // }
         this.formatter1 = function (x) { return x.displayName; };
         this.formatter2 = function (x) { return x.resourceRatecardDisplayname; };
     }
@@ -168,8 +180,8 @@ var EditResourceComponent = /** @class */ (function () {
             resourceRateCardId: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             contractedHours: '',
             resourceContractEffortInPercentage: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].min(0), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].max(100)]],
-            resourceType: [{ value: this.resourceType$ ? this.resourceType$ : 'default' }, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            employeeType: [{ value: this.employeeType$ ? this.employeeType$ : 'default' }, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            resourceType: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            employeeType: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             companyId: [this.auth.companyId, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             resourceManagerId: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             employeeGradeBand: '',
@@ -184,21 +196,15 @@ var EditResourceComponent = /** @class */ (function () {
                 validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required, checttypedstringratecards],
             }),
         });
+        this.resourceService.GetEmployeeTypes().subscribe(function (et) {
+            _this.employeeTypes = et;
+        });
+        this.resourceService.GetResourceTypes().subscribe(function (rt) {
+            _this.resourceTypes = rt;
+        });
         setTimeout(function () {
             _this.getResource(_this.id);
-            _this.resourceService.GetEmployeeTypes().subscribe(function (et) {
-                _this.employeeTypes = et;
-            });
-            _this.resourceService.GetResourceTypes().subscribe(function (rt) {
-                _this.resourceTypes = rt;
-            });
-            // emailExistValidator(this.resources);
         }, 250);
-        // checttypedstring;
-    };
-    // tslint:disable-next-line:use-life-cycle-interface
-    EditResourceComponent.prototype.ngAfterViewInit = function () {
-        this.date = this.datepicker.selectedDate;
     };
     EditResourceComponent.prototype.getResource = function (id) {
         var _this = this;
@@ -207,11 +213,6 @@ var EditResourceComponent = /** @class */ (function () {
             _this.onResourceRetrieved(res);
             console.log(res);
         }, function (error) { return _this.errorMessage = error; });
-    };
-    // Selects today's date
-    EditResourceComponent.prototype.selectToday = function () {
-        this.today = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
-        return this.today;
     };
     EditResourceComponent.prototype.onResourceRetrieved = function (res) {
         if (this.resourceForm) {
@@ -256,6 +257,7 @@ var EditResourceComponent = /** @class */ (function () {
         if (this.resourceForm.dirty && this.resourceForm.valid) {
             // Copy the form values over the product object values
             var p = Object.assign({}, this.res, this.resourceForm.value);
+            console.log(p);
             if (this.res.resourceId !== '' || this.res.resourceId !== null) {
                 this.resourceService.saveResource(p)
                     .subscribe(function () { _this.resourceService.getResourcesAndRates(); _this.onSaveComplete(); _this.toastr.onSuccessToastr('Resource'); }, function (error) { _this.errorMessage = error, _this.onSaveComplete(); _this.toastr.onErrorToastr(); });
@@ -284,16 +286,7 @@ var EditResourceComponent = /** @class */ (function () {
             _this.firstname$ = val;
             _this.displayname = _this.firstname$ + ' ' + _this.lastname$;
         });
-        if (this.id === '' || this.id === null) {
-            this.resandman = null;
-            this.resman = null;
-        }
-        else {
-            this.resandman = this.resources.find(function (x) { return x.resourceId === _this.id; });
-            this.resman = this.resources.find(function (x) { return x.resourceId === _this.resandman.resourceManagerId; });
-        }
         var currency = this.auth.reportingCurrencySys;
-        console.log(currency);
         this.uiratecards = this.ratecards.map(function (e) {
             return {
                 companyId: e.companyId,
@@ -306,50 +299,54 @@ var EditResourceComponent = /** @class */ (function () {
                 resourceRatecardDisplayname: e.employeeJobTitleOrGradeOrBand + " - " + currency + e.dailyRate + " (" + e.locationForGradeOnshoreOffShore + ")"
             };
         });
-        this.ratecard = this.uiratecards.find(function (x) { return x.companyRateCardId === _this.resandman.resourceRateCardId; });
-        this.resourceManagerDisplayname = this.resman.displayName;
-        this.resourceForm.patchValue({ resourceManager$: "" + this.resman.displayName });
-        this.resourceManagerId = this.resman.resourceId;
-        this.resourceRatecardDisplayname = this.ratecard.resourceRatecardDisplayname;
-        this.resourceForm.patchValue({ resourceRateCard$: "" + this.resourceRatecardDisplayname });
-        this.resourceRateCardId = this.res.resourceRateCardId;
+        if (this.id === '' || this.id === null) {
+            this.resandman = null;
+            this.resman = null;
+            this.ratecard = null;
+        }
+        else {
+            this.resandman = this.resources.find(function (x) { return x.resourceId === _this.id; });
+            if (this.resandman.resourceManagerId) {
+                this.resman = this.resources.find(function (x) { return x.resourceId === _this.resandman.resourceManagerId; });
+                this.ratecard = this.uiratecards.find(function (x) { return x.companyRateCardId === _this.resandman.resourceRateCardId; });
+            }
+            else {
+                this.resman = null;
+                this.ratecard = null;
+            }
+            var boss = 'The Boss';
+            this.resourceManagerDisplayname = this.resman ? this.resman.displayName : boss;
+            this.resourceForm.patchValue({ resourceManager$: "" + this.resourceManagerDisplayname });
+            this.resourceManagerId = (this.resourceManagerDisplayname === boss) ? this.res.resourceId : this.resman.resourceManagerId;
+            this.resourceRatecardDisplayname = this.ratecard.resourceRatecardDisplayname;
+            this.resourceForm.patchValue({ resourceRateCard$: "" + this.resourceRatecardDisplayname });
+            this.resourceRateCardId = this.res.resourceRateCardId;
+        }
         this.resourceEndDate$ = new Date(this.res.resourceEndDate ? this.res.resourceEndDate : new Date().toISOString());
         this.resourceStartDate$ = new Date(this.res.resourceStartDate ? this.res.resourceStartDate : new Date().toISOString());
         this.employeeType$ = this.res.employeeType;
         this.resourceType$ = this.res.resourceType;
         this.resourceForm.patchValue({ employeeType: "" + this.res.employeeType });
         this.resourceForm.patchValue({ resourceType: "" + this.res.resourceType });
-        this.resourceForm.patchValue({ resourceManagerId: "" + this.resman.resourceId });
+        this.resourceForm.patchValue({ resourceManagerId: "" + this.resourceManagerId });
         this.resourceForm.patchValue({ resourceRateCardId: "" + this.res.resourceRateCardId });
         console.log(this.employeeTypes);
         console.log(this.resourceTypes);
         console.log(this.employeeType$);
         console.log(this.resourceType$);
         console.log(this.resourceEndDate$);
-        // checttypedstring(this.resources);
-        this.refreshManager(this.resources);
-        this.refreshRatecards(this.uiratecards);
     };
-    // updateDate() {
-    //   this.resourceForm.get('resourceEndDate').valueChanges.subscribe(val => {
-    //     console.log(val);
-    //     // this.selectedDate = new Date(val);
-    //     this.resourceForm.patchValue({resourceEndDate: val});
-    //     // console.log(this.selectedDate);
-    //     console.log(this.f['resourceEndDate'].value);
-    //     console.log(this.res);
-    //   });
-    // }
-    EditResourceComponent.prototype.refreshRatecards = function (rates) {
+    EditResourceComponent.prototype.refreshRatecards = function () {
         var _this = this;
         this.resourceForm.get('resourceRateCard$').valueChanges.subscribe(function (val) {
+            console.log(_this.uiratecards);
             if (typeof val === 'string') {
                 val = val;
             }
             else {
                 val = val.resourceRatecardDisplayname;
             }
-            var displaynames = rates.map(function (item) { return item.resourceRatecardDisplayname; });
+            var displaynames = _this.uiratecards.map(function (item) { return item.resourceRatecardDisplayname; });
             // console.log(displaynames.indexOf(val) !== -1);
             if (!displaynames.includes(val) || val === '' || val === undefined || val === null) {
                 return _this.f['resourceRateCard$'].setErrors({ ratecarddisplayisvalid: true });
@@ -359,16 +356,17 @@ var EditResourceComponent = /** @class */ (function () {
             }
         });
     };
-    EditResourceComponent.prototype.refreshManager = function (resources) {
+    EditResourceComponent.prototype.refreshManager = function () {
         var _this = this;
         this.resourceForm.get('resourceManager$').valueChanges.subscribe(function (val) {
+            console.log(_this.resources);
             if (typeof val === 'string') {
                 val = val;
             }
             else {
                 val = val.displayName;
             }
-            var displaynames = resources.map(function (item) { return item.displayName; });
+            var displaynames = _this.resources.map(function (item) { return item.displayName; });
             // console.log(displaynames.indexOf(val) !== -1);
             if (!displaynames.some(function (item) { return val === item; }) || val === '' || val === undefined || val === null) {
                 return _this.f['resourceManager$'].setErrors({ managerdisplayisvalid: true });
@@ -378,10 +376,6 @@ var EditResourceComponent = /** @class */ (function () {
             }
         });
     };
-    // getOneResource(id) {
-    //  this.resourceService.getResource(id).subscribe(r => this.resman = r);
-    //  console.log(this.resman);
-    // }
     EditResourceComponent.prototype.onSelectResource = function (val) {
         console.log(val.displayName);
         this.resourceForm.patchValue({ resourceManager$: "" + val.displayName });
@@ -4587,10 +4581,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourceService", function() { return ResourceService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! app/shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! app/shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+
 
 
 
@@ -4603,17 +4600,27 @@ var ResourceService = /** @class */ (function () {
     function ResourceService(http, auth) {
         this.http = http;
         this.auth = auth;
-        this.baseUrl = 'http://localhost:53956/api';
+        // private baseUrl = 'http://localhost:53956/api';
+        this.baseUrl = environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].baseurl;
+        this.utilStore = { utilities: [] };
+        this._utils = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
         this.resourceStore = { resources: [] };
-        this._resources = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+        this._resources = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
         this.resourceListStore = { resourcesandrates: [] };
-        this._resourcesandrates = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+        this._resourcesandrates = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
         this.rateCardStore = { rateCards: [] };
-        this._rateCards = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"]([]);
+        this._rateCards = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"]([]);
     }
     Object.defineProperty(ResourceService.prototype, "rateCards", {
         get: function () {
             return this._rateCards.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ResourceService.prototype, "utils", {
+        get: function () {
+            return this._utils.asObservable();
         },
         enumerable: true,
         configurable: true
@@ -4629,6 +4636,11 @@ var ResourceService = /** @class */ (function () {
         get: function () {
             return this._resourcesandrates.asObservable();
         },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ResourceService.prototype, "utilitiesData", {
+        get: function () { return this.utilStore.utilities; },
         enumerable: true,
         configurable: true
     });
@@ -4652,6 +4664,15 @@ var ResourceService = /** @class */ (function () {
     ResourceService.prototype.rateCardById = function (id) {
         return this.rateCardStore.rateCards.find(function (x) { return x.companyRateCardId === id; });
     };
+    ResourceService.prototype.utilById = function (id) {
+        return this.utilStore.utilities.find(function (x) { return x.resourceUtilizationSummaryId === id; });
+    };
+    ResourceService.prototype.utilitiesByResourceIdAll = function (id) {
+        return this.utilStore.utilities.find(function (x) { return x.resourceId === id; });
+    };
+    ResourceService.prototype.utilitiesByResourceIdOneyear = function (id, year) {
+        return this.utilStore.utilities.filter(function (x) { return x.resourceId === id && x.year === year; });
+    };
     ResourceService.prototype.error = function (error) {
         return error;
     };
@@ -4667,8 +4688,8 @@ var ResourceService = /** @class */ (function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 companyId = this.auth.companyId;
-                this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHeader.body).subscribe(function (response) {
-                    _this.resourceStore.resources = response.json();
+                this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHttpClientHeader).subscribe(function (response) {
+                    _this.resourceStore.resources = response;
                     _this._resources.next(Object.assign({}, _this.resourceStore).resources);
                 }, function (error) {
                     console.log('Failed to fetch resources');
@@ -4677,30 +4698,19 @@ var ResourceService = /** @class */ (function () {
             });
         });
     };
-    ResourceService.prototype.getResourcepool = function () {
-        return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var companyId, options;
-            var _this = this;
-            return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                companyId = this.auth.companyId;
-                options = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["RequestOptions"]();
-                options.headers = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["Headers"]();
-                options.headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.auth.TOKEN_KEY));
-                options.headers.append('Content-Type', 'application/json; charset=utf-8');
-                options.headers.append('responseType', 'ResponseContentType.Blob');
-                this.http.get(this.baseUrl + '/resources/' + companyId, options).subscribe(function (response) {
-                    _this.resourceStore.resources = response.json();
-                    _this._resources.next(Object.assign({}, _this.resourceStore).resources);
-                }, function (error) {
-                    console.log('Failed to fetch resources');
-                });
-                return [2 /*return*/];
-            });
+    ResourceService.prototype.getResourcesUtilization = function () {
+        var _this = this;
+        var companyId = this.auth.companyId;
+        return this.http.get(this.baseUrl + '/resources/allutilization/' + companyId, this.auth.tokenHttpClientHeader).subscribe(function (response) {
+            _this.utilStore.utilities = response;
+            _this._utils.next(Object.assign({}, _this.utilStore).utilities);
+        }, function (error) {
+            console.log('Failed to fetch utilities');
         });
     };
     ResourceService.prototype.downloadFile = function () {
-        var options = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["RequestOptions"]({ responseType: _angular_http__WEBPACK_IMPORTED_MODULE_3__["ResponseContentType"].Blob });
-        return this.http.get(this.baseUrl + '/uploadactuals/export', options).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.blob(); }));
+        var options = new _angular_http__WEBPACK_IMPORTED_MODULE_4__["RequestOptions"]({ responseType: _angular_http__WEBPACK_IMPORTED_MODULE_4__["ResponseContentType"].Blob });
+        return this.http.get(this.baseUrl + '/uploadactuals/export', this.auth.tokenHttpClientHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (res) { return res; }));
         // .catch(this.handleError);
     };
     ResourceService.prototype.createImageFromBlob = function (image) {
@@ -4715,18 +4725,13 @@ var ResourceService = /** @class */ (function () {
     };
     ResourceService.prototype.getResourcesAndRates = function () {
         return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0, function () {
-            var headers, companyId;
+            var companyId;
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
-                headers = new _angular_http__WEBPACK_IMPORTED_MODULE_3__["Headers"]();
-                headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.auth.TOKEN_KEY));
-                headers.append('Content-Type', 'application/json');
                 companyId = this.auth.companyId;
-                console.log(this.auth.tokenHeader);
-                console.log(companyId);
-                this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHeader).subscribe(function (response) {
+                this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHttpClientHeader).subscribe(function (response) {
                     console.log(response);
-                    _this.resourceListStore.resourcesandrates = response.json();
+                    _this.resourceListStore.resourcesandrates = response;
                     _this._resourcesandrates.next(Object.assign({}, _this.resourceListStore).resourcesandrates);
                 }, function (error) {
                     console.log('Failed to fetch resources');
@@ -4741,8 +4746,8 @@ var ResourceService = /** @class */ (function () {
             var _this = this;
             return tslib__WEBPACK_IMPORTED_MODULE_0__["__generator"](this, function (_a) {
                 companyId = this.auth.companyId;
-                this.http.get(this.baseUrl + '/companyratecards' + '/' + companyId, this.auth.tokenHeader).subscribe(function (response) {
-                    _this.rateCardStore.rateCards = response.json();
+                this.http.get(this.baseUrl + '/companyratecards' + '/' + companyId, this.auth.tokenHttpClientHeader).subscribe(function (response) {
+                    _this.rateCardStore.rateCards = response;
                     _this._rateCards.next(Object.assign({}, _this.rateCardStore).rateCards);
                 }, function (error) {
                     console.log('Failed to fetch rate cards');
@@ -4754,29 +4759,27 @@ var ResourceService = /** @class */ (function () {
     ResourceService.prototype.postResource = function (resource) {
         var _this = this;
         // tslint:disable-next-line:max-line-length
-        return this.http.post(this.baseUrl + '/resources', resource, this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) {
-            res.json(),
-                _this.resourceStore.resources.push(res.json());
+        return this.http.post(this.baseUrl + '/resources', resource, this.auth.tokenHttpClientHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (res) {
+            _this.resourceStore.resources.push(res);
             _this._resources.next(Object.assign({}, _this.resourceStore).resources);
             console.log(resource),
-                console.log(res.json());
+                console.log(res);
         }));
     };
     ResourceService.prototype.getResource = function (id) {
         // tslint:disable-next-line:prefer-const
         var companyId = this.auth.companyId;
         if (id === '') {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(this.initializeBusiness());
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(this.initializeBusiness());
         }
-        return this.http.get(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }));
+        return this.http.get(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHttpClientHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (res) { return res; }));
     };
     ResourceService.prototype.saveResource = function (ResourceData) {
         var _this = this;
         console.log(ResourceData);
         // tslint:disable-next-line:max-line-length
-        return this.http.post(this.baseUrl + '/resources/resource', ResourceData, this.auth.tokenHeaderWithType).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) {
-            res.json(),
-                _this.resourceListStore.resourcesandrates.push(res.json());
+        return this.http.post(this.baseUrl + '/resources/resource', ResourceData, this.auth.tokenHttpClientHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (res) {
+            _this.resourceListStore.resourcesandrates.push(res);
             _this._resourcesandrates.next(Object.assign({}, _this.resourceListStore).resourcesandrates);
         }));
     };
@@ -4788,7 +4791,7 @@ var ResourceService = /** @class */ (function () {
     ResourceService.prototype.deleteItem = function (id) {
         var _this = this;
         var companyId = this.auth.companyId;
-        return this.http.delete(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHeader).toPromise()
+        return this.http.delete(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHttpClientHeader).toPromise()
             .then(function () {
             _this.getResources(),
                 _this._resources.next(_this.resourceStore.resources),
@@ -4797,16 +4800,16 @@ var ResourceService = /** @class */ (function () {
         // .do(data => console.log('deleteProduct: ' + JSON.stringify(data))).catch(this.handleError);
     };
     ResourceService.prototype.GetGiveAccess = function () {
-        return this.http.get(this.baseUrl + '/dropdown/giveaccess', this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(this.handleError));
+        return this.http.get(this.baseUrl + '/dropdown/giveaccess', this.auth.tokenHttpClientHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (res) { return res; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(this.handleError));
     };
     ResourceService.prototype.GetEmployeeTypes = function () {
-        return this.http.get(this.baseUrl + '/dropdown/employeeTypes', this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(this.handleError));
+        return this.http.get(this.baseUrl + '/dropdown/employeeTypes', this.auth.tokenHttpClientHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (res) { return res; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(this.handleError));
     };
     ResourceService.prototype.GetResourceTypes = function () {
-        return this.http.get(this.baseUrl + '/dropdown/resourcetypes', this.auth.tokenHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (res) { return res.json(); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])(this.handleError));
+        return this.http.get(this.baseUrl + '/dropdown/resourcetypes', this.auth.tokenHttpClientHeader).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (res) { return res; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["catchError"])(this.handleError));
     };
     ResourceService.prototype.handleError = function (error) {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])('Something went wrong!');
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])('Something went wrong!');
     };
     ResourceService.prototype.initializeBusiness = function () {
         // Return an initialized object
@@ -4850,8 +4853,8 @@ var ResourceService = /** @class */ (function () {
     };
     ResourceService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_3__["Http"],
-            app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"],
+            app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]])
     ], ResourceService);
     return ResourceService;
 }());
@@ -4867,7 +4870,7 @@ var ResourceService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <h1 class=\"card-title m-1 pl-2 pull-left text-muted text-primary\">Resource Demand</h1>\r\n</div>\r\n<!-- Minimal statistics with bg color section start -->\r\n<section id=\"minimal-statistics-bg\">\r\n  <div class=\"row text-left\" matchHeight=\"card\">\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-primary\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-pencil white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>\r\n                  <div counto [step]=\"1\" [countTo]=\"10000\" [countFrom]=\"0\" [duration]=\"1\" (countoChange)=\"counto = $event\">{{resourceCount}}</div>\r\n                </h3>\r\n                <span>New Posts</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-danger\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-speech white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>156</h3>\r\n                <span>New Comments</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-success\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-graph white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>64.89 %</h3>\r\n                <span>Bounce Rate</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-warning\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-pointer white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>423</h3>\r\n                <span>Total Visits</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n<!-- Minimal statistics with bg color section end -->\r\n\r\n<section id=\"extended\">\r\n    <div class=\"row text-left\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n              <h2 class=\"card-title text-capitalize text-monospace\">Resource Pool</h2>\r\n          </div>\r\n          <div class=\"card-content p-2 m-2\">\r\n            <div class=\"card-body\">\r\n              <div class=\"row\">\r\n                  <button class=\"btn btn-md btn-outline-danger m-2 \" (click)=\"newResource()\">+ Add new</button>\r\n                  <hr class=\"bg-dark\">\r\n              </div>\r\n              <!-- <div class=\"row m-2\">\r\n                  <input type=\"text\" [(ngModel)]=\"search\" (ngModelChange)=\"filter($event)\" class=\"form-control round\" placeholder=\"search this page\">\r\n              </div> -->\r\n              <div class=\"row m-2 bg-light\">\r\n                <div class=\"col-4 d-inline-flex align-items-center\">\r\n                  <div class=\"form-group float-left\">\r\n                    <label class=\"align-items-center\" style=\"top: 50%\">\r\n                      <span>Show </span>\r\n\r\n                      <select class=\"form-control-sm m-2\" [(ngModel)]=\"pagelenght\">\r\n                        <option value=\"{{resources?.length}}\">All</option>\r\n                        <option value=\"5\">5</option>\r\n                        <option value=\"10\">10</option>\r\n                        <option value=\"25\">25</option>\r\n                        <option value=\"50\">50</option>\r\n                        <option value=\"100\">100</option>\r\n                      </select>\r\n                      <span> entries</span>\r\n                    </label>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-4 float-right\">\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \">Groupby</button>\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \">Whatever</button>\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \">CSV</button>\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \">Print</button>\r\n                </div>\r\n                <div class=\"col-4 float-right\">\r\n                    <input type=\"text\" [(ngModel)]=\"search\" (ngModelChange)=\"filter($event)\" class=\"form-control m-2 round\" placeholder=\"search this page\">\r\n                </div>\r\n              </div>\r\n                <div classs =\"m-2 p-2\">\r\n                    <div classs =\"row\">\r\n                        <div class=\"col-12\">\r\n                            <table [mfData]=\"resources$ | async\" #mf=\"mfDataTable\" [mfRowsOnPage]=\"pagelenght\" class=\"table table-hover table-responsive-md  align-middle text-center dataTable \">\r\n                  <thead>\r\n                    <tr>\r\n                        <th style=\"width: 20%;\">\r\n                            <mfDefaultSorter by=\"displayName\">Name</mfDefaultSorter>\r\n                        </th>\r\n                        <th>\r\n                            <mfDefaultSorter by=\"firstName\">Email</mfDefaultSorter>\r\n                        </th>\r\n                        <th>\r\n                            <mfDefaultSorter by=\"firstName\">Age</mfDefaultSorter>\r\n                        </th>\r\n                        <th>\r\n                            <mfDefaultSorter by=\"firstName\">City</mfDefaultSorter>\r\n                        </th>\r\n                        <th>\r\n                            <mfDefaultSorter by=\"firstName\">City</mfDefaultSorter>\r\n                        </th>\r\n                        <th>\r\n                            <mfDefaultSorter by=\"firstName\">Name</mfDefaultSorter>\r\n                        </th>\r\n                        <th>Actions</th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                    <tr *ngFor=\"let res of mf.data\">\r\n                      <td>\r\n                          <div class=\"media\">\r\n                            <a class=\"mr-0\">\r\n                              <img *ngIf=\"res.imageUrl\" alt=\"96x96\" class=\"media-object d-flex  bg-primary height-50 rounded-circle\" [src]=\"res.imageUrl\">\r\n                              <span *ngIf=\"!res.imageUrl\" style=\"height: 50px;\" class=\"media-object d-flex  rounded-circle roundprofile + ' ' + bg-info \">\r\n                                {{ res.firstName | fl }}</span>\r\n                            </a>\r\n                            <div class=\"media-body ml-0\">\r\n                              <a (click)=\"gotoResource(res)\">\r\n                              <h4 class=\"font-medium-1 text-primary mt-1 mb-0\">{{res.displayName}}</h4>\r\n                              <p class=\"text-muted font-small-3\">{{res.resourceEmailAddress}}</p>\r\n                              </a>\r\n                            </div>\r\n                          </div>\r\n                          <!-- <img class=\"media-object round-media\" src=\"{{res.imageUrl}}\" alt=\"Generic placeholder image\"\r\n                            style=\"height: 75px;\" /> -->\r\n                            <!-- <span  class=\"avatar avatar-md mr-2 ml-0\">\r\n                              <span *ngIf=\"!res.imageUrl\" style=\"height: 50px;\" class=\"media-object rounded-circle roundprofile + ' ' + bg-info \">\r\n                              <p class=\"d-flex innerTEXT\">{{ res.firstName | fl }}</p></span>\r\n                              <img *ngIf=\"res.imageUrl\" style=\"height: 50px;\" class=\"media-object rounded-circle\" [src]=\"res.imageUrl\" alt=\"Generic placeholder image\">\r\n                              {{res.displayName}}\r\n                            </span> -->\r\n                        </td>\r\n                        <td>{{res.firstName}}</td>\r\n                      <!-- <td>\r\n                        <div class=\"custom-control custom-checkbox m-0\">\r\n                          <input type=\"checkbox\" class=\"custom-control-input\" id=\"item1\">\r\n                          <label class=\"custom-control-label col-form-label\" for=\"item1\"></label>\r\n                        </div>\r\n                      </td> -->\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>{{res.firstName}}</td>\r\n                      <td>\r\n                        <a class=\"success p-0\" data-original-title=\"\" title=\"\" (click)=\"editResource(res)\">\r\n                          <i class=\"ft-edit-2 font-medium-3 mr-2\"></i>\r\n                        </a>\r\n                        <a class=\"danger p-0\" data-original-title=\"\" title=\"\" (click)=\"deleteResource(res)\">\r\n                          <i class=\"ft-x font-medium-3 mr-2\"></i>\r\n                        </a>\r\n                      </td>\r\n                    </tr>\r\n                  </tbody>\r\n                  <tfoot>\r\n                      <tr>\r\n                          <td colspan=\"7\">\r\n                              <mfBootstrapPaginator></mfBootstrapPaginator>\r\n                          </td>\r\n                      </tr>\r\n                      </tfoot>\r\n                </table>\r\n                        </div>\r\n                    </div>\r\n                    </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n\r\n"
+module.exports = "<div class=\"row\">\r\n    <h1 class=\"card-title m-1 pl-2 pull-left text-muted text-primary\">Resource Demand</h1>\r\n</div>\r\n<!-- Minimal statistics with bg color section start -->\r\n<section id=\"minimal-statistics-bg\">\r\n  <div class=\"row text-left\" matchHeight=\"card\">\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-primary\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-pencil white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>\r\n                  <div *ngIf=\"resources?.length\" counto [step]=\"1\" [countTo]=\"10000\" [countFrom]=\"0\" [duration]=\"1\" (countoChange)=\"counto = $event\">{{resourceCount}}</div>\r\n                </h3>\r\n                <span>New Posts</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-danger\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-speech white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>156</h3>\r\n                <span>New Comments</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-success\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-graph white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>64.89 %</h3>\r\n                <span>Bounce Rate</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"col-xl-3 col-lg-6 col-12\">\r\n      <div class=\"card bg-warning\">\r\n        <div class=\"card-content\">\r\n          <div class=\"px-3 py-3\">\r\n            <div class=\"media\">\r\n              <div class=\"media-left align-self-center\">\r\n                <i class=\"icon-pointer white font-large-2 float-left\"></i>\r\n              </div>\r\n              <div class=\"media-body white text-right\">\r\n                <h3>423</h3>\r\n                <span>Total Visits</span>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</section>\r\n<!-- Minimal statistics with bg color section end -->\r\n\r\n<section id=\"extended\">\r\n    <div class=\"row text-left\">\r\n      <div class=\"col-sm-12\">\r\n        <div class=\"card\">\r\n          <div class=\"card-header\">\r\n              <h2 class=\"card-title text-capitalize text-monospace\">Resource Pool</h2>\r\n          </div>\r\n          <div class=\"card-content p-2 m-2\">\r\n            <div class=\"card-body\">\r\n              <div class=\"row\">\r\n                  <button class=\"btn btn-md btn-outline-danger m-2 \" (click)=\"newResource()\">+ Add new</button>\r\n                  <hr class=\"bg-dark\">\r\n              </div>\r\n              <!-- <div class=\"row m-2\">\r\n                  <input type=\"text\" [(ngModel)]=\"search\" (ngModelChange)=\"filter($event)\" class=\"form-control round\" placeholder=\"search this page\">\r\n              </div> -->\r\n              <div class=\"row m-2 bg-light\">\r\n                <div class=\"col-4 d-inline-flex align-items-center\">\r\n                  <div class=\"form-group float-left\">\r\n                    <label class=\"align-items-center\" style=\"top: 50%\">\r\n                      <span>Show </span>\r\n\r\n                      <select class=\"form-control-sm m-2\" [(ngModel)]=\"pagelenght\">\r\n                        <option value=\"{{resources?.length}}\">All</option>\r\n                        <option value=\"5\">5</option>\r\n                        <option value=\"10\">10</option>\r\n                        <option value=\"25\">25</option>\r\n                        <option value=\"50\">50</option>\r\n                        <option value=\"100\">100</option>\r\n                      </select>\r\n                      <span> entries</span>\r\n                    </label>\r\n                  </div>\r\n                </div>\r\n                <div class=\"col-4 float-right\">\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \">CSV</button>\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \">Print</button>\r\n                  <span class=\" bg-light text-muted m-2 \">show report in :</span>\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \" (click)=\"changeShowin('days')\">Days</button>\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \" (click)=\"changeShowin('hours')\">Hours</button>\r\n                  <button class=\"btn btn-sm btn-outline-secondary m-2 \" (click)=\"changeShowin('FTE')\">FTE</button>\r\n\r\n                </div>\r\n                <div class=\"col-4 float-right\">\r\n                    <input type=\"text\" [(ngModel)]=\"search\" (ngModelChange)=\"filter($event)\" class=\"form-control m-2 round\" placeholder=\"..type a name to search the list below\">\r\n                </div>\r\n              </div>\r\n                <div classs =\"m-2 p-2\">\r\n                    <div classs =\"row\">\r\n                        <div class=\"col-12\">\r\n                            <table  [mfData]=\"resources$ | async\" #mf=\"mfDataTable\" [mfRowsOnPage]=\"pagelenght\" class=\"table table-hover dflex table-responsive-md align-middle text-center dataTable \">\r\n                  <thead>\r\n                    <tr style=\"vertical-align: middle\">\r\n                        <th style=\"width:4%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"displayName\">Resource</mfDefaultSorter></th>\r\n                        <th style=\"width:7.7%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"employeeJobTitle\">Job Title</mfDefaultSorter></th>\r\n                        <th style=\"width:7.7%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"employeeType\">Employment</mfDefaultSorter></th>\r\n                        <th style=\"width: 3%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"resourceutilizationSummaries\">Demand<small class=\"text-muted\"><br> (current period)<br>(<i style=\"color: blue;\">{{showin}}</i>)</small></mfDefaultSorter></th>\r\n                        <th style=\"width: 3%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"resourceutilizationSummaries\">Availability<small class=\"text-muted\"><br> (current period)<br>(<i style=\"color: blue;\">{{showin}}</i>)</small></mfDefaultSorter></th>\r\n                        <th style=\"width: 3%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"resourceutilizationSummaries\">Absences<small class=\"text-muted\"><br> (current period)<br>(<i style=\"color: blue;\">{{showin}}</i>)</small></mfDefaultSorter></th>\r\n                        <!-- <th style=\"width: 3%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"resourceutilizationSummaries\">Holidays<br> & Absences<small class=\"text-muted\"><br> (current period)</small></mfDefaultSorter></th> -->\r\n                        <th style=\"width: 3%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"resourceutilizationSummaries\">Utilization<small class=\"text-muted\"><br> (current period)<br>(<i style=\"color: blue;\">{{showin}}</i>)</small></mfDefaultSorter></th>\r\n                        <th style=\"width:7.7%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"location\">Location</mfDefaultSorter></th>\r\n                        <th style=\"width:4%; vertical-align: middle\" class=\"col\"><mfDefaultSorter by=\"resourceManager.displayName\">Manager</mfDefaultSorter></th>\r\n                        <th style=\"width:7.7%; vertical-align: middle\" class=\"col\"><mfDefaultSorter >Actions</mfDefaultSorter></th>\r\n                    </tr>\r\n                  </thead>\r\n                  <tbody>\r\n                    <tr  style=\"vertical-align: middle\" *ngFor=\"let res of mf.data\">\r\n                      <td style=\"vertical-align: middle\">\r\n                        <div class=\"media\">\r\n                          <a *ngIf=\"resources?.length>0 && res?.firstName\" class=\"m-0\">\r\n                            <img *ngIf=\"res?.imageUrl\" alt=\"96x96\" class=\"media-object d-flex  bg-primary height-50 rounded-circle\" [src]=\"res?.imageUrl\">\r\n                            <span *ngIf=\"!res?.imageUrl\" style=\"height: 50px;\" class=\"media-object d-flex  rounded-circle roundprofile + ' ' + bg-info \">\r\n                              {{ res?.firstName | fl }}</span>\r\n                          </a>\r\n                          <div class=\"media-body float-left ml-0\">\r\n                            <a (click)=\"gotoResource(res)\">\r\n                            <h5 class=\"font-medium-1 text-primary mt-1 mb-0\">{{res?.displayName}}</h5>\r\n                            <p class=\"text-muted font-small-3\">{{res?.resourceEmailAddress}}</p>\r\n                            </a>\r\n                          </div>\r\n                        </div>\r\n                      </td>\r\n                      <td style=\"vertical-align: middle\">{{res?.employeeJobTitle}}</td>\r\n                      <td style=\"vertical-align: middle; opacity: 0.7;\">\r\n                        <span [ngClass]=\"empBadge(res?.employeeType)\" class=\"badge m-0\">{{res?.employeeType}}</span>\r\n                      </td>\r\n                      <td style=\"vertical-align: middle\"><span *ngIf=\"res?.resourceutilizationSummaries\"></span>{{calculateCurrentPeriodDemand(res) | showin: showin | number : '1.2-2'}}</td>\r\n                      <td style=\"vertical-align: middle\"><span class=\"float-left\">{{calculateCurrentPeriodFTE(res) | showin: showin | number : '1.2-2'}}</span><span class=\"float-right text-muted text-monospace\">{{ percentageAvailable(currentmonthdays,calculateCurrentPeriodFTE(res)) | showin: showin | number : '1.0-0'}}%</span></td>\r\n                      <td style=\"vertical-align: middle\">{{calculateCurrentPeriodAbsence(res) | showin: showin | number : '1.2-2'}}</td>\r\n                      <td style=\"vertical-align: middle\"><span class=\"float-left\" [ngClass]=\"overUnderUtilization(calculateCurrentPeriodUtilization(res))\">{{calculateCurrentPeriodUtilization(res) | showin: showin | number : '1.2-2'}}</span><span class=\"float-right text-muted text-monospace p-1 badge badge-pill\" [ngClass]=\"overUnderUtilizationPercent(percentageUtilization(calculateCurrentPeriodUtilization(res),calculateCurrentPeriodFTE(res)))\">{{percentageUtilization(calculateCurrentPeriodUtilization(res),calculateCurrentPeriodFTE(res)) | number : '1.0-0'}}%</span></td>\r\n                      <td style=\"vertical-align: middle\">{{res?.location}}</td>\r\n                      <td style=\"vertical-align: middle\">\r\n                        <div class=\"media\">\r\n                          <a *ngIf=\"resources?.length>0\" class=\"m-0 mr--1\">\r\n                            <img *ngIf=\"res?.resourceManager?.imageUrl\" alt=\"96x96\" class=\"media-object d-flex  bg-primary height-50 rounded-circle\" [src]=\"res?.resourceManager?.imageUrl\">\r\n                            <span *ngIf=\"!res?.resourceManager?.imageUrl && res?.resourceManager?.firstName\" style=\"height: 50px;\" class=\"media-object d-flex  rounded-circle roundprofile + ' ' + bg-info \">\r\n                              {{ res?.resourceManager?.firstName | fl }}</span>\r\n                          </a>\r\n                          <div class=\"media-body float-left ml-0\">\r\n                            <a (click)=\"gotoResource(res)\">\r\n                            <h6 class=\"font-medium-1 text-primary mt-1 mb-0\">{{res?.resourceManager?.displayName}}</h6>\r\n                            <p class=\"text-muted font-small-3\">{{res?.resourceManager?.resourceEmailAddress}}</p>\r\n\r\n                            </a>\r\n                          </div>\r\n                        </div>\r\n                      </td>\r\n                      <td style=\"vertical-align: middle\">\r\n                        <a class=\"success p-0\" data-original-title=\"\" title=\"\" (click)=\"editResource(res)\">\r\n                          <i class=\"ft-edit-2 font-medium-3 mr-2\"></i>\r\n                        </a>\r\n                        <a class=\"danger p-0\" data-original-title=\"\" title=\"\" (click)=\"deleteResource(res)\">\r\n                          <i class=\"ft-x font-medium-3 mr-2\"></i>\r\n                        </a>\r\n                      </td>\r\n                    </tr>\r\n                  </tbody>\r\n                  <tfoot>\r\n                      <tr>\r\n                          <td colspan=\"13\">\r\n                              <mfBootstrapPaginator></mfBootstrapPaginator>\r\n                          </td>\r\n                      </tr>\r\n                      </tfoot>\r\n                </table>\r\n                        </div>\r\n                    </div>\r\n                    </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -4893,15 +4896,19 @@ module.exports = ":host /deep/ .ct-grid {\n  stroke-dasharray: 0px;\n  stroke: r
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResourcesComponent", function() { return ResourcesComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
-/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(chartist__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _resources_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../resources.service */ "./src/app/resources/resources.service.ts");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _resource_delete_resource_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../resource/delete-resource.component */ "./src/app/resources/resource/delete-resource.component.ts");
-/* harmony import */ var _resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../resource/edit-resource.component */ "./src/app/resources/resource/edit-resource.component.ts");
+/* harmony import */ var app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! app/shared/auth/auth.service */ "./src/app/shared/auth/auth.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! chartist */ "./node_modules/chartist/dist/chartist.js");
+/* harmony import */ var chartist__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(chartist__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _resources_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../resources.service */ "./src/app/resources/resources.service.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _resource_delete_resource_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../resource/delete-resource.component */ "./src/app/resources/resource/delete-resource.component.ts");
+/* harmony import */ var _resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../resource/edit-resource.component */ "./src/app/resources/resource/edit-resource.component.ts");
+/* harmony import */ var _resource_utility__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../resource-utility */ "./src/app/resources/resource-utility.ts");
+
+
 
 
 
@@ -4914,14 +4921,18 @@ __webpack_require__.r(__webpack_exports__);
 var data = __webpack_require__(/*! ../../shared/data/chartist.json */ "./src/app/shared/data/chartist.json");
 var ResourcesComponent = /** @class */ (function () {
     // Bar chart configuration Ends
-    function ResourcesComponent(resourcesService, router, modalService) {
+    function ResourcesComponent(resourcesService, auth, router, modalService) {
         this.resourcesService = resourcesService;
+        this.auth = auth;
         this.router = router;
         this.modalService = modalService;
-        this.resources$ = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        this.resources$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
         this.resources = [];
         this.ratecards = [];
-        this.pagelenght = 5;
+        this.ut = [];
+        this.pagelenght = 25;
+        this.currentmonthdays = 23;
+        this.showin = 'days';
         // Line chart configuration Starts
         this.WidgetlineChart = {
             type: 'Line', data: data['WidgetlineChart2'],
@@ -4994,7 +5005,7 @@ var ResourcesComponent = /** @class */ (function () {
                     showLabel: false,
                     offset: 0,
                 },
-                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_4__["Interpolation"].cardinal({
+                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_5__["Interpolation"].cardinal({
                     tension: 0
                 }),
                 fullWidth: true
@@ -5154,7 +5165,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 6;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_4__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_5__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -5199,7 +5210,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 6;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_4__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_5__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -5347,7 +5358,7 @@ var ResourcesComponent = /** @class */ (function () {
             options: {
                 showArea: true,
                 fullWidth: true,
-                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_4__["Interpolation"].none(),
+                lineSmooth: chartist__WEBPACK_IMPORTED_MODULE_5__["Interpolation"].none(),
                 axisX: {
                     showGrid: false,
                 },
@@ -5409,7 +5420,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 4;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_4__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_5__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -5447,7 +5458,7 @@ var ResourcesComponent = /** @class */ (function () {
                 draw: function (data) {
                     var circleRadius = 4;
                     if (data.type === 'point') {
-                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_4__["Svg"]('circle', {
+                        var circle = new chartist__WEBPACK_IMPORTED_MODULE_5__["Svg"]('circle', {
                             cx: data.x,
                             cy: data.y,
                             r: circleRadius,
@@ -5588,24 +5599,58 @@ var ResourcesComponent = /** @class */ (function () {
         };
     }
     ResourcesComponent.prototype.ngOnInit = function () {
-        this.resourcesService.getResourcesAndRates();
-        this.resourcesService.getRateCards();
+        var _this = this;
+        // this.rerender();
+        this.resourcesService.getResourcesUtilization();
+        setTimeout(function () {
+            _this.resourcesService.getResourcesAndRates();
+            _this.resourcesService.getRateCards();
+        }, 250);
         this.getResources();
         this.getRatecards();
-        // this.rerender();
-        setTimeout(function () {
-        }, 200);
+    };
+    ResourcesComponent.prototype.percentageUtilization = function (u, a) {
+        var per$ = (u / a) * 100;
+        if (per$ === undefined || Number.isNaN(per$)) {
+            per$ = 0;
+        }
+        return per$;
+    };
+    ResourcesComponent.prototype.percentageAvailable = function (c, a) {
+        // calculation based on monthly reporting (8 hour days, 5 day week and 52 weeks year)
+        if (this.showin === 'days') {
+            c = c;
+        }
+        if (this.showin === 'hours') {
+            c = c * 8;
+        }
+        if (this.showin === 'FTE') {
+            c = c / 21.6667;
+        }
+        var per = (a / c) * 100;
+        if (per === undefined || Number.isNaN(per)) {
+            per = 0;
+        }
+        return per;
     };
     ResourcesComponent.prototype.getResources = function () {
         var _this = this;
         this.resourcesService.resourcesandrates.subscribe(function (resources) {
-            _this.resources = resources;
-            _this.resources$.next(resources);
-            // this.dtTrigger.next();
-            console.log(_this.resources$);
-            _this.resourceCount = formatNumber(_this.resources.length);
-            setTimeout(function () {
-            }, 250);
+            if (resources.length > 0) {
+                _this.resources = resources;
+                _this.resources$.next(resources);
+                console.log(_this.resources$);
+                console.log(_this.resources);
+                _this.resourceCount = formatNumber(_this.resources.length);
+            }
+            return;
+        });
+        this.resourcesService.utils.subscribe(function (ut) {
+            if (ut.length > 0) {
+                _this.ut = ut;
+                console.log(_this.ut);
+            }
+            return;
         });
     };
     ResourcesComponent.prototype.getRatecards = function () {
@@ -5613,11 +5658,246 @@ var ResourcesComponent = /** @class */ (function () {
         this.resourcesService.rateCards
             .subscribe(function (rates) { _this.ratecards = rates; console.log(_this.ratecards); }, function (error) { return _this.errorMessage = error; });
     };
+    ResourcesComponent.prototype.calculateCurrentPeriodUtilization = function (r) {
+        var id = r.resourceId;
+        var currentYear = this.auth.reportingYear;
+        var currentperiod = this.auth.reportingPeriod;
+        if (this.ut.some(function (x) { return (Number(currentYear) === x.year && x.resourceId === id); })) {
+            // const yu = this.resourcesService.utilitiesByResourceIdOneyear(id, Number(currentYear));
+            var yu = this.ut.filter(function (x) { return x.year === Number(currentYear) && x.resourceId === id; })[0];
+            // console.log(yu);
+            if (currentperiod === 'January') {
+                return (-yu.janAvailabilityAfterHolidaysInDays + yu.janResourceUtilizationInDays);
+            }
+            if (currentperiod === 'February') {
+                return (-yu.febAvailabilityAfterHolidaysInDays + yu.febResourceUtilizationInDays);
+            }
+            if (currentperiod === 'March') {
+                return (-yu.marAvailabilityAfterHolidaysInDays + yu.marResourceUtilizationInDays);
+            }
+            if (currentperiod === 'April') {
+                return (-yu.aprAvailabilityAfterHolidaysInDays + yu.aprResourceUtilizationInDays);
+            }
+            if (currentperiod === 'May') {
+                return (-yu.mayAvailabilityAfterHolidaysInDays + yu.mayResourceUtilizationInDays);
+            }
+            if (currentperiod === 'June') {
+                return (-yu.junAvailabilityAfterHolidaysInDays + yu.junResourceUtilizationInDays);
+            }
+            if (currentperiod === 'July') {
+                return (-yu.julAvailabilityAfterHolidaysInDays + yu.julResourceUtilizationInDays);
+            }
+            if (currentperiod === 'August') {
+                return (-yu.augAvailabilityAfterHolidaysInDays + yu.augResourceUtilizationInDays);
+            }
+            if (currentperiod === 'Septemebr') {
+                return (-yu.sepAvailabilityAfterHolidaysInDays + yu.sepResourceUtilizationInDays);
+            }
+            if (currentperiod === 'October') {
+                return (-yu.octAvailabilityAfterHolidaysInDays + yu.octResourceUtilizationInDays);
+            }
+            if (currentperiod === 'November') {
+                return (-yu.novAvailabilityAfterHolidaysInDays + yu.novResourceUtilizationInDays);
+            }
+            if (currentperiod === 'December') {
+                return (-yu.decAvailabilityAfterHolidaysInDays + yu.decResourceUtilizationInDays);
+            }
+            return 0;
+        }
+        return 0;
+    };
+    ResourcesComponent.prototype.overUnderUtilization = function (num) {
+        if (num === 0) {
+            return 'text-success';
+        }
+        else {
+            return 'text-danger';
+        }
+    };
+    ResourcesComponent.prototype.overUnderUtilizationPercent = function (num) {
+        if (num === 0 || num === 1) {
+            return 'badge-success';
+        }
+        else {
+            return 'badge-danger';
+        }
+    };
+    ResourcesComponent.prototype.returnUtils = function (r) {
+        var currentYear = this.auth.reportingYear;
+        var currentperiod = this.auth.reportingPeriod;
+        var ut = new _resource_utility__WEBPACK_IMPORTED_MODULE_10__["ResourceUtilization"]();
+        ut = r.resourceutilizationSummaries.find(function (x) { return x.year === Number(currentYear); })[0];
+        return ut;
+    };
+    ResourcesComponent.prototype.calculateCurrentPeriodDemand = function (r) {
+        var id = r.resourceId;
+        var currentYear = this.auth.reportingYear;
+        var currentperiod = this.auth.reportingPeriod;
+        if (this.ut.some(function (x) { return (Number(currentYear) === x.year && x.resourceId === id); })) {
+            var yu = this.ut.filter(function (x) { return x.year === Number(currentYear) && x.resourceId === id; })[0];
+            if (currentperiod === 'January') {
+                return (yu.janResourceUtilizationInDays);
+            }
+            if (currentperiod === 'February') {
+                return (yu.febResourceUtilizationInDays);
+            }
+            if (currentperiod === 'March') {
+                return (yu.marResourceUtilizationInDays);
+            }
+            if (currentperiod === 'April') {
+                return (yu.aprResourceUtilizationInDays);
+            }
+            if (currentperiod === 'May') {
+                return (yu.mayResourceUtilizationInDays);
+            }
+            if (currentperiod === 'June') {
+                return (yu.junResourceUtilizationInDays);
+            }
+            if (currentperiod === 'July') {
+                return (yu.julResourceUtilizationInDays);
+            }
+            if (currentperiod === 'August') {
+                return (yu.augResourceUtilizationInDays);
+            }
+            if (currentperiod === 'Septemebr') {
+                return (yu.sepResourceUtilizationInDays);
+            }
+            if (currentperiod === 'October') {
+                return (yu.octResourceUtilizationInDays);
+            }
+            if (currentperiod === 'November') {
+                return (yu.novResourceUtilizationInDays);
+            }
+            if (currentperiod === 'December') {
+                return (yu.decResourceUtilizationInDays);
+            }
+            return 0;
+        }
+        return 0;
+    };
+    ResourcesComponent.prototype.calculateCurrentPeriodFTE = function (r) {
+        var id = r.resourceId;
+        var currentYear = this.auth.reportingYear;
+        var currentperiod = this.auth.reportingPeriod;
+        if (this.ut.some(function (x) { return (Number(currentYear) === x.year && x.resourceId === id); })) {
+            var yu = this.ut.filter(function (x) { return x.year === Number(currentYear) && x.resourceId === id; })[0];
+            // console.log(yu);
+            if (currentperiod === 'January') {
+                return (yu.janAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'February') {
+                return (yu.febAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'March') {
+                return (yu.marAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'April') {
+                return (yu.aprAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'May') {
+                return (yu.mayAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'June') {
+                return (yu.junAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'July') {
+                return (yu.julAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'August') {
+                return (yu.augAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'Septemebr') {
+                return (yu.sepAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'October') {
+                return (yu.octAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'November') {
+                return (yu.novAvailabilityBeforeHolidaysInDays);
+            }
+            if (currentperiod === 'December') {
+                return (yu.decAvailabilityBeforeHolidaysInDays);
+            }
+            return 0;
+        }
+        return 0;
+    };
+    ResourcesComponent.prototype.calculateCurrentPeriodAbsence = function (r) {
+        var id = r.resourceId;
+        var currentYear = this.auth.reportingYear;
+        var currentperiod = this.auth.reportingPeriod;
+        if (this.ut.some(function (x) { return (Number(currentYear) === x.year && x.resourceId === id); })) {
+            var yu = this.ut.filter(function (x) { return x.year === Number(currentYear) && x.resourceId === id; })[0];
+            console.log(yu);
+            if (currentperiod === 'January') {
+                return (yu.janTotalHolidays);
+            }
+            if (currentperiod === 'February') {
+                return (yu.febTotalHolidays);
+            }
+            if (currentperiod === 'March') {
+                return (yu.marTotalHolidays);
+            }
+            if (currentperiod === 'April') {
+                return (yu.aprTotalHolidays);
+            }
+            if (currentperiod === 'May') {
+                return (yu.mayTotalHolidays);
+            }
+            if (currentperiod === 'June') {
+                return (yu.junTotalHolidays);
+            }
+            if (currentperiod === 'July') {
+                return (yu.julTotalHolidays);
+            }
+            if (currentperiod === 'August') {
+                return (yu.augTotalHolidays);
+            }
+            if (currentperiod === 'Septemebr') {
+                return (yu.sepTotalHolidays);
+            }
+            if (currentperiod === 'October') {
+                return (yu.octTotalHolidays);
+            }
+            if (currentperiod === 'November') {
+                return (yu.novTotalHolidays);
+            }
+            if (currentperiod === 'December') {
+                return (yu.decTotalHolidays);
+            }
+            return 0;
+        }
+        return 0;
+    };
+    // filter(search) {
+    //   this.resources$.next(this.resources.filter(_ => Object.keys(_).some(k => _[k].toLowerCase().includes(search.toLowerCase()))));
+    // }
+    ResourcesComponent.prototype.empBadge = function (emp) {
+        if (emp === 'Permanent_Staff') {
+            return 'badge-primary';
+        }
+        if (emp === 'Temporary_Staff') {
+            return 'badge-warning';
+        }
+        if (emp === 'Contractor') {
+            return 'badge-danger';
+        }
+        if (emp === 'Managed_Service') {
+            return 'badge-info';
+        }
+        return;
+    };
+    ResourcesComponent.prototype.changeShowin = function (show) {
+        this.showin = show;
+    };
+    // filter(search) {
+    //   this.resources$.next(this.resources.filter(_ => JSON.stringify(_).toLowerCase().indexOf(search.toLowerCase()) !== -1));
+    // }
     ResourcesComponent.prototype.filter = function (search) {
         this.resources$.next(this.resources.filter(function (_) { return _.displayName.toLowerCase().includes(search.toLowerCase()); }));
     };
     ResourcesComponent.prototype.newResource = function () {
-        var modalRef = this.modalService.open(_resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_8__["EditResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
+        var modalRef = this.modalService.open(_resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_9__["EditResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
         modalRef.componentInstance.id = '';
         modalRef.componentInstance.header = 'Create new resource';
         modalRef.componentInstance.resources = this.resources;
@@ -5628,14 +5908,14 @@ var ResourcesComponent = /** @class */ (function () {
         this.router.navigate(['/resources/resource', res.resourceId]);
     };
     ResourcesComponent.prototype.editResource = function (res) {
-        var modalRef = this.modalService.open(_resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_8__["EditResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
+        var modalRef = this.modalService.open(_resource_edit_resource_component__WEBPACK_IMPORTED_MODULE_9__["EditResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
         modalRef.componentInstance.id = res.resourceId;
         modalRef.componentInstance.header = "Edit resource:";
         modalRef.componentInstance.resources = this.resources;
         modalRef.componentInstance.ratecards = this.ratecards;
     };
     ResourcesComponent.prototype.deleteResource = function (res) {
-        var modalRef = this.modalService.open(_resource_delete_resource_component__WEBPACK_IMPORTED_MODULE_7__["DeleteResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
+        var modalRef = this.modalService.open(_resource_delete_resource_component__WEBPACK_IMPORTED_MODULE_8__["DeleteResourceComponent"], { size: 'lg', windowClass: 'modal-xl' });
         modalRef.componentInstance.id = res.resourceId;
     };
     // Open default modal
@@ -5649,10 +5929,10 @@ var ResourcesComponent = /** @class */ (function () {
     };
     // This function is used in open
     ResourcesComponent.prototype.getDismissReason = function (reason) {
-        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["ModalDismissReasons"].ESC) {
+        if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["ModalDismissReasons"].ESC) {
             return 'by pressing ESC';
         }
-        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["ModalDismissReasons"].BACKDROP_CLICK) {
+        else if (reason === _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["ModalDismissReasons"].BACKDROP_CLICK) {
             return 'by clicking on a backdrop';
         }
         else {
@@ -5660,12 +5940,13 @@ var ResourcesComponent = /** @class */ (function () {
         }
     };
     ResourcesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"])({
             selector: 'app-resources',
             template: __webpack_require__(/*! ./resources.component.html */ "./src/app/resources/resources/resources.component.html"),
             styles: [__webpack_require__(/*! ./resources.component.scss */ "./src/app/resources/resources/resources.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_resources_service__WEBPACK_IMPORTED_MODULE_5__["ResourceService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["NgbModal"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_resources_service__WEBPACK_IMPORTED_MODULE_6__["ResourceService"], app_shared_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModal"]])
     ], ResourcesComponent);
     return ResourcesComponent;
 }());

@@ -8,7 +8,8 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 @Injectable()
 export class AuthService {
 
-  BASE_URL = 'http://localhost:53956/api'; // 61646
+  BASE_URL = environment.baseurl;
+  // BASE_URL = 'http://localhost:53956/api'; // 61646
   // BASE_URL = 'https://myprojectapplicationbackend.azurewebsites.net/api';
   TOKEN_KEY = 'token';
   FIRSTNAME_KEY = 'firstname';
@@ -110,12 +111,12 @@ export class AuthService {
     return false;
   }
 
-  // get tokenHeader() {
+  get tokenHttpClientHeader() {
 
-  //   const header = new Headers({'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY),
-  //   'Content-Type': 'application/json'});
-  //   return new RequestOptions({ headers: header});
-  // }
+    const header = new HttpHeaders({'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY),
+    'Content-Type': 'application/json'});
+    return ({headers: header});
+  }
   get tokenHeader() {
 
     const header = new Headers({'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY)});

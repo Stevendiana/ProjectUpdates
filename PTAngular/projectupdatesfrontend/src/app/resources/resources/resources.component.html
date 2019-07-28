@@ -14,7 +14,7 @@
               </div>
               <div class="media-body white text-right">
                 <h3>
-                  <div counto [step]="1" [countTo]="10000" [countFrom]="0" [duration]="1" (countoChange)="counto = $event">{{resourceCount}}</div>
+                  <div *ngIf="resources?.length" counto [step]="1" [countTo]="10000" [countFrom]="0" [duration]="1" (countoChange)="counto = $event">{{resourceCount}}</div>
                 </h3>
                 <span>New Posts</span>
               </div>
@@ -113,79 +113,80 @@
                   </div>
                 </div>
                 <div class="col-4 float-right">
-                  <button class="btn btn-sm btn-outline-secondary m-2 ">Groupby</button>
-                  <button class="btn btn-sm btn-outline-secondary m-2 ">Whatever</button>
                   <button class="btn btn-sm btn-outline-secondary m-2 ">CSV</button>
                   <button class="btn btn-sm btn-outline-secondary m-2 ">Print</button>
+                  <span class=" bg-light text-muted m-2 ">show report in :</span>
+                  <button class="btn btn-sm btn-outline-secondary m-2 " (click)="changeShowin('days')">Days</button>
+                  <button class="btn btn-sm btn-outline-secondary m-2 " (click)="changeShowin('hours')">Hours</button>
+                  <button class="btn btn-sm btn-outline-secondary m-2 " (click)="changeShowin('FTE')">FTE</button>
+
                 </div>
                 <div class="col-4 float-right">
-                    <input type="text" [(ngModel)]="search" (ngModelChange)="filter($event)" class="form-control m-2 round" placeholder="search this page">
+                    <input type="text" [(ngModel)]="search" (ngModelChange)="filter($event)" class="form-control m-2 round" placeholder="..type a name to search the list below">
                 </div>
               </div>
                 <div classs ="m-2 p-2">
                     <div classs ="row">
                         <div class="col-12">
-                            <table [mfData]="resources$ | async" #mf="mfDataTable" [mfRowsOnPage]="pagelenght" class="table table-hover table-responsive-md  align-middle text-center dataTable ">
+                            <table  [mfData]="resources$ | async" #mf="mfDataTable" [mfRowsOnPage]="pagelenght" class="table table-hover dflex table-responsive-md align-middle text-center dataTable ">
                   <thead>
-                    <tr>
-                        <th style="width: 20%;">
-                            <mfDefaultSorter by="displayName">Name</mfDefaultSorter>
-                        </th>
-                        <th>
-                            <mfDefaultSorter by="firstName">Email</mfDefaultSorter>
-                        </th>
-                        <th>
-                            <mfDefaultSorter by="firstName">Age</mfDefaultSorter>
-                        </th>
-                        <th>
-                            <mfDefaultSorter by="firstName">City</mfDefaultSorter>
-                        </th>
-                        <th>
-                            <mfDefaultSorter by="firstName">City</mfDefaultSorter>
-                        </th>
-                        <th>
-                            <mfDefaultSorter by="firstName">Name</mfDefaultSorter>
-                        </th>
-                        <th>Actions</th>
+                    <tr style="vertical-align: middle">
+                        <th style="width:4%; vertical-align: middle" class="col"><mfDefaultSorter by="displayName">Resource</mfDefaultSorter></th>
+                        <th style="width:7.7%; vertical-align: middle" class="col"><mfDefaultSorter by="employeeJobTitle">Job Title</mfDefaultSorter></th>
+                        <th style="width:7.7%; vertical-align: middle" class="col"><mfDefaultSorter by="employeeType">Employment</mfDefaultSorter></th>
+                        <th style="width: 3%; vertical-align: middle" class="col"><mfDefaultSorter by="resourceutilizationSummaries">Demand<small class="text-muted"><br> (current period)<br>(<i style="color: blue;">{{showin}}</i>)</small></mfDefaultSorter></th>
+                        <th style="width: 3%; vertical-align: middle" class="col"><mfDefaultSorter by="resourceutilizationSummaries">Availability<small class="text-muted"><br> (current period)<br>(<i style="color: blue;">{{showin}}</i>)</small></mfDefaultSorter></th>
+                        <th style="width: 3%; vertical-align: middle" class="col"><mfDefaultSorter by="resourceutilizationSummaries">Absences<small class="text-muted"><br> (current period)<br>(<i style="color: blue;">{{showin}}</i>)</small></mfDefaultSorter></th>
+                        <!-- <th style="width: 3%; vertical-align: middle" class="col"><mfDefaultSorter by="resourceutilizationSummaries">Holidays<br> & Absences<small class="text-muted"><br> (current period)</small></mfDefaultSorter></th> -->
+                        <th style="width: 3%; vertical-align: middle" class="col"><mfDefaultSorter by="resourceutilizationSummaries">Utilization<small class="text-muted"><br> (current period)<br>(<i style="color: blue;">{{showin}}</i>)</small></mfDefaultSorter></th>
+                        <th style="width:7.7%; vertical-align: middle" class="col"><mfDefaultSorter by="location">Location</mfDefaultSorter></th>
+                        <th style="width:4%; vertical-align: middle" class="col"><mfDefaultSorter by="resourceManager.displayName">Manager</mfDefaultSorter></th>
+                        <th style="width:7.7%; vertical-align: middle" class="col"><mfDefaultSorter >Actions</mfDefaultSorter></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let res of mf.data">
-                      <td>
-                          <div class="media">
-                            <a class="mr-0">
-                              <img *ngIf="res.imageUrl" alt="96x96" class="media-object d-flex  bg-primary height-50 rounded-circle" [src]="res.imageUrl">
-                              <span *ngIf="!res.imageUrl" style="height: 50px;" class="media-object d-flex  rounded-circle roundprofile + ' ' + bg-info ">
-                                {{ res.firstName | fl }}</span>
+                    <tr  style="vertical-align: middle" *ngFor="let res of mf.data">
+                      <td style="vertical-align: middle">
+                        <div class="media">
+                          <a *ngIf="resources?.length>0 && res?.firstName" class="m-0">
+                            <img *ngIf="res?.imageUrl" alt="96x96" class="media-object d-flex  bg-primary height-50 rounded-circle" [src]="res?.imageUrl">
+                            <span *ngIf="!res?.imageUrl" style="height: 50px;" class="media-object d-flex  rounded-circle roundprofile + ' ' + bg-info ">
+                              {{ res?.firstName | fl }}</span>
+                          </a>
+                          <div class="media-body float-left ml-0">
+                            <a (click)="gotoResource(res)">
+                            <h5 class="font-medium-1 text-primary mt-1 mb-0">{{res?.displayName}}</h5>
+                            <p class="text-muted font-small-3">{{res?.resourceEmailAddress}}</p>
                             </a>
-                            <div class="media-body ml-0">
-                              <a (click)="gotoResource(res)">
-                              <h4 class="font-medium-1 text-primary mt-1 mb-0">{{res.displayName}}</h4>
-                              <p class="text-muted font-small-3">{{res.resourceEmailAddress}}</p>
-                              </a>
-                            </div>
                           </div>
-                          <!-- <img class="media-object round-media" src="{{res.imageUrl}}" alt="Generic placeholder image"
-                            style="height: 75px;" /> -->
-                            <!-- <span  class="avatar avatar-md mr-2 ml-0">
-                              <span *ngIf="!res.imageUrl" style="height: 50px;" class="media-object rounded-circle roundprofile + ' ' + bg-info ">
-                              <p class="d-flex innerTEXT">{{ res.firstName | fl }}</p></span>
-                              <img *ngIf="res.imageUrl" style="height: 50px;" class="media-object rounded-circle" [src]="res.imageUrl" alt="Generic placeholder image">
-                              {{res.displayName}}
-                            </span> -->
-                        </td>
-                        <td>{{res.firstName}}</td>
-                      <!-- <td>
-                        <div class="custom-control custom-checkbox m-0">
-                          <input type="checkbox" class="custom-control-input" id="item1">
-                          <label class="custom-control-label col-form-label" for="item1"></label>
                         </div>
-                      </td> -->
-                      <td>{{res.firstName}}</td>
-                      <td>{{res.firstName}}</td>
-                      <td>{{res.firstName}}</td>
-                      <td>{{res.firstName}}</td>
-                      <td>
+                      </td>
+                      <td style="vertical-align: middle">{{res?.employeeJobTitle}}</td>
+                      <td style="vertical-align: middle; opacity: 0.7;">
+                        <span [ngClass]="empBadge(res?.employeeType)" class="badge m-0">{{res?.employeeType}}</span>
+                      </td>
+                      <td style="vertical-align: middle"><span *ngIf="res?.resourceutilizationSummaries"></span>{{calculateCurrentPeriodDemand(res) | showin: showin | number : '1.2-2'}}</td>
+                      <td style="vertical-align: middle"><span class="float-left">{{calculateCurrentPeriodFTE(res) | showin: showin | number : '1.2-2'}}</span><span class="float-right text-muted text-monospace">{{ percentageAvailable(currentmonthdays,calculateCurrentPeriodFTE(res)) | showin: showin | number : '1.0-0'}}%</span></td>
+                      <td style="vertical-align: middle">{{calculateCurrentPeriodAbsence(res) | showin: showin | number : '1.2-2'}}</td>
+                      <td style="vertical-align: middle"><span class="float-left" [ngClass]="overUnderUtilization(calculateCurrentPeriodUtilization(res))">{{calculateCurrentPeriodUtilization(res) | showin: showin | number : '1.2-2'}}</span><span class="float-right text-muted text-monospace p-1 badge badge-pill" [ngClass]="overUnderUtilizationPercent(percentageUtilization(calculateCurrentPeriodUtilization(res),calculateCurrentPeriodFTE(res)))">{{percentageUtilization(calculateCurrentPeriodUtilization(res),calculateCurrentPeriodFTE(res)) | number : '1.0-0'}}%</span></td>
+                      <td style="vertical-align: middle">{{res?.location}}</td>
+                      <td style="vertical-align: middle">
+                        <div class="media">
+                          <a *ngIf="resources?.length>0" class="m-0 mr--1">
+                            <img *ngIf="res?.resourceManager?.imageUrl" alt="96x96" class="media-object d-flex  bg-primary height-50 rounded-circle" [src]="res?.resourceManager?.imageUrl">
+                            <span *ngIf="!res?.resourceManager?.imageUrl && res?.resourceManager?.firstName" style="height: 50px;" class="media-object d-flex  rounded-circle roundprofile + ' ' + bg-info ">
+                              {{ res?.resourceManager?.firstName | fl }}</span>
+                          </a>
+                          <div class="media-body float-left ml-0">
+                            <a (click)="gotoResource(res)">
+                            <h6 class="font-medium-1 text-primary mt-1 mb-0">{{res?.resourceManager?.displayName}}</h6>
+                            <p class="text-muted font-small-3">{{res?.resourceManager?.resourceEmailAddress}}</p>
+
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                      <td style="vertical-align: middle">
                         <a class="success p-0" data-original-title="" title="" (click)="editResource(res)">
                           <i class="ft-edit-2 font-medium-3 mr-2"></i>
                         </a>
@@ -197,7 +198,7 @@
                   </tbody>
                   <tfoot>
                       <tr>
-                          <td colspan="7">
+                          <td colspan="13">
                               <mfBootstrapPaginator></mfBootstrapPaginator>
                           </td>
                       </tr>

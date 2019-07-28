@@ -226,11 +226,12 @@ namespace PTApi.Controllers
         [HttpGet("{companyId}")]
         //[Authorize]
         [Authorize(AuthenticationSchemes = "Bearer")]
-        [Authorize(Policy = "AccountOwner")]
+        //[Authorize(Policy = "AccountOwner")]
         public IActionResult GetResources(string companyId)
         {
             var roleGroup =_userService.UserRoleGroup();
             var comp = _userService.GetSecureUserCompany();
+            int year = Convert.ToInt32(_userService.GetSecureUserCompanyReportingYear());
 
             // List<ResourceAdminViewModel> resources = new List<ResourceAdminViewModel>();
 
@@ -238,10 +239,39 @@ namespace PTApi.Controllers
             {
                 if ( companyId == comp)
                 {
-                    var allResources =  _unitOfWork.Resources.GetAllResources(comp);
+                    var allResources =  _unitOfWork.Resources.GetAllResources(comp, year);
 
                    
                     var result = _mapper.Map<IEnumerable<Resource>, IEnumerable<ResourceViewModel>>(allResources);
+                    return Ok(result);
+                    //return allResources.Select(Mapper.Map<Resource, ResourceAdminViewModel>);
+                }
+                return BadRequest();
+            }
+            return BadRequest();
+
+        }
+
+        [HttpGet("allutilization/{companyId}")]
+        //[Authorize]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[Authorize(Policy = "AccountOwner")]
+        public IActionResult GetAllResourcesUtilization(string companyId)
+        {
+            var roleGroup =_userService.UserRoleGroup();
+            var comp = _userService.GetSecureUserCompany();
+            int year = Convert.ToInt32(_userService.GetSecureUserCompanyReportingYear());
+
+            // List<ResourceAdminViewModel> resources = new List<ResourceAdminViewModel>();
+
+            if (roleGroup=="Admin_Group")
+            {
+                if ( companyId == comp)
+                {
+                    var allResources =  _unitOfWork.ResourceUtilizations.GetAllResourcesUtilization(comp);
+
+
+                     var result = _mapper.Map<IEnumerable<ResourceUtilizationSummary>, IEnumerable<ResourceUtilizationViewModel>>(allResources);
                     return Ok(result);
                     //return allResources.Select(Mapper.Map<Resource, ResourceAdminViewModel>);
                 }

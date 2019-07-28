@@ -1,25 +1,71 @@
-locationName: '',
-  location: '',
-  billable: '',
-  isDisabled: '',
-  employeeJobTitle: '',
-  resourceRateCardId: '',
-  companyRateCard: '',
-  contractedHours: '',
-  resourceContractEffortInPercentage: '',
-  resourceType: '',
-  employeeType: '',
-  companyId: '',
-  appUserRole: '',
-  company: '',
-  resourceManagerId: '',
-  identityId: '',
-  identity: '',
-  firstName: '',
-  lastName: '',
+ ResourceUtilizationSummaryId { get; set; }
+ Year { get; set; }
+ CompanyId { get; set; }
+ Company Company { get; set; }
+ ResourceId { get; set; }
+ Resource Resource { get; set; }
 
-  employeeGradeBand: '',
-  managerName: '',
-  resourceRate: '',
-  displayName: '',
-  addedBy: '',
+  JanResourceUtilizationInDays : number;
+  FebResourceUtilizationInDays : number;
+  MarResourceUtilizationInDays : number;
+  AprResourceUtilizationInDays : number;
+  MayResourceUtilizationInDays : number;
+  JunResourceUtilizationInDays : number;
+  JulResourceUtilizationInDays : number;
+  AugResourceUtilizationInDays : number;
+  SepResourceUtilizationInDays : number;
+  OctResourceUtilizationInDays : number;
+  NovResourceUtilizationInDays : number;
+  DecResourceUtilizationInDays : number;
+ // Schedule - Actual Days taken From ForecastTaskTimesheet
+  TotalUtilizationInDays
+ {
+
+ }
+
+ //standard daily hours = 8hrs.
+
+  JanAvailabilityBeforeHolidaysInDays : number;
+  FebAvailabilityBeforeHolidaysInDays : number;
+  MarAvailabilityBeforeHolidaysInDays : number;
+  AprAvailabilityBeforeHolidaysInDays : number;
+  MayAvailabilityBeforeHolidaysInDays : number;
+  JunAvailabilityBeforeHolidaysInDays : number;
+  JulAvailabilityBeforeHolidaysInDays : number;
+  AugAvailabilityBeforeHolidaysInDays : number;
+  SepAvailabilityBeforeHolidaysInDays : number;
+  OctAvailabilityBeforeHolidaysInDays : number;
+  NovAvailabilityBeforeHolidaysInDays : number;
+  DecAvailabilityBeforeHolidaysInDays : number;
+
+  TotalAvailabilityBeforeHolidaysInDays
+ {
+
+ }
+
+  JanTotalHolidays : number;
+  FebTotalHolidays : number;
+  MarTotalHolidays : number;
+  AprTotalHolidays : number;
+  MayTotalHolidays : number;
+  JunTotalHolidays : number;
+  JulTotalHolidays : number;
+  AugTotalHolidays : number;
+  SepTotalHolidays : number;
+  OctTotalHolidays : number;
+  NovTotalHolidays : number;
+  DecTotalHolidays : number;
+
+
+  JanAvailabilityAfterHolidaysInDays : number;
+  FebAvailabilityAfterHolidaysInDays : number;
+  MarAvailabilityAfterHolidaysInDays : number;
+  AprAvailabilityAfterHolidaysInDays : number;
+  MayAvailabilityAfterHolidaysInDays : number;
+  JunAvailabilityAfterHolidaysInDays : number;
+  JulAvailabilityAfterHolidaysInDays : number;
+  AugAvailabilityAfterHolidaysInDays : number;
+  SepAvailabilityAfterHolidaysInDays : number;
+  OctAvailabilityAfterHolidaysInDays : number;
+  NovAvailabilityAfterHolidaysInDays : number;
+  DecAvailabilityAfterHolidaysInDays : number;

@@ -14,3 +14,4 @@ C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Debug\netcoreapp2.1\PTApi.pdb
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Debug\netcoreapp2.1\Microsoft.Azure.Documents.ServiceInterop.dll
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\bin\Debug\netcoreapp2.1\Cosmos.CRTCompat.dll
 C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\Ndiananie\Git\ProjectUpdates\PTApi\obj\Debug\netcoreapp2.1\PTApi.csprojAssemblyReference.cache

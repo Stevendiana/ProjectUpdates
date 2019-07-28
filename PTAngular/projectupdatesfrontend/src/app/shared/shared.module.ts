@@ -1,3 +1,4 @@
+import { ShowinPipe } from './../app.showin';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgModule } from '@angular/core';
@@ -46,6 +47,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
         SidebarDirective,
         NgbModule,
         FlPipe,
+        ShowinPipe,
         DatePickerComponent,
         PerfectScrollbarModule,
         TranslateModule
@@ -64,6 +66,7 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     ],
     declarations: [
         FlPipe,
+        ShowinPipe,
         FooterComponent,
         NavbarComponent,
         SidebarComponent,

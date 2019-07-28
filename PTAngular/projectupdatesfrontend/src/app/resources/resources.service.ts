@@ -9,43 +9,54 @@ import {throwError as observableThrowError, of as observableOf} from 'rxjs';
 import { Headers, Response } from '@angular/http';
 import { KeyValuePair } from './keyvaluepair';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IRateCard } from './rate-card';
+import { IRateCard, RateCard } from './rate-card';
+import { IResourceUtilization } from './resource-utility';
 
 @Injectable()
 export class ResourceService {
 
-  private baseUrl = 'http://localhost:53956/api';
-  // private baseUrl = environment.baseurl;
+  // private baseUrl = 'http://localhost:53956/api';
+  private baseUrl = environment.baseurl;
   errorMessage: string;
   deleteMessage: string;
   imageToShow: any;
 
-  public _resources: BehaviorSubject<IResource[]>;
+  public _utils: BehaviorSubject<IResourceUtilization[]>;
+  public _resources: BehaviorSubject<IResourceList[]>;
   public _resourcesandrates: BehaviorSubject<IResourceList[]>;
   public _rateCards: BehaviorSubject<IRateCard[]>;
 
 
   public resourceStore: {
-    resources: IResource[]
+    resources: any;
+  };
+
+  public utilStore: {
+    utilities: any;
   };
   public resourceListStore: {
-    resourcesandrates: IResourceList[]
+    resourcesandrates: any;
   };
 
   public rateCardStore: {
-    rateCards: IRateCard[]
+    rateCards: any;
   };
 
 
-  get rateCards(): Observable<IRateCard[]> {
+  get rateCards(): Observable<any[]> {
     return this._rateCards.asObservable();
   }
+  get utils(): Observable<any[]> {
+    return this._utils.asObservable();
+  }
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private auth: AuthService)  // tslint:disable-next-line:one-line
   {
+    this.utilStore = { utilities: [] };
+    this._utils = new BehaviorSubject<IResourceUtilization[]>([]);
     this.resourceStore = { resources: [] };
-    this._resources = new BehaviorSubject<IResource[]>([]);
+    this._resources = new BehaviorSubject<IResourceList[]>([]);
     this.resourceListStore = { resourcesandrates: [] };
     this._resourcesandrates = new BehaviorSubject<IResourceList[]>([]);
     this.rateCardStore = { rateCards: [] };
@@ -53,13 +64,14 @@ export class ResourceService {
 
   }
 
-  get resources(): Observable<IResource[]> {
+  get resources(): Observable<IResourceList[]> {
     return this._resources.asObservable();
   }
   get resourcesandrates(): Observable<IResourceList[]> {
     return this._resourcesandrates.asObservable();
   }
 
+  get utilitiesData(): IResource[] {return this.utilStore.utilities; }
   get resourcesData(): IResource[] {return this.resourceStore.resources; }
 
   get rateCardsData(): IRateCard[] {return this.rateCardStore.rateCards; }
@@ -70,6 +82,15 @@ export class ResourceService {
   }
   rateCardById(id: string) {
     return this.rateCardStore.rateCards.find(x => x.companyRateCardId === id);
+  }
+  utilById(id: string) {
+    return this.utilStore.utilities.find(x => x.resourceUtilizationSummaryId === id);
+  }
+  utilitiesByResourceIdAll(id: string) {
+    return this.utilStore.utilities.find(x => x.resourceId === id);
+  }
+  utilitiesByResourceIdOneyear(id: string, year: any) {
+    return this.utilStore.utilities.filter(x => x.resourceId === id && x.year === year );
   }
 
   error(error: string) {
@@ -87,38 +108,30 @@ export class ResourceService {
 
     const companyId = this.auth.companyId;
 
-    this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHeader.body ).subscribe(response => {
-        this.resourceStore.resources = response.json();
+    this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHttpClientHeader ).subscribe(response => {
+        this.resourceStore.resources = response;
         this._resources.next(Object.assign({}, this.resourceStore).resources);
     }, error => {
       console.log('Failed to fetch resources');
     });
   }
 
-  async getResourcepool() {
+  getResourcesUtilization() {
 
     const companyId = this.auth.companyId;
 
-    const options = new RequestOptions();
-    options.headers = new Headers();
-    options.headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.auth.TOKEN_KEY));
-    options.headers.append('Content-Type', 'application/json; charset=utf-8');
-    options.headers.append('responseType', 'ResponseContentType.Blob');
-
-    this.http.get(this.baseUrl + '/resources/' + companyId, options).subscribe(response => {
-        this.resourceStore.resources = response.json();
-        this._resources.next(Object.assign({}, this.resourceStore).resources);
-
-
+   return this.http.get(this.baseUrl + '/resources/allutilization/' + companyId, this.auth.tokenHttpClientHeader).subscribe(response => {
+    this.utilStore.utilities = response;
+    this._utils.next(Object.assign({}, this.utilStore).utilities);
     }, error => {
-      console.log('Failed to fetch resources');
+      console.log('Failed to fetch utilities');
     });
   }
 
   downloadFile() {
     const options = new RequestOptions({responseType: ResponseContentType.Blob });
-    return this.http.get(this.baseUrl + '/uploadactuals/export', options).pipe(
-        map(res => res.blob()), );
+    return this.http.get(this.baseUrl + '/uploadactuals/export', this.auth.tokenHttpClientHeader).pipe(
+        map(res => res), );
         // .catch(this.handleError);
   }
 
@@ -136,18 +149,11 @@ export class ResourceService {
 
   async getResourcesAndRates() {
 
-    const headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + localStorage.getItem(this.auth.TOKEN_KEY));
-    headers.append('Content-Type', 'application/json');
-
     const companyId = this.auth.companyId;
-    console.log(this.auth.tokenHeader);
-    console.log(companyId);
 
-
-    this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHeader).subscribe(response => {
+    this.http.get(this.baseUrl + '/resources/' + companyId, this.auth.tokenHttpClientHeader).subscribe(response => {
       console.log(response);
-        this.resourceListStore.resourcesandrates = response.json();
+        this.resourceListStore.resourcesandrates = response;
         this._resourcesandrates.next(Object.assign({}, this.resourceListStore).resourcesandrates);
     }, error => {
       console.log('Failed to fetch resources');
@@ -158,8 +164,8 @@ export class ResourceService {
 
     const companyId = this.auth.companyId;
 
-    this.http.get(this.baseUrl + '/companyratecards' + '/' + companyId, this.auth.tokenHeader).subscribe(response => {
-        this.rateCardStore.rateCards = response.json();
+    this.http.get(this.baseUrl + '/companyratecards' + '/' + companyId, this.auth.tokenHttpClientHeader).subscribe(response => {
+        this.rateCardStore.rateCards = response;
         this._rateCards.next(Object.assign({}, this.rateCardStore).rateCards);
     }, error => {
       console.log('Failed to fetch rate cards');
@@ -171,33 +177,32 @@ export class ResourceService {
   postResource(resource) {
 
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.baseUrl + '/resources', resource, this.auth.tokenHeader).pipe(
+    return this.http.post(this.baseUrl + '/resources', resource, this.auth.tokenHttpClientHeader).pipe(
                     map(res => {
-                      res.json(),
-                      this.resourceStore.resources .push(res.json());
+                      this.resourceStore.resources .push(res);
                       this._resources.next(Object.assign({}, this.resourceStore).resources);
                       console.log(resource),
-                      console.log(res.json()); }));
+                      console.log(res); }));
    }
 
 
-  getResource(id: string): Observable<IResource> {
+  getResource(id: string): Observable<any> {
     // tslint:disable-next-line:prefer-const
     let companyId = this.auth.companyId;
     if (id === '') {
       return observableOf(this.initializeBusiness());
-
-      }
-    return this.http.get(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHeader).pipe(map(res => res.json()));
+    }
+    return this.http.get(
+      this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHttpClientHeader).pipe(map(res => res));
   }
 
   saveResource(ResourceData) {
     console.log(ResourceData);
 
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.baseUrl + '/resources/resource', ResourceData, this.auth.tokenHeaderWithType).pipe(
-      map(res => { res.json(),
-        this.resourceListStore.resourcesandrates.push(res.json());
+    return this.http.post(this.baseUrl + '/resources/resource', ResourceData, this.auth.tokenHttpClientHeader).pipe(
+      map(res => {
+        this.resourceListStore.resourcesandrates.push(res);
         this._resourcesandrates.next(Object.assign({}, this.resourceListStore).resourcesandrates);
       }
       ));
@@ -215,7 +220,7 @@ export class ResourceService {
   deleteItem(id: string) {
 
     const companyId = this.auth.companyId;
-    return this.http.delete(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHeader).toPromise()
+    return this.http.delete(this.baseUrl + '/resources' + '/' + companyId + '/' + id, this.auth.tokenHttpClientHeader).toPromise()
                     .then(() => {
                       this.getResources(),
                       this._resources.next(this.resourceStore.resources),
@@ -226,22 +231,22 @@ export class ResourceService {
 
   GetGiveAccess(): Observable<KeyValuePair[]> {
 
-    return this.http.get(this.baseUrl + '/dropdown/giveaccess', this.auth.tokenHeader).pipe(
-    map(res => res.json()),
+    return this.http.get(this.baseUrl + '/dropdown/giveaccess', this.auth.tokenHttpClientHeader).pipe(
+    map(res => res),
     catchError(this.handleError));
   }
 
   GetEmployeeTypes(): Observable<KeyValuePair[]> {
 
-    return this.http.get(this.baseUrl + '/dropdown/employeeTypes', this.auth.tokenHeader).pipe(
-    map(res => res.json()),
+    return this.http.get(this.baseUrl + '/dropdown/employeeTypes', this.auth.tokenHttpClientHeader).pipe(
+    map(res => res),
     catchError(this.handleError));
   }
 
   GetResourceTypes(): Observable<KeyValuePair[]> {
 
-    return this.http.get(this.baseUrl + '/dropdown/resourcetypes', this.auth.tokenHeader).pipe(
-    map(res => res.json()),
+    return this.http.get(this.baseUrl + '/dropdown/resourcetypes', this.auth.tokenHttpClientHeader).pipe(
+    map(res => res),
     catchError(this.handleError));
   }
 

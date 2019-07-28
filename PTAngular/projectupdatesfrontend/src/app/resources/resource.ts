@@ -1,3 +1,5 @@
+import { IResourceUtilization } from './resource-utility';
+
 export interface IResource {
 
   resourceId: string;
@@ -137,6 +139,7 @@ export interface IResourceList {
   userModifiedId: string;
   userModifiedEmail: string;
   userModifiedResourceId: string;
+  resourceutilizationSummaries: IResourceUtilization[];
 
 }
 
@@ -236,6 +239,9 @@ export class Resource {
   userModifiedId: string;
   userModifiedEmail: string;
   userModifiedResourceId: string;
+
+  resourceutilizationSummaries: IResourceUtilization[];
+
 
 }
 
